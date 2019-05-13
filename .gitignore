@@ -1,0 +1,6 @@
+zappy_ai
+zappy_server
+tmp
+*.o
+*.a
+*.so
