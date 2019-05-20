@@ -26,6 +26,7 @@ SRC		=	$(SRC_DIR)/main.c	\
 			$(SRC_DIR)/arguments/int_argument.c	\
 			$(SRC_DIR)/destroy_struct.c	\
 			$(SRC_DIR)/error.c	\
+			$(SRC_DIR)/init_connection.c	\
 
 CFLAGS	=	-I $(ROOT)/includes $(WARN)
 

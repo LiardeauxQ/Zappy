@@ -22,6 +22,7 @@ typedef struct input_s {
 } input_t;
 
 typedef struct server_s {
+    unsigned int port;
     int sockfd;
     struct sockaddr_in sockaddr;
 } server_t;
