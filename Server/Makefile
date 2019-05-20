@@ -15,7 +15,17 @@ NAME		=	zappy_server
 
 BUILD		=	$(ROOT)/build
 
-SRC		=	$(SRC_DIR)/main.c
+SRC		=	$(SRC_DIR)/main.c	\
+			$(SRC_DIR)/arguments/arguments.c	\
+			$(SRC_DIR)/arguments/port.c	\
+			$(SRC_DIR)/arguments/width.c	\
+			$(SRC_DIR)/arguments/height.c	\
+			$(SRC_DIR)/arguments/freq.c	\
+			$(SRC_DIR)/arguments/client_nbr.c	\
+			$(SRC_DIR)/arguments/names.c	\
+			$(SRC_DIR)/arguments/int_argument.c	\
+			$(SRC_DIR)/destroy_struct.c	\
+			$(SRC_DIR)/error.c	\
 
 CFLAGS	=	-I $(ROOT)/includes $(WARN)
 
