@@ -18,13 +18,13 @@ const struct arguments_s arg_opt[] = {
     {0x0, 0x0, 0x0}
 };
 
-void handle_arguments(int const ac, char **av, server_info_t *info)
+void handle_arguments(int const ac, char **av, input_t *input)
 {
     for (int i = 0 ; i < ac ; i++) {
         for (int j = 0 ; arg_opt[j].short_name != 0x0 ; j++) {
             if (!strcmp(arg_opt[j].short_name, av[i])
                     || !strcmp(arg_opt[j].long_name, av[i])) {
-                arg_opt[j].fct(av + i + 1, info);
+                arg_opt[j].fct(av + i + 1, input);
             }
         }
     }

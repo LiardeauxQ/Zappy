@@ -7,9 +7,9 @@
 
 #include "arguments.h"
 
-void handle_freq(char **av, server_info_t *info)
+void handle_freq(char **av, input_t *input)
 {
     if (av == 0x0 || *av == 0x0)
         return;
-    info->frequence = handle_int_argument(*av);
+    input->frequence = handle_int_argument(*av);
 }

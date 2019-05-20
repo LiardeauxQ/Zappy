@@ -7,9 +7,9 @@
 
 #include "arguments.h"
 
-void handle_height(char **av, server_info_t *info)
+void handle_height(char **av, input_t *input)
 {
     if (av == 0x0 || *av == 0x0)
         return;
-    info->height = handle_int_argument(*av);
+    input->height = handle_int_argument(*av);
 }

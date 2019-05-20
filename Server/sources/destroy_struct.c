@@ -16,7 +16,7 @@ void destroy_array(char **array)
     free(array);
 }
 
-void destroy_server_info(server_info_t *info)
+void destroy_server_info(info_t *info)
 {
-    destroy_array(info->names);
+    destroy_array(info->input.names);
 }

@@ -7,9 +7,9 @@
 
 #include "arguments.h"
 
-void handle_client_nbr(char **av, server_info_t *info)
+void handle_client_nbr(char **av, input_t *input)
 {
     if (av == 0x0 || *av == 0x0)
         return;
-    info->client_nbr = handle_int_argument(*av);
+    input->client_nbr = handle_int_argument(*av);
 }
