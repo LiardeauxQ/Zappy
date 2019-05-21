@@ -11,6 +11,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
+#include <sys/select.h>
+
+#include "client.h"
 
 typedef struct input_s {
     unsigned int port;
@@ -31,6 +34,7 @@ typedef struct info_s {
     unsigned int port;
     struct input_s input;
     struct server_s server;
+    struct client_s clients[MAX_CLIENT];
 } info_t;
 
 /* destroy_struct.c */
