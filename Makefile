@@ -9,6 +9,9 @@ ROOT		=	.
 
 V		?=	@
 
+DIRS			:= $(ROOT)/AI	\
+				   $(ROOT)/Server
+
 #COLOR
 
 GREEN		=	\e[1;32m
@@ -29,26 +32,24 @@ debug:			CFLAGS += $(G)
 ##
 
 all:
-	$(V)make --no-print-directory -C AI
-	$(V)make --no-print-directory -C Server
-	$(V)cp Server/zappy_server .
-	$(V)cp AI/zappy_ai .
+		$(V)$(foreach var, $(DIRS), make --no-print-directory -C $(var);)
 
 debug:			 echo_d $(NAME)
 
 release:		 fclean echo_r $(NAME)
 
+tests_run:
+		$(V)$(foreach var, $(DIRS), make tests_run --no-print-directory -C $(var);)
+
 clean:
-		$(V)make clean --no-print-directory -C AI
-		$(V)make clean --no-print-directory -C Server
+		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
-		$(V)make fclean --no-print-directory -C AI
-		$(V)make fclean --no-print-directory -C Server
+		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
 		$(V)rm -f zappy_server
 		$(V)rm -f zappy_ai
-		$(V)printf "$(ORANGE)Removing binary file.$(WHITE)\n"
+		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
 
 re:			fclean all
 
