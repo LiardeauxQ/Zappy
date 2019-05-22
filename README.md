@@ -1,6 +1,6 @@
 # Zappy
 
-End-year epitech's project.
+Year-End Epitech project.
 
 ### Installing
 
@@ -16,8 +16,8 @@ make tests_run
 
 ## Authors
 
-* **Quentin Liardeaux** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Quentin Liardeaux** - [Github](https://github.com/LiardeauxQ)
 * **Loan Petit**
 * **Antoine Herbosa**
 * **Hugo Trinh-quy**
-* **Niels George-peillex
+* **Niels George-peillex**
