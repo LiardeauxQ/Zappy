@@ -1,0 +1,47 @@
+stages:
+    - build
+    - tests
+
+build:
+  image: ubuntu:18.04
+  stage: build
+  # instead of calling g++ directly you can also use some build toolkit like make
+  # install the necessary build tools when needed
+  before_script:
+    - apt-get update
+    - apt-get install -y build-essential
+  script:
+    - make re
+  # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
+  # cache:
+  #   paths:
+  #     - "*.o"
+
+tests:
+  image: ubuntu:18.04
+  stage: tests
+  before_script:
+    - apt-get update
+    - apt-get install -y software-properties-common
+    - add-apt-repository ppa:snaipewastaken/ppa
+    - apt-get update
+    - apt-get install -y build-essential
+    - apt-get install -y criterion-dev
+    - apt-get install -y gcovr
+  script:
+    - make tests_run
+
+#deploy:
+#  image: epitechcontent/epitest-docker
+#  stage: deploy
+#  script:
+#    - echo "Pushing to $TARGET_REPO"
+#    - mkdir -p ~/.ssh
+#    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/epitech
+#    - chmod 600 ~/.ssh/epitech
+#    - git config core.sshCommand "ssh -o \"StrictHostKeyChecking=no\" -i ~/.ssh/epitech -F /dev/null"
+#    - git remote remove epitech || true
+#    - git remote add epitech $TARGET_REPO || true
+#    - git push epitech HEAD:$CI_COMMIT_REF_NAME
+#    - git config --unset core.sshCommand
+#    - rm -rf ~/.ssh/epitech
