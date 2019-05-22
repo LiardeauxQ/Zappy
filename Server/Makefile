@@ -32,7 +32,9 @@ SRC			:=	$(SRC_DIR)/arguments/arguments.c	\
 				$(SRC_DIR)/destroy_struct.c	\
 				$(SRC_DIR)/error.c	\
 				$(SRC_DIR)/init_connection.c	\
-				$(SRC_DIR)/protocols.c	\
+				$(SRC_DIR)/protocols/protocols.c	\
+				$(SRC_DIR)/protocols/init_packets.c	\
+				$(SRC_DIR)/protocols/packet_handler.c	\
 
 TEST_SRC	:=	$(TEST_DIR)/test_arguments.c
 

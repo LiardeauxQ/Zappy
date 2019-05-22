@@ -130,7 +130,7 @@ enum RESOURCE_NUMBER {
 /*
 ** Each change to this document will need an incrementation of this value.
 */
-#define PROTOCOL_VERSION    0x3
+#define PROTOCOL_VERSION    0x4
 
 
 /*
@@ -179,6 +179,7 @@ typedef struct packet_handler pkt_handler_t;
 ** handlers must be NULL-terminated;
 */
 struct packet_handler_register {
+    size_t size;
     pkt_handler_t **handlers;
 };
 
