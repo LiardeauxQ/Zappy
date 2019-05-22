@@ -15,27 +15,33 @@
 
 #include "client.h"
 
-typedef struct input_s {
+struct input_s {
     unsigned int port;
     unsigned int width;
     unsigned int height;
     unsigned int client_nbr;
     unsigned int frequence;
     char **names;
-} input_t;
+};
 
-typedef struct server_s {
+typedef struct input_s input_t;
+
+struct server_s {
     unsigned int port;
     int sockfd;
     struct sockaddr_in sockaddr;
-} server_t;
+};
 
-typedef struct info_s {
-    unsigned int port;
+typedef struct server_s server_t;
+
+struct info_s {
+    int port;
     struct input_s input;
     struct server_s server;
     struct client_s clients[MAX_CLIENT];
-} info_t;
+};
+
+typedef struct info_s info_t;
 
 /* destroy_struct.c */
 
