@@ -5,7 +5,7 @@
 ** handle packet_handler struct
 */
 
-#include "packets.h"
+#include "graphical/packets.h"
 
 pkt_handler_t *init_pkt(int id, ...)
 {

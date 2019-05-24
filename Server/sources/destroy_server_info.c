@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2018
-** destroy_struct.c
+** destroy_server_info.c
 ** File description:
 ** destroy structures
 */

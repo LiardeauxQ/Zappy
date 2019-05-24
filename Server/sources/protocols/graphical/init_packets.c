@@ -5,7 +5,7 @@
 ** init packet registers
 */
 
-#include "packets.h"
+#include "graphical/packets.h"
 
 void init_client_packets(phr_t *reg)
 {

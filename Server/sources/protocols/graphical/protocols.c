@@ -5,7 +5,7 @@
 ** handle graphical protocol
 */
 
-#include "packets.h"
+#include "graphical/packets.h"
 
 void init_packets(phr_t *reg)
 {
