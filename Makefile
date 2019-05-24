@@ -10,7 +10,16 @@ ROOT		=	.
 V		?=	@
 
 DIRS			:= $(ROOT)/AI	\
-				   $(ROOT)/Server
+				   $(ROOT)/Server	\
+				   $(ROOT)/Graphical
+
+BINARIES_SRC	:=	$(ROOT)/AI/zappy_ai	\
+					$(ROOT)/Server/zappy_server	\
+					$(ROOT)/Graphical/zappy_graphical
+
+BINARIES		:=	zappy_ai	\
+					zappy_server	\
+					zappy_graphical
 
 #COLOR
 
@@ -33,6 +42,7 @@ debug:			CFLAGS += $(G)
 
 all:
 		$(V)$(foreach var, $(DIRS), make --no-print-directory -C $(var);)
+		$(V)$(foreach var, $(BINARIES_SRC), cp $(var) .;)
 
 debug:			 echo_d $(NAME)
 
@@ -47,8 +57,7 @@ clean:
 
 fclean:
 		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
-		$(V)rm -f zappy_server
-		$(V)rm -f zappy_ai
+		$(V)$(foreach var, $(BINARIES), rm -f $(var);)
 		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
 
 re:			fclean all
