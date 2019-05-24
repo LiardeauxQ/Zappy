@@ -19,24 +19,24 @@ TEST		=	tests_run
 
 BUILD		=	$(ROOT)/build
 
-MAIN		:=	$(SRC_DIR)/main.c	\
+MAIN		:=	main.c	\
 
-SRC			:=	$(SRC_DIR)/arguments/arguments.c	\
-				$(SRC_DIR)/arguments/port.c	\
-				$(SRC_DIR)/arguments/width.c	\
-				$(SRC_DIR)/arguments/height.c	\
-				$(SRC_DIR)/arguments/freq.c	\
-				$(SRC_DIR)/arguments/client_nbr.c	\
-				$(SRC_DIR)/arguments/names.c	\
-				$(SRC_DIR)/arguments/int_argument.c	\
-				$(SRC_DIR)/destroy_struct.c	\
-				$(SRC_DIR)/error.c	\
-				$(SRC_DIR)/init_connection.c	\
-				$(SRC_DIR)/protocols/protocols.c	\
-				$(SRC_DIR)/protocols/init_packets.c	\
-				$(SRC_DIR)/protocols/packet_handler.c	\
+SRC			:=	arguments/arguments.c	\
+				arguments/port.c	\
+				arguments/width.c	\
+				arguments/height.c	\
+				arguments/freq.c	\
+				arguments/client_nbr.c	\
+				arguments/names.c	\
+				arguments/int_argument.c	\
+				destroy_server_info.c	\
+				error.c	\
+				init_connection.c	\
+				protocols/graphical/protocols.c	\
+				protocols/graphical/init_packets.c	\
+				protocols/graphical/packet_handler.c	\
 
-TEST_SRC	:=	$(TEST_DIR)/test_arguments.c
+TEST_SRC	:=	test_arguments.c
 
 
 CFLAGS		=	-I $(ROOT)/includes $(WARN)
@@ -51,9 +51,13 @@ G			=	-g -D DEBUG
 
 V			?=	@
 
-MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(MAIN))
-OBJS			:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRC))
-TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.c, $(BUILD)/%.o, $(TEST_SRC))
+MAIN_PREFIXED		:= $(addprefix $(SRC_DIR)/, $(MAIN))
+SRC_PREFIXED		:= $(addprefix $(SRC_DIR)/, $(SRC))
+TEST_SRC_PREFIXED	:= $(addprefix $(TEST_DIR)/, $(TEST_SRC))
+
+MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(MAIN_PREFIXED))
+OBJS			:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRC_PREFIXED))
+TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.c, $(BUILD)/%.o, $(TEST_SRC_PREFIXED))
 
 #COLOR
 
