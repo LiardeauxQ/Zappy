@@ -25,8 +25,9 @@ SRC			:=
 
 TEST_SRC	:=	$(TEST_DIR)/test_example.cpp	\
 
-
 CXXFLAGS	 =	-I $(ROOT)/includes $(WARN) -pipe -march=native -std=c++11
+
+TESTFLAGS	=	$(CXXFLAGS)
 
 WARN		=	-Wall -Wextra
 
@@ -71,7 +72,7 @@ $(NAME):	$(BUILD)/$(NAME)
 $(TEST):		CFLAGS += --coverage
 $(TEST):		LDFLAGS	+= -lcriterion --coverage
 $(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		$(BUILD)/$(TEST)
+$(TEST):		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
 				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
@@ -100,7 +101,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.cpp
 $(BUILD)/%.o:		$(TEST_DIR)/%.cpp
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CXX) -o $@ -c $< $(CXXFLAGS)
+			$(V)$(CXX) -o $@ -c $< $(TESTFLAGS)
 
 clean:
 			$(V)rm -f $(OBJS)

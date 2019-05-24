@@ -58,7 +58,7 @@ $(NAME):
 			$(V)cat $(MAIN) >> $(NAME)
 			$(V)chmod +x $(NAME)
 
-$(TEST):		$(BUILD)/$(TEST)
+$(TEST):
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
 

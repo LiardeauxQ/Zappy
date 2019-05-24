@@ -81,7 +81,7 @@ $(NAME):	$(BUILD)/$(NAME)
 $(TEST):		CFLAGS += --coverage
 $(TEST):		LDFLAGS	+= -lcriterion --coverage
 $(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		$(BUILD)/$(TEST)
+$(TEST):		fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
 				$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
@@ -110,7 +110,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.c
 $(BUILD)/%.o:		$(TEST_DIR)/%.c
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< $(CFLAGS)
+			$(V)$(CC) -o $@ -c $< -I $(ROOT)/includes $(WARN)
 
 clean:
 			$(V)rm -f $(OBJS)
