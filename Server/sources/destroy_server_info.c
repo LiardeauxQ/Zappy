@@ -19,4 +19,5 @@ void destroy_array(char **array)
 void destroy_server_info(info_t *info)
 {
     destroy_array(info->input.names);
+    close(info->server.sockfd);
 }

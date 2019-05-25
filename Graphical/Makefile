@@ -5,7 +5,9 @@
 ## makefile of the source file
 ##
 
-ROOT		=	.
+ROOT		=	..
+
+CURRENT_DIR	=	Graphical
 
 SRC_DIR		=	sources
 
@@ -17,15 +19,17 @@ NAME		=	zappy_graphical
 
 TEST		=	tests_run
 
-BUILD		=	$(ROOT)/build
+BUILD		=	build
 
-MAIN		:=	$(SRC_DIR)/main.cpp	\
+MAIN		:=	main.cpp	\
 
-SRC			:=	
+SRC			:=	protocol/ServerInteraction.cpp
 
-TEST_SRC	:=	$(TEST_DIR)/test_example.cpp	\
+TEST_SRC	:=	test_example.cpp	\
 
-CXXFLAGS	 =	-I $(ROOT)/includes $(WARN) -pipe -march=native -std=c++11
+INCLUDES	=	-I includes
+
+CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++11
 
 TESTFLAGS	=	$(CXXFLAGS)
 
@@ -39,9 +43,14 @@ G		=	-g -D DEBUG
 
 V		?=	@
 
-MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(MAIN))
-OBJS			:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(SRC))
-TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.cpp, $(BUILD)/%.o, $(TEST_SRC))
+
+MAIN_PREFIXED		:=	$(addprefix $(SRC_DIR)/, $(MAIN))
+SRC_PREFIXED		:=	$(addprefix $(SRC_DIR)/, $(SRC))
+TEST_SRC_PREFIXED	:=	$(addprefix $(TEST_DIR)/, $(TEST_SRC))
+
+MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(MAIN_PREFIXED))
+OBJS			:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(SRC_PREFIXED))
+TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.cpp, $(BUILD)/%.o, $(TEST_SRC_PREFIXED))
 
 #COLOR
 
