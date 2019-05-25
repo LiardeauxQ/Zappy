@@ -11,53 +11,37 @@ SRC_DIR		=	sources
 
 TEST_DIR	=	tests
 
-CC		=	gcc
+CXX	    	=	g++
 
-NAME		=	zappy_server
+NAME		=	zappy_graphical
 
 TEST		=	tests_run
 
 BUILD		=	$(ROOT)/build
 
-MAIN		:=	main.c	\
+MAIN		:=	$(SRC_DIR)/main.cpp	\
 
-SRC			:=	arguments/arguments.c	\
-				arguments/port.c	\
-				arguments/width.c	\
-				arguments/height.c	\
-				arguments/freq.c	\
-				arguments/client_nbr.c	\
-				arguments/names.c	\
-				arguments/int_argument.c	\
-				destroy_server_info.c	\
-				error.c	\
-				init_connection.c	\
-				protocols/graphical/protocols.c	\
-				protocols/graphical/init_packets.c	\
-				protocols/graphical/packet_handler.c	\
+SRC			:=	
 
-TEST_SRC	:=	test_arguments.c
+TEST_SRC	:=	$(TEST_DIR)/test_example.cpp	\
 
+CXXFLAGS	 =	-I $(ROOT)/includes $(WARN) -pipe -march=native -std=c++11
 
-CFLAGS		=	-I $(ROOT)/includes $(WARN)
+TESTFLAGS	=	$(CXXFLAGS)
 
 WARN		=	-Wall -Wextra
 
-LIB			?=	1
+LIB		?=	1
 
-DEB			?=	0
+DEB		?=	0
 
-G			=	-g -D DEBUG
+G		=	-g -D DEBUG
 
-V			?=	@
+V		?=	@
 
-MAIN_PREFIXED		:= $(addprefix $(SRC_DIR)/, $(MAIN))
-SRC_PREFIXED		:= $(addprefix $(SRC_DIR)/, $(SRC))
-TEST_SRC_PREFIXED	:= $(addprefix $(TEST_DIR)/, $(TEST_SRC))
-
-MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(MAIN_PREFIXED))
-OBJS			:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRC_PREFIXED))
-TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.c, $(BUILD)/%.o, $(TEST_SRC_PREFIXED))
+MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(MAIN))
+OBJS			:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(SRC))
+TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.cpp, $(BUILD)/%.o, $(TEST_SRC))
 
 #COLOR
 
@@ -72,7 +56,7 @@ RED		 	=	\e[1;35m
 BLUE		=	\e[1;34m
 
 
-debug:			CFLAGS += $(G)
+debug:			CXXFLAGS += $(G)
 
 ##
 ## Directives
@@ -88,10 +72,10 @@ $(NAME):	$(BUILD)/$(NAME)
 $(TEST):		CFLAGS += --coverage
 $(TEST):		LDFLAGS	+= -lcriterion --coverage
 $(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
+$(TEST):		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
-				$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
+				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
 				$(V)./tests_run
 				$(V)gcovr --exclude $(TEST_DIR)
 
@@ -101,23 +85,23 @@ release:		 fclean echo_r $(NAME)
 
 $(BUILD)/$(NAME):	$(MAIN_OBJ) $(OBJS)
 			$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
-			$(V)$(CC) -o $(BUILD)/$(NAME) $(OBJS) $(LDFLAGS)
+			$(V)$(CXX) -o $(BUILD)/$(NAME) $(OBJS) $(LDFLAGS)
 			$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
 
 $(BUILD)/$(TEST):	$(OBJS) $(TEST_OBJS)
 					$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
-					$(V)$(CC) -o $(BUILD)/$(TEST) $(OBJS) $(LDFLAGS)
+					$(V)$(CXX) -o $(BUILD)/$(TEST) $(OBJS) $(LDFLAGS)
 					$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
 
-$(BUILD)/%.o:		$(SRC_DIR)/%.c
+$(BUILD)/%.o:		$(SRC_DIR)/%.cpp
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< $(CFLAGS)
+			$(V)$(CXX) -o $@ -c $< $(CXXFLAGS)
 
-$(BUILD)/%.o:		$(TEST_DIR)/%.c
+$(BUILD)/%.o:		$(TEST_DIR)/%.cpp
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< -I $(ROOT)/includes $(WARN)
+			$(V)$(CXX) -o $@ -c $< $(TESTFLAGS)
 
 clean:
 			$(V)rm -f $(OBJS)
