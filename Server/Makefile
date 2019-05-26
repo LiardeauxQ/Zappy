@@ -35,6 +35,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/protocols.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
+				protocols/ai/init_action_handlers.c	\
 
 TEST_SRC	:=	test_arguments.c
 
