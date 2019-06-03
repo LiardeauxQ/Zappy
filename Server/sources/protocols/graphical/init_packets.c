@@ -7,8 +7,10 @@
 
 #include "graphical/packets.h"
 
-void init_client_packets(phr_t *reg)
+int init_client_packets(phr_t *reg)
 {
+    if (reg == 0x0)
+        return (-1);
     add_pkt_info(reg, init_pkt(1, 0, "CLT_PROTOCOL_ADDONS", 0x0));
     add_pkt_info(reg, init_pkt(2, 0, "CLT_MAP_SIZE", 0x0));
     add_pkt_info(reg, init_pkt(3, 0, "CLT_TILE_CONTENT", 0x0));
@@ -20,10 +22,13 @@ void init_client_packets(phr_t *reg)
     add_pkt_info(reg, init_pkt(9, 0, "CLT_TIME_UNIT_REQUEST", 0x0));
     add_pkt_info(reg, init_pkt(10, 0, "CLT_TIME_UNIT_CHANGE", 0x0));
     add_pkt_info(reg, init_pkt(11, 0, "CLT_CUSTOM", 0x0));
+    return (0);
 }
 
-void init_server_environnements_packets(phr_t *reg)
+int init_server_environnements_packets(phr_t *reg)
 {
+    if (reg == 0x0)
+        return (-1);
     add_pkt_info(reg, init_pkt(12, 0, "SRV_PROTOCOL_ADDONS", 0x0));
     add_pkt_info(reg, init_pkt(13, 0, "SRV_MAP_SIZE", 0x0));
     add_pkt_info(reg, init_pkt(14, 0, "SRV_TILE_CONTENT", 0x0));
@@ -34,10 +39,13 @@ void init_server_environnements_packets(phr_t *reg)
     add_pkt_info(reg, init_pkt(19, 0, "SRV_PLAYER_INVENTORY", 0x0));
     add_pkt_info(reg, init_pkt(20, 0, "SRV_EXPULSION", 0x0));
     add_pkt_info(reg, init_pkt(21, 0, "SRV_BROADCAST", 0x0));
+    return (0);
 }
 
-void init_server_actions_packets(phr_t *reg)
+int init_server_actions_packets(phr_t *reg)
 {
+    if (reg == 0x0)
+        return (-1);
     add_pkt_info(reg, init_pkt(22, 0, "SRV_INCANTATION_START", 0x0));
     add_pkt_info(reg, init_pkt(23, 0, "SRV_INCANTATION_END", 0x0));
     add_pkt_info(reg, init_pkt(24, 0, "SRV_EGG_LAYING", 0x0));
@@ -51,12 +59,16 @@ void init_server_actions_packets(phr_t *reg)
     add_pkt_info(reg, init_pkt(32, 0, "SRV_TIME_UNIT_REQUEST", 0x0));
     add_pkt_info(reg, init_pkt(33, 0, "SRV_TIME_UNIT_CHANGE", 0x0));
     add_pkt_info(reg, init_pkt(34, 0, "SRV_END_GAMES", 0x0));
+    return (0);
 }
 
-void init_server_additionals_packets(phr_t *reg)
+int init_server_additionals_packets(phr_t *reg)
 {
+    if (reg == 0x0)
+        return (-1);
     add_pkt_info(reg, init_pkt(35, 0, "SRV_MESSAGE_FROM_SRV", 0x0));
     add_pkt_info(reg, init_pkt(36, 0, "SRV_UNKNOWN_COMMAND", 0x0));
     add_pkt_info(reg, init_pkt(37, 0, "SRV_COMMAND_PARAMETER", 0x0));
     add_pkt_info(reg, init_pkt(40, 0, "SRV_CUSTOM", 0x0));
+    return (0);
 }

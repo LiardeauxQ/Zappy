@@ -22,10 +22,10 @@ void handle_arguments(int const ac, char **av, input_t *input)
 {
     if (input == 0x0 || av == 0x0)
         return;
-    for (int i = 0 ; i < ac ; i++) {
+    for (int i = 0 ; i < ac && av[i] != 0x0 ; i++) {
         for (int j = 0 ; arg_opt[j].short_name != 0x0 ; j++) {
-            if (!strcmp(arg_opt[j].short_name, av[i])
-                    || !strcmp(arg_opt[j].long_name, av[i])) {
+            if (strcmp(arg_opt[j].short_name, av[i]) == 0
+                    || strcmp(arg_opt[j].long_name, av[i]) == 0) {
                 arg_opt[j].fct(av + i + 1, input);
             }
         }

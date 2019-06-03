@@ -22,7 +22,7 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
         exit(84);
 }
 
-void communication::ServerInteraction::sendPacket(uint8_t id, uint16_t size, uint16_t subid)
+void communication::ServerInteraction::sendPacket(uint8_t id, uint16_t size, uint16_t subid) const
 {
     packet_header hdr = {id, PROTOCOL_VERSION, size, subid};
 
@@ -31,56 +31,45 @@ void communication::ServerInteraction::sendPacket(uint8_t id, uint16_t size, uin
 
 void communication::ServerInteraction::requestMapSize(void) const
 {
-    packet_header hdr = {CLT_MAP_SIZE, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_MAP_SIZE, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestTileContent(void) const
 {
-    packet_header hdr = {CLT_TILE_CONTENT, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_TILE_CONTENT, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestMapContent(void) const
 {
-    packet_header hdr = {CLT_MAP_CONTENT, PROTOCOL_VERSION, 0x0, 0x0};
+    sendPacket(CLT_MAP_CONTENT, 0x0, 0x0);
+}
 
-    write(_sockfd, &hdr, sizeof(hdr));
+void communication::ServerInteraction::requestTeamsNames(void) const
+{
+    sendPacket(CLT_TEAMS_NAMES, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestPlayerPosition(void) const
 {
-    packet_header hdr = {CLT_PLAYER_POSITION, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_PLAYER_POSITION, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestPlayerLevel(void) const
 {
-    packet_header hdr = {CLT_PLAYER_LEVEL, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_PLAYER_LEVEL, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestPlayerInventory(void) const
 {
-    packet_header hdr = {CLT_PLAYER_INVENTORY, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_PLAYER_INVENTORY, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestTimeUnit(void) const
 {
-    packet_header hdr = {CLT_TIME_UNIT_REQUEST, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_TIME_UNIT_REQUEST, 0x0, 0x0);
 }
 
 void communication::ServerInteraction::requestTimeUpdate(void) const
 {
-    packet_header hdr = {CLT_TIME_UNIT_CHANGE, PROTOCOL_VERSION, 0x0, 0x0};
-
-    write(_sockfd, &hdr, sizeof(hdr));
+    sendPacket(CLT_TIME_UNIT_CHANGE, 0x0, 0x0);
 }

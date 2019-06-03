@@ -17,18 +17,21 @@ static struct sockaddr_in bind_socket(int const sockfd, int const port)
     sockaddr.sin_port = htons(port);
     sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
     if (bind(sockfd, (struct sockaddr *)&sockaddr,
-                sizeof(struct sockaddr_in)) == -1)
-        exit_with_error("bind");
+                sizeof(struct sockaddr_in)) == -1) {
+        print_exit_msg("Error with bind", 0);
+        memset(&sockaddr, 0, sizeof(sockaddr));
+    }
     return (sockaddr);
 }
 
-void init_connection(server_t *server)
+int init_connection(server_t *server)
 {
     server->sockfd = socket(AF_INET, SOCK_STREAM, 6);
 
     if (server->sockfd == -1)
-        exit_with_error("socket");
+        return (print_exit_msg("Error with socket initialization", -1));
     server->sockaddr = bind_socket(server->sockfd, server->port);
+    return (0);
 }
 
 int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],

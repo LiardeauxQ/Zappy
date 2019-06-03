@@ -33,7 +33,7 @@ namespace communication {
         void requestTimeUnit(void) const;
         void requestTimeUpdate(void) const;
     private:
-        void sendPacket(uint8_t id, uint16_t size, uint16_t subid);
+        void sendPacket(uint8_t id, uint16_t size, uint16_t subid) const;
 
         unsigned int _port;
         int _sockfd;

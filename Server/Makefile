@@ -36,7 +36,10 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
 
-TEST_SRC	:=	test_arguments.c
+TEST_SRC	:=	test_arguments.c	\
+				test_init_connection.c	\
+				test_init_packets.c	\
+				test_packet_handler.c
 
 
 CFLAGS		=	-I $(ROOT)/includes $(WARN)
