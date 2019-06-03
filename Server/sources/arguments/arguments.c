@@ -5,8 +5,9 @@
 ** handle program arguments
 */
 
-#include "arguments.h"
 #include <stdlib.h>
+
+#include "arguments.h"
 
 const struct arguments_s arg_opt[] = {
     {"-p", "--port", &handle_port},
