@@ -165,7 +165,6 @@ void zapi::Menu::loop()
         buttonSprite.setTextureRect(rectSourceSprite);
         displayItems();
     }
-    std::cout << "test menu" << std::endl;
 }
 
 std::string &zapi::Menu::getInputHost(void) {

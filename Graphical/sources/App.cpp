@@ -65,20 +65,15 @@ void App::menuState(void)
 void App::loop()
 {
     while (window.isOpen()) {
-        std::cout << "loop" << std::endl;
         frameTime = frameClock.restart();
         if (server != nullptr)
             server->listenSocket();
-        std::cout << "end socket" << std::endl;
         inputHandler();
-        std::cout << "input handler" << std::endl;
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
             window.drawEntities(team.getPlayers(), frameTime);
-        std::cout << "draw entities" << std::endl;
         window.updateHUD();
         window.display();
-        std::cout << "end window displaying" << std::endl;
     }
 }
 
