@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2018
-** destroy_struct.c
+** destroy_server_info.c
 ** File description:
 ** destroy structures
 */
@@ -19,4 +19,5 @@ void destroy_array(char **array)
 void destroy_server_info(info_t *info)
 {
     destroy_array(info->input.names);
+    close(info->server.sockfd);
 }
