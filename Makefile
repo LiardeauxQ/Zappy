@@ -55,6 +55,7 @@ release:		 fclean echo_r $(NAME)
 tests_run:
 		$(V)printf "$(ORANGE)Starting tests:\n\n$(WHITE)"
 		$(V)$(foreach var, $(DIRS), make tests_run --no-print-directory -C $(var);)
+		$(V)printf "$(RED)\nCompute coverage for zappy project:\n\n$(WHITE)"
 		$(V)gcovr -r . --exclude Server/tests --exclude AI/tests --exclude Graphical/tests
 
 clean:
