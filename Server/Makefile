@@ -28,6 +28,7 @@ SRC			:=	arguments/arguments.c	\
 				arguments/freq.c	\
 				arguments/client_nbr.c	\
 				arguments/names.c	\
+				arguments/resources.c	\
 				arguments/int_argument.c	\
 				destroy_server_info.c	\
 				error.c	\
@@ -39,7 +40,13 @@ SRC			:=	arguments/arguments.c	\
 				handle_clients.c	\
 				map/create_map.c	\
 
-TEST_SRC	:=	test_arguments.c	\
+TEST_SRC	:=	arguments/test_arguments.c	\
+				arguments/test_freq_argument.c	\
+				arguments/test_names_argument.c	\
+				arguments/test_width_argument.c	\
+				arguments/test_port_argument.c	\
+				arguments/test_client_nbr_argument.c	\
+				arguments/test_height_argument.c	\
 				test_init_connection.c	\
 				test_init_packets.c	\
 				test_packet_handler.c	\
