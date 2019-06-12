@@ -23,13 +23,15 @@ BUILD		=	build
 
 MAIN		:=	main.cpp	\
 
-SRC			:=	protocol/ServerInteraction.cpp
+SRC			:=	protocol/ServerInteraction.cpp	\
+				InputParser.cpp	\
+				Errors.cpp
 
-TEST_SRC	:=	test_example.cpp	\
+TEST_SRC	:=	test_InputParser.cpp	\
 
 INCLUDES	=	-I includes
 
-CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++11
+CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++17
 
 TESTFLAGS	=	$(CXXFLAGS)
 
@@ -78,7 +80,7 @@ $(NAME):	$(BUILD)/$(NAME)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(NAME) $(NAME)
 
-$(TEST):		CFLAGS += --coverage
+$(TEST):		CXXFLAGS += --coverage
 $(TEST):		LDFLAGS	+= -lcriterion --coverage
 $(TEST):		OBJS +=	$(TEST_OBJS)
 $(TEST):		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
@@ -86,7 +88,7 @@ $(TEST):		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
 				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
 				$(V)./tests_run
-				$(V)gcovr --exclude $(TEST_DIR)
+				$(V)gcovr -r . --exclude $(TEST_DIR)
 
 debug:			 echo_d $(NAME)
 

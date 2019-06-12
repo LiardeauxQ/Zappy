@@ -12,15 +12,18 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <iostream>
 #include <string>
 
 #include "protocols.h"
+#include "Errors.hpp"
 
 namespace communication {
 
     class ServerInteraction {
     public:
         ServerInteraction(unsigned int port, const std::string &ipAddress);
+        ServerInteraction();
         ~ServerInteraction() = default;
 
         void requestMapSize(void) const;
@@ -32,6 +35,8 @@ namespace communication {
         void requestPlayerInventory(void) const;
         void requestTimeUnit(void) const;
         void requestTimeUpdate(void) const;
+        
+        unsigned int getSocket(void) const { return _sockfd; }
     private:
         void sendPacket(uint8_t id, uint16_t size, uint16_t subid) const;
 

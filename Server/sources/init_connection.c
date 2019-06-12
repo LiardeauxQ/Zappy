@@ -26,7 +26,7 @@ static struct sockaddr_in bind_socket(int const sockfd, int const port)
 
 int init_connection(server_t *server)
 {
-    server->sockfd = socket(AF_INET, SOCK_STREAM, 6);
+    server->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     if (server->sockfd == -1)
         return (print_exit_msg("Error with socket initialization", -1));
@@ -63,6 +63,7 @@ void get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     if (!FD_ISSET(main_socket, readfds))
         return;
     new_socket = accept(main_socket, &addr, &addrlen);
+    printf("%d\n", new_socket);
     if (new_socket == -1) {
         perror("accept");
         return;
