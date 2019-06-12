@@ -37,11 +37,13 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/packet_handler.c	\
 				protocols/ai/init_action_handlers.c	\
 				handle_clients.c	\
+				map/create_map.c	\
 
 TEST_SRC	:=	test_arguments.c	\
 				test_init_connection.c	\
 				test_init_packets.c	\
-				test_packet_handler.c
+				test_packet_handler.c	\
+				test_map.c	\
 
 
 CFLAGS		=	-I $(ROOT)/includes $(WARN)
