@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#include "player.h"
+
 #pragma pack(1)
 
 /*
@@ -16,11 +18,17 @@
 */
 enum HANDLING_ERRORS {
     NO_ERROR                = 0,
-    INVALID_PARAMETERS      = 1,
-    DANGLING_HANDLER        = 2
+    TOO_FEW_PARAMETERS      = 1,
+    TOO_MUCH_PARAMETERS     = 2,
+    INVALID_PARAMETERS      = 3,
+    TIME_LIMIT_PASSED       = 4,
+    DANGLING_HANDLER        = 5
 };
 
-typedef int (*action_handler_fcnt)(const uint16_t limit_cycles, const char **args);
+/*
+** Return an error flag in case of error (HANDLING_ERRORS).
+*/
+typedef int (*action_handler_fcnt)(player_t *player, const uint16_t limit_cycles, const char **args);
 
 /*
 ** Handle each actions by representing and describing each ones.
@@ -33,9 +41,9 @@ typedef int (*action_handler_fcnt)(const uint16_t limit_cycles, const char **arg
 ** -> handler - Function pointer to the handler.
 */
 struct action_handler {
-    char *command;
     uint16_t limit_cycles;
     uint16_t args_nbr;
+    char *command;
     action_handler_fcnt handler;
 };
 
