@@ -34,7 +34,7 @@ void create_csv_columns(char *line, csv_data_t *data)
         data->columns[i].name = strdup(splited_line[i]);
         i++;
     }
-    data->columns[i].size = -1;
+    data->columns[i] = (csv_column_t){0};
     free_array(splited_line);
 }
 
@@ -46,38 +46,40 @@ void add_value_to_column(csv_column_t *column, char *value)
     column->values[column->size] = 0x0;
 }
 
-csv_data_t read_csv_file(FILE *fp)
+csv_data_t *read_csv_file(FILE *fp)
 {
     size_t linecap = 0;
     ssize_t linelen = 0;
     char *line = 0x0;
     char **splited_line = 0x0;
-    csv_data_t data = {0};
+    csv_data_t *data = calloc(1, sizeof(csv_data_t));
     size_t pos = 0;
 
     while ((linelen = getline(&line, &linecap, fp)) > 0) {
         line[strlen(line) - 1] = 0;
         if (pos == 0) {
-            create_csv_columns(line, &data);
+            create_csv_columns(line, data);
             pos++;
             continue;
         }
         splited_line = str_to_word_array(line, ";");
         for (int i = 0 ; splited_line[i] != 0x0 ; i++)
-            add_value_to_column(&data.columns[i], splited_line[i]);
+            add_value_to_column(&data->columns[i], splited_line[i]);
         free_array(splited_line);
         pos++;
     }
     return (data);
 }
 
-csv_data_t parse_csv(const char *filename)
+csv_data_t *parse_csv(const char *filename)
 {
-    FILE *fp = fopen(filename, "r");
-    csv_data_t data = {0};
+    FILE *fp = 0x0;
+    csv_data_t *data = 0x0;
 
-    if (fp == 0x0)
-        exit(84);
+    if (check_extension(filename, ".csv"))
+        return (0x0);
+    if ((fp = fopen(filename, "r")) == 0x0)
+        return (0x0);
     data = read_csv_file(fp);
     fclose(fp);
     return (data);

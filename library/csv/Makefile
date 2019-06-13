@@ -9,15 +9,23 @@ ROOT		=	.
 
 SRC_DIR		=	sources
 
+TEST_DIR	=	tests
+
 CC			=	gcc
 
 NAME		=	libcsv.a
+
+TEST		= tests_run
 
 BUILD		=	$(ROOT)/build
 
 SRC			:=	parse_csv.c	\
 				str_to_word_array.c	\
+				check_extension.c	\
+				free_csv_data.c	\
 				free_array.c	\
+
+TEST_SRC	:=	test_parse_csv.c
 
 CFLAGS		=	-I $(ROOT)/includes $(WARN)
 
@@ -32,8 +40,10 @@ G			=	-g -D DEBUG
 V			?=	@
 
 SRC_PREFIXED		:= $(addprefix $(SRC_DIR)/, $(SRC))
+TEST_SRC_PREFIXED	:= $(addprefix $(TEST_DIR)/, $(TEST_SRC))
 
 OBJS			:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRC_PREFIXED))
+TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.c, $(BUILD)/%.o, $(TEST_SRC_PREFIXED))
 
 #COLOR
 
@@ -60,6 +70,15 @@ $(NAME):	$(BUILD)/$(NAME)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(NAME) $(NAME)
 
+$(TEST):	CFLAGS	+= --coverage
+$(TEST):	LDFLAGS += -lcriterion --coverage
+$(TEST):	OBJS	+=	$(TEST_OBJS)
+$(TEST):	fclean $(BUILD)/$(TEST)
+			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
+			$(V)cp $(BUILD)/$(TEST) $(TEST)
+			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
+			$(V)./tests_run
+
 debug:			 echo_d $(NAME)
 
 release:		 fclean echo_r $(NAME)
@@ -72,16 +91,30 @@ $(BUILD)/$(NAME):	$(OBJS)
 $(BUILD)/%.o:		$(SRC_DIR)/%.c
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
+			$(V)$(CC) -o $@ -c $< $(CFLAGS)
+
+
+$(BUILD)/$(TEST):	$(OBJS) $(TEST_OBJS)
+			$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
+			$(V)$(CC) -o $(BUILD)/$(TEST) $(OBJS) $(LDFLAGS)
+			$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
+
+$(BUILD)/%.o:		$(TEST_DIR)/%.c
+			$(V)mkdir -p $(dir $@)
+			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
+			$(V)$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
 			$(V)rm -f $(OBJS)
+			$(V)rm -f $(TEST_OBJS)
 			$(V)rm -rf $(BUILD)
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:		clean
 			$(V)rm -f $(BUILD)/$(NAME)
+			$(V)rm -f $(BUILD)/$(TEST)
 			$(V)rm -f $(NAME)
+			$(V)rm -f $(TEST)
 			$(V)printf "$(ORANGE)Removing binary file.$(WHITE)\n"
 
 re:			fclean all

@@ -26,7 +26,18 @@ typedef struct csv_data_s csv_data_t;
 
 /* parse_csv.c */
 
-csv_data_t parse_csv(const char *filename);
+csv_data_t *parse_csv(const char *filename);
+void create_csv_columns(char *line, csv_data_t *data);
+void add_value_to_column(csv_column_t *column, char *value);
+
+/* free_csv_data.c */
+
+void free_csv_columns(csv_column_t *column);
+void free_csv_data(csv_data_t *data);
+
+/* check_extension.c */
+
+int check_extension(const char *filename, const char *extension);
 
 /* str_to_word_array.c */
 

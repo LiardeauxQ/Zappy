@@ -107,7 +107,6 @@ $(TEST):		fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
 				$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
 				$(V)./tests_run
-				$(V)gcovr --exclude $(TEST_DIR)
 
 debug:			 echo_d $(NAME)
 
