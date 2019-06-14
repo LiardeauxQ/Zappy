@@ -54,7 +54,7 @@ all:			$(NAME)
 $(NAME):
 			$(V)printf "$(GREEN)Creating binary.$(WHITE)\n"
 			$(V)touch $(NAME)
-			$(V)echo "#!/usr/bin/env python3\n" >> $(NAME)
+			$(V)echo "#!/usr/bin/env python3" >> $(NAME)
 			$(V)cat $(MAIN) >> $(NAME)
 			$(V)chmod +x $(NAME)
 
