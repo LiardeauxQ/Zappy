@@ -1,145 +1,144 @@
-from sources.ressources.stonesTypes import *
 
-level_1_necessary = {
-    StonesTypes.LINEMATE : 1,
-    StonesTypes.DERAUMERE : 0,
-    StonesTypes.SIBUR : 0,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 0,
-    StonesTypes.THYSTAME : 0
+#LINEMATE
+
+linemate_necessary = {
+    1 : 1,
+    2 : 1,
+    3 : 2,
+    4 : 1,
+    5 : 1,
+    6 : 1,
+    7 : 2,
+    8 : 0
 }
 
-level_1_desirable = {
-    StonesTypes.LINEMATE : 2,
-    StonesTypes.DERAUMERE : 1,
-    StonesTypes.SIBUR : 1,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 0,
-    StonesTypes.THYSTAME : 0
+linemate_desirable = {
+    1 : 2,
+    2 : 3,
+    3 : 3,
+    4 : 2,
+    5 : 2,
+    6 : 3,
+    7 : 2,
+    8 : 0
 }
 
-level_2_necessary = {
-    StonesTypes.LINEMATE : 1,
-    StonesTypes.DERAUMERE : 1,
-    StonesTypes.SIBUR : 1,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 0,
-    StonesTypes.THYSTAME : 0
+#DERAUMERE
+
+deraumere_necessary = {
+    1 : 0,
+    2 : 1,
+    3 : 0,
+    4 : 1,
+    5 : 2,
+    6 : 2,
+    7 : 2,
+    8 : 0
 }
 
-level_2_desirable = {
-    StonesTypes.LINEMATE : 3,
-    StonesTypes.DERAUMERE : 1,
-    StonesTypes.SIBUR : 2,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 2,
-    StonesTypes.THYSTAME : 0
+deraumere_desirable = {
+    1 : 1,
+    2 : 1,
+    3 : 1,
+    4 : 2,
+    5 : 3,
+    6 : 3,
+    7 : 2,
+    8 : 0
 }
 
-level_3_necessary = {
-    StonesTypes.LINEMATE : 2,
-    StonesTypes.DERAUMERE : 0,
-    StonesTypes.SIBUR : 1,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 2,
-    StonesTypes.THYSTAME : 0
+#SIBUR
+
+sibur_necessary = {
+    1 : 0,
+    2 : 1,
+    3 : 1,
+    4 : 2,
+    5 : 1,
+    6 : 3,
+    7 : 2,
+    8 : 0
 }
 
-level_3_desirable = {
-    StonesTypes.LINEMATE : 3,
-    StonesTypes.DERAUMERE : 1,
-    StonesTypes.SIBUR : 3,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 3,
-    StonesTypes.THYSTAME : 0
+sibur_desirable = {
+    1 : 1,
+    2 : 2,
+    3 : 3,
+    4 : 3,
+    5 : 4,
+    6 : 5,
+    7 : 2,
+    8 : 0
 }
 
-level_4_necessary = {
-    StonesTypes.LINEMATE : 1,
-    StonesTypes.DERAUMERE : 1,
-    StonesTypes.SIBUR : 2,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 1,
-    StonesTypes.THYSTAME : 0
+# MENDIANE
+
+mendiane_necessary = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 3,
+    6 : 0,
+    7 : 2,
+    8 : 0
 }
 
-level_4_desirable = {
-    StonesTypes.LINEMATE : 2,
-    StonesTypes.DERAUMERE : 3,
-    StonesTypes.SIBUR : 3,
-    StonesTypes.MENDIANE : 3,
-    StonesTypes.PHIRAS : 1,
-    StonesTypes.THYSTAME : 0
+mendiane_desirable = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 3,
+    5 : 3,
+    6 : 2,
+    7 : 2,
+    8 : 0
 }
 
-level_5_necessary = {
-    StonesTypes.LINEMATE : 1,
-    StonesTypes.DERAUMERE : 2,
-    StonesTypes.SIBUR : 1,
-    StonesTypes.MENDIANE : 3,
-    StonesTypes.PHIRAS : 0,
-    StonesTypes.THYSTAME : 0
+# PHIRAS
+
+phiras_necessary = {
+    1 : 0,
+    2 : 0,
+    3 : 2,
+    4 : 1,
+    5 : 0,
+    6 : 1,
+    7 : 2,
+    8 : 0
 }
 
-level_5_desirable = {
-    StonesTypes.LINEMATE : 2,
-    StonesTypes.DERAUMERE : 4,
-    StonesTypes.SIBUR : 4,
-    StonesTypes.MENDIANE : 3,
-    StonesTypes.PHIRAS : 1,
-    StonesTypes.THYSTAME : 0
+phiras_desirable = {
+    1 : 0,
+    2 : 2,
+    3 : 3,
+    4 : 1,
+    5 : 1,
+    6 : 3,
+    7 : 2,
+    8 : 0
 }
 
-level_6_necessary = {
-    StonesTypes.LINEMATE : 1,
-    StonesTypes.DERAUMERE : 2,
-    StonesTypes.SIBUR : 3,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 1,
-    StonesTypes.THYSTAME : 0
+# THYSTAME
+
+thystame_necessary = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 0,
+    7 : 1,
+    8 : 0
 }
 
-level_6_desirable = {
-    StonesTypes.LINEMATE : 3,
-    StonesTypes.DERAUMERE : 4,
-    StonesTypes.SIBUR : 5,
-    StonesTypes.MENDIANE : 2,
-    StonesTypes.PHIRAS : 3,
-    StonesTypes.THYSTAME : 1
-}
-
-level_7_necessary = {
-    StonesTypes.LINEMATE : 2,
-    StonesTypes.DERAUMERE : 2,
-    StonesTypes.SIBUR : 2,
-    StonesTypes.MENDIANE : 2,
-    StonesTypes.PHIRAS : 2,
-    StonesTypes.THYSTAME : 1
-}
-
-level_7_desirable = {
-    StonesTypes.LINEMATE : 2,
-    StonesTypes.DERAUMERE : 2,
-    StonesTypes.SIBUR : 2,
-    StonesTypes.MENDIANE : 2,
-    StonesTypes.PHIRAS : 2,
-    StonesTypes.THYSTAME : 1
-}
-
-level_8_necessary = {
-    StonesTypes.LINEMATE : 0,
-    StonesTypes.DERAUMERE : 0,
-    StonesTypes.SIBUR : 0,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 0,
-    StonesTypes.THYSTAME : 0
-}
-
-level_8_desirable = {
-    StonesTypes.LINEMATE : 0,
-    StonesTypes.DERAUMERE : 0,
-    StonesTypes.SIBUR : 0,
-    StonesTypes.MENDIANE : 0,
-    StonesTypes.PHIRAS : 0,
-    StonesTypes.THYSTAME : 0
+thystame_desirable = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 1,
+    7 : 1,
+    8 : 0
 }
