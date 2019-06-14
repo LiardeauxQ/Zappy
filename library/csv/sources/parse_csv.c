@@ -21,12 +21,14 @@ static size_t arrlen(char **array)
     return (size);
 }
 
-void create_csv_columns(char *line, csv_data_t *data)
+csv_data_t *create_csv_columns(char *line, csv_data_t *data)
 {
     char **splited_line = str_to_word_array(line, ";");
     size_t size = arrlen(splited_line);
     size_t i = 0;
 
+    if (data == 0x0)
+        return (0x0);
     data->size = size;
     data->columns = malloc((size + 1) * sizeof(csv_column_t));
     while (splited_line[i] != 0x0) {
@@ -36,6 +38,7 @@ void create_csv_columns(char *line, csv_data_t *data)
     }
     data->columns[i] = (csv_column_t){0};
     free_array(splited_line);
+    return (data);
 }
 
 void add_value_to_column(csv_column_t *column, char *value)
@@ -57,9 +60,8 @@ csv_data_t *read_csv_file(FILE *fp)
 
     while ((linelen = getline(&line, &linecap, fp)) > 0) {
         line[strlen(line) - 1] = 0;
-        if (pos == 0) {
-            create_csv_columns(line, data);
-            pos++;
+        if (pos++ == 0) {
+            data = create_csv_columns(line, data);
             continue;
         }
         splited_line = str_to_word_array(line, ";");
@@ -76,6 +78,8 @@ csv_data_t *parse_csv(const char *filename)
     FILE *fp = 0x0;
     csv_data_t *data = 0x0;
 
+    if (filename == 0x0)
+        return (0x0);
     if (check_extension(filename, ".csv"))
         return (0x0);
     if ((fp = fopen(filename, "r")) == 0x0)

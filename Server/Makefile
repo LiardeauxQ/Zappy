@@ -39,6 +39,9 @@ SRC			:=	arguments/arguments.c	\
 				protocols/ai/init_action_handlers.c	\
 				handle_clients.c	\
 				map/create_map.c	\
+				map/default_resources.c	\
+				map/handle_resources.c	\
+				map/world_generation.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_freq_argument.c	\
@@ -50,10 +53,17 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				test_init_connection.c	\
 				test_init_packets.c	\
 				test_packet_handler.c	\
-				test_map.c	\
+				map/test_map.c	\
+				map/test_resources.c	\
+				map/test_default_resources.c	\
+				map/test_world_generation.c		\
 
 
-CFLAGS		=	-I $(ROOT)/includes $(WARN)
+CFLAGS		=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+
+TESTCFLAGS	=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+
+LDFLAGS		=	-lcsv -L ../Library/csv
 
 WARN		=	-Wall -Wextra
 
@@ -130,7 +140,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.c
 $(BUILD)/%.o:		$(TEST_DIR)/%.c
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< -I $(ROOT)/includes $(WARN)
+			$(V)$(CC) -o $@ -c $< $(TESTCFLAGS) $(WARN)
 
 clean:
 			$(V)rm -f $(OBJS)

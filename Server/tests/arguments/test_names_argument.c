@@ -32,5 +32,5 @@ Test(test_names_arguments, simple_test)
     cr_assert_eq(handle_names(av, &input), 0);
     cr_assert_str_eq(input.names[0], "name1");
     cr_assert_str_eq(input.names[1], "name2");
-    cr_assert_eq(input.names[3], 0x0);
+    cr_assert_eq(input.names[2], 0x0);
 }

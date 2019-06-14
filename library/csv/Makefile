@@ -20,12 +20,14 @@ TEST		= tests_run
 BUILD		=	$(ROOT)/build
 
 SRC			:=	parse_csv.c	\
+				operations.c	\
 				str_to_word_array.c	\
 				check_extension.c	\
 				free_csv_data.c	\
 				free_array.c	\
 
-TEST_SRC	:=	test_parse_csv.c
+TEST_SRC	:=	test_parse_csv.c	\
+				test_operations.c
 
 CFLAGS		=	-I $(ROOT)/includes $(WARN)
 

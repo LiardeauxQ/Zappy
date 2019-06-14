@@ -27,7 +27,7 @@ typedef struct csv_data_s csv_data_t;
 /* parse_csv.c */
 
 csv_data_t *parse_csv(const char *filename);
-void create_csv_columns(char *line, csv_data_t *data);
+csv_data_t *create_csv_columns(char *line, csv_data_t *data);
 void add_value_to_column(csv_column_t *column, char *value);
 
 /* free_csv_data.c */

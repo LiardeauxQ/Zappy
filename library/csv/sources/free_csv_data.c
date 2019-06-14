@@ -18,11 +18,11 @@ void free_csv_columns(csv_column_t *column)
             free(column->values[i]);
         free(column->values);
     }
-    free(column);
 }
 
 void free_csv_data(csv_data_t *data)
 {
     for (size_t i = 0 ; i < data->size ; i++)
         free_csv_columns(&data->columns[i]);
+    free(data->columns);
 }
