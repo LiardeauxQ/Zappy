@@ -4,3 +4,8 @@ tmp
 *.o
 *.a
 *.so
+build/
+tests_run
+zappy_server
+zappy_ai
+zappy_graphical

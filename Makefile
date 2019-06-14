@@ -9,6 +9,22 @@ ROOT		=	.
 
 V		?=	@
 
+DIRS			:= $(ROOT)/Server	\
+				   $(ROOT)/AI	\
+				   $(ROOT)/Graphical
+
+BINARIES_SRC	:=	$(ROOT)/Server/zappy_server	\
+					$(ROOT)/AI/zappy_ai	\
+					$(ROOT)/Graphical/zappy_graphical
+
+BINARIES		:=	zappy_server	\
+					zappy_ai	\
+					zappy_graphical
+
+TEST_DIRS		:=	$(ROOT)/Server/tests	\
+					$(ROOT)/AI/tests	\
+					$(ROOT)/Graphical/tests
+
 #COLOR
 
 GREEN		=	\e[1;32m
@@ -29,26 +45,27 @@ debug:			CFLAGS += $(G)
 ##
 
 all:
-	$(V)make --no-print-directory -C AI
-	$(V)make --no-print-directory -C Server
-	$(V)cp Server/zappy_server .
-	$(V)cp AI/zappy_ai .
+		$(V)$(foreach var, $(DIRS), make --no-print-directory -C $(var);)
+		$(V)$(foreach var, $(BINARIES_SRC), cp $(var) .;)
 
 debug:			 echo_d $(NAME)
 
 release:		 fclean echo_r $(NAME)
 
+tests_run:
+		$(V)printf "$(ORANGE)Starting tests:\n\n$(WHITE)"
+		$(V)$(foreach var, $(DIRS), make tests_run --no-print-directory -C $(var);)
+		$(V)printf "$(RED)\nCompute coverage for zappy project:\n\n$(WHITE)"
+		$(V)gcovr -r . --exclude Server/tests --exclude AI/tests --exclude Graphical/tests
+
 clean:
-		$(V)make clean --no-print-directory -C AI
-		$(V)make clean --no-print-directory -C Server
+		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
-		$(V)make fclean --no-print-directory -C AI
-		$(V)make fclean --no-print-directory -C Server
-		$(V)rm -f zappy_server
-		$(V)rm -f zappy_ai
-		$(V)printf "$(ORANGE)Removing binary file.$(WHITE)\n"
+		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
+		$(V)$(foreach var, $(BINARIES), rm -f $(var);)
+		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
 
 re:			fclean all
 

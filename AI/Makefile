@@ -9,29 +9,26 @@ ROOT		=	.
 
 SRC_DIR		=	sources
 
-CXX		=	g++
+TEST_DIR	=	tests
 
 NAME		=	zappy_ai
 
-BUILD		=	$(ROOT)/build
+TEST		=	tests_run
 
-SRC		=	$(SRC_DIR)/main.cpp	\
+MAIN		:=	$(SRC_DIR)/main.py	\
 
-CXXFLAGS	=	-I $(ROOT)/includes $(WARN) -pipe -march=native -std=c++17
+SRC			:=	
 
-WARN		=	-Wall -Wextra
+TEST_SRC	:=
+
 
 LIB		?=	1
-
-TEST		?=	0
 
 DEB		?=	0
 
 G		=	-g -D DEBUG
 
 V		?=	@
-
-OBJS		=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(SRC))
 
 #COLOR
 
@@ -41,7 +38,7 @@ WHITE		=	\e[0m
 
 ORANGE		=	\e[1;33m
 
-RED		 =	\e[1;35m
+RED		 	=	\e[1;35m
 
 BLUE		=	\e[1;34m
 
@@ -54,32 +51,27 @@ debug:			CXXFLAGS += $(G)
 
 all:			$(NAME)
 
-$(NAME):		$(BUILD)/$(NAME) $(OBJS)
-			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
-			$(V)cp $(BUILD)/$(NAME) $(NAME)
+$(NAME):
+			$(V)printf "$(GREEN)Creating binary.$(WHITE)\n"
+			$(V)touch $(NAME)
+			$(V)echo "#!/usr/bin/env python3\n" >> $(NAME)
+			$(V)cat $(MAIN) >> $(NAME)
+			$(V)chmod +x $(NAME)
+
+$(TEST):
+				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
+				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
 
 debug:			 echo_d $(NAME)
 
 release:		 fclean echo_r $(NAME)
 
-$(BUILD)/$(NAME):	$(OBJS)
-			$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
-			$(V)$(CXX) -o $(BUILD)/$(NAME) $(OBJS) $(LDFLAGS)
-			$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
-
-$(BUILD)/%.o:		$(SRC_DIR)/%.cpp
-			$(V)mkdir -p $(dir $@)
-			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CXX) -o $@ -c $< $(CXXFLAGS)
-
 clean:
-			$(V)rm -rf $(OBJS)
-			$(V)rm -rf $(BUILD)
-			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
+			$(V)printf "$(ORANGE)Nothing to do for clean rule.$(WHITE)\n"
 
 fclean:		 clean
-			$(V)rm -f $(BUILD)/$(NAME)
 			$(V)rm -f $(NAME)
+			$(V)rm -f $(TEST)
 			$(V)printf "$(ORANGE)Removing binary file.$(WHITE)\n"
 
 re:			fclean all
@@ -93,4 +85,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo 
+.PHONY:		 clean fclean debug all re echo_debug buildrepo

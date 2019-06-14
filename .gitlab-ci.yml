@@ -1,0 +1,36 @@
+stages:
+    - build
+    - tests
+
+build:
+  image: epitechcontent/epitest-docker
+  stage: build
+  # instead of calling g++ directly you can also use some build toolkit like make
+  # install the necessary build tools when needed
+  script:
+    - make re
+  # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
+  # cache:
+  #   paths:
+  #     - "*.o"
+
+tests:
+  image: epitechcontent/epitest-docker
+  stage: tests
+  script:
+    - make tests_run
+
+#deploy:
+#  image: epitechcontent/epitest-docker
+#  stage: deploy
+#  script:
+#    - echo "Pushing to $TARGET_REPO"
+#    - mkdir -p ~/.ssh
+#    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/epitech
+#    - chmod 600 ~/.ssh/epitech
+#    - git config core.sshCommand "ssh -o \"StrictHostKeyChecking=no\" -i ~/.ssh/epitech -F /dev/null"
+#    - git remote remove epitech || true
+#    - git remote add epitech $TARGET_REPO || true
+#    - git push epitech HEAD:$CI_COMMIT_REF_NAME
+#    - git config --unset core.sshCommand
+#    - rm -rf ~/.ssh/epitech
