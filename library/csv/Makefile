@@ -79,7 +79,7 @@ $(TEST):	fclean $(BUILD)/$(TEST)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(TEST) $(TEST)
 			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
-			$(V)./tests_run
+			$(V)./tests_run -f
 
 debug:			 echo_d $(NAME)
 
