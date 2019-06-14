@@ -26,7 +26,7 @@ LIBS				:=	$(ROOT)/Library/csv
 TEST_DIRS		:=	$(ROOT)/Server/tests	\
 					$(ROOT)/AI/tests	\
 					$(ROOT)/Graphical/tests	\
-					$(ROOT)/Library/csv/tests
+					$(ROOT)/library/csv/tests
 
 #COLOR
 
