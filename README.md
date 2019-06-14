@@ -23,3 +23,4 @@ make tests_run
 * **Antoine Herbosa**
 * **Hugo Trinh-quy**
 * **Niels George-peillex**
+* **Kilian Perrier**
