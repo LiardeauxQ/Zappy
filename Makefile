@@ -21,7 +21,7 @@ BINARIES		:=	zappy_server	\
 					zappy_ai	\
 					zappy_graphical
 
-LIBS				:=	$(ROOT)/Library/csv
+LIBS				:=	$(ROOT)/library/csv
 
 TEST_DIRS		:=	$(ROOT)/Server/tests	\
 					$(ROOT)/AI/tests	\
