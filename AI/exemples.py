@@ -5,6 +5,7 @@ from sources.ressources.stone import *
 from sources.ressources.stonesTypes import *
 from sources.ressources.dictionaries import *
 from sources.elevation.playerNeededForElevation import *
+from sources.socket.socket import *
 
 
 def exemple():
@@ -27,5 +28,32 @@ def exemple():
     print("From level 2 to level 3 you need", playerNeededForElevation[2], "players")
 
 
+def exemple_socket():
+
+    # create a new object socket:
+    # Usage: obj = Socket(host = "localhost", port = 3630)
+    # ecah Socket obj get an unique ID
+    client = Socket()
+
+    # get Socket Infos:
+    print (client.getInfo())
+
+    # connect to server
+    ret = client.connect()
+
+    if ret == 0:
+        #send a message
+        client.sendMessage("CouCou Niels <3")
+
+        #recive Data
+        client.getData()
+
+        #close connection
+        client.closeConection()
+
+    # all Socket method which need connections return 84 in errors case
+
+
 if __name__ == "__main__":
     exemple()
+    exemple_socket()
