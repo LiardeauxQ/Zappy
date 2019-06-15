@@ -6,7 +6,7 @@
 */
 
 #include <criterion/criterion.h>
-#include <graphical/packets.h>
+#include "graphical/packets.h"
 
 Test(packet_handler, simple_init_test)
 {

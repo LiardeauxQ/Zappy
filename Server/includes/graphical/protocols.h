@@ -117,6 +117,8 @@ enum RESULT {
 ** Enum for the resources number.
 */
 
+#define RESOURCE_TYPES_NUMBER 8
+
 enum RESOURCE_NUMBER {
     FOOD        = 0,
     LINEMATE    = 1,
@@ -124,14 +126,15 @@ enum RESOURCE_NUMBER {
     SIBUR       = 3,
     MENDIANE    = 4,
     PHIRAS      = 5,
-    THYSTAME    = 6
+    THYSTAME    = 6,
+    CUSTOM       = 10
 };
 
 /*
 ** Each change to this document will need an incrementation of this value.
 */
 
-#define PROTOCOL_VERSION    0x5
+#define PROTOCOL_VERSION    0x7
 
 #define SHORT_MSG_LEN 128
 #define LONG_MSG_LEN 1024

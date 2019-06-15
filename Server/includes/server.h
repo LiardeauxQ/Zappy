@@ -23,6 +23,7 @@ struct input_s {
     unsigned int client_nbr;
     unsigned int frequence;
     char **names;
+    char *resources_filename;
 };
 
 typedef struct input_s input_t;
@@ -46,5 +47,6 @@ typedef struct info_s info_t;
 
 /* destroy_struct.c */
 
-void destroy_array(char **array);
+void free_array(char **array);
+void free_input(input_t *input);
 void destroy_server_info(info_t *info);

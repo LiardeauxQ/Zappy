@@ -7,9 +7,12 @@
 
 #include "arguments.h"
 
-void handle_client_nbr(char **av, input_t *input)
+int handle_client_nbr(char **av, input_t *input)
 {
-    if (av == 0x0 || *av == 0x0)
-        return;
+    if (av == 0x0 || *av == 0x0) {
+        fprintf(stderr, "Empty client nbr\n");
+        return (-1);
+    }
     input->client_nbr = handle_int_argument(*av);
+    return (0);
 }
