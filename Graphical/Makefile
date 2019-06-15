@@ -33,6 +33,8 @@ INCLUDES	=	-I includes
 
 CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++17
 
+LDFLAGS		=	-L ./GraphicalAPI/ -lGraphicalAPI -lsfml-graphics -lsfml-system -lsfml-window
+
 TESTFLAGS	=	$(CXXFLAGS)
 
 WARN		=	-Wall -Wextra
