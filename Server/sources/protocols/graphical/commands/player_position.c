@@ -5,10 +5,12 @@
 ** handle player's position
 */
 
-void get_player_position()
+int get_player_position(const char *data)
 {
+    return (0);
 }
 
-void send_player_position()
+int send_player_position(const char *data)
 {
+    return (0);
 }

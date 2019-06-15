@@ -5,6 +5,7 @@
 ** handle expulsion
 */
 
-void send_player_expulsion()
+int send_player_expulsion(const char *data)
 {
+    return (0);
 }

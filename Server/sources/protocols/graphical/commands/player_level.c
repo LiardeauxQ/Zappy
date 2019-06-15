@@ -5,10 +5,12 @@
 ** handle player's level
 */
 
-void get_player_level()
+int get_player_level(const char *data)
 {
+    return (0);
 }
 
-void send_player_level()
+int send_player_level(const char *data)
 {
+    return (0);
 }

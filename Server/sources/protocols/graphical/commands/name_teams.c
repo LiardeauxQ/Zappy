@@ -5,10 +5,12 @@
 ** handle teams's name
 */
 
-void get_name_teams()
+int get_name_teams(const char *data)
 {
+    return (0);
 }
 
-void send_name_teams()
+int send_name_teams(const char *data)
 {
+    return (0);
 }

@@ -87,6 +87,7 @@ enum GRAPHIC_PACKETS_FROM_SERVER {
     SRV_MESSAGE_FROM_SRV    = 35,
     SRV_UNKNOWN_COMMAND     = 36,
     SRV_COMMAND_PARAMETER   = 37,
+    SRV_MAP_CONTENT         = 38,
 /*
 ** Special command reserved for addons.
 */
@@ -134,7 +135,7 @@ enum RESOURCE_NUMBER {
 ** Each change to this document will need an incrementation of this value.
 */
 
-#define PROTOCOL_VERSION    0x7
+#define PROTOCOL_VERSION    0x8
 
 #define SHORT_MSG_LEN 128
 #define LONG_MSG_LEN 1024

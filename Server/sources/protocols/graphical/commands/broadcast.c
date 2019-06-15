@@ -5,6 +5,6 @@
 ** handle broadcast
 */
 
-void send_broadcast()
+int send_broadcast(const char *data)
 {
 }

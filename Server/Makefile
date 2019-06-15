@@ -33,11 +33,28 @@ SRC			:=	arguments/arguments.c	\
 				connection/destroy_server_info.c	\
 				error.c	\
 				connection/init_connection.c	\
-				connection/protocols/graphical/protocols.c	\
-				connection/protocols/graphical/init_packets.c	\
-				connection/protocols/graphical/packet_handler.c	\
-				connection/protocols/ai/init_action_handlers.c	\
-				connection/handle_clients.c	\
+				protocols/graphical/protocols.c	\
+				protocols/graphical/init_packets.c	\
+				protocols/graphical/packet_handler.c	\
+				protocols/ai/init_action_handlers.c	\
+				protocols/graphical/commands/broadcast.c	\
+				protocols/graphical/commands/eggs.c	\
+				protocols/graphical/commands/end_game.c	\
+				protocols/graphical/commands/expulsion.c	\
+				protocols/graphical/commands/incantation.c	\
+				protocols/graphical/commands/map_content.c	\
+				protocols/graphical/commands/map_size.c	\
+				protocols/graphical/commands/name_teams.c	\
+				protocols/graphical/commands/player_connection.c	\
+				protocols/graphical/commands/player_death.c	\
+				protocols/graphical/commands/player_inventory.c	\
+				protocols/graphical/commands/player_level.c	\
+				protocols/graphical/commands/player_position.c	\
+				protocols/graphical/commands/resources.c	\
+				protocols/graphical/commands/server_message.c	\
+				protocols/graphical/commands/tile_content.c	\
+				protocols/graphical/commands/time.c	\
+				handle_clients.c	\
 				game/create_map.c	\
 				game/resources/default_resources.c	\
 				game/resources/handle_resources.c	\

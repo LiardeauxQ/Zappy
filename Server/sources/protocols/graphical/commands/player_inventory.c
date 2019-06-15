@@ -5,10 +5,10 @@
 ** handle player's inventory
 */
 
-void get_player_inventory()
+int get_player_inventory(const char *data)
 {
 }
 
-void send_player_inventory()
+int send_player_inventory(const char *data)
 {
 }

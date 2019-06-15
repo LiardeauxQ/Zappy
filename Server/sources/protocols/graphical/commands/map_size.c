@@ -5,10 +5,12 @@
 ** handle map_size interaction
 */
 
-void get_map_size()
+int get_map_size(const char *data)
 {
+    return (0);
 }
 
-void send_map_size()
+int send_map_size(const char *data)
 {
+    return (0);
 }

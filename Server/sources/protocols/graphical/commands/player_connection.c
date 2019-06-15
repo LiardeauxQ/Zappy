@@ -5,6 +5,7 @@
 ** handle player connection
 */
 
-void send_player_connection()
+int send_player_connection(const char *data)
 {
+    return (0);
 }
