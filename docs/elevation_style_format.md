@@ -5,6 +5,7 @@ It will be a csv file.
 
 ## Format
 
+csv extension
 start level; end level; nb of players; [ressources1; ressources2; ...]
 
 ## Sample

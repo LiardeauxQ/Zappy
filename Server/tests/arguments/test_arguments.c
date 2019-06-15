@@ -20,6 +20,7 @@ Test(test_arguments, no_arguments)
     cr_assert_eq(input.client_nbr, 0);
     cr_assert_eq(input.frequence, 0);
     cr_assert_eq(input.names, 0x0);
+    free_input(&input);
 }
 
 Test(test_arguments, with_arguments_1)
@@ -34,6 +35,7 @@ Test(test_arguments, with_arguments_1)
     cr_assert_eq(input.client_nbr, 0);
     cr_assert_eq(input.frequence, 0);
     cr_assert_eq(input.names, 0x0);
+    free_input(&input);
 }
 
 Test(test_arguments, with_arguments_2)
@@ -48,6 +50,7 @@ Test(test_arguments, with_arguments_2)
     cr_assert_eq(input.client_nbr, 23);
     cr_assert_eq(input.frequence, 67);
     cr_assert_eq(input.names, 0x0);
+    free_input(&input);
 }
 
 Test(test_arguments, with_arguments_names)
@@ -65,4 +68,18 @@ Test(test_arguments, with_arguments_names)
     cr_assert_str_eq(input.names[1], "name2");
     cr_assert_str_eq(input.names[2], "name3");
     cr_assert_eq(input.names[3], 0x0);
+    free_input(&input);
+}
+
+Test(test_arguments, with_optional_arguments)
+{
+    input_t input = {0};
+    char *av[] = {"./zappy_server", "-r", "filename", 0x0};
+
+    handle_arguments(7, av, &input);
+    cr_assert_eq(input.port, 0);
+    cr_assert_eq(input.width, 0);
+    cr_assert_eq(input.height, 0);
+    cr_assert_str_eq(input.resources_filename, "filename");
+    free_input(&input);
 }

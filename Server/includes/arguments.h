@@ -20,7 +20,7 @@
 struct arguments_s {
     char *short_name;
     char *long_name;
-    void (*fct)(char **av, input_t *input);
+    int (*fct)(char **av, input_t *input);
 };
 
 extern const struct arguments_s arg_opt[];
@@ -31,27 +31,31 @@ int handle_int_argument(char const *arg);
 
 /* port.c */
 
-void handle_port(char **av, input_t *input);
+int handle_port(char **av, input_t *input);
 
 /* width.c */
 
-void handle_width(char **av, input_t *input);
+int handle_width(char **av, input_t *input);
 
 /* height.c */
 
-void handle_height(char **av, input_t *input);
+int handle_height(char **av, input_t *input);
 
 /* freq.c */
 
-void handle_freq(char **av, input_t *input);
+int handle_freq(char **av, input_t *input);
 
 /* client_nbr.c */
 
-void handle_client_nbr(char **av, input_t *input);
+int handle_client_nbr(char **av, input_t *input);
 
 /* names.c */
 
-void handle_names(char **av, input_t *input);
+int handle_names(char **av, input_t *input);
+
+/* resources.c */
+
+int handle_resources(char **av, input_t *input);
 
 /* arguments.c */
 

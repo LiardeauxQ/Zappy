@@ -1,36 +1,37 @@
 stages:
     - build
-    - tests
+    - unit_tests
 
 build:
-  image: epitechcontent/epitest-docker
-  stage: build
-  # instead of calling g++ directly you can also use some build toolkit like make
-  # install the necessary build tools when needed
-  script:
-    - make re
-  # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
-  # cache:
-  #   paths:
-  #     - "*.o"
+    image: epitechcontent/epitest-docker
+    stage: build
+    script:
+        - make re
 
-tests:
-  image: epitechcontent/epitest-docker
-  stage: tests
-  script:
-    - make tests_run
+server_test:
+    image: epitechcontent/epitest-docker
+    stage: unit_tests
+    script:
+        - make -C library/csv/
+        - make -C Server build_tests
+        - ./Server/tests_run -f
 
-#deploy:
-#  image: epitechcontent/epitest-docker
-#  stage: deploy
-#  script:
-#    - echo "Pushing to $TARGET_REPO"
-#    - mkdir -p ~/.ssh
-#    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/epitech
-#    - chmod 600 ~/.ssh/epitech
-#    - git config core.sshCommand "ssh -o \"StrictHostKeyChecking=no\" -i ~/.ssh/epitech -F /dev/null"
-#    - git remote remove epitech || true
-#    - git remote add epitech $TARGET_REPO || true
-#    - git push epitech HEAD:$CI_COMMIT_REF_NAME
-#    - git config --unset core.sshCommand
-#    - rm -rf ~/.ssh/epitech
+graph_test:
+    image: epitechcontent/epitest-docker
+    stage: unit_tests
+    script:
+        - make -C Graphical build_tests
+        - ./Graphical/tests_run -f
+
+csv_test:
+    image: epitechcontent/epitest-docker
+    stage: unit_tests
+    script:
+        - make -C library/csv build_tests
+        - ./library/csv/tests_run -f
+
+covering:
+    image: epitechcontent/epitest-docker
+    stage: unit_tests
+    script:
+        - make tests_run

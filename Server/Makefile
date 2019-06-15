@@ -28,23 +28,44 @@ SRC			:=	arguments/arguments.c	\
 				arguments/freq.c	\
 				arguments/client_nbr.c	\
 				arguments/names.c	\
+				arguments/resources.c	\
 				arguments/int_argument.c	\
-				destroy_server_info.c	\
+				connection/destroy_server_info.c	\
 				error.c	\
-				init_connection.c	\
-				protocols/graphical/protocols.c	\
-				protocols/graphical/init_packets.c	\
-				protocols/graphical/packet_handler.c	\
-				protocols/ai/init_action_handlers.c	\
-				handle_clients.c	\
+				connection/init_connection.c	\
+				connection/protocols/graphical/protocols.c	\
+				connection/protocols/graphical/init_packets.c	\
+				connection/protocols/graphical/packet_handler.c	\
+				connection/protocols/ai/init_action_handlers.c	\
+				connection/handle_clients.c	\
+				game/create_map.c	\
+				game/resources/default_resources.c	\
+				game/resources/handle_resources.c	\
+				game/world_generation.c	\
+				game/player/create_player.c	\
 
-TEST_SRC	:=	test_arguments.c	\
+TEST_SRC	:=	arguments/test_arguments.c	\
+				arguments/test_freq_argument.c	\
+				arguments/test_names_argument.c	\
+				arguments/test_width_argument.c	\
+				arguments/test_port_argument.c	\
+				arguments/test_client_nbr_argument.c	\
+				arguments/test_height_argument.c	\
 				test_init_connection.c	\
 				test_init_packets.c	\
-				test_packet_handler.c
+				test_packet_handler.c	\
+				game/test_map.c	\
+				game/test_world_generation.c		\
+				game/resources/test_resources.c	\
+				game/resources/test_default_resources.c	\
+				game/player/test_player_creation.c	\
 
 
-CFLAGS		=	-I $(ROOT)/includes $(WARN)
+CFLAGS		=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
+
+TESTCFLAGS	=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
+
+LDFLAGS		=	-lcsv -L ../library/csv
 
 WARN		=	-Wall -Wextra
 
@@ -90,15 +111,16 @@ $(NAME):	$(BUILD)/$(NAME)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(NAME) $(NAME)
 
-$(TEST):		CFLAGS += --coverage
-$(TEST):		LDFLAGS	+= -lcriterion --coverage
-$(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
+build_tests:	CFLAGS += --coverage
+build_tests:	LDFLAGS	+= -lcriterion --coverage
+build_tests:	OBJS +=	$(TEST_OBJS)
+build_tests:	fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
-				$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
-				$(V)./tests_run
-				$(V)gcovr --exclude $(TEST_DIR)
+
+$(TEST):	build_tests
+			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
+			$(V)./tests_run -f
 
 debug:			 echo_d $(NAME)
 
@@ -122,7 +144,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.c
 $(BUILD)/%.o:		$(TEST_DIR)/%.c
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< -I $(ROOT)/includes $(WARN)
+			$(V)$(CC) -o $@ -c $< $(TESTCFLAGS) $(WARN)
 
 clean:
 			$(V)rm -f $(OBJS)
@@ -149,4 +171,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo
+.PHONY:		 clean fclean debug all re echo_debug buildrepo build_tests

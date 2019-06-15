@@ -82,15 +82,16 @@ $(NAME):	$(BUILD)/$(NAME)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(NAME) $(NAME)
 
-$(TEST):		CXXFLAGS += --coverage
-$(TEST):		LDFLAGS	+= -lcriterion --coverage
-$(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		fclean graphic_api $(BUILD)/$(TEST) #find a solution to remove fclean rule
-				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
-				$(V)cp $(BUILD)/$(TEST) $(TEST)
-				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
-				$(V)./tests_run
-				$(V)gcovr -r . --exclude $(TEST_DIR)
+build_tests:		CXXFLAGS += --coverage
+build_tests:		LDFLAGS	+= -lcriterion --coverage
+build_tests:		OBJS +=	$(TEST_OBJS)
+build_tests:		fclean graphic_api $(BUILD)/$(TEST) #find a solution to remove fclean rule
+					$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
+					$(V)cp $(BUILD)/$(TEST) $(TEST)
+
+$(TEST): build_tests
+		$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
+		$(V)./tests_run -f
 
 debug:			 echo_d $(NAME)
 
@@ -146,4 +147,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo
+.PHONY:		 clean fclean debug all re echo_debug buildrepo build_tests
