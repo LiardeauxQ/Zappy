@@ -61,11 +61,11 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/player/test_player_creation.c	\
 
 
-CFLAGS		=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+CFLAGS		=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
 
-TESTCFLAGS	=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+TESTCFLAGS	=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
 
-LDFLAGS		=	-lcsv -L ../Library/csv
+LDFLAGS		=	-lcsv -L ../library/csv
 
 WARN		=	-Wall -Wextra
 

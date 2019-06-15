@@ -77,7 +77,7 @@ tests_run:
 		$(V)$(foreach var, $(LIBS), make --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make tests_run --no-print-directory -C $(var);)
 		$(V)printf "$(RED)\nCompute coverage for zappy project:\n\n$(WHITE)"
-		$(V)gcovr -r . --exclude Server/tests --exclude AI/tests --exclude Graphical/tests --exclude Library/csv/tests
+		$(V)gcovr -r . --exclude Server/tests --exclude AI/tests --exclude Graphical/tests --exclude library/csv/tests
 
 clean:
 		$(V)$(foreach var, $(LIBS), make clean --no-print-directory -C $(var);)
