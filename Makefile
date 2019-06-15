@@ -13,13 +13,15 @@ DIRS			:= $(ROOT)/Server	\
 				   $(ROOT)/AI	\
 				   $(ROOT)/Graphical
 
-BINARIES_SRC	:=	$(ROOT)/Server/zappy_server	\
-					$(ROOT)/AI/zappy_ai	\
-					$(ROOT)/Graphical/zappy_graphical
+SERVER_BIN_NAME	=	zappy_server
+CLIENT_BIN_NAME	=	zappy_ai
+GRAPH_BIN_NAME	=	zappy_graphical
 
-BINARIES		:=	zappy_server	\
-					zappy_ai	\
-					zappy_graphical
+SERVER_BIN_SRC	= $(ROOT)/Server
+CLIENT_BIN_SRC	= $(ROOT)/AI
+GRAPH_BIN_SRC	= $(ROOT)/Graphical
+
+BINARIES		:=	$(SERVER_BIN_NAME) $(CLIENT_BIN_NAME) $(GRAPH_BIN_NAME)
 
 LIBS				:=	$(ROOT)/library/csv
 
@@ -47,10 +49,23 @@ debug:			CFLAGS += $(G)
 ## Directives
 ##
 
-all:
-		$(V)$(foreach var, $(LIBS), make --no-print-directory -C $(var);)
-		$(V)$(foreach var, $(DIRS), make --no-print-directory -C $(var);)
+all: $(SERVER_BIN_NAME) $(CLIENT_BIN_NAME) $(GRAPH_BIN_NAME)
 		$(V)$(foreach var, $(BINARIES_SRC), cp $(var) .;)
+
+$(SERVER_BIN_NAME): libraries
+		$(V)make --no-print-directory -C $(SERVER_BIN_SRC)
+		$(V)cp $(SERVER_BIN_SRC)/$(SERVER_BIN_NAME) .
+
+$(CLIENT_BIN_NAME):
+		$(V)make --no-print-directory -C $(CLIENT_BIN_SRC)
+		$(V)cp $(CLIENT_BIN_SRC)/$(CLIENT_BIN_NAME) .
+
+$(GRAPH_BIN_NAME):
+		$(V)make --no-print-directory -C $(GRAPH_BIN_SRC)
+		$(V)cp $(GRAPH_BIN_SRC)/$(GRAPH_BIN_NAME) .
+
+libraries:
+		$(V)$(foreach var, $(LIBS), make --no-print-directory -C $(var);)
 
 debug:			 echo_d $(NAME)
 
@@ -86,4 +101,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo 
+.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries
