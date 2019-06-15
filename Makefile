@@ -67,6 +67,10 @@ $(GRAPH_BIN_NAME):
 libraries:
 		$(V)$(foreach var, $(LIBS), make --no-print-directory -C $(var);)
 
+build_tests: libraries
+		$(V)$(foreach var, $(DIRS), make  build_tests --no-print-directory -C $(var);)
+		$(V)$(foreach var, $(LIBS), make build_tests --no-print-directory -C $(var);)
+
 debug:			 echo_d $(NAME)
 
 release:		 fclean echo_r $(NAME)
@@ -101,4 +105,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries
+.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests
