@@ -5,13 +5,10 @@
 ** Utils header
 */
 
-#ifndef UTILS_HPP
-	#define UTILS_HPP
+#pragma once
 
 #include <SFML/Graphics.hpp>
 
 namespace zapi
 {
 }
-
-#endif /* !UTILS_HPP */

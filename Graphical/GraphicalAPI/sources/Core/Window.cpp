@@ -16,13 +16,13 @@ zapi::Window::Window(const std::string &title)
 void zapi::Window::loop()
 {
     while (isOpen()) {
-        eventDisplay();
+        eventHandler();
         clear();
         display();
     }
 }
 
-void zapi::Window::eventDisplay()
+void zapi::Window::eventHandler()
 {
     while (pollEvent(event)) {
         if (event.type == sf::Event::Closed)

@@ -5,8 +5,7 @@
 ** Window header
 */
 
-#ifndef WINDOW_HPP
-	#define WINDOW_HPP
+#pragma once
 
 #include "Utils.hpp"
 #include <string>
@@ -19,9 +18,7 @@ namespace zapi
             ~Window() = default;
         private:
             void loop();
-            void eventDisplay();
+            void eventHandler();
             sf::Event event;
     };
 }
-
-#endif /* !WINDOW_HPP */
