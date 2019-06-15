@@ -85,7 +85,7 @@ $(NAME):	$(BUILD)/$(NAME)
 $(TEST):		CXXFLAGS += --coverage
 $(TEST):		LDFLAGS	+= -lcriterion --coverage
 $(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
+$(TEST):		fclean graphic_api $(BUILD)/$(TEST) #find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
 				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
