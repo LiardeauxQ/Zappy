@@ -23,6 +23,7 @@ MAIN		:=
 
 SRC			:=	Core/Window.cpp \
 				Entity.cpp \
+				Tile.cpp \
 
 INCLUDES	=	-I includes
 
