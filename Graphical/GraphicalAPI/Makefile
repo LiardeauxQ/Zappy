@@ -25,6 +25,7 @@ SRC			:=	Core/Window.cpp \
 				Entity.cpp \
 				Tile.cpp \
 				Resource.cpp \
+				Player.cpp \
 
 INCLUDES	=	-I includes
 
