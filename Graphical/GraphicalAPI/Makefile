@@ -22,10 +22,11 @@ BUILD		=	build
 MAIN		:=
 
 SRC			:=	Core/Window.cpp \
+				Entity.cpp \
 
 INCLUDES	=	-I includes
 
-CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++17
+CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++17 -fPIC
 
 LDFLAGS		=	-lsfml-graphics -lsfml-system -lsfml-window
 
