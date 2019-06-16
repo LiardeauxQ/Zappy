@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Entity.hpp"
+#include "Resource.hpp"
 
 namespace zapi
 {
@@ -19,5 +19,6 @@ namespace zapi
         private:
             sf::Vector2f size;
             sf::RectangleShape main;
+            std::vector<Entity *> resources;
     };
 }
