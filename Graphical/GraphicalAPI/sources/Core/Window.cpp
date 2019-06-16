@@ -9,9 +9,9 @@
 
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
+, camera(sf::FloatRect(100, 100, 1600, 800))
 , entities()
-{
-}
+{}
 
 void zapi::Window::addEntity(Entity *entity)
 {
@@ -31,10 +31,11 @@ void zapi::Window::startLoop()
 void zapi::Window::loop()
 {
     while (isOpen()) {
-        eventHandler();
         clear();
         for (auto &entity : entities)
             entity->update(this);
+        eventHandler();
+        setView(camera);
         display();
     }
 }
@@ -46,5 +47,13 @@ void zapi::Window::eventHandler()
             close();
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
             close();
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+            camera.move(0, -20);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)
+            camera.move(0, 20);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)
+            camera.move(-20, 0);
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
+            camera.move(20, 0);
     }
 }

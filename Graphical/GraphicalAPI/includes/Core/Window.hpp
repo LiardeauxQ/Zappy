@@ -20,6 +20,7 @@ namespace zapi
             void addEntity(Entity *entity);
             void addEntity(Entity &entity);
             void startLoop();
+            sf::View camera;
         private:
             void loop();
             void eventHandler();
