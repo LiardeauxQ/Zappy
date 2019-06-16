@@ -9,6 +9,21 @@
 
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
+, entities()
+{
+}
+
+void zapi::Window::addEntity(Entity *entity)
+{
+    entities.push_back(entity);
+}
+
+void zapi::Window::addEntity(Entity &entity)
+{
+    entities.push_back(&entity);
+}
+
+void zapi::Window::startLoop()
 {
     loop();
 }
@@ -18,6 +33,8 @@ void zapi::Window::loop()
     while (isOpen()) {
         eventHandler();
         clear();
+        for (auto &entity : entities)
+            entity->update(this);
         display();
     }
 }

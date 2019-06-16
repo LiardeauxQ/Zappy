@@ -7,8 +7,9 @@
 
 #pragma once
 
-#include "Utils.hpp"
+#include "Entity.hpp"
 #include <string>
+#include <vector>
 
 namespace zapi
 {
@@ -16,9 +17,13 @@ namespace zapi
         public:
             Window(const std::string &title);
             ~Window() = default;
+            void addEntity(Entity *entity);
+            void addEntity(Entity &entity);
+            void startLoop();
         private:
             void loop();
             void eventHandler();
             sf::Event event;
+            std::vector<Entity *> entities;
     };
 }
