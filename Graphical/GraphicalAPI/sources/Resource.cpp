@@ -25,3 +25,16 @@ void zapi::Resource::update(sf::RenderWindow *window)
     //if (quantity < 0)
     window->draw(main);
 }
+
+zapi::Resource &zapi::Resource::operator++(int)
+{
+    quantity++;
+    return *this;
+}
+
+zapi::Resource &zapi::Resource::operator--(int)
+{
+    if (quantity != 0)
+        quantity--;
+    return *this;
+}

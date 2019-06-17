@@ -16,6 +16,8 @@ namespace zapi
             Resource(const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
             ~Resource() = default;
             void update(sf::RenderWindow *window) final;
+            Resource &operator++(int);
+            Resource &operator--(int);
         private:
             unsigned int quantity;
             sf::Vector2f size;
