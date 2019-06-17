@@ -6,6 +6,7 @@
 */
 
 #include <string.h>
+#include <unistd.h>
 
 #include "graphical/commands.h"
 #include "graphical/protocols.h"
@@ -24,9 +25,9 @@ int send_map_size(const void *data)
         return (-1);
     world = (world_t*)sender->data;
     map = (srv_map_size_t){world->width, world->height};
-    to_write = calloc(1, size * sizeof(char));
+    to_write = calloc(2, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HANDLER_LEN);
-    to_write = memcpy(to_write + PKT_HANDLER_LEN, &map, SRV_MAP_SIZE_LEN);
+    memcpy(to_write + PKT_HANDLER_LEN, &map, SRV_MAP_SIZE_LEN);
     write(sender->sockfd, to_write, size);
     return (0);
 }

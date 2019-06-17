@@ -14,6 +14,7 @@
 struct tile_content_s {
     int *resources;
     unsigned int *players_id;
+    int player_nb;
 };
 
 typedef struct tile_content_s tile_content_t;

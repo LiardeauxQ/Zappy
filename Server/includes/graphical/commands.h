@@ -9,6 +9,9 @@
 
 #include <stdlib.h>
 
+#include "graphical/protocols.h"
+#include "world.h"
+
 #define SENDER_MAGIC_NUM 0x01041976 // Foundation of 
 #define SENDER_MAGIC_NUM_LEN 4
 
@@ -21,8 +24,11 @@ struct sender_s {
 
 typedef struct sender_s sender_t;
 
+/* sender.c  */
+
 sender_t *get_senders_from_data(const void *data);
 void *convert_senders_to_data(const sender_t *senders);
+size_t count_senders(const sender_t *senders);
 
 /* handle_broadcast.c */
 
@@ -98,6 +104,8 @@ int unknown_command(const void *data);
 
 /* handle_tile_content.c */
 
+srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
+        const unsigned int x, const unsigned int y);
 int get_tile_content(const void *data);
 int send_tile_content(const void *data);
 

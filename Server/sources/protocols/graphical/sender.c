@@ -49,3 +49,11 @@ void *convert_senders_to_data(const sender_t *senders)
     tmp = memcpy(tmp, &senders[i], sizeof(sender_t));
     return (data);
 }
+
+size_t count_senders(const sender_t *senders)
+{
+    size_t size = 0;
+
+    while (!senders[size++].is_last);
+    return (size + 1);
+}
