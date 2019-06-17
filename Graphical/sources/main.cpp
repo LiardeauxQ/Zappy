@@ -21,8 +21,8 @@ int main(int ac, char **av)
 //    interaction.requestMapContent();
     zapi::Window window("Zappy");
 
-    for (int i = 0, x = 0, y = 0; i != 2500; i++, x += 100) {
-        if (x >= 5000) {
+    for (int i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
+        if (x >= 3000) {
             x = 0;
             y += 100;
         }

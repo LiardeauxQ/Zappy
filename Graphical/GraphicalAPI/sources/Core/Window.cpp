@@ -10,7 +10,7 @@
 
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
-, camera(sf::FloatRect(1700, 2100, 1600, 800))
+, camera(sf::FloatRect(700, 1100, 1600, 800))
 , entities()
 {
     setView(camera);
