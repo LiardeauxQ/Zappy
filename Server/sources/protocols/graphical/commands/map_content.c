@@ -5,12 +5,17 @@
 ** handle map_content
 */
 
-int get_map_content(const char *data)
+#include <string.h>
+
+#include "graphical/commands.h"
+#include "graphical/protocols.h"
+#include "world.h"
+
+int get_map_content(const void *data)
 {
-    return (0);
+
 }
 
-int send_map_content(const char *data)
+int send_map_content(const void *data)
 {
-    return (0);
 }

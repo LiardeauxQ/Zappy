@@ -54,6 +54,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/server_message.c	\
 				protocols/graphical/commands/tile_content.c	\
 				protocols/graphical/commands/time.c	\
+				protocols/graphical/sender.c	\
 				handle_clients.c	\
 				game/create_map.c	\
 				game/resources/default_resources.c	\
@@ -75,6 +76,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
+				commands/test_sender.c	\
 
 
 CFLAGS		=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)

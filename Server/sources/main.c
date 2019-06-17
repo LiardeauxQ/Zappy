@@ -7,6 +7,7 @@
 
 #include "server.h"
 #include "arguments.h"
+#include "graphical/commands.h"
 #include "connection.h"
 
 void start_server(client_t (*clients)[MAX_CLIENT], int const sockfd)
