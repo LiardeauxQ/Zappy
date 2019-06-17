@@ -27,13 +27,16 @@ resource_t *parse_resources(const char *filename)
     return (resources == 0x0 ? init_default_resources() : resources);
 }
 
-static int check_invalid_value(void)
+static int my_atoi(const char *str, int *error)
 {
-    if (errno == EINVAL) {
-        errno = 0;
-        return (-1);
+    for (int i = 0 ; str[i] != 0 ; i++) {
+        if (str[i] < '0' || str[i] > '9') {
+            *error = 1;
+            return (0);
+        }
     }
-    return (0);
+    *error = 0;
+    return (atoi(str));
 }
 
 resource_t *fill_resources(const csv_data_t *data)
@@ -44,13 +47,14 @@ resource_t *fill_resources(const csv_data_t *data)
     int percentage = 0;
     resource_t *resources = 0x0;
     size_t size = 1;
+    int error = 0;
 
     if (name_id < 0 || percentage_id < 0)
         return (0x0);
     for (size_t i = 0 ; i < data->columns[name_id].size ; i++) {
         resource_id = find_id_for_resource(data->columns[name_id].values[i]);
-        percentage = strtol(data->columns[percentage_id].values[i], 0x0, 10);
-        if (check_invalid_value())
+        percentage = my_atoi(data->columns[percentage_id].values[i], &error);
+        if (error)
             continue;
         resources = realloc(resources, (size + 1) * sizeof(resource_t));
         add_resource(&resources[size - 1], resource_id, percentage,

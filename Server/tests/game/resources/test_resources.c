@@ -18,9 +18,8 @@ static csv_data_t *init_simple_csv(int error)
     add_value_to_column(&data->columns[0], "Linemate");
     add_value_to_column(&data->columns[0], "Sibur");
     add_value_to_column(&data->columns[1], "26");
-    add_value_to_column(&data->columns[1], (error) ? "error" : "5");
+    add_value_to_column(&data->columns[1], (error == 1) ? "error" : "5");
     add_value_to_column(&data->columns[1], "50");
-
     return (data);
 }
 

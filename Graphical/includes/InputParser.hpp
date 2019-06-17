@@ -5,6 +5,8 @@
 ** InputParser header
 */
 
+#pragma once
+
 #include <string>
 #include <vector>
 #include <tuple>

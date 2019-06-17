@@ -30,22 +30,19 @@ SRC			:=	arguments/arguments.c	\
 				arguments/names.c	\
 				arguments/resources.c	\
 				arguments/int_argument.c	\
-				destroy_server_info.c	\
+				connection/destroy_server_info.c	\
 				error.c	\
-				init_connection.c	\
-				protocols/graphical/protocols.c	\
-				protocols/graphical/init_packets.c	\
-				protocols/graphical/packet_handler.c	\
-				protocols/ai/init_action_handlers.c	\
-				handlers/ai/movement_handlers.c \
-				handlers/ai/player_info_handlers.c \
-				handlers/ai/resources_handlers.c \
-				handlers/ai/utils.c \
-				handle_clients.c	\
-				map/create_map.c	\
-				map/default_resources.c	\
-				map/handle_resources.c	\
-				map/world_generation.c	\
+				connection/init_connection.c	\
+				connection/protocols/graphical/protocols.c	\
+				connection/protocols/graphical/init_packets.c	\
+				connection/protocols/graphical/packet_handler.c	\
+				connection/protocols/ai/init_action_handlers.c	\
+				connection/handle_clients.c	\
+				game/create_map.c	\
+				game/resources/default_resources.c	\
+				game/resources/handle_resources.c	\
+				game/world_generation.c	\
+				game/player/create_player.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_freq_argument.c	\
@@ -57,17 +54,18 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				test_init_connection.c	\
 				test_init_packets.c	\
 				test_packet_handler.c	\
-				map/test_map.c	\
-				map/test_resources.c	\
-				map/test_default_resources.c	\
-				map/test_world_generation.c		\
+				game/test_map.c	\
+				game/test_world_generation.c		\
+				game/resources/test_resources.c	\
+				game/resources/test_default_resources.c	\
+				game/player/test_player_creation.c	\
 
 
-CFLAGS		=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+CFLAGS		=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
 
-TESTCFLAGS	=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+TESTCFLAGS	=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
 
-LDFLAGS		=	-lcsv -L ../Library/csv
+LDFLAGS		=	-lcsv -L ../library/csv
 
 WARN		=	-Wall -Wextra
 
@@ -113,14 +111,16 @@ $(NAME):	$(BUILD)/$(NAME)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(NAME) $(NAME)
 
-$(TEST):		CFLAGS += --coverage
-$(TEST):		LDFLAGS	+= -lcriterion --coverage
-$(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
+build_tests:	CFLAGS += --coverage
+build_tests:	LDFLAGS	+= -lcriterion --coverage
+build_tests:	OBJS +=	$(TEST_OBJS)
+build_tests:	fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
-				$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
-				$(V)./tests_run
+
+$(TEST):	build_tests
+			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
+			$(V)./tests_run -f
 
 debug:			 echo_d $(NAME)
 
@@ -171,4 +171,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo
+.PHONY:		 clean fclean debug all re echo_debug buildrepo build_tests

@@ -16,7 +16,7 @@
 /*
 ** DANGLING_HANDLER -> Handler function is NULL
 */
-enum HANDLING_ERRORS {
+enum AI_ACTION_ERRORS {
     NO_ERROR                = 0,
     TOO_FEW_PARAMETERS      = 1,
     TOO_MUCH_PARAMETERS     = 2,
@@ -28,7 +28,8 @@ enum HANDLING_ERRORS {
 /*
 ** Return an error flag in case of error (HANDLING_ERRORS).
 */
-typedef int (*action_handler_fcnt)(player_t *player, const uint16_t limit_cycles, const char **args);
+typedef int (*action_handler_fcnt)(world_t *world, player_t *player,
+        const uint16_t limit_cycles, const char **args);
 
 /*
 ** Handle each actions by representing and describing each ones.

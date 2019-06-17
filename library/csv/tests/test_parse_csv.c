@@ -10,8 +10,13 @@
 
 Test(parse_csv, simple_test)
 {
-    csv_data_t *data = parse_csv("tests/data/data.csv");
+    csv_data_t *data = parse_csv("library/csv/tests/data/data.csv");
 
+    if (data == 0x0) {
+        data = parse_csv("tests/data/data.csv");
+        if (data == 0x0)
+            cr_assert_fail();
+    }
     cr_assert_eq(data->size, 3);
     cr_assert_str_eq(data->columns[0].name, "name");
     cr_assert_str_eq(data->columns[1].name, "age");
@@ -22,8 +27,13 @@ Test(parse_csv, simple_test)
 
 Test(parse_csv, simple_end_value_test)
 {
-    csv_data_t *data = parse_csv("tests/data/data.csv");
+    csv_data_t *data = parse_csv("library/csv/tests/data/data.csv");
 
+    if (data == 0x0) {
+        data = parse_csv("tests/data/data.csv");
+        if (data == 0x0)
+            cr_assert_fail();
+    }
     cr_assert_eq(data->size, 3);
     cr_assert_eq(data->columns[3].size, 0);
     cr_assert_eq(data->columns[3].name, 0x0);

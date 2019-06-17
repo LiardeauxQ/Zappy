@@ -19,7 +19,7 @@ static const struct resource_s default_resources[] = {
     {5, 10, "Phiras"},
     {6, 10, "Thystame"},
     {10, 0, "Custom"},
-    {0},
+    {0, 0, 0x0},
 };
 
 resource_t *init_default_resources(void)

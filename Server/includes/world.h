@@ -9,10 +9,12 @@
 
 #include "map.h"
 #include "resources.h"
+#include "graphical/protocols.h"
 
 struct world_s {
     map_t map;
     resource_t *resources;
+    srv_new_player_connect_t *players;
 };
 
 typedef struct world_s world_t;

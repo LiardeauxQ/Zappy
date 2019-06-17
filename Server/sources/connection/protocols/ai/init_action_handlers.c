@@ -12,9 +12,8 @@ act_handler_t *init_action_handler(char *command, uint16_t limit_cycles,
 {
     act_handler_t *action = malloc(sizeof(act_handler_t));
 
-    if (!action) {
+    if (!action)
         exit_with_error("malloc");
-    }
     action->command = command;
     action->limit_cycles = limit_cycles;
     action->args_nbr = args_nbr;
@@ -27,9 +26,8 @@ void register_action_handler(ahr_t *registrar, act_handler_t *handler)
     registrar->size += 1;
     registrar->handlers = realloc(registrar->handlers,
             (registrar->size + 1) * sizeof(act_handler_t *));
-    if (registrar->handlers == 0x0) {
+    if (registrar->handlers == 0x0)
         exit_with_error("realloc");
-    }
     registrar->handlers[registrar->size - 1] = handler;
     registrar->handlers[registrar->size] = 0x0;
 }
