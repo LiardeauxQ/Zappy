@@ -63,7 +63,6 @@ void get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     if (!FD_ISSET(main_socket, readfds))
         return;
     new_socket = accept(main_socket, &addr, &addrlen);
-    printf("%d\n", new_socket);
     if (new_socket == -1) {
         perror("accept");
         return;
