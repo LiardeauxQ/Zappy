@@ -22,6 +22,7 @@ class Player:
 
     def broadcast(self):
         self.client.sendMessage("Broadcast text\n")
+        return self.client.getData()
 
     def connectNumber(self):
         self.client.sendMessage("Connect_nbr\n")
