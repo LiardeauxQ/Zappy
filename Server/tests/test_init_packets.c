@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2018
-** name
+** test_init_packets.c
 ** File description:
 ** test init_packet functions
 */
@@ -8,7 +8,7 @@
 #include <criterion/criterion.h>
 #include "graphical/packets.h"
 
-Test(init_packet, simple_client_packets_test)
+Test(init_client_packets, simple_test)
 {
     phr_t reg = {0};
 
@@ -16,17 +16,18 @@ Test(init_packet, simple_client_packets_test)
     cr_assert_eq(reg.size, 11);
 }
 
-Test(init_packet, error_test_with_no_value)
+Test(init_client_packets, test_with_no_value)
 {
     phr_t reg = {0};
 
     cr_assert_eq(init_client_packets(&reg), 0);
     cr_assert_eq(init_server_environnements_packets(NULL), -1);
-    cr_assert_eq(init_server_actions_packets(NULL), -1);
+    cr_assert_eq(init_server_actions_packets1(NULL), -1);
+    cr_assert_eq(init_server_actions_packets2(NULL), -1);
     cr_assert_eq(init_server_additionals_packets(NULL), -1);
 }
 
-Test(init_packet, simple_environnements_packets_test)
+Test(init_server_environnements_packets, simple_test)
 {
     phr_t reg = {0};
 
@@ -37,19 +38,30 @@ Test(init_packet, simple_environnements_packets_test)
     cr_assert_str_eq(reg.handlers[2]->name, "SRV_TILE_CONTENT");
 }
 
-Test(init_packet, simple_server_actions_packets_test)
+Test(init_server_actions_packets1, simple_test)
 {
     phr_t reg = {0};
 
-    init_server_actions_packets(&reg);
-    cr_assert_eq(reg.size, 13);
+    init_server_actions_packets1(&reg);
+    cr_assert_eq(reg.size, 5);
     cr_assert_eq(reg.handlers[0]->subid, 0);
     cr_assert_eq(reg.handlers[1]->subid, 0);
     cr_assert_eq(reg.handlers[2]->subid, 0);
     cr_assert_eq(reg.handlers[3]->subid, 0);
 }
 
-Test(init_packet, simple_server_additional_packets_test)
+Test(init_server_actions_packets2, simple_test)
+{
+    phr_t reg = {0};
+
+    init_server_actions_packets2(&reg);
+    cr_assert_eq(reg.size, 8);
+    cr_assert_str_eq(reg.handlers[0]->name, "SRV_PLAYER_DEATH");
+    cr_assert_str_eq(reg.handlers[1]->name, "SRV_EGG_LAYED");
+    cr_assert_str_eq(reg.handlers[2]->name, "SRV_EGG_HATCHING");
+}
+
+Test(init_server_additionals_packets, simple_test)
 {
     phr_t reg = {0};
 
