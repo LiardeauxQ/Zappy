@@ -69,8 +69,8 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_client_nbr_argument.c	\
 				arguments/test_height_argument.c	\
 				test_init_connection.c	\
-				test_init_packets.c	\
 				test_packet_handler.c	\
+				test_init_packets.c	\
 				game/test_map.c	\
 				game/test_world_generation.c		\
 				game/resources/test_resources.c	\
