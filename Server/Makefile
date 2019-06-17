@@ -28,6 +28,7 @@ SRC			:=	arguments/arguments.c	\
 				arguments/freq.c	\
 				arguments/client_nbr.c	\
 				arguments/names.c	\
+				arguments/resources.c	\
 				arguments/int_argument.c	\
 				destroy_server_info.c	\
 				error.c	\
@@ -36,16 +37,37 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
 				protocols/ai/init_action_handlers.c	\
-				protocols/ai/init_action_handlers.c	\
 				handlers/ai/movement_handlers.c \
 				handlers/ai/player_info_handlers.c \
 				handlers/ai/resources_handlers.c \
 				handlers/ai/utils.c \
+				handle_clients.c	\
+				map/create_map.c	\
+				map/default_resources.c	\
+				map/handle_resources.c	\
+				map/world_generation.c	\
 
-TEST_SRC	:=	test_arguments.c
+TEST_SRC	:=	arguments/test_arguments.c	\
+				arguments/test_freq_argument.c	\
+				arguments/test_names_argument.c	\
+				arguments/test_width_argument.c	\
+				arguments/test_port_argument.c	\
+				arguments/test_client_nbr_argument.c	\
+				arguments/test_height_argument.c	\
+				test_init_connection.c	\
+				test_init_packets.c	\
+				test_packet_handler.c	\
+				map/test_map.c	\
+				map/test_resources.c	\
+				map/test_default_resources.c	\
+				map/test_world_generation.c		\
 
 
-CFLAGS		=	-I $(ROOT)/includes $(WARN)
+CFLAGS		=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+
+TESTCFLAGS	=	-I $(ROOT)/includes -I ../Library/csv/includes $(WARN)
+
+LDFLAGS		=	-lcsv -L ../Library/csv
 
 WARN		=	-Wall -Wextra
 
@@ -99,7 +121,6 @@ $(TEST):		fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
 				$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
 				$(V)./tests_run
-				$(V)gcovr --exclude $(TEST_DIR)
 
 debug:			 echo_d $(NAME)
 
@@ -123,7 +144,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.c
 $(BUILD)/%.o:		$(TEST_DIR)/%.c
 			$(V)mkdir -p $(dir $@)
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< -I $(ROOT)/includes $(WARN)
+			$(V)$(CC) -o $@ -c $< $(TESTCFLAGS) $(WARN)
 
 clean:
 			$(V)rm -f $(OBJS)

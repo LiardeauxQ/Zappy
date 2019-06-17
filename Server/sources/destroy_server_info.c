@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void destroy_array(char **array)
+void free_array(char **array)
 {
     if (!array)
         return;
@@ -16,8 +16,16 @@ void destroy_array(char **array)
     free(array);
 }
 
+void free_input(input_t *input)
+{
+    if (input->names)
+        free_array(input->names);
+    if (input->resources_filename)
+        free(input->resources_filename);
+}
+
 void destroy_server_info(info_t *info)
 {
-    destroy_array(info->input.names);
+    free_input(&info->input);
     close(info->server.sockfd);
 }
