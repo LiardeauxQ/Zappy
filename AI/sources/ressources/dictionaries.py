@@ -143,7 +143,7 @@ thystame_desirable = {
     8 : 0
 }
 
-move_to_case = []
+move_to_case = [None] * 16
 move_to_case[0] = {}
 move_to_case[1] = {"Forward", "Left", "Forward"}
 move_to_case[2] = {"Forward"}
