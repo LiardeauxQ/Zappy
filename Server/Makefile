@@ -36,7 +36,6 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/protocols.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
-				protocols/ai/init_action_handlers.c	\
 				protocols/graphical/commands/broadcast.c	\
 				protocols/graphical/commands/eggs.c	\
 				protocols/graphical/commands/end_game.c	\
@@ -54,6 +53,11 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/server_message.c	\
 				protocols/graphical/commands/tile_content.c	\
 				protocols/graphical/commands/time.c	\
+				protocols/ai/init_action_handlers.c	\
+				protocols/ai/handlers/movement_handlers.c \
+				protocols/ai/handlers/player_info_handlers.c \
+				protocols/ai/handlers/resources_handlers.c \
+				protocols/ai/handlers/utils.c \
 				handle_clients.c	\
 				game/create_map.c	\
 				game/resources/default_resources.c	\
@@ -75,6 +79,8 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
+				handlers/ai/test_movement_handlers.c \
+				handlers/ai/test_resources_handlers.c \
 
 
 CFLAGS		=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)

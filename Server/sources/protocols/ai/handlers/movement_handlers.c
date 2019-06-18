@@ -16,22 +16,22 @@ int forward_move_handler(world_t *world, player_t *player,
     clock_t start_time = clock();
 
     switch (player->orientation) {
-        case UP:
+        case NORTH:
             player->y -= 1;
             break;
-        case RIGHT:
+        case EAST:
             player->x += 1;
             break;
-        case DOWN:
+        case SOUTH:
             player->y += 1;
             break;
-        case LEFT:
+        case WEST:
             player->x -= 1;
             break;
     }
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? NO_ERROR : TIME_LIMIT_PASSED);
+    // send_message((!time_limit_passed) ? "ok" : "ko");
+    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
 }
 
 int left_move_handler(world_t *world, player_t *player,
@@ -42,8 +42,8 @@ int left_move_handler(world_t *world, player_t *player,
 
     player->orientation--;
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? NO_ERROR : TIME_LIMIT_PASSED);
+    // send_message((!time_limit_passed) ? "ok" : "ko");
+    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
 }
 
 int right_move_handler(world_t *world, player_t *player,
@@ -54,6 +54,6 @@ int right_move_handler(world_t *world, player_t *player,
 
     player->orientation++;
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? NO_ERROR : TIME_LIMIT_PASSED);
+    // send_message((!time_limit_passed) ? "ok" : "ko");
+    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
 }

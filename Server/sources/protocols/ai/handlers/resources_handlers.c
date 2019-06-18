@@ -12,22 +12,30 @@
 
 #include "ai/handlers/player_info_handlers.h"
 
-char *resource_to_string(const enum RESOURCE_ID id, const int quantity, resources_t *resources)
+char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity, resource_t *resources)
 {
-    int ressource_string_len = strlen(ressources_strings[id]);
-    int len = ressource_string_len + 1 + snprintf(0x0, 0, "%d", quantity) + 1;
-    char *str = calloc(1, sizeof(char) * len);
+    int ressource_string_len = strlen(resources[id].name);
+    unsigned int len = 0;
+    char *str = 0x0;
 
-    strcat(str, ressources[id]->name);
-    sprintf(str + ressource_string_len, "%d", quantity);
+    if (quantity != -1)
+        len = ressource_string_len + 1 + snprintf(0x0, 0, "%d", quantity) + 1;
+    else
+        len = ressource_string_len + 1;
+    str = calloc(1, sizeof(char) * len);
+    strcat(str, resources[id].name);
+    if (quantity != -1) {
+        strcat(str, " ");
+        sprintf(str + ressource_string_len + 1, "%d", quantity);
+    }
     str[len - 1] = 0;
     return (str);
 }
 
-enum RESOURCE_ID resource_str_to_id(const char *resource, ressources_t *resources)
+enum RESOURCE_NUMBER resource_str_to_id(const char *resource, resource_t *resources)
 {
-    for (int i = 0; resources[i]; i++) {
-        if (!strcmp(ressources[i]->name, resource))
+    for (int i = 0; resources[i].id >= 0; i++) {
+        if (!strcmp(resources[i].name, resource))
             return (i);
     }
     return (-1);
@@ -38,19 +46,20 @@ int take_object_handler(world_t *world, player_t *player,
 {
     int time_limit_passed = 0;
     clock_t start_time = clock();
-    enum RESOURCE_ID resource_id = 0;
+    enum RESOURCE_NUMBER resource_id = 0;
 
     if (!args[0])
         return (TOO_FEW_PARAMETERS);
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
-    resource_id = resource_str_to_id(args[0]);
+    resource_id = resource_str_to_id(args[0], world->resources);
     if ((int) resource_id == -1)
         return (INVALID_PARAMETERS);
     player->resources[resource_id]++;
+    world->tiles[player->x][player->y].resources[resource_id]--;
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? NO_ERROR : TIME_LIMIT_PASSED);
+    // send_message((!time_limit_passed) ? "ok" : "ko");
+    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
 }
 
 int set_down_object_handler(world_t *world, player_t *player,
@@ -58,19 +67,20 @@ int set_down_object_handler(world_t *world, player_t *player,
 {
     int time_limit_passed = 0;
     clock_t start_time = clock();
-    enum RESOURCE_ID resource_id = 0;
+    enum RESOURCE_NUMBER resource_id = 0;
 
     if (!args[0])
-        return (TOO_FEW_PARAMETERS);
+        return (AI_TOO_FEW_PARAMETERS);
     else if (args[1])
-        return (TOO_MUCH_PARAMETERS);
-    resource_id = resource_str_to_id(args[0]);
+        return (AI_TOO_MUCH_PARAMETERS);
+    resource_id = resource_str_to_id(args[0], world->resources);
     if ((int) resource_id == -1)
-        return (INVALID_PARAMETERS);
+        return (AI_INVALID_PARAMETERS);
     player->resources[resource_id]--;
+    world->tiles[player->x][player->y].resources[resource_id]++;
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? NO_ERROR : TIME_LIMIT_PASSED);
+    // send_message((!time_limit_passed) ? "ok" : "ko");
+    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
 }
 
 int inventory_handler(world_t *world, player_t *player,
@@ -81,10 +91,10 @@ int inventory_handler(world_t *world, player_t *player,
     char *resource_string = 0x0;
     char *inventory = calloc(1, 2);
 
-    for (int i = 0; i < 6; i++) {
-        if (i == 0)
-            strcat(inventory, "[");
-        resource_string = resource_to_string(i, player->resources[i + 1]);
+    strcat(inventory, "[");
+    for (int i = 0; i < DEFAULT_RESOURCES_NUMBER; i++) {
+        resource_string = resource_to_string(i,
+                player->resources[i + 1], world->resources);
         inventory = realloc(inventory, strlen(inventory) + strlen(resource_string) + 1);
         strcat(inventory , resource_string);
         if (i == sizeof(player->resources) / 4 - 1)
@@ -92,6 +102,6 @@ int inventory_handler(world_t *world, player_t *player,
     }
     printf("%s", inventory);
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? NO_ERROR : TIME_LIMIT_PASSED);
+    // send_message((!time_limit_passed) ? "ok" : "ko");
+    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
 }

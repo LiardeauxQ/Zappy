@@ -11,18 +11,26 @@
 
 #include "player.h"
 
-#pragma pack(1)
+#ifdef __clang__
+#   pragma pack(1)
+#endif /* __clang__ */
+
+#if defined (__GNUC__) && (__GNUC__ >= 7)
+#   define PACKED __attribute__((packed))
+#else
+#   define PACKED
+#endif
 
 /*
 ** DANGLING_HANDLER -> Handler function is NULL
 */
 enum AI_ACTION_ERRORS {
-    NO_ERROR                = 0,
-    TOO_FEW_PARAMETERS      = 1,
-    TOO_MUCH_PARAMETERS     = 2,
-    INVALID_PARAMETERS      = 3,
-    TIME_LIMIT_PASSED       = 4,
-    DANGLING_HANDLER        = 5
+    AI_NO_ERROR                = 0,
+    AI_TOO_FEW_PARAMETERS      = 1,
+    AI_TOO_MUCH_PARAMETERS     = 2,
+    AI_INVALID_PARAMETERS      = 3,
+    AI_TIME_LIMIT_PASSED       = 4,
+    AI_DANGLING_HANDLER        = 5
 };
 
 /*
@@ -61,5 +69,7 @@ struct action_handler_register {
 
 typedef struct action_handler_register ahr_t;
 
-#pragma options align=reset
+#ifdef __clang__
+#   pragma options align=reset
+#endif /* __clang__ */
 

@@ -7,13 +7,13 @@
 
 #pragma once
 
-#include "ai/player.h"
+#include "world.h"
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 
-char *resource_to_string(const enum RESOURCE_ID id, const int quantity);
+char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity);
 
-enum RESOURCE_ID resource_str_to_id(const char *resource);
+enum RESOURCE_NUMBER resource_str_to_id(const char *resource);
 
 int take_object_handler(world_t *world, player_t *player,
         const uint16_t limit_cycles, const char **args);

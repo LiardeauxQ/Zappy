@@ -23,7 +23,7 @@ struct player_s {
     unsigned int team_id;
     uint8_t level;
     unsigned int hp;
-    enum ORIENTATION direction;
+    enum ORIENTATION orientation;
     unsigned int resources[DEFAULT_RESOURCES_NUMBER];
     unsigned int x;
     unsigned int y;

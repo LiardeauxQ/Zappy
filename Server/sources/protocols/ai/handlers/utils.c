@@ -10,7 +10,7 @@
 
 #include "ai/handlers/utils.h"
 
-int *next_case(world_t *world_t, int *coords, int orientation, int inc)
+int *next_case(world_t *world, int *coords, int orientation, int inc)
 {
     unsigned int x_inc[4] = {0, 1, 0, -1};
     unsigned int y_inc[4] = {-1, 0, 1, 0};

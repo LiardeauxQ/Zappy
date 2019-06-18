@@ -23,7 +23,7 @@ void add_player(world_t *world, const unsigned int team_id)
     world->players[player_id].team_id = team_id;
     world->players[player_id].x = rand() % world->width;
     world->players[player_id].y = rand() % world->height;
-    world->players[player_id].direction = rand() % 4;
+    world->players[player_id].orientation = rand() % 4;
     world->players[player_id].level = 0;
     world->players[player_id].hp = 0;
     memset(world->players[player_id].resources, 0, DEFAULT_RESOURCES_NUMBER);

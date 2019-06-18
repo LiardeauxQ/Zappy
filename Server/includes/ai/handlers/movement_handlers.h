@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "ai/player.h"
+#include "world.h"
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 

@@ -5,6 +5,7 @@
 ** main
 */
 
+#include <time.h>
 #include "server.h"
 #include "arguments.h"
 #include "connection.h"
