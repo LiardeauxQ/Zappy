@@ -24,7 +24,13 @@ struct linked_list {
 
 typedef struct linked_list linked_list_t;
 
+/* init_list.c */
+
 void append(linked_list_t *list, void *data);
 void insert(linked_list_t *list, size_t pos, void *data);
+
+/* deletions.c */
+
 void *pop(linked_list_t *list);
 void *delete_elem(linked_list_t *list, size_t pos);
+void delete_linked_list(linked_list_t *list);

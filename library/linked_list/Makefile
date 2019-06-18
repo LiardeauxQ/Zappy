@@ -20,6 +20,7 @@ TEST		= tests_run
 BUILD		=	$(ROOT)/build
 
 SRC			:=	init_list.c	\
+				deletions.c	\
 
 TEST_SRC	:=	test_init_list.c	\
 				test_init_list2.c	\
