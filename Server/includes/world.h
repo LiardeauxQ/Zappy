@@ -13,7 +13,7 @@
 #include "linked_list.h"
 
 struct tile_content_s {
-    int *resources;
+    int *resources; // -1 at the end
     linked_list_t players_id; // of type unsigned int
     int player_nb;
 };
@@ -38,7 +38,7 @@ struct world_s {
     size_t height;
     unsigned int f;
     tile_content_t **tiles;
-    resource_t *resources;
+    resource_t *resources; // available resources
     linked_list_t players; // of type struct player_s
 };
 

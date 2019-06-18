@@ -81,6 +81,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
 				commands/test_sender.c	\
+				commands/test_map_size.c	\
 
 
 CFLAGS		=	$(INCLUDES) $(WARN)
