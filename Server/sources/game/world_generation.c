@@ -48,9 +48,12 @@ tile_content_t **init_tiles(const size_t width, const size_t height,
 world_t generate_world(const size_t width, const size_t height,
         const size_t f, const char *resources_filename)
 {
-    world_t world = {width, height, f, 0x0, 0x0, 0x0};
+    world_t world = {0};
     size_t max_resources = 0;
 
+    world.width = width;
+    world.height = height;
+    world.f = f;
     world.resources = parse_resources(resources_filename);
     while (world.resources[max_resources++].name != 0x0);
     world.tiles = init_tiles(width, height, max_resources);

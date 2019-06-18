@@ -11,6 +11,7 @@
 #include "world.h"
 #include "resources.h"
 #include "graphical/protocols.h"
+#include "linked_list.h"
 
 Test(generate_resources, simple_test)
 {
@@ -47,7 +48,7 @@ Test(init_tiles, simple_test)
     for (int i = 0 ; i < width ; i++) {
         for (int j = 0 ; j < height ; j++) {
             cr_assert_eq(tiles[i][j].resources[2], -1);
-            cr_assert_eq(tiles[i][j].players_id, 0);
+            cr_assert_eq(tiles[i][j].players_id.head, 0x0);
         }
     }
 }
