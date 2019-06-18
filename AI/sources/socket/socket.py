@@ -1,75 +1,69 @@
 import socket
 import random
+import time
 
 
-class Socket:
+class SocketZappy:
 
-    def __init__(self, host = "localhost", port = 3630):
+    def __init__(self, host = 'localhost', port = 3630):
         self.socketID = random.randint(0, 200000)
         self.host = host
         self.port = port 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
 
-    def connect(self):
+    def connect_zappy(self):
+
+        buff_size = 2048;
+        buff = bytearray(buff_size)
         try:
             self.socket.connect((self.host, self.port))
+            r = self.socket.recv_into(buff, buff_size);
         except:
             print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
+            self.connected = False
             return 84
         else:
             print ("socket [", self.socketID, "]","Connection on http://", self.host, ":", self.port, sep='')
-            self.connect = True
+            self.connected = True
             return 0
         
     def sendMessage(self, message):
-        if self.connect == False:
-            print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
-            return 84
         try:
-            self.socket.send(message)
+            self.socket.send(str.encode(message))
         except:
-            print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
+            print("socket [", self.socketID, "]","Message Error")
+            self.connected = False
             return 84
         else:
             print("socket [", self.socketID, "]", "Send :", message)
-            return 0
+            return self.getData()
 
 
     def closeConection(self):
-        if self.connect == False:
+        if self.connected == False:
             print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
+            self.connected = False
             return 84
-        try:
-            self.socket.close()
-        except:
-            print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
-            return 84
-        finally:
-            print("socket [", self.socketID, "]","Connection Close")
-            self.connect = False
-            return 0
+        self.socket.close()
 
 
     def getData(self):
-        if self.connect == False:
+        if self.connected == False:
             print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
+            self.connected = False
             return 84
+        buff_size = 2048;
+        buff = bytearray(buff_size)
         try:
-            recv = self.socket.recv()
+            self.socket.recv_into(buff, buff_size);
         except:
             print("socket [", self.socketID, "]","Connection Error")
-            self.connect = False
+            self.connected = False
             return 84
         else:
-            print("socket [", self.socketID, "]","recive :", recv)
-            return recv
+            print("socket [", self.socketID, "]","recive :", buff.decode())
+            return buff.decode()
 
     def getInfo(self):
         return self.socketID, self.connected, self.host, self.port
