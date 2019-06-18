@@ -1,9 +1,18 @@
 from sources.socket.socket import *
+from sources.ressources.dictionaries import *
 
 class Player:
 
     def __init__(self):
         self.client = Socket()
+        self.level = 1
+        self.linemate = 0
+        self.deraumere = 0
+        self.sibur = 0
+        self.mendiane = 0
+        self.phiras= 0
+        self.thystame = 0
+        self.linemate_necessary = linemate_necessary
 
     def forward(self):
         self.client.sendMessage("Forward\n")
@@ -41,3 +50,27 @@ class Player:
 
     def startIncantation(self):
         self.client.sendMessage("Incantation\n")
+
+    def checkFood(self):
+        if self.life / 126 > 8:
+            return True
+        else:
+            return False
+
+    def checkElevation(self):
+        if self.linemate >= linemate_necessary[self.level] and\
+        self.deraumere >= deraumere_necessary[self.level] and\
+        self.sibur >= sibur_necessary[self.level] and\
+        self.mendiane >= mendiane_necessary[self.level] and\
+        self.phiras >= phiras_necessary[self.level] and\
+        self.thystame >= thystame_necessary[self.level]:
+            return True
+        else:
+            return False
+
+    def checkRessource(self, name):
+        # replace 'neceassry' by 'desirable'
+        if vars(self)[name] >= vars(self)[(name + '_necessary')][self.level]:
+            return True
+        else:
+            return False

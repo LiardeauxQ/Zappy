@@ -142,3 +142,21 @@ thystame_desirable = {
     7 : 1,
     8 : 0
 }
+
+move_to_case = []
+move_to_case[0] = {}
+move_to_case[1] = {"Forward", "Left", "Forward"}
+move_to_case[2] = {"Forward"}
+move_to_case[3] = {"Forward", "Right", "Forward"}
+move_to_case[4] = {"Forward", "Forward", "Left", "Forward", "Forward"}
+move_to_case[5] = {"Forward", "Forward", "Left", "Forward"}
+move_to_case[6] = {"Forward", "Forward"}
+move_to_case[7] = {"Forward", "Forward", "Right", "Forward"}
+move_to_case[8] = {"Forward", "Forward", "Right", "Forward", "Forward"}
+move_to_case[9] = {"Forward", "Forward", "Forward", "Left", "Forward", "Forward", "Forward"}
+move_to_case[10] = {"Forward", "Forward", "Forward", "Left", "Forward", "Forward"}
+move_to_case[11] = {"Forward", "Forward", "Forward", "Left", "Forward"}
+move_to_case[12] = {"Forward", "Forward", "Forward"}
+move_to_case[13] = {"Forward", "Forward", "Forward", "Right", "Forward"}
+move_to_case[14] = {"Forward", "Forward", "Forward", "Right", "Forward", "Forward"}
+move_to_case[15] = {"Forward", "Forward", "Forward", "Right", "Forward", "Forward", "Forward"}
