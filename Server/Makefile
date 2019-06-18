@@ -17,7 +17,7 @@ COMPILER_COMMAND	=	compile_commands.json
 
 CC		=	gcc
 
-INCLUDES	=	-I includes -I ../Library/csv/includes -I ../library/linked_list/includes
+INCLUDES	=	-I includes -I ../library/csv/includes -I ../library/linked_list/includes
 
 NAME		=	zappy_server
 
