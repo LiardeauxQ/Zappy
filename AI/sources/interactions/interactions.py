@@ -74,3 +74,19 @@ class Player:
             return True
         else:
             return False
+
+    def checkLook(self, array):
+        for i, elem in enumerate(array):
+            if self.checkRessource(elem):
+                self.actions = move_to_case[i]
+                self.handleActions()
+
+    def handleActions(self):
+        while len(self.actions) > 0:
+            action = self.actions.pop(0)
+            if action == "Left":
+                self.left()
+            elif action == "Right":
+                self.right()
+            else:
+                self.forward()
