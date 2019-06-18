@@ -8,17 +8,20 @@
 #pragma once
 
 #include "Player.hpp"
-#include <vector>
+#include <vector> 
+#include <memory>
 
 namespace zapi
 {
     class Team {
         public:
-            Team();
+            Team(const std::string &name = "trash");
             ~Team() = default;
-            void addPlayer(Player *player);
-            void addPlayer(Player &player);
+            void addPlayer(int id, const sf::Vector2f &position);
+            std::string &getName() { return name; };
+            std::vector<std::shared_ptr<Player>> &getPlayers() { return players; };
         private:
-            std::vector<Player *> players;
+            std::string name;
+            std::vector<std::shared_ptr<Player>> players;
     };
 }

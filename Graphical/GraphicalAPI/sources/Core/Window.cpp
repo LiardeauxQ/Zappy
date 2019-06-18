@@ -11,20 +11,22 @@
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
+, event()
 , entities()
 {
     setView(camera);
     std::srand(std::time(nullptr));
 }
 
-void zapi::Window::addEntity(Entity *entity)
+void zapi::Window::addEntities(std::vector<std::shared_ptr<Entity>> &entityList)
 {
-    entities.push_back(entity);
+    for (auto &entity : entityList)
+        entities.push_back(entity);
 }
 
-void zapi::Window::addEntity(Entity &entity)
+void zapi::Window::addEntity(std::shared_ptr<Entity> entity)
 {
-    entities.push_back(&entity);
+    entities.push_back(entity);
 }
 
 void zapi::Window::startLoop()

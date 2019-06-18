@@ -10,6 +10,7 @@
 #include "Entity.hpp"
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace zapi
 {
@@ -17,14 +18,14 @@ namespace zapi
         public:
             Window(const std::string &title);
             ~Window() = default;
-            void addEntity(Entity *entity);
-            void addEntity(Entity &entity);
+            void addEntities(std::vector<std::shared_ptr<Entity>> &entityList);
+            void addEntity(std::shared_ptr<Entity> entity);
             void startLoop();
-            sf::View camera;
         private:
             void loop();
             void eventHandler();
+            sf::View camera;
             sf::Event event;
-            std::vector<Entity *> entities;
+            std::vector<std::shared_ptr<Entity>> entities;
     };
 }

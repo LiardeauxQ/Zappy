@@ -7,14 +7,15 @@
 
 #include "Player.hpp"
 
-zapi::Player::Player(const float &radius, const sf::Vector2f &position)
+zapi::Player::Player(unsigned int id, const sf::Vector2f &position)
 : Entity(position)
-, radius(radius)
-    , main(radius)
-    {
-        main.setFillColor(sf::Color::Blue);
-        main.setOutlineColor(sf::Color::Black);
-        main.setOutlineThickness(1);
+, id(id)
+, radius(25)
+, main(radius)
+{
+    main.setFillColor(sf::Color::Blue);
+    main.setOutlineColor(sf::Color::Black);
+    main.setOutlineThickness(1);
     main.setPosition(position);
 }
 

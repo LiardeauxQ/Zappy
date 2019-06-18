@@ -22,6 +22,7 @@ BUILD		=	build
 MAIN		:=
 
 SRC			:=	Core/Window.cpp \
+				Core/Game.cpp \
 				Entity.cpp \
 				Tile.cpp \
 				Resource.cpp \

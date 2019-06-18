@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Resource.hpp"
+#include <memory>
 
 namespace zapi
 {
@@ -19,6 +20,6 @@ namespace zapi
         private:
             sf::Vector2f size;
             sf::RectangleShape main;
-            std::vector<Entity *> resources;
+            std::vector<std::shared_ptr<Entity>> resources;
     };
 }

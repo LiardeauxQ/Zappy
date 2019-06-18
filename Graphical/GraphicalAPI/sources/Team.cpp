@@ -7,16 +7,12 @@
 
 #include "Team.hpp"
 
-zapi::Team::Team()
-: players()
+zapi::Team::Team(const std::string &name)
+: name(name)
+, players()
 {}
 
-void zapi::Team::addPlayer(Player *player)
+void zapi::Team::addPlayer(int id, const sf::Vector2f &position)
 {
-    players.push_back(player);
-}
-
-void zapi::Team::addPlayer(Player &player)
-{
-    players.push_back(&player);
+    players.push_back(std::make_shared<Player>(Player(id, position)));
 }

@@ -20,7 +20,7 @@ zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
     main.setPosition(position);
 
     for (int i = 0; i != 7; i++)
-        resources.push_back(new Resource(sf::Vector2f(size.x/8, size.y/8), position + sf::Vector2f((std::rand()%((int)size.x - (int)size.x/8)), (std::rand()%((int)size.y - (int)size.y/8)))));
+        resources.push_back(std::make_shared<Resource>(Resource(sf::Vector2f(size.x/8, size.y/8), position + sf::Vector2f((std::rand()%((int)size.x - (int)size.x/8)), (std::rand()%((int)size.y - (int)size.y/8))))));
 }
 
 void zapi::Tile::update(sf::RenderWindow *window)
