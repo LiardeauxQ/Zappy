@@ -26,7 +26,7 @@ static void write_map_content(world_t *world, const int sockfd)
     to_write = memcpy(to_write, &hdr, PKT_HANDLER_LEN);
     for (size_t i = 0 ; i < world->width ; i++) {
         for (size_t j = 0 ; j < world->height ; j++) {
-            current_tile = convert_to_srv_tile_content(world, i, j);
+            current_tile = convert_to_srv_tile_content(&world->tiles[i][j], i, j);
             tmp = to_write + offset;
             tmp = memcpy(tmp, &current_tile, SRV_TILE_CONTENT_LEN);
             offset += SRV_TILE_CONTENT_LEN;

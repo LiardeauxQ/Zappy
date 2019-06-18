@@ -10,10 +10,11 @@
 #include "map.h"
 #include "resources.h"
 #include "graphical/protocols.h"
+#include "linked_list.h"
 
 struct tile_content_s {
     int *resources;
-    unsigned int *players_id;
+    linked_list_t players_id; // of type unsigned int
     int player_nb;
 };
 
@@ -38,7 +39,7 @@ struct world_s {
     unsigned int f;
     tile_content_t **tiles;
     resource_t *resources;
-    player_t *players;
+    linked_list_t players; // of type struct player_s
 };
 
 typedef struct world_s world_t;

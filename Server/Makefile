@@ -7,17 +7,21 @@
 
 ROOT		=	.
 
-SRC_DIR		=	sources
+SRC_DIR		=	$(ROOT)/sources
 
-TEST_DIR	=	tests
+TEST_DIR	=	$(ROOT)/tests
+
+BUILD		=	$(ROOT)/build
+
+COMPILER_COMMAND	=	compile_commands.json
 
 CC		=	gcc
+
+INCLUDES	=	-I includes -I ../Library/csv/includes -I ../library/linked_list/includes
 
 NAME		=	zappy_server
 
 TEST		=	tests_run
-
-BUILD		=	$(ROOT)/build
 
 MAIN		:=	main.c	\
 
@@ -79,11 +83,11 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_sender.c	\
 
 
-CFLAGS		=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
+CFLAGS		=	$(INCLUDES) $(WARN)
 
-TESTCFLAGS	=	-I $(ROOT)/includes -I ../library/csv/includes $(WARN)
+TESTCFLAGS	=	$(INCLUDES) $(WARN)
 
-LDFLAGS		=	-lcsv -L ../library/csv
+LDFLAGS		=	-lcsv -L ../library/csv -llinkedlist -L ../library/linked_list
 
 WARN		=	-Wall -Wextra
 
@@ -103,6 +107,11 @@ MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(MAIN_PREFIXED))
 OBJS			:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRC_PREFIXED))
 TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.c, $(BUILD)/%.o, $(TEST_SRC_PREFIXED))
 
+MAIN_JSONS	:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o.json, $(MAIN_PREFIXED))
+JSONS		:=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o.json, $(SRC_PREFIXED))
+TEST_JSONS	:=	$(patsubst $(TEST_DIR)/%.c, $(BUILD)/%.o.json, $(TEST_SRC_PREFIXED))
+
+
 #COLOR
 
 GREEN		=	\e[1;32m
@@ -116,38 +125,50 @@ RED		 	=	\e[1;35m
 BLUE		=	\e[1;34m
 
 
-debug:			CFLAGS += $(G)
+debug:			CFLAGS += $(G) -D LOG_LEVEL=5
+
+$(NAME):	OBJS += $(MAIN_OBJ)
+
+build_tests:	CFLAGS += --coverage
+build_tests:	LDFLAGS	+= -lcriterion --coverage
+build_tests:	OBJS +=	$(TEST_OBJS)
 
 ##
 ## Directives
 ##
 
-all:			$(NAME)
+all:			$(ROOT)/$(NAME)
 
-$(NAME):	OBJS += $(MAIN_OBJ)
-$(NAME):	$(BUILD)/$(NAME)
-			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
-			$(V)cp $(BUILD)/$(NAME) $(NAME)
+$(ROOT)/$(NAME):	$(BUILD)/$(NAME)
+					$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
+					$(V)cp $(BUILD)/$(NAME) $(NAME)
 
-build_tests:	CFLAGS += --coverage
-build_tests:	LDFLAGS	+= -lcriterion --coverage
-build_tests:	OBJS +=	$(TEST_OBJS)
 build_tests:	fclean $(BUILD)/$(TEST) #TODO: Find a solution to remove fclean rule
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 				$(V)cp $(BUILD)/$(TEST) $(TEST)
+
+cmd_gen:	$(ROOT)/$(COMPILER_COMMAND)
 
 $(TEST):	build_tests
 			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
 			$(V)./tests_run -f
 
-debug:			 echo_d $(NAME)
+debug:			 re
 
 release:		 fclean echo_r $(NAME)
 
+$(ROOT)/$(COMPILER_COMMAND): $(JSONS) += $(MAIN_JSONS)
+$(ROOT)/$(COMPILER_COMMAND): $(JSONS) += $(TEST_JSONS)
+$(ROOT)/$(COMPILER_COMMAND): $(JSONS)
+	$(V)printf "$(WHITE)Creating $(BLUE)$(COMPILER_COMMAND)$(WHITE).\n"
+	$(V)sed -e '2s/^/[$\n/' -e '$$s/,$$/$\n]/' $(JSONS) > $(ROOT)/$(COMPILER_COMMAND)
+	$(V)rm *.o
+
+
 $(BUILD)/$(NAME):	$(MAIN_OBJ) $(OBJS)
-			$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
-			$(V)$(CC) -o $(BUILD)/$(NAME) $(OBJS) $(LDFLAGS)
-			$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
+					$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
+					$(V)$(CC) -o $(BUILD)/$(NAME) $(OBJS) $(LDFLAGS)
+					$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
 
 $(BUILD)/$(TEST):	$(OBJS) $(TEST_OBJS)
 					$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
@@ -155,27 +176,34 @@ $(BUILD)/$(TEST):	$(OBJS) $(TEST_OBJS)
 					$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
 
 $(BUILD)/%.o:		$(SRC_DIR)/%.c
-			$(V)mkdir -p $(dir $@)
-			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< $(CFLAGS)
+					$(V)mkdir -p $(dir $@)
+					$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
+					$(V)$(CC) -o $@ -c $< $(CFLAGS)
 
 $(BUILD)/%.o:		$(TEST_DIR)/%.c
-			$(V)mkdir -p $(dir $@)
-			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
-			$(V)$(CC) -o $@ -c $< $(TESTCFLAGS) $(WARN)
+					$(V)mkdir -p $(dir $@)
+					$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
+					$(V)$(CC) -o $@ -c $< $(TESTCFLAGS) $(WARN)
+
+$(BUILD)/%.o.json:		$(SRC_DIR)/%.c
+						$(V)mkdir -p $(dir $@)
+						$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
+						$(V)$(CC) -MJ $@ -c $< $(CFLAGS)
+
+$(BUILD)/%.o.json:		$(TEST_DIR)/%.c
+						$(V)mkdir -p $(dir $@)
+						$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
+						$(V)$(CC) -MJ $@ -c $< $(TESTCFLAGS) $(WARN)
+
 
 clean:
-			$(V)rm -f $(OBJS)
-			$(V)rm -f $(TEST_OBJS)
-			$(V)rm -f $(MAIN_OBJ)
 			$(V)rm -rf $(BUILD)
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
-fclean:		 clean
-			$(V)rm -f $(BUILD)/$(NAME)
-			$(V)rm -f $(BUILD)/$(TEST)
+fclean:		clean
 			$(V)rm -f $(NAME)
 			$(V)rm -f $(TEST)
+			$(V)rm -f $(COMPILER_COMMAND)
 			$(V)printf "$(ORANGE)Removing binary file.$(WHITE)\n"
 
 re:			fclean all

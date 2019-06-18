@@ -23,7 +23,8 @@ GRAPH_BIN_SRC	= $(ROOT)/Graphical
 
 BINARIES		:=	$(SERVER_BIN_NAME) $(CLIENT_BIN_NAME) $(GRAPH_BIN_NAME)
 
-LIBS				:=	$(ROOT)/library/csv
+LIBS				:=	$(ROOT)/library/csv	\
+						$(ROOT)/library/linked_list
 
 TEST_DIRS		:=	$(ROOT)/Server/tests	\
 					$(ROOT)/AI/tests	\
