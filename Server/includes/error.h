@@ -14,3 +14,5 @@
 #define EXIT_ERROR 84
 
 void exit_with_error(char const *msg);
+int print_exit_msg(char const *msg, int exit_value);
+void check_malloc(void *data);

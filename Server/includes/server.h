@@ -8,32 +8,45 @@
 #pragma once
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
+#include <sys/select.h>
 
-typedef struct input_s {
+#include "client.h"
+
+struct input_s {
     unsigned int port;
     unsigned int width;
     unsigned int height;
     unsigned int client_nbr;
     unsigned int frequence;
     char **names;
-} input_t;
+    char *resources_filename;
+};
 
-typedef struct server_s {
+typedef struct input_s input_t;
+
+struct server_s {
     unsigned int port;
     int sockfd;
     struct sockaddr_in sockaddr;
-} server_t;
+};
 
-typedef struct info_s {
-    unsigned int port;
+typedef struct server_s server_t;
+
+struct info_s {
+    int port;
     struct input_s input;
     struct server_s server;
-} info_t;
+    struct client_s clients[MAX_CLIENT];
+};
+
+typedef struct info_s info_t;
 
 /* destroy_struct.c */
 
-void destroy_array(char **array);
+void free_array(char **array);
+void free_input(input_t *input);
 void destroy_server_info(info_t *info);

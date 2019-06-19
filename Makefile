@@ -13,17 +13,23 @@ DIRS			:= $(ROOT)/Server	\
 				   $(ROOT)/AI	\
 				   $(ROOT)/Graphical
 
-BINARIES_SRC	:=	$(ROOT)/Server/zappy_server	\
-					$(ROOT)/AI/zappy_ai	\
-					$(ROOT)/Graphical/zappy_graphical
+SERVER_BIN_NAME	=	zappy_server
+CLIENT_BIN_NAME	=	zappy_ai
+GRAPH_BIN_NAME	=	zappy_graphical
 
-BINARIES		:=	zappy_server	\
-					zappy_ai	\
-					zappy_graphical
+SERVER_BIN_SRC	= $(ROOT)/Server
+CLIENT_BIN_SRC	= $(ROOT)/AI
+GRAPH_BIN_SRC	= $(ROOT)/Graphical
+
+BINARIES		:=	$(SERVER_BIN_NAME) $(CLIENT_BIN_NAME) $(GRAPH_BIN_NAME)
+
+LIBS				:=	$(ROOT)/library/csv	\
+						$(ROOT)/library/linked_list
 
 TEST_DIRS		:=	$(ROOT)/Server/tests	\
 					$(ROOT)/AI/tests	\
-					$(ROOT)/Graphical/tests
+					$(ROOT)/Graphical/tests	\
+					$(ROOT)/library/csv/tests
 
 #COLOR
 
@@ -44,9 +50,27 @@ debug:			CFLAGS += $(G)
 ## Directives
 ##
 
-all:
-		$(V)$(foreach var, $(DIRS), make --no-print-directory -C $(var);)
+all: $(SERVER_BIN_NAME) $(CLIENT_BIN_NAME) $(GRAPH_BIN_NAME)
 		$(V)$(foreach var, $(BINARIES_SRC), cp $(var) .;)
+
+$(SERVER_BIN_NAME): libraries
+		$(V)make --no-print-directory -C $(SERVER_BIN_SRC)
+		$(V)cp $(SERVER_BIN_SRC)/$(SERVER_BIN_NAME) .
+
+$(CLIENT_BIN_NAME):
+		$(V)make --no-print-directory -C $(CLIENT_BIN_SRC)
+		$(V)cp $(CLIENT_BIN_SRC)/$(CLIENT_BIN_NAME) .
+
+$(GRAPH_BIN_NAME):
+		$(V)make --no-print-directory -C $(GRAPH_BIN_SRC)
+		$(V)cp $(GRAPH_BIN_SRC)/$(GRAPH_BIN_NAME) .
+
+libraries:
+		$(V)$(foreach var, $(LIBS), make --no-print-directory -C $(var);)
+
+build_tests: libraries
+		$(V)$(foreach var, $(DIRS), make  build_tests --no-print-directory -C $(var);)
+		$(V)$(foreach var, $(LIBS), make build_tests --no-print-directory -C $(var);)
 
 debug:			 echo_d $(NAME)
 
@@ -54,14 +78,19 @@ release:		 fclean echo_r $(NAME)
 
 tests_run:
 		$(V)printf "$(ORANGE)Starting tests:\n\n$(WHITE)"
+		$(V)$(foreach var, $(LIBS), make tests_run --no-print-directory -C $(var);)
+		$(V)$(foreach var, $(LIBS), make --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make tests_run --no-print-directory -C $(var);)
-		$(V)gcovr -r . --exclude Server/tests --exclude AI/tests --exclude Graphical/tests
+		$(V)printf "$(RED)\nCompute coverage for zappy project:\n\n$(WHITE)"
+		$(V)gcovr -r . --exclude Server/tests --exclude AI/tests --exclude Graphical/tests --exclude library/csv/tests
 
 clean:
+		$(V)$(foreach var, $(LIBS), make clean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
+		$(V)$(foreach var, $(LIBS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(BINARIES), rm -f $(var);)
 		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
@@ -77,4 +106,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo 
+.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests

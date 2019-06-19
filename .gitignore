@@ -1,4 +1,4 @@
-zappy_ai
+gitqzappy_ai
 epitech_server
 zappy_server
 tmp
@@ -11,3 +11,5 @@ zappy_server
 zappy_ai
 zappy_graphical
 __pycache__
+.cquery
+.vscode/

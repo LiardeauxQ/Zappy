@@ -5,7 +5,17 @@
 ** main
 */
 
-int main(int __attribute__((unused)) ac, char __attribute__((unused)) **av)
+#include "InputParser.hpp"
+#include "ServerInteraction.hpp"
+
+int main(int ac, char **av)
 {
+    IO::InputParser iParser(ac, av);
+    communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
+            iParser.getCmdStringOption("-h"));
+
+    interaction.requestMapSize();
+    interaction.requestTileContent();
+    interaction.requestMapContent();
     return (0);
 }

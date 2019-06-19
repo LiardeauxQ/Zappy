@@ -5,7 +5,9 @@
 ## makefile of the source file
 ##
 
-ROOT		=	.
+ROOT		=	..
+
+CURRENT_DIR	=	Graphical
 
 SRC_DIR		=	sources
 
@@ -17,15 +19,19 @@ NAME		=	zappy_graphical
 
 TEST		=	tests_run
 
-BUILD		=	$(ROOT)/build
+BUILD		=	build
 
-MAIN		:=	$(SRC_DIR)/main.cpp	\
+MAIN		:=	main.cpp	\
 
-SRC			:=	
+SRC			:=	protocol/ServerInteraction.cpp	\
+				InputParser.cpp	\
+				Errors.cpp
 
-TEST_SRC	:=	$(TEST_DIR)/test_example.cpp	\
+TEST_SRC	:=	test_InputParser.cpp	\
 
-CXXFLAGS	 =	-I $(ROOT)/includes $(WARN) -pipe -march=native -std=c++11
+INCLUDES	=	-I includes
+
+CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++17
 
 TESTFLAGS	=	$(CXXFLAGS)
 
@@ -39,9 +45,14 @@ G		=	-g -D DEBUG
 
 V		?=	@
 
-MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(MAIN))
-OBJS			:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(SRC))
-TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.cpp, $(BUILD)/%.o, $(TEST_SRC))
+
+MAIN_PREFIXED		:=	$(addprefix $(SRC_DIR)/, $(MAIN))
+SRC_PREFIXED		:=	$(addprefix $(SRC_DIR)/, $(SRC))
+TEST_SRC_PREFIXED	:=	$(addprefix $(TEST_DIR)/, $(TEST_SRC))
+
+MAIN_OBJ		:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(MAIN_PREFIXED))
+OBJS			:=	$(patsubst $(SRC_DIR)/%.cpp, $(BUILD)/%.o, $(SRC_PREFIXED))
+TEST_OBJS		:=	$(patsubst $(TEST_DIR)/%.cpp, $(BUILD)/%.o, $(TEST_SRC_PREFIXED))
 
 #COLOR
 
@@ -69,15 +80,16 @@ $(NAME):	$(BUILD)/$(NAME)
 			$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 			$(V)cp $(BUILD)/$(NAME) $(NAME)
 
-$(TEST):		CFLAGS += --coverage
-$(TEST):		LDFLAGS	+= -lcriterion --coverage
-$(TEST):		OBJS +=	$(TEST_OBJS)
-$(TEST):		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
-				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
-				$(V)cp $(BUILD)/$(TEST) $(TEST)
-				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
-				$(V)./tests_run
-				$(V)gcovr --exclude $(TEST_DIR)
+build_tests:		CXXFLAGS += --coverage
+build_tests:		LDFLAGS	+= -lcriterion --coverage
+build_tests:		OBJS +=	$(TEST_OBJS)
+build_tests:		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
+					$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
+					$(V)cp $(BUILD)/$(TEST) $(TEST)
+
+$(TEST): build_tests
+		$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
+		$(V)./tests_run -f
 
 debug:			 echo_d $(NAME)
 
@@ -128,4 +140,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo
+.PHONY:		 clean fclean debug all re echo_debug buildrepo build_tests
