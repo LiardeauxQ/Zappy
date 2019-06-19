@@ -100,10 +100,10 @@ class Player:
         print (result)
         return result
 
-    def handleActions(self, elem):
+    def handleActions(self):
         while len(self.actions) > 0:
             print(self.actions)
-            action = self.actions.pop()
+            action = self.actions.pop(0)
             if action == "Left":
                 self.left()
             elif action == "Right":

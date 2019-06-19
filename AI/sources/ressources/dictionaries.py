@@ -12,25 +12,33 @@ CONSTANTS = {
     "phiras_desirable": [-1, 0, 2, 3, 1, 1, 3, 2, 0],
     "thystame_necessary": [-1, 0, 0, 0, 0, 0, 0, 1, 0],
     "thystame_desirable": [-1, 0, 0, 0, 0, 0, 1, 1, 0],
-}
-
-# ACTION TO MOVE TO LOOK POSITION
-
-move_to_case = {
-    0 : [],
-    1 : ["Forward", "Left", "Forward"],
-    2 : ["Forward"],
-    3 : ["Forward", "Right", "Forward"],
-    4 : ["Forward", "Forward", "Left", "Forward", "Forward"],
-    5 : ["Forward", "Forward", "Left", "Forward"],
-    6 : ["Forward", "Forward"],
-    7 : ["Forward", "Forward", "Right", "Forward"],
-    8 : ["Forward", "Forward", "Right", "Forward", "Forward"],
-    9 : ["Forward", "Forward", "Forward", "Left", "Forward", "Forward", "Forward"],
-    10 : ["Forward", "Forward", "Forward", "Left", "Forward", "Forward"],
-    11 : ["Forward", "Forward", "Forward", "Left", "Forward"],
-    12 : ["Forward", "Forward", "Forward"],
-    13 : ["Forward", "Forward", "Forward", "Right", "Forward"],
-    14 : ["Forward", "Forward", "Forward", "Right", "Forward", "Forward"],
-    15 : ["Forward", "Forward", "Forward", "Right", "Forward", "Forward", "Forward"]
+    "move_to_case": [
+        [],
+        ["Forward", "Left", "Forward"],
+        ["Forward"],
+        ["Forward", "Right", "Forward"],
+        ["Forward", "Forward", "Left", "Forward", "Forward"],
+        ["Forward", "Forward", "Left", "Forward"],
+        ["Forward", "Forward"],
+        ["Forward", "Forward", "Right", "Forward"],
+        ["Forward", "Forward", "Right", "Forward", "Forward"],
+        ["Forward", "Forward", "Forward", "Left", "Forward", "Forward", "Forward"],
+        ["Forward", "Forward", "Forward", "Left", "Forward", "Forward"],
+        ["Forward", "Forward", "Forward", "Left", "Forward"],
+        ["Forward", "Forward", "Forward"],
+        ["Forward", "Forward", "Forward", "Right", "Forward"],
+        ["Forward", "Forward", "Forward", "Right", "Forward", "Forward"],
+        ["Forward", "Forward", "Forward", "Right", "Forward", "Forward", "Forward"]
+    ],
+    "move_to_sound" : [
+        [],
+        ["Forward"],
+        ["Forward", "Left", "Forward"],
+        ["Left", "Forward"],
+        ["Left", "Forward", "Left", "Forward"],
+        ["Left", "Left", "Forward"],
+        ["Right", "Forward", "Right", "Forward"],
+        ["Right", "Forward"],
+        ["Forward", "Right", "Forward"]
+    ]
 }
