@@ -13,9 +13,11 @@ zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
 , size(size)
 , main(size)
 {
-    // if (!texture.loadFromFile("../../sprites/crystal.png", sf::IntRect(position.x, position.y, 32, 64)))
+    texture.loadFromFile("sprites/crystal.png", sf::IntRect(0, 0, 32, 64));
+    texture.setSmooth(true);
     main.setFillColor(sf::Color::Yellow);
-    // sprite.setTexture(texture);
+    sprite.setTexture(texture);
+    sprite.setPosition(position);
     main.setOutlineColor(sf::Color::Black);
     main.setOutlineThickness(1);
     main.setPosition(position);
@@ -23,9 +25,8 @@ zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
 
 void zapi::Resource::update(sf::RenderWindow *window)
 {
-    //if (quantity < 0)
+    window->draw(sprite);
     window->draw(main);
-    // window->draw(sprite);
 }
 
 zapi::Resource &zapi::Resource::operator++(int)
