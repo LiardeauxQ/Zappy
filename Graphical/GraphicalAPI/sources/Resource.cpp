@@ -22,8 +22,8 @@ zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
 
 void zapi::Resource::update(sf::RenderWindow *window)
 {
-    //if (quantity < 0)
-    window->draw(main);
+    if (quantity < 0)
+        window->draw(main);
 }
 
 zapi::Resource &zapi::Resource::operator++(int)

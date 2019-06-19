@@ -9,7 +9,6 @@
 
 #include "Player.hpp"
 #include <vector> 
-#include <memory>
 
 namespace zapi
 {
@@ -19,9 +18,9 @@ namespace zapi
             ~Team() = default;
             void addPlayer(int id, const sf::Vector2f &position);
             std::string &getName() { return name; };
-            std::vector<std::shared_ptr<Player>> &getPlayers() { return players; };
+            std::vector<Player> &getPlayers() { return players; };
         private:
             std::string name;
-            std::vector<std::shared_ptr<Player>> players;
+            std::vector<Player> players;
     };
 }

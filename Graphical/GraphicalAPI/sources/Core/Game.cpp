@@ -6,12 +6,14 @@
 */
 
 #include "Core/Game.hpp"
+#include <cstdlib>
 
 zapi::Game::Game(const std::string &title)
 : window(title)
 , tiles()
 , teams()
 {
+    std::srand(std::time(nullptr));
     initialize();
 }
 
@@ -22,14 +24,22 @@ void zapi::Game::initialize()
             x = 0;
             y += 100;
         }
-        tiles.push_back(std::make_shared<Tile>(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y))));
+        tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
     }
-    window.addEntities(tiles);
 }
 
 void zapi::Game::start()
 {
-    window.startLoop();
+    loop();
+}
+
+void zapi::Game::loop()
+{
+    while (window.isOpen()) {
+        window.update();
+        window.drawEntities(tiles);
+        window.display();
+    }
 }
 
 void zapi::Game::addTeam(const std::string &teamName)
@@ -42,7 +52,6 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
     for (auto &team : teams)
         if (team.getName() == teamName) {
             team.addPlayer(id, position);
-            window.addEntity(team.getPlayers().back());
             return;
         }
     addTeam(teamName);
