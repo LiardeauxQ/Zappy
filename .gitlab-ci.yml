@@ -1,7 +1,7 @@
 stages:
     - build
     - unit_tests
-    - full_deploy
+    - deploy
 
 build:
     image: epitechcontent/epitest-docker
