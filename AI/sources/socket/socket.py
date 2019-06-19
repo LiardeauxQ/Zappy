@@ -16,19 +16,13 @@ class SocketZappy:
 
         buff_size = 2048;
         buff = bytearray(buff_size)
-        try:
-            self.socket.connect((self.host, self.port))
-            r = self.socket.recv_into(buff, buff_size);
-        except:
-            print("socket [", self.socketID, "]","Connection Error")
-            self.connected = False
-            return 84
-        else:
-            print ("socket [", self.socketID, "]","Connection on http://", self.host, ":", self.port, sep='')
-            self.connected = True
-            return 0
+        self.socket.connect((self.host, self.port))
+        self.socket.recv_into(buff, buff_size);
+        print ("socket [", self.socketID, "]","Connection on http://", self.host, ":", self.port, " -> ", buff.decode(), sep='')
+        self.connected = True
+        return 0
         
-    def sendMessage(self, message):
+    def sendMessage(self, message: str):
         try:
             self.socket.send(str.encode(message))
         except:
