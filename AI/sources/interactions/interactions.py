@@ -42,11 +42,11 @@ class Player:
     def eject(self):
         self.client.sendMessage("Eject\n")
 
-    def takeObject(self):
-        self.client.sendMessage("Take object\n")
+    def takeObject(self, elem):
+        self.client.sendMessage("Take " + elem + "\n")
 
-    def dropObject(self):
-        self.client.sendMessage("Set object\n")
+    def dropObject(self, elem):
+        self.client.sendMessage("Set " + elem + "\n")
 
     def startIncantation(self):
         self.client.sendMessage("Incantation\n")
@@ -79,9 +79,9 @@ class Player:
         for i, elem in enumerate(array):
             if self.checkRessource(elem):
                 self.actions = move_to_case[i]
-                self.handleActions()
+                self.handleActions(elem)
 
-    def handleActions(self):
+    def handleActions(self, elem):
         while len(self.actions) > 0:
             action = self.actions.pop(0)
             if action == "Left":
@@ -90,3 +90,4 @@ class Player:
                 self.right()
             else:
                 self.forward()
+        self.takeObject(elem)
