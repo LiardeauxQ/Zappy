@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <array>
 #include "Entity.hpp"
 
 namespace zapi
@@ -18,9 +19,11 @@ namespace zapi
             void update(sf::RenderWindow *window) final;
             void move(ORIENTATION direction);
             unsigned int getId() { return id; };
+
         private:
             unsigned int id;
             float radius;
             sf::CircleShape main;
+            std::array<int, 7> inventory {{0, 0, 0, 0, 0, 0, 0}};
     };
 }
