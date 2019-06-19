@@ -38,7 +38,7 @@ int send_broadcast(const void *data);
 /* handle_eggs.c */
 
 int send_laying_egg(const void *data);
-int send_laid_egg(const void *data);
+int send_layed_egg(const void *data);
 int send_hatching_egg(const void *data);
 int send_egg_connection(const void *data);
 int send_egg_hatched_death(const void *data);

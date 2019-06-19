@@ -47,6 +47,7 @@ static void write_player_inventory(const srv_player_inventory_t *inv,
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &inv, SRV_PLAYER_INVENTORY_LEN);
     write(sockfd, to_write, size);
+    free(to_write);
 }
 
 int send_player_inventory(const void *data)

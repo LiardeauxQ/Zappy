@@ -28,6 +28,7 @@ static void write_player_level(const srv_player_level_t *lvl, int sockfd)
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &lvl, SRV_PLAYER_LEVEL_LEN);
     write(sockfd, to_write, size);
+    free(to_write);
 }
 
 int send_player_level(const void *data)

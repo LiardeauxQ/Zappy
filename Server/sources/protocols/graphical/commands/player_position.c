@@ -28,6 +28,7 @@ static void write_player_position(const srv_player_pos_t *pos, int sockfd)
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &pos, SRV_PLAYER_POS_LEN);
     write(sockfd, to_write, size);
+    free(to_write);
 }
 
 int send_player_position(const void *data)
