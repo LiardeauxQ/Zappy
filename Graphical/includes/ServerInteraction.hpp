@@ -20,6 +20,21 @@
 
 namespace communication {
 
+    template <class T>
+    class Packet {
+    public:
+        Packet(uint8_t id, int sockfd, uint16_t size = 0, uint16_t subid = 0);
+        ~Packet() = default;
+
+        Packet &operator<<(const T *data); // send
+        void operator>>(T *data); // receive
+    private:
+        uint8_t id;
+        int sockfd;
+        uint16_t size;
+        uint16_t subid;
+    };
+
     class ServerInteraction {
     public:
         ServerInteraction(unsigned int port, const std::string &ipAddress);
@@ -27,19 +42,17 @@ namespace communication {
         ~ServerInteraction() = default;
 
         void requestMapSize(void) const;
-        void requestTileContent(void) const;
+        void requestTileContent(unsigned int x, unsigned int y) const;
         void requestMapContent(void) const;
         void requestTeamsNames(void) const;
-        void requestPlayerPosition(void) const;
-        void requestPlayerLevel(void) const;
-        void requestPlayerInventory(void) const;
+        void requestPlayerPosition(unsigned int id) const;
+        void requestPlayerLevel(unsigned int id) const;
+        void requestPlayerInventory(unsigned int id) const;
         void requestTimeUnit(void) const;
         void requestTimeUpdate(void) const;
         
         unsigned int getSocket(void) const { return _sockfd; }
     private:
-        void sendPacket(uint8_t id, uint16_t size, uint16_t subid) const;
-
         unsigned int _port;
         int _sockfd;
     };

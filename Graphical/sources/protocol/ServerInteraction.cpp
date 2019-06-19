@@ -28,60 +28,107 @@ communication::ServerInteraction::ServerInteraction() : _port(0), _sockfd(-1)
 {
 }
 
-void communication::ServerInteraction::sendPacket(uint8_t id, uint16_t size, uint16_t subid) const
+void communication::ServerInteraction::requestMapSize(void) const
 {
-    packet_header hdr = {id, PROTOCOL_VERSION, size, subid};
-    srv_map_size_t map = {0};
+    Packet<clt_map_size_t> pkt(CLT_MAP_SIZE, _sockfd);
+    Packet<srv_map_size_t> pkt2(SRV_MAP_SIZE, _sockfd);
 
-    write(_sockfd, &hdr, sizeof(hdr));
-    hdr = (packet_header){0};
-    read(_sockfd, &hdr, sizeof(hdr));
-    printf("%d %d\n", hdr.id, hdr.size);
-    read(_sockfd, &map, sizeof(srv_map_size_t));
+    pkt << 0x0;
+    srv_map_size_t map = {0, 0};
+    pkt2 >> &map;
     printf("%d %d\n", map.x, map.y);
 }
 
-void communication::ServerInteraction::requestMapSize(void) const
+void communication::ServerInteraction::requestTileContent(unsigned int x,
+        unsigned int y) const
 {
-    sendPacket(CLT_MAP_SIZE, 0, 0);
-}
+    clt_tile_content_t tile = {x, y};
+    Packet<clt_tile_content_t> pkt(CLT_TILE_CONTENT, _sockfd,
+            CLT_TILE_CONTENT_LEN);
 
-void communication::ServerInteraction::requestTileContent(void) const
-{
-    sendPacket(CLT_TILE_CONTENT, 0, 0);
+    pkt << &tile;
 }
 
 void communication::ServerInteraction::requestMapContent(void) const
 {
-    sendPacket(CLT_MAP_CONTENT, 0, 0);
+    Packet<clt_map_content_t> pkt(CLT_MAP_CONTENT, _sockfd);
+
+    pkt << 0x0;
 }
 
 void communication::ServerInteraction::requestTeamsNames(void) const
 {
-    sendPacket(CLT_TEAMS_NAMES, 0, 0);
+    Packet<clt_teams_names_t> pkt(CLT_TEAMS_NAMES, _sockfd);
+
+    pkt << 0x0;
 }
 
-void communication::ServerInteraction::requestPlayerPosition(void) const
+void communication::ServerInteraction::requestPlayerPosition(unsigned int id) const
 {
-    sendPacket(CLT_PLAYER_POSITION, 0, 0);
+    clt_player_pos_t player = {id};
+    Packet<clt_player_pos_t> pkt(CLT_PLAYER_POSITION, _sockfd,
+            CLT_PLAYER_POS_LEN);
+
+    pkt << &player;
 }
 
-void communication::ServerInteraction::requestPlayerLevel(void) const
+void communication::ServerInteraction::requestPlayerLevel(unsigned int id) const
 {
-    sendPacket(CLT_PLAYER_LEVEL, 0, 0);
+    clt_player_level_t player = {id};
+    Packet<clt_player_level_t> pkt(CLT_PLAYER_LEVEL, _sockfd,
+            CLT_PLAYER_LEVEL_LEN);
+
+    pkt << &player;
 }
 
-void communication::ServerInteraction::requestPlayerInventory(void) const
+void communication::ServerInteraction::requestPlayerInventory(unsigned int id) const
 {
-    sendPacket(CLT_PLAYER_INVENTORY, 0, 0);
+    struct clt_player_inventory player = {id};
+    Packet<struct clt_player_inventory> pkt(CLT_PLAYER_INVENTORY, _sockfd,
+            CLT_PLAYER_INVENTORY_LEN);
+
+    pkt << &player;
 }
 
 void communication::ServerInteraction::requestTimeUnit(void) const
 {
-    sendPacket(CLT_TIME_UNIT_REQUEST, 0, 0);
+    Packet<char> pkt(CLT_TIME_UNIT_REQUEST, _sockfd);
+
+    pkt << 0x0;
 }
 
 void communication::ServerInteraction::requestTimeUpdate(void) const
 {
-    sendPacket(CLT_TIME_UNIT_CHANGE, 0, 0);
+    Packet<char> pkt(CLT_TIME_UNIT_CHANGE, _sockfd);
+
+    pkt << 0x0;
+}
+
+template <class T>
+communication::Packet<T>::Packet(uint8_t id, int sockfd, uint16_t size, uint16_t subid)
+    : id(id), sockfd(sockfd), size(size), subid(subid)
+{
+}
+
+template <class T>
+communication::Packet<T> &communication::Packet<T>::operator<<(const T *data)
+{
+    packet_header hdr = {id, PROTOCOL_VERSION, size, subid};
+
+    write(sockfd, &hdr, sizeof(hdr));
+    write(sockfd, data, sizeof(T));
+    return (*this);
+}
+
+template <class T>
+void communication::Packet<T>::operator>>(T *data)
+{
+    packet_header hdr = {0, 0, 0, 0};
+
+    if (read(sockfd, &hdr, PKT_HDR_LEN) != PKT_HDR_LEN
+            || hdr.id > SRV_CUSTOM) {
+        data = nullptr;
+        return;
+    }
+    read(sockfd, data, hdr.size);
 }
