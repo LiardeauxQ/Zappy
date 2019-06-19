@@ -15,6 +15,7 @@
 #include <sys/select.h>
 
 #include "client.h"
+#include "graphical/protocols.h"
 
 struct input_s {
     unsigned int port;
@@ -41,6 +42,7 @@ struct info_s {
     struct input_s input;
     struct server_s server;
     struct client_s clients[MAX_CLIENT];
+    phr_t handler_register;
 };
 
 typedef struct info_s info_t;
@@ -49,4 +51,8 @@ typedef struct info_s info_t;
 
 void free_array(char **array);
 void free_input(input_t *input);
-void destroy_server_info(info_t *info);
+
+/* init_info.c */
+
+info_t init_info(int ac, char **av);
+void destroy_info(info_t *info);

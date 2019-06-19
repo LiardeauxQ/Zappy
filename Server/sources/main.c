@@ -32,14 +32,9 @@ void start_server(client_t (*clients)[MAX_CLIENT], int const sockfd)
 
 int main(int ac, char **av)
 {
-    info_t info = {0};
-    client_t clients[MAX_CLIENT] = {0};
+    info_t info = init_info(ac, av);
 
-    handle_arguments(ac, av, &info.input);
-    parse_resources(info.input.resources_filename);
-    //info.server.port = info.input.port;
-    //init_connection(&info.server);
     //start_server(&clients, info.server.sockfd);
-    destroy_server_info(&info);
+    destroy_info(&info);
     return (0);
 }

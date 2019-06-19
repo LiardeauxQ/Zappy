@@ -26,3 +26,8 @@ int init_server_environnements_packets(phr_t *reg);
 int init_server_actions_packets1(phr_t *reg);
 int init_server_actions_packets2(phr_t *reg);
 int init_server_additionals_packets(phr_t *reg);
+
+/* protocols.c */
+
+void init_packets(phr_t *reg);
+void destroy_packets(phr_t *reg);
