@@ -25,7 +25,7 @@ Test(send_map_size, simple_test)
     char data[80] = {0};
     char buffer[80] = {0};
     const size_t size = PKT_HDR_LEN + SRV_MAP_SIZE_LEN + 1;
-    char result[size] = {0};
+    char result[PKT_HDR_LEN + SRV_MAP_SIZE_LEN + 1] = {0};
     pkt_header_t hdr = {13, PROTOCOL_VERSION, SRV_MAP_SIZE_LEN, 0};
     srv_map_size_t map_size = {34, 34};
     sender_t sender = {&world, sizeof(world_t), fd, 1};
