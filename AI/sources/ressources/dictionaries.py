@@ -143,20 +143,23 @@ thystame_desirable = {
     8 : 0
 }
 
-move_to_case = [None] * 16
-move_to_case[0] = {}
-move_to_case[1] = {"Forward", "Left", "Forward"}
-move_to_case[2] = {"Forward"}
-move_to_case[3] = {"Forward", "Right", "Forward"}
-move_to_case[4] = {"Forward", "Forward", "Left", "Forward", "Forward"}
-move_to_case[5] = {"Forward", "Forward", "Left", "Forward"}
-move_to_case[6] = {"Forward", "Forward"}
-move_to_case[7] = {"Forward", "Forward", "Right", "Forward"}
-move_to_case[8] = {"Forward", "Forward", "Right", "Forward", "Forward"}
-move_to_case[9] = {"Forward", "Forward", "Forward", "Left", "Forward", "Forward", "Forward"}
-move_to_case[10] = {"Forward", "Forward", "Forward", "Left", "Forward", "Forward"}
-move_to_case[11] = {"Forward", "Forward", "Forward", "Left", "Forward"}
-move_to_case[12] = {"Forward", "Forward", "Forward"}
-move_to_case[13] = {"Forward", "Forward", "Forward", "Right", "Forward"}
-move_to_case[14] = {"Forward", "Forward", "Forward", "Right", "Forward", "Forward"}
-move_to_case[15] = {"Forward", "Forward", "Forward", "Right", "Forward", "Forward", "Forward"}
+# ACTION TO MOVE TO LOOK POSITION
+
+move_to_case = {
+    0 : {},
+    1 : {"Forward", "Left", "Forward"},
+    2 : {"Forward"},
+    3 : {"Forward", "Right", "Forward"},
+    4 : {"Forward", "Forward", "Left", "Forward", "Forward"},
+    5 : {"Forward", "Forward", "Left", "Forward"},
+    6 : {"Forward", "Forward"},
+    7 : {"Forward", "Forward", "Right", "Forward"},
+    8 : {"Forward", "Forward", "Right", "Forward", "Forward"},
+    9 : {"Forward", "Forward", "Forward", "Left", "Forward", "Forward", "Forward"},
+    10 : {"Forward", "Forward", "Forward", "Left", "Forward", "Forward"},
+    11 : {"Forward", "Forward", "Forward", "Left", "Forward"},
+    12 : {"Forward", "Forward", "Forward"},
+    13 : {"Forward", "Forward", "Forward", "Right", "Forward"},
+    14 : {"Forward", "Forward", "Forward", "Right", "Forward", "Forward"},
+    15 : {"Forward", "Forward", "Forward", "Right", "Forward", "Forward", "Forward"}
+}
