@@ -30,7 +30,9 @@ class Player:
         print(l)
 
     def inventory(self):
+        
         self.client.sendMessage("Inventory\n")
+        
 
     def broadcast(self):
         self.client.sendMessage("Broadcast text\n")
@@ -99,6 +101,7 @@ class Player:
 
     def handleActions(self, elem):
         while len(self.actions) > 0:
+            print(self.actions)
             action = self.actions.pop()
             if action == "Left":
                 self.left()
