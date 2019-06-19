@@ -20,11 +20,12 @@ namespace zapi
             ~Game() = default;
             void initialize();
             void start();
+            void loop();
             void addTeam(const std::string &teamName);
             void addPlayer(const std::string &teamName, int id, const sf::Vector2f &position);
         private:
             Window window;
-            std::vector<std::shared_ptr<Entity>> tiles;
+            std::vector<Tile> tiles;
             std::vector<Team> teams;
     };
 }

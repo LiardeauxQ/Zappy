@@ -6,47 +6,43 @@
 */
 
 #include "Core/Window.hpp"
-#include <cstdlib>
 
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
 , event()
-, entities()
 {
     setView(camera);
-    std::srand(std::time(nullptr));
 }
 
-void zapi::Window::addEntities(std::vector<std::shared_ptr<Entity>> &entityList)
+void zapi::Window::update()
 {
-    for (auto &entity : entityList)
-        entities.push_back(entity);
+    clear();
+    inputHandler();
+    setView(camera);
 }
 
-void zapi::Window::addEntity(std::shared_ptr<Entity> entity)
+void zapi::Window::drawEntities(std::vector<Tile> &entities)
 {
-    entities.push_back(entity);
-}
-
-void zapi::Window::startLoop()
-{
-    loop();
-}
-
-void zapi::Window::loop()
-{
-    while (isOpen()) {
-        clear();
-        for (auto &entity : entities)
-            entity->update(this);
-        eventHandler();
-        setView(camera);
-        display();
+    for (auto &entity : entities) {
+        entity.update(this);
+        drawEntities(entity.getResources());
     }
 }
 
-void zapi::Window::eventHandler()
+void zapi::Window::drawEntities(std::vector<Resource> &entities)
+{
+    for (auto &entity : entities)
+        entity.update(this);
+}
+
+void zapi::Window::drawEntities(std::vector<Player> &entities)
+{
+    for (auto &entity : entities)
+        entity.update(this);
+}
+
+void zapi::Window::inputHandler()
 {
     while (pollEvent(event)) {
         if (event.type == sf::Event::Closed)

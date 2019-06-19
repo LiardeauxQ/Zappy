@@ -14,6 +14,5 @@ zapi::Team::Team(const std::string &name)
 
 void zapi::Team::addPlayer(int id, const sf::Vector2f &position)
 {
-    // players.push_back(std::make_shared<Player>(Player(id, position)));
     players.push_back(Player(id, position));
 }

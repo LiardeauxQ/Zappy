@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "Entity.hpp"
+#include "Tile.hpp"
+#include "Player.hpp"
 #include <string>
 #include <vector>
-#include <memory>
 
 namespace zapi
 {
@@ -18,14 +18,14 @@ namespace zapi
         public:
             Window(const std::string &title);
             ~Window() = default;
-            void addEntities(std::vector<std::shared_ptr<Entity>> &entityList);
-            void addEntity(std::shared_ptr<Entity> entity);
-            void startLoop();
+            void update();
+            void drawEntities(std::vector<Tile> &entities);
+            void drawEntities(std::vector<Resource> &entities);
+            void drawEntities(std::vector<Player> &entities);
+
         private:
-            void loop();
-            void eventHandler();
+            void inputHandler();
             sf::View camera;
             sf::Event event;
-            std::vector<std::shared_ptr<Entity>> entities;
     };
 }

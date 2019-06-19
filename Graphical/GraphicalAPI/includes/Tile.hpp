@@ -8,7 +8,6 @@
 #pragma once
 
 #include "Resource.hpp"
-#include <memory>
 
 namespace zapi
 {
@@ -17,10 +16,11 @@ namespace zapi
             Tile(const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
             ~Tile() = default;
             void update(sf::RenderWindow *window) final;
+            std::vector<Resource> &getResources() { return resources; };
         private:
             sf::Vector2f size;
             sf::RectangleShape main;
-            std::vector<std::shared_ptr<Entity>> resources;
+            std::vector<Resource> resources;
             sf::Texture texture;
             sf::Sprite sprite;
     };

@@ -25,7 +25,7 @@ zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
 
 void zapi::Resource::update(sf::RenderWindow *window)
 {
-    window->draw(sprite);
+    // window->draw(sprite);
     window->draw(main);
 }
 
