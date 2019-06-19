@@ -94,3 +94,17 @@ class Player:
             else:
                 self.forward()
         self.takeObject(elem)
+
+    def dropItemsForElevation(self):
+        for i in range(linemate_necessary[self.level]):
+            self.dropObject("linemate")
+        for i in range(deraumere_necessary[self.level]):
+            self.dropObject("deraumere")
+        for i in range(sibur_necessary[self.level]):
+            self.dropObject("sibur")
+        for i in range(mendiane_necessary[self.level]):
+            self.dropObject("mendiane")
+        for i in range(phiras_necessary[self.level]):
+            self.dropObject("phiras")
+        for i in range(thystame_necessary[self.level]):
+            self.dropObject("thystame")
