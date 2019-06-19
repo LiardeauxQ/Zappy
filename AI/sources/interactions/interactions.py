@@ -81,6 +81,8 @@ class Player:
                 if self.checkRessource(elem):
                     self.actions = move_to_case[i]
                     self.handleActions(elem)
+                    return
+        self.forward()
 
     def handleActions(self, elem):
         while len(self.actions) > 0:
