@@ -13,6 +13,7 @@ server_test:
     stage: unit_tests
     script:
         - make -C library/csv/
+        - make -C library/linked_list
         - make -C Server build_tests
         - ./Server/tests_run -f
 
@@ -29,6 +30,13 @@ csv_test:
     script:
         - make -C library/csv build_tests
         - ./library/csv/tests_run -f
+
+library_test:
+    image: epitechcontent/epitest-docker
+    stage: unit_tests
+    script:
+        - make -C library/linked_list build_tests
+        - ./library/linked_list/tests_run -f
 
 covering:
     image: epitechcontent/epitest-docker
