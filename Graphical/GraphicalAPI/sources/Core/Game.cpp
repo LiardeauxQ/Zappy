@@ -17,10 +17,11 @@ zapi::Game::Game(const std::string &title)
 
 void zapi::Game::initialize()
 {
-    for (int i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
+    for (float i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
         if (x >= 3000) {
             x = 0;
             y += 100;
+            // y += 100 * std::sqrt(2);
         }
         tiles.push_back(std::make_shared<Tile>(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y))));
     }

@@ -21,5 +21,7 @@ namespace zapi
             sf::Vector2f size;
             sf::RectangleShape main;
             std::vector<std::shared_ptr<Entity>> resources;
+            sf::Texture texture;
+            sf::Sprite sprite;
     };
 }

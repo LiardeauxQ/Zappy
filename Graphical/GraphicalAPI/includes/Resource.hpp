@@ -22,5 +22,7 @@ namespace zapi
             unsigned int quantity;
             sf::Vector2f size;
             sf::RectangleShape main;
+            sf::Texture texture;
+            sf::Sprite sprite;
     };
 }

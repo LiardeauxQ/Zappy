@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <cmath>
 #include "Window.hpp"
 #include "Tile.hpp"
 #include "Team.hpp"
