@@ -16,14 +16,14 @@ static void write_map_content(world_t *world, const int sockfd)
 {
     char *to_write = 0x0;
     char *tmp = 0x0;
-    size_t size = PKT_HANDLER_LEN + (world->width * world->height
+    size_t size = PKT_HDR_LEN + (world->width * world->height
             * SRV_TILE_CONTENT_LEN) + 1;
-    size_t offset = PKT_HANDLER_LEN;
+    size_t offset = PKT_HDR_LEN;
     pkt_header_t hdr = {SRV_MAP_SIZE, PROTOCOL_VERSION, size, 0};
     srv_tile_content_t current_tile = {0};
 
     to_write = calloc(1, size * sizeof(char));
-    to_write = memcpy(to_write, &hdr, PKT_HANDLER_LEN);
+    to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     for (size_t i = 0 ; i < world->width ; i++) {
         for (size_t j = 0 ; j < world->height ; j++) {
             current_tile = convert_to_srv_tile_content(&world->tiles[i][j], i, j);

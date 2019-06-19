@@ -34,7 +34,7 @@ srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
     return (content);
 }
 
-int get_tile_content(const void *data)
+int get_tile_content(const void __attribute__((unused)) *data)
 {
     /*sender_t *senders = get_senders_from_data(data);
     size_t size = count_senders(senders);
@@ -42,8 +42,8 @@ int get_tile_content(const void *data)
     if (size != 2)
         return (-1);
     send_map_content(data);
-    free(senders);
-    return (0);*/
+    free(senders);*/
+    return (0);
 }
 
 static void write_map_tile_content(tile_content_t *tile,
