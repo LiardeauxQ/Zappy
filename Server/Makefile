@@ -15,6 +15,8 @@ BUILD		=	$(ROOT)/build
 
 COMPILER_COMMAND	=	compile_commands.json
 
+TMP_FILES	:=	.tmp tmp
+
 CC		=	gcc
 
 INCLUDES	=	-I includes -I ../library/csv/includes -I ../library/linked_list/includes
@@ -199,6 +201,7 @@ $(BUILD)/%.o.json:		$(TEST_DIR)/%.c
 
 clean:
 			$(V)rm -rf $(BUILD)
+			$(V)rm -f $(TMP_FILES)
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:		clean

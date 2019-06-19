@@ -5,6 +5,9 @@
 ** main
 */
 
+#include <fcntl.h>
+#include <stdio.h>
+
 #include "arguments.h"
 #include "graphical/commands.h"
 #include "connection.h"
