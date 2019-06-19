@@ -10,5 +10,5 @@ if __name__ == "__main__":
     client = Player()
 
     client.client.sendMessage("abc\n");
-    client.client.sendMessage("Look\n");
+    client.look();
 

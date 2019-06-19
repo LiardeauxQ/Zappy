@@ -49,15 +49,9 @@ class SocketZappy:
             return 84
         buff_size = 2048;
         buff = bytearray(buff_size)
-        try:
-            self.socket.recv_into(buff, buff_size);
-        except:
-            print("socket [", self.socketID, "]","Connection Error")
-            self.connected = False
-            return 84
-        else:
-            print("socket [", self.socketID, "]","recive :", buff.decode())
-            return buff.decode()
+        self.socket.recv_into(buff, buff_size);
+        print("socket [", self.socketID, "]","recive :", buff.decode())
+        return buff.decode()
 
     def getInfo(self):
         return self.socketID, self.connected, self.host, self.port

@@ -25,10 +25,15 @@ class Player:
         self.client.sendMessage("Left\n")
 
     def look(self):
-        self.client.sendMessage("Look\n")
+        l = self.client.sendMessage("Look\n")
+        l = self. __parseLookString(l)
+        self.checkLook(l)
+        print(l)
 
     def inventory(self):
+        
         self.client.sendMessage("Inventory\n")
+        
 
     def broadcast(self, text):
         self.client.sendMessage("Broadcast " + text + "\n")
@@ -69,7 +74,10 @@ class Player:
             return False
 
     def checkRessource(self, name):
-        if vars(self)[name] >= name + '_deseriable'[self.level]:
+        # replace 'neceassry' by 'desirable'
+        if name == "player" or name == "food":
+            return False
+        if vars(self)[name] >= CONSTANTS[name + "_necessary"][self.level]:
             return True
         else:
             return False
@@ -84,9 +92,18 @@ class Player:
                     return
         self.forward()
 
-    def handleActions(self):
+    def __parseLookString(self, array):
+        array = array.replace("\x00", "").replace("\n", "").replace("[", "").replace("]", "")
+        result = array.split(',')
+        for i in range(len(result)):
+            result[i] = result[i].strip().split(' ')
+        print (result)
+        return result
+
+    def handleActions(self, elem):
         while len(self.actions) > 0:
-            action = self.actions.pop(0)
+            print(self.actions)
+            action = self.actions.pop()
             if action == "Left":
                 self.left()
             elif action == "Right":
