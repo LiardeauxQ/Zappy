@@ -25,15 +25,13 @@ class Player:
         self.client.sendMessage("Left\n")
 
     def look(self):
-        l = self.client.sendMessage("Look\n")
-        print(l)
+        self.client.sendMessage("Look\n")
 
     def inventory(self):
         self.client.sendMessage("Inventory\n")
 
-    def broadcast(self):
-        self.client.sendMessage("Broadcast text\n")
-        return self.client.getData()
+    def broadcast(self, text):
+        self.client.sendMessage("Broadcast " + text + "\n")
 
     def connectNumber(self):
         self.client.sendMessage("Connect_nbr\n")
