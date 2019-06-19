@@ -7,6 +7,7 @@ class Player:
         self.client = SocketZappy()
         self.client.connect_zappy()
         self.level = 1
+        self.food = 10
         self.linemate = 0
         self.deraumere = 0
         self.sibur = 0
@@ -53,7 +54,7 @@ class Player:
         self.client.sendMessage("Incantation\n")
 
     def checkFood(self):
-        if self.life / 126 > 8:
+        if self.food > 10:
             return True
         else:
             return False
@@ -70,8 +71,7 @@ class Player:
             return False
 
     def checkRessource(self, name):
-        # replace 'neceassry' by 'desirable'
-        if vars(self)[name] >= vars(self)[(name + '_deseriable')][self.level]:
+        if vars(self)[name] >= name + '_deseriable'[self.level]:
             return True
         else:
             return False
@@ -80,12 +80,13 @@ class Player:
         for i, elems in enumerate(array):
             for elem in elems:
                 if self.checkRessource(elem):
-                    self.actions = move_to_case[i]
-                    self.handleActions(elem)
+                    self.actions = CONSTANTS["move_to_case"][i]
+                    self.handleActions()
+                    self.takeObject(elem)
                     return
         self.forward()
 
-    def handleActions(self, elem):
+    def handleActions(self):
         while len(self.actions) > 0:
             action = self.actions.pop(0)
             if action == "Left":
@@ -94,18 +95,26 @@ class Player:
                 self.right()
             else:
                 self.forward()
-        self.takeObject(elem)
 
     def dropItemsForElevation(self):
-        for i in range(linemate_necessary[self.level]):
+        for _ in range(CONSTANTS["linemate_necessary"][self.level]):
             self.dropObject("linemate")
-        for i in range(deraumere_necessary[self.level]):
+        for _ in range(CONSTANTS["deraumere_necessary"][self.level]):
             self.dropObject("deraumere")
-        for i in range(sibur_necessary[self.level]):
+        for _ in range(CONSTANTS["sibur_necessary"][self.level]):
             self.dropObject("sibur")
-        for i in range(mendiane_necessary[self.level]):
+        for _ in range(CONSTANTS["mendiane_necessary"][self.level]):
             self.dropObject("mendiane")
-        for i in range(phiras_necessary[self.level]):
+        for _ in range(CONSTANTS["phiras_necessary"][self.level]):
             self.dropObject("phiras")
-        for i in range(thystame_necessary[self.level]):
+        for _ in range(CONSTANTS["thystame_necessary"][self.level]):
             self.dropObject("thystame")
+
+    def moveToElevation(self, tile):
+        if tile == 0:
+            return
+        self.actions = CONSTANTS["move_to_sound"][tile]
+        self.handleActions()
+        # newtile = self.broadcast text
+            # self.moveToElevation(newtile)
+        # wait to know which text in broadcast to send 
