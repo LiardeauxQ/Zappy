@@ -50,3 +50,4 @@ void generate_resources(int **resources, const resource_t *available);
 tile_content_t **init_tiles(const size_t width, const size_t height,
         const int max_resources);
 void update_world_resources(world_t *world);
+world_t *worlddup(world_t *world);

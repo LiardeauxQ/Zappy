@@ -9,8 +9,6 @@ tests_run
 zappy_server
 zappy_ai
 zappy_graphical
-<<<<<<< HEAD
 .*.session.vim
-=======
 .cquery
->>>>>>> c1c022d55e351992393d2128a082cd071e4e642b
+.vscode/

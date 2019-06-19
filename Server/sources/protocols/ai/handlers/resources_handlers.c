@@ -92,15 +92,16 @@ int inventory_handler(world_t *world, player_t *player,
     char *inventory = calloc(1, 2);
 
     strcat(inventory, "[");
-    for (int i = 0; i < DEFAULT_RESOURCES_NUMBER; i++) {
+    for (int i = 1; i < DEFAULT_RESOURCES_NUMBER; i++) {
         resource_string = resource_to_string(i,
-                player->resources[i + 1], world->resources);
-        inventory = realloc(inventory, strlen(inventory) + strlen(resource_string) + 1);
+                player->resources[i], world->resources);
+        inventory = realloc(inventory, strlen(inventory) + strlen(resource_string) + 3);
         strcat(inventory , resource_string);
         if (i == sizeof(player->resources) / 4 - 1)
             strcat(inventory , "]");
+        else
+            strcat(inventory , ", ");
     }
-    printf("%s", inventory);
     time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
     // send_message((!time_limit_passed) ? "ok" : "ko");
     return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);

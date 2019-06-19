@@ -15,6 +15,8 @@ BUILD		=	$(ROOT)/build
 
 COMPILER_COMMAND	=	compile_commands.json
 
+TMP_FILES	:=	.tmp tmp
+
 CC		=	gcc
 
 INCLUDES	=	-I includes -I ../library/csv/includes -I ../library/linked_list/includes
@@ -35,6 +37,7 @@ SRC			:=	arguments/arguments.c	\
 				arguments/resources.c	\
 				arguments/int_argument.c	\
 				connection/destroy_server_info.c	\
+				connection/init_info.c	\
 				error.c	\
 				connection/init_connection.c	\
 				protocols/graphical/protocols.c	\
@@ -205,6 +208,7 @@ $(BUILD)/%.o.json:		$(TEST_DIR)/%.c
 
 clean:
 			$(V)rm -rf $(BUILD)
+			$(V)rm -f $(TMP_FILES)
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:		clean
