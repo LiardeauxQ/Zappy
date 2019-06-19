@@ -76,10 +76,11 @@ class Player:
             return False
 
     def checkLook(self, array):
-        for i, elem in enumerate(array):
-            if self.checkRessource(elem):
-                self.actions = move_to_case[i]
-                self.handleActions(elem)
+        for i, elems in enumerate(array):
+            for elem in elems:
+                if self.checkRessource(elem):
+                    self.actions = move_to_case[i]
+                    self.handleActions(elem)
 
     def handleActions(self, elem):
         while len(self.actions) > 0:
