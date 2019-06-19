@@ -1,4 +1,4 @@
-from sources.ressources.stonesTypes import *
+from AI.sources.ressources.stonesTypes import *
 
 
 class Stone:

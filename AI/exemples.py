@@ -1,11 +1,11 @@
 
 # First import the files like this
 
-from sources.ressources.stone import *
-from sources.ressources.stonesTypes import *
-from sources.ressources.dictionaries import *
-from sources.elevation.playerNeededForElevation import *
-from sources.socket.socket import *
+from AI.sources.ressources.stone import *
+from AI.sources.ressources.stonesTypes import *
+from AI.sources.ressources.dictionaries import *
+from AI.sources.elevation.playerNeededForElevation import *
+from AI.sources.socket.socket import *
 
 
 def exemple():
