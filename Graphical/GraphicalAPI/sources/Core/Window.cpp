@@ -62,8 +62,8 @@ void zapi::Window::eventHandler()
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
             camera.move(20, 0);
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
-            camera.zoom(0.2);
+            camera.zoom(0.8);
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z)
-            camera.zoom(-0.2);
+            camera.zoom(1.2);
     }
 }

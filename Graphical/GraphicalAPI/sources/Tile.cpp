@@ -11,10 +11,10 @@
 zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
     : Entity(position), size(size), main(size), resources()
 {
-    // if (!texture.loadFromFile("../../sprites/grass.png", sf::IntRect(position.x, position.y, 100, 100)))
-    //     main.setFillColor(sf::Color::White);
+    // if (!texture.loadFromFile("sprites/grass.png", sf::IntRect(position.x, position.y, 100, 100)))
+        main.setFillColor(sf::Color::White);
     // else
-    // sprite.setTexture(texture);
+        // sprite.setTexture(texture);
     main.setOutlineColor(sf::Color::Red);
     main.setOutlineThickness(1);
     // main.setRotation(45);
