@@ -8,7 +8,7 @@
 #pragma once
 
 #include "Player.hpp"
-#include <vector> 
+#include <vector>
 #include <memory>
 
 namespace zapi

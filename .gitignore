@@ -1,4 +1,5 @@
 .vscode/
+.DS_Store
 zappy_ai
 zappy_server
 tmp
