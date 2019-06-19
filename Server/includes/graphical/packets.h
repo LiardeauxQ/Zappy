@@ -18,6 +18,7 @@
 
 pkt_handler_t *init_pkt(int id, ...);
 phr_t *add_pkt_info(phr_t *reg, pkt_handler_t *handler);
+data_handler get_data_handler_for_id(phr_t *reg, size_t id);
 
 /* init_packets.c */
 

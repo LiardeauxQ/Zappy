@@ -64,6 +64,19 @@ world_t generate_world(const size_t width, const size_t height,
     return (world);
 }
 
+world_t *worlddup(world_t *world)
+{
+    world_t *new = calloc(sizeof(world_t), 1);
+
+    new->width = world->width;
+    new->height = world->height;
+    new->f = world->f;
+    new->tiles = world->tiles;
+    new->resources = world->resources;
+    new->players = world->players;
+    return (new);
+}
+
 void update_world_resources(world_t *world)
 {
     for (size_t x = 0 ; x < world->width ; x++) {

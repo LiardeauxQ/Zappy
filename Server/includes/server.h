@@ -16,6 +16,7 @@
 
 #include "client.h"
 #include "graphical/protocols.h"
+#include "world.h"
 
 struct input_s {
     unsigned int port;
@@ -43,6 +44,7 @@ struct info_s {
     struct server_s server;
     struct client_s clients[MAX_CLIENT];
     phr_t handler_register;
+    world_t world;
 };
 
 typedef struct info_s info_t;

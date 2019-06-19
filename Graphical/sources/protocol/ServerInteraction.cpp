@@ -31,8 +31,14 @@ communication::ServerInteraction::ServerInteraction() : _port(0), _sockfd(-1)
 void communication::ServerInteraction::sendPacket(uint8_t id, uint16_t size, uint16_t subid) const
 {
     packet_header hdr = {id, PROTOCOL_VERSION, size, subid};
+    srv_map_size_t map = {0};
 
     write(_sockfd, &hdr, sizeof(hdr));
+    hdr = (packet_header){0};
+    read(_sockfd, &hdr, sizeof(hdr));
+    printf("%d %d\n", hdr.id, hdr.size);
+    read(_sockfd, &map, sizeof(srv_map_size_t));
+    printf("%d %d\n", map.x, map.y);
 }
 
 void communication::ServerInteraction::requestMapSize(void) const

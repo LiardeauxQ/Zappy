@@ -5,6 +5,7 @@
 ** init packet registers
 */
 
+#include "graphical/protocols.h"
 #include "graphical/packets.h"
 #include "graphical/commands.h"
 

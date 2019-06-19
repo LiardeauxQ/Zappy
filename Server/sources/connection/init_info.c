@@ -20,6 +20,8 @@ info_t init_info(int ac, char **av)
     init_packets(&info.handler_register);
     info.server.port = info.input.port;
     init_connection(&info.server);
+    info.world = generate_world(info.input.width, info.input.height,
+            info.input.frequence, info.input.resources_filename);
     return (info);
 }
 
