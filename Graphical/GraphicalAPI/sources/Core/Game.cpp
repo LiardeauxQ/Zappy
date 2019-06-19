@@ -43,7 +43,7 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
     for (auto &team : teams)
         if (team.getName() == teamName) {
             team.addPlayer(id, position);
-            window.addEntity(team.getPlayers().back());
+            // window.addEntity(team.getPlayers().back());
             return;
         }
     addTeam(teamName);

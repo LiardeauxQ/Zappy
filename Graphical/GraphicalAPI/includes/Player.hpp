@@ -17,6 +17,7 @@ namespace zapi
             ~Player() = default;
             void update(sf::RenderWindow *window) final;
             void move(ORIENTATION direction);
+            unsigned int getId() { return id; };
         private:
             unsigned int id;
             float radius;
