@@ -4,6 +4,7 @@
 ** File description:
 ** handle eggs
 */
+
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,7 +12,7 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-int send_laying_egg(const void __attribute__((unused)) *data)
+int send_laying_egg(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
     char *to_write = 0x0;
@@ -32,7 +33,7 @@ int send_laying_egg(const void __attribute__((unused)) *data)
     return (0);
 }
 
-int send_layed_egg(const void __attribute__((unused)) *data)
+int send_layed_egg(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
     char *to_write = 0x0;
@@ -56,7 +57,7 @@ int send_layed_egg(const void __attribute__((unused)) *data)
     return (0);
 }
 
-int send_hatching_egg(const void __attribute__((unused)) *data)
+int send_hatching_egg(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
     char *to_write = 0x0;
@@ -77,7 +78,7 @@ int send_hatching_egg(const void __attribute__((unused)) *data)
     return (0);
 }
 
-int send_egg_connection(const void __attribute__((unused)) *data)
+int send_egg_connection(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
     char *to_write = 0x0;
@@ -98,7 +99,7 @@ int send_egg_connection(const void __attribute__((unused)) *data)
     return (0);
 }
 
-int send_egg_hatched_death(const void __attribute__((unused)) *data)
+int send_egg_hatched_death(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
     char *to_write = 0x0;
