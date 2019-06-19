@@ -11,18 +11,21 @@
 #include "world.h"
 #include "player.h"
 
+
 Test(add_player, simple_test)
 {
     unsigned int width = 4;
     unsigned int height = 4;
     world_t world = generate_world(width, height, 0, 0x0);
+    player_t *player = 0x0;
 
     add_player(&world, 0);
-    cr_assert_eq(world.players[0].id, 0);
-    cr_assert(world.players[0].x > 0 && world.players[0].x < width);
-    cr_assert(world.players[0].y > 0 && world.players[0].y < height);
-    cr_assert(world.players[0].orientation >= 0
-            && world.players[0].orientation <= 4);
-    cr_assert_eq(world.players[0].level, 0);
-    cr_assert_eq(world.players[0].team_id, 0);
+    player = (player_t*)world.players.head->data;
+    cr_assert_eq(player->id, 0);
+    cr_assert(player->x > 0 && player->x < width);
+    cr_assert(player->y > 0 && player->y < height);
+    cr_assert(player->orientation >= 0
+            && player->orientation <= 4);
+    cr_assert_eq(player->level, 0);
+    cr_assert_eq(player->team_id, 0);
 }

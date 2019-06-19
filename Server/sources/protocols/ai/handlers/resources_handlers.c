@@ -34,7 +34,7 @@ char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity, reso
 
 enum RESOURCE_NUMBER resource_str_to_id(const char *resource, resource_t *resources)
 {
-    for (int i = 0; resources[i].id >= 0; i++) {
+    for (int i = 0; i < DEFAULT_RESOURCES_NUMBER; i++) {
         if (!strcmp(resources[i].name, resource))
             return (i);
     }

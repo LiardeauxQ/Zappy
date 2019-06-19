@@ -13,9 +13,9 @@ int init_client_packets(phr_t *reg)
     if (reg == 0x0)
         return (-1);
     add_pkt_info(reg, init_pkt(1, 0, "CLT_PROTOCOL_ADDONS", 0x0));
-    add_pkt_info(reg, init_pkt(2, 0, "CLT_MAP_SIZE", &get_map_size));
+    add_pkt_info(reg, init_pkt(2, 0, "CLT_MAP_SIZE", &send_map_size));
     add_pkt_info(reg, init_pkt(3, 0, "CLT_TILE_CONTENT", &get_tile_content));
-    add_pkt_info(reg, init_pkt(4, 0, "CLT_MAP_CONTENT", &get_map_content));
+    add_pkt_info(reg, init_pkt(4, 0, "CLT_MAP_CONTENT", &send_map_content));
     add_pkt_info(reg, init_pkt(5, 0, "CLT_TEAMS_NAMES", &get_name_teams));
     add_pkt_info(reg, init_pkt(6, 0, "CLT_PLAYER_POSITION",
                 &get_player_position));

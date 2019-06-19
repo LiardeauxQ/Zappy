@@ -5,12 +5,12 @@
 ** handle incantation
 */
 
-int send_incantation_start(const char *data)
+int send_incantation_start(const void __attribute__((unused)) *data)
 {
     return (0);
 }
 
-int send_incantation_end(const char *data)
+int send_incantation_end(const void __attribute__((unused)) *data)
 {
     return (0);
 }

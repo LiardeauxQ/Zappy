@@ -10,18 +10,20 @@
 #include "map.h"
 #include "resources.h"
 #include "graphical/protocols.h"
+#include "linked_list.h"
 
 struct tile_content_s {
-    int *resources;
-    unsigned int *players_id;
+    int *resources; // -1 at the end
+    linked_list_t players_id; // of type unsigned int
+    int player_nb;
 };
 
 typedef struct tile_content_s tile_content_t;
 
 struct player_s {
+    uint8_t level;
     unsigned int id;
     unsigned int team_id;
-    uint8_t level;
     unsigned int hp;
     enum ORIENTATION orientation;
     unsigned int resources[DEFAULT_RESOURCES_NUMBER];
@@ -36,8 +38,8 @@ struct world_s {
     size_t height;
     unsigned int f;
     tile_content_t **tiles;
-    resource_t *resources;
-    player_t *players;
+    resource_t *resources; // available resources
+    linked_list_t players; // of type struct player_s
 };
 
 typedef struct world_s world_t;

@@ -5,7 +5,7 @@
 ** handle expulsion
 */
 
-int send_player_expulsion(const char *data)
+int send_player_expulsion(const void __attribute__((unused)) *data)
 {
     return (0);
 }

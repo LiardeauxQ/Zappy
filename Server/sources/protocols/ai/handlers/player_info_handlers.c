@@ -16,8 +16,9 @@ int tile_to_str(world_t *world, int *coords, int team_id)
 {
     char *str = calloc(1, 1);
     char *buffer = 0x0;
-    player_t player = {0};
+    player_t *player = {0};
     tile_content_t tile = world->tiles[coords[0]][coords[1]];
+    node_t *player_id_cursor = tile.players_id.head;
 
     for (int i = 0; tile.resources[i] != -1; i++) {
         buffer = world->resources[tile.resources[i]].name;
@@ -26,11 +27,12 @@ int tile_to_str(world_t *world, int *coords, int team_id)
         if (tile.resources[i + 1] != -1)
             strcat(str, " ");
     }
-    for (int i = 0; tile.players_id[i] != 0; i++) {
-        if (world->players[tile.players_id[i]].team_id == team_id && str[0]) {
+    for (int i = 0; (player_id_cursor = player_id_cursor->next); i++) {
+        player = get_player(world->players, (int) player_id_cursor->data);
+        if (player && (int) player->team_id && str[0]) {
             str = realloc(str, strlen(str) + strlen(" player"));
             strcat(str, " player");
-        } else if (world->players[tile.players_id[i]].team_id == team_id) {
+        } else if (player && (int) player->team_id) {
             str = realloc(str, strlen(str) + strlen("player"));
             strcat(str, "player");
         }

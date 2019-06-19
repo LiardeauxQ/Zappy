@@ -11,34 +11,40 @@
 Test(forward_move_handler, test_forward_move_handler)
 {
     world_t world = generate_world(4, 4, 0, 0x0);
+    player_t *head = 0x0;
 
-    add_player(&world, 0);
     world.f = 100;
-    world.players[0].x = 1;
-    world.players[0].y = 1;
-    world.players[0].orientation = EAST;
-    forward_move_handler(&world, &world.players[0], 100, 0x0);
-    cr_assert_eq(world.players[0].x, 2);
+    add_player(&world, 0);
+    head = (player_t *) world.players.head;
+    head->x = 1;
+    head->y = 1;
+    head->orientation = EAST;
+    forward_move_handler(&world, head, 100, 0x0);
+    cr_assert_eq(head->x, 2);
 }
 
 Test(left_move_handler, test_left_move_handler)
 {
     world_t world = generate_world(4, 4, 0, 0x0);
+    player_t *head = 0x0;
 
-    add_player(&world, 0);
     world.f = 100;
-    world.players[0].orientation = EAST;
-    left_move_handler(&world, &world.players[0], 100, 0x0);
-    cr_assert_eq(world.players[0].orientation, NORTH);
+    add_player(&world, 0);
+    head = (player_t *) world.players.head;
+    head->orientation = EAST;
+    left_move_handler(&world, head, 100, 0x0);
+    cr_assert_eq(head->orientation, NORTH);
 }
 
 Test(right_move_handler, test_right_move_handler)
 {
     world_t world = generate_world(4, 4, 0, 0x0);
+    player_t *head = 0x0;
 
-    add_player(&world, 0);
     world.f = 100;
-    world.players[0].orientation = EAST;
-    right_move_handler(&world, &world.players[0], 100, 0x0);
-    cr_assert_eq(world.players[0].orientation, SOUTH);
+    add_player(&world, 0);
+    head = (player_t *) world.players.head;
+    head->orientation = EAST;
+    right_move_handler(&world, head, 100, 0x0);
+    cr_assert_eq(head->orientation, SOUTH);
 }
