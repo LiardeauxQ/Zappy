@@ -5,7 +5,7 @@ import time
 
 class SocketZappy:
 
-    def __init__(self, host = '127.0.0.1', port = 6000):
+    def __init__(self, host = 'localhost', port = 6000):
         self.socketID = random.randint(0, 200000)
         self.host = host
         self.port = port 

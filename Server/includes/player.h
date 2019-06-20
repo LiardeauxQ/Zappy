@@ -11,4 +11,4 @@
 #include "resources.h"
 #include "graphical/protocols.h"
 
-void add_player(world_t *world, const unsigned int team_id);
+int add_player(world_t *world, const unsigned int team_id); // return player_id

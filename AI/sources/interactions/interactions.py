@@ -75,7 +75,7 @@ class Player:
 
     def checkRessource(self, name):
         # replace 'neceassry' by 'desirable'
-        if name == "player" or name == "food":
+        if name == "player" or name == "food" or name == "":
             return False
         if vars(self)[name] >= CONSTANTS[name + "_necessary"][self.level]:
             return True

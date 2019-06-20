@@ -19,13 +19,15 @@
 
 void check_connection(game_t *game, server_t *server, client_reader reader)
 {
+    struct timeval timeout = {0};
     int max_fd = 0;
     int sockfd = server->sockfd;
     fd_set readfds = server->readfds;
     int clt_sockfd = 0;
 
+    timeout.tv_usec = 500;
     max_fd = set_fds(&readfds, server->clients, sockfd);
-    if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
+    if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
         exit_with_error("select");
     clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
     if (clt_sockfd > 0)

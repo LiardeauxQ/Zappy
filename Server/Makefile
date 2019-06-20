@@ -69,6 +69,7 @@ SRC			:=	arguments/arguments.c	\
 				game/resources/handle_resources.c	\
 				game/world_generation.c	\
 				game/player/create_player.c	\
+				utils/get_next_line.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_freq_argument.c	\

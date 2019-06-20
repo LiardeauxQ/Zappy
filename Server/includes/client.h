@@ -19,6 +19,7 @@ typedef struct world_s world_t;
 
 typedef struct client_s {
     int sockfd;
+    int client_nb;
 } client_t;
 
 typedef int (*client_reader)(client_t *, game_t *);

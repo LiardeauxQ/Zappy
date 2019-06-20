@@ -33,6 +33,7 @@ int read_graph_client(client_t *clt, game_t *g)
         handler = get_data_handler_for_id(&g->handler_register, tmp.id);
         handler(convert_senders_to_data(sdrs));
         i++;
+        printf("tmp size %d\n", tmp.size);
     } while (tmp.size > 0);
     destroy_senders(sdrs);
     return (0);

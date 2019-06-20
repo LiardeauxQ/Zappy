@@ -25,7 +25,7 @@ info_t init_info(int ac, char **av)
     info.server_graph.port = (info.input.port == 0 ? DEFAULT_PORT_GRAPH
             : info.input.port + 1);
     init_connection(&info.server_ai);
-    init_connection(&info.server_graph);
+    init_non_blocking_connection(&info.server_graph);
     info.game.world = generate_world(info.input.width, info.input.height,
             info.input.frequence, info.input.resources_filename);
     return (info);
