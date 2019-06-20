@@ -1,5 +1,6 @@
 from AI.sources.socket.socket import *
 from AI.sources.ressources.dictionaries import *
+import sys
 
 class Player:
 
@@ -49,6 +50,7 @@ class Player:
 
     def takeObject(self, elem):
         self.client.sendMessage("Take " + elem + "\n")
+        vars(self)[elem] += 1
 
     def dropObject(self, elem):
         self.client.sendMessage("Set " + elem + "\n")
@@ -75,9 +77,9 @@ class Player:
 
     def checkRessource(self, name):
         # replace 'neceassry' by 'desirable'
-        if name == "player" or name == "food":
+        if name == "player" or name == "food" or name == "":
             return False
-        if vars(self)[name] >= CONSTANTS[name + "_necessary"][self.level]:
+        if vars(self)[name] < CONSTANTS[name + "_necessary"][self.level]:
             return True
         else:
             return False
@@ -85,6 +87,11 @@ class Player:
     def checkLook(self, array):
         for i, elems in enumerate(array):
             for elem in elems:
+                if self.checkFood() and elem == "food":
+                    self.actions = CONSTANTS["move_to_case"][i]
+                    self.handleActions()
+                    self.takeObject(elem)
+                    return
                 if self.checkRessource(elem):
                     self.actions = CONSTANTS["move_to_case"][i]
                     self.handleActions()
@@ -130,6 +137,19 @@ class Player:
             return
         self.actions = CONSTANTS["move_to_sound"][tile]
         self.handleActions()
-        # newtile = self.broadcast text
-            # self.moveToElevation(newtile)
-        # wait to know which text in broadcast to send 
+        #
+        # LISTEN TO HAVE THE NEW TILE "message K, elevation for level x"
+        #
+        # newtile = getData()
+        # self.moveToElevation(newtile)
+
+    def start(self):
+        while True:
+            self.look()
+            if self.checkElevation():
+                    self.dropItemsForElevation()
+                    self.startIncantation()
+                    l = self.client.getData()
+                    if l != "ko\n":
+                        self.level += 1
+                        sys.exit()
