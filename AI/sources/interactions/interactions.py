@@ -32,8 +32,20 @@ class Player:
         print(l)
 
     def inventory(self):
-        
-        self.client.sendMessage("Inventory\n")
+        l = self.client.sendMessage("Inventory\n")          
+        print(l)
+        self.__parseInventoryString(l)
+
+    def __parseInventoryString(self, array):
+        array = array.replace("\x00", "").replace("\n", "").replace("[", "").replace("]", "")
+        result = array.split(',')
+        for i in range(len(result)):
+            result[i] = result[i].strip().split(' ')
+        for i in range(len(result)):
+            vars(self)[result[i][0]] = int(result[i][1]);
+        print (result)
+        return result
+
         
 
     def broadcast(self, text):
@@ -145,6 +157,8 @@ class Player:
 
     def start(self):
         while True:
+            self.inventory()
+            print("Inventory >", self.food, self.linemate)
             self.look()
             if self.checkElevation():
                     self.dropItemsForElevation()
