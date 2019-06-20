@@ -10,6 +10,7 @@
 
 #include "arguments.h"
 #include "graphical/commands.h"
+#include "ai/protocols.h"
 #include "connection.h"
 #include "server.h"
 
@@ -22,9 +23,10 @@ void check_connection(game_t *game, server_t *server)
     max_fd = set_fds(&readfds, server->clients, sockfd);
     if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
         exit_with_error("select");
-    get_new_connection(&readfds, &server->clients, sockfd);
+    if (get_new_connection(&readfds, &server->clients, sockfd) == 1)
+        write(sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
     handle_clients(game, &server->clients, &readfds);
- }
+}
 
 void start_server(info_t *info)
 {

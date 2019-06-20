@@ -13,3 +13,4 @@ zappy_graphical
 __pycache__
 .cquery
 .vscode/
+__pycache__
