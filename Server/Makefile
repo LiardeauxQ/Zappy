@@ -15,6 +15,8 @@ BUILD		=	$(ROOT)/build
 
 COMPILER_COMMAND	=	compile_commands.json
 
+TMP_FILES	:=	.tmp tmp
+
 CC		=	gcc
 
 INCLUDES	=	-I includes -I ../library/csv/includes -I ../library/linked_list/includes
@@ -35,6 +37,7 @@ SRC			:=	arguments/arguments.c	\
 				arguments/resources.c	\
 				arguments/int_argument.c	\
 				connection/destroy_server_info.c	\
+				connection/init_info.c	\
 				error.c	\
 				connection/init_connection.c	\
 				protocols/graphical/protocols.c	\
@@ -60,7 +63,6 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/time.c	\
 				protocols/graphical/sender.c	\
 				handle_clients.c	\
-				game/create_map.c	\
 				game/resources/default_resources.c	\
 				game/resources/handle_resources.c	\
 				game/world_generation.c	\
@@ -74,6 +76,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_client_nbr_argument.c	\
 				arguments/test_height_argument.c	\
 				test_init_connection.c	\
+				test_init_info.c	\
 				test_packet_handler.c	\
 				test_init_packets.c	\
 				game/test_world_generation.c		\
@@ -199,6 +202,7 @@ $(BUILD)/%.o.json:		$(TEST_DIR)/%.c
 
 clean:
 			$(V)rm -rf $(BUILD)
+			$(V)rm -f $(TMP_FILES)
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:		clean

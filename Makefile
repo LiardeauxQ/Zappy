@@ -13,6 +13,8 @@ DIRS			:= $(ROOT)/Server	\
 				   $(ROOT)/AI	\
 				   $(ROOT)/Graphical
 
+TMP_FILES		:=	tmp .tmp
+
 SERVER_BIN_NAME	=	zappy_server
 CLIENT_BIN_NAME	=	zappy_ai
 GRAPH_BIN_NAME	=	zappy_graphical
@@ -87,12 +89,14 @@ tests_run:
 clean:
 		$(V)$(foreach var, $(LIBS), make clean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
+		$(V)rm -f $(TMP_FILES)
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
 		$(V)$(foreach var, $(LIBS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(BINARIES), rm -f $(var);)
+		$(V)rm -f $(TMP_FILES)
 		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
 
 re:			fclean all

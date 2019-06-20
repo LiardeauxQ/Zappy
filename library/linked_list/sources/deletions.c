@@ -43,10 +43,12 @@ void *delete_elem(linked_list_t *list, size_t pos)
 void delete_linked_list(linked_list_t *list)
 {
     node_t *tmp = list->head;
+    node_t *stock = 0x0;
 
     while (tmp) {
+        stock = tmp->next;
         free(tmp);
-        tmp = tmp->next;
+        tmp = stock;
     }
     list->head = 0x0;
     list->tail = 0x0;
