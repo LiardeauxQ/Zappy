@@ -35,5 +35,5 @@ zapi::Player &zapi::Team::getPlayer(unsigned int id)
 
 void zapi::Team::removePlayer(unsigned int id)
 {
-    return;
+    players.remove_if([id](zapi::Player p){ return p.getId() == id; });
 }

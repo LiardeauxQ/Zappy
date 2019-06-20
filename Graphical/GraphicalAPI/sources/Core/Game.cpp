@@ -121,3 +121,13 @@ void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> res
         }
     }
 }
+
+void zapi::Game::removePlayer(unsigned int id)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            team.removePlayer(id);
+            return;
+        }
+    }
+}
