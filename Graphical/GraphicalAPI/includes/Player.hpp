@@ -19,11 +19,17 @@ namespace zapi
             ~Player() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             void move(ORIENTATION direction);
-            void addInventory(int index, int quantity);
-            void removeInventory(int index, int quantity);
+            void addInventory(RESOURCE_NUMBER index);
+            void removeInventory(RESOURCE_NUMBER index);
             unsigned int getId() { return id; };
+            void resetTile(zapi::Tile *tile);
+            void levelUp(void);
+            void dropResource(RESOURCE_NUMBER index);
+            void pickUpResource(RESOURCE_NUMBER index);
+            unsigned int getId(void);
 
         private:
+            int level;
             unsigned int id;
             float radius;
             sf::CircleShape main;

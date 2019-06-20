@@ -18,6 +18,8 @@ namespace zapi
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             sf::Vector2f getPosition(void) { return position; };
             std::vector<Resource> &getResources() { return resources; };
+            void removeResource(RESOURCE_NUMBER index);
+            void addResource(RESOURCE_NUMBER index);
         private:
             sf::Vector2f size;
             std::vector<Resource> resources;

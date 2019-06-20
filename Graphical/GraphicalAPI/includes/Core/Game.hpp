@@ -24,6 +24,7 @@ namespace zapi
             void addTeam(const std::string &teamName);
             void addPlayer(const std::string &teamName, int id, const sf::Vector2f &position);
             Tile *findTile(const sf::Vector2f &position);
+            void movePlayer(unsigned int id, ORIENTATION direction);
         private:
             Window window;
             std::vector<Tile> tiles;

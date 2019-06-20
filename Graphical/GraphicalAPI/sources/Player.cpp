@@ -9,6 +9,7 @@
 
 zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &position)
 : Entity(position)
+, level(0)
 , id(id)
 , radius(25)
 , main(radius)
@@ -42,12 +43,40 @@ void zapi::Player::move(ORIENTATION direction)
     }
 }
 
-void zapi::Player::addInventory(int index, int quantity)
+void zapi::Player::addInventory(RESOURCE_NUMBER index)
 {
-    inventory[index] += quantity;
+    inventory[index] += 1;
 }
 
-void zapi::Player::removeInventory(int index, int quantity)
+void zapi::Player::removeInventory(RESOURCE_NUMBER index)
 {
-    inventory[index] -= quantity;
+    if (inventory[index] > 0)
+        inventory[index] -= 1;
+}
+
+void zapi::Player::resetTile(zapi::Tile *tile)
+{
+    this->tile = tile;
+}
+
+void zapi::Player::levelUp(void)
+{
+    level++;
+}
+
+void zapi::Player::dropResource(RESOURCE_NUMBER index)
+{
+    tile->addResource(index);
+    removeInventory(index);
+}
+
+void zapi::Player::pickUpResource(RESOURCE_NUMBER index)
+{
+    tile->removeResource(index);
+    addInventory(index);
+}
+
+unsigned int zapi::Player::getId(void)
+{
+    return id;
 }
