@@ -5,38 +5,52 @@
 ** main
 */
 
+#include <fcntl.h>
+#include <stdio.h>
+
 #include "arguments.h"
 #include "graphical/commands.h"
+#include "graphical/client.h"
+#include "ai/protocols.h"
+#include "ai/client.h"
 #include "connection.h"
 #include "server.h"
+#include "client.h"
 
-void start_server(client_t (*clients)[MAX_CLIENT], int const sockfd)
+void check_connection(game_t *game, server_t *server, client_reader reader)
 {
+    struct timeval timeout = {0};
     int max_fd = 0;
-    fd_set readfds = {0};
+    int sockfd = server->sockfd;
+    fd_set readfds = server->readfds;
+    int clt_sockfd = 0;
 
-    if (listen(sockfd, MAX_CLIENT) == -1)
+    timeout.tv_usec = 500;
+    max_fd = set_fds(&readfds, server->clients, sockfd);
+    if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
+        exit_with_error("select");
+    clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
+    if (clt_sockfd > 0)
+        write(clt_sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
+    handle_clients(game, &server->clients, &readfds, reader);
+}
+
+void start_server(info_t *info)
+{
+    if (listen(info->server_ai.sockfd, MAX_CLIENT) == -1
+            || listen(info->server_graph.sockfd, MAX_CLIENT) == -1)
         exit_with_error("listen");
     while (1) {
-        max_fd = set_fds(&readfds, *clients, sockfd);
-        if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
-            exit_with_error("select");
-        get_new_connection(&readfds, clients, sockfd);
-        handle_clients(clients, &readfds);
-        //TODO: communication between server and client with the protocol
+        check_connection(&info->game, &info->server_ai, &read_ai_client);
+        check_connection(&info->game, &info->server_graph, &read_graph_client);
     }
 }
 
 int main(int ac, char **av)
 {
-    info_t info = {0};
-    client_t clients[MAX_CLIENT] = {0};
+    info_t info = init_info(ac, av);
 
-    handle_arguments(ac, av, &info.input);
-    parse_resources(info.input.resources_filename);
-    //info.server.port = info.input.port;
-    //init_connection(&info.server);
-    //start_server(&clients, info.server.sockfd);
-    destroy_server_info(&info);
+    start_server(&info);
+    destroy_info(&info);
     return (0);
 }

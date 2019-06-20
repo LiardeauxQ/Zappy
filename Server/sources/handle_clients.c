@@ -2,24 +2,18 @@
 ** EPITECH PROJECT, 2018
 ** handle_clients.c
 ** File description:
-** catch clients commands
+** handle clients interaction
 */
+
+#include <stdio.h>
 
 #include "server.h"
 #include "graphical/protocols.h"
-#include <stdio.h>
+#include "graphical/commands.h"
+#include "graphical/packets.h"
 
-int handle_current_client(client_t *client)
-{
-    pkt_header_t hdr = {0};
-
-    if (read(client->sockfd, &hdr, PKT_HDR_LEN) <= 0)
-        return (1);
-    printf("%d %d %d %d\n", hdr.id, hdr.version, hdr.size, hdr.subid);
-    return (0);
-}
-
-void handle_clients(struct client_s (*clients)[MAX_CLIENT], fd_set *readfds)
+void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
+        fd_set *readfds, client_reader reader)
 {
     int fd = 0;
 
@@ -27,6 +21,6 @@ void handle_clients(struct client_s (*clients)[MAX_CLIENT], fd_set *readfds)
         fd = (*clients)[i].sockfd;
         if (!FD_ISSET(fd, readfds))
             continue;
-        handle_current_client(&(*clients)[i]);
+        reader(clients[i], game);
     }
 }

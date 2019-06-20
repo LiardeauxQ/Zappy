@@ -29,6 +29,7 @@ typedef struct sender_s sender_t;
 sender_t *get_senders_from_data(const void *data);
 void *convert_senders_to_data(const sender_t *senders);
 size_t count_senders(const sender_t *senders);
+void destroy_senders(sender_t *senders);
 
 /* handle_broadcast.c */
 

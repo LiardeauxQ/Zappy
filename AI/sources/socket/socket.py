@@ -5,7 +5,7 @@ import time
 
 class SocketZappy:
 
-    def __init__(self, host = 'localhost', port = 3630):
+    def __init__(self, host = 'localhost', port = 6000):
         self.socketID = random.randint(0, 200000)
         self.host = host
         self.port = port 
@@ -14,7 +14,7 @@ class SocketZappy:
 
     def connect_zappy(self):
 
-        buff_size = 2048;
+        buff_size = 8;
         buff = bytearray(buff_size)
         self.socket.connect((self.host, self.port))
         self.socket.recv_into(buff, buff_size);

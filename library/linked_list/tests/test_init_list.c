@@ -11,12 +11,12 @@
 
 Test(append, simple_test)
 {
+    
     char str[] = "test";
     linked_list_t list = {0};
 
     append(&list, str);
     cr_assert_eq((char*)list.head->data, str);
-    delete_linked_list(&list);
 }
 
 Test(append, multiple_nodes_test)
@@ -35,7 +35,6 @@ Test(append, multiple_nodes_test)
         j++;
     }
     cr_assert_eq(j, 4);
-    delete_linked_list(&list);
 }
 
 Test(insert, middle_pos_test)
@@ -56,7 +55,6 @@ Test(insert, middle_pos_test)
         current_pos++;
     }
     cr_assert_eq((char*)tmp->data, new);
-    delete_linked_list(&list);
 }
 
 Test(insert, start_pos_test)
@@ -77,5 +75,4 @@ Test(insert, start_pos_test)
         current_pos++;
     }
     cr_assert_eq((char*)tmp->data, new);
-    delete_linked_list(&list);
 }

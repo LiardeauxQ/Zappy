@@ -15,7 +15,5 @@ int main(int ac, char **av)
             iParser.getCmdStringOption("-h"));
 
     interaction.requestMapSize();
-    interaction.requestTileContent();
-    interaction.requestMapContent();
     return (0);
 }

@@ -18,12 +18,14 @@ Test(convert_senders_to_data, simple_test)
     senders[0] = (sender_t){0x0, 987, 1, 0};
     senders[1] = (sender_t){0x0, 567, 1, 1};
     data = convert_senders_to_data(senders);
-    converted_sender = (sender_t*)data;
+    cr_assert_eq(*(int*)data, SENDER_MAGIC_NUM);
+    converted_sender = (sender_t*)(data + SENDER_MAGIC_NUM_LEN);
     cr_assert_eq(converted_sender->data, 0x0);
     cr_assert_eq(converted_sender->size, 987);
     cr_assert_eq(converted_sender->sockfd, 1);
     cr_assert_eq(converted_sender->is_last, 0);
-    converted_sender = (sender_t*)(data + sizeof(sender_t));
+    converted_sender = (sender_t*)(data + sizeof(sender_t)
+            + SENDER_MAGIC_NUM_LEN);
     cr_assert_eq(converted_sender->data, 0x0);
     cr_assert_eq(converted_sender->size, 567);
     cr_assert_eq(converted_sender->sockfd, 1);
