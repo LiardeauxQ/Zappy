@@ -23,6 +23,7 @@ namespace zapi
             std::list<Player> getPlayers() { return players; };
             bool checkPlayer(unsigned int id);
             zapi::Player &getPlayer(unsigned int id);
+            void removePlayer(unsigned int id);
         private:
             std::string name;
             std::list<Player> players;
