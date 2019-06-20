@@ -8,6 +8,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #pragma pack(1)
 
