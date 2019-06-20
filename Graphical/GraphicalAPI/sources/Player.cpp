@@ -12,7 +12,7 @@ zapi::Player::Player(unsigned int id, const sf::Vector2f &position)
 , id(id)
 , radius(25)
 , main(radius)
-, inventory({ 0, 0, 0, 0, 0, 0, 0 })
+, inventory()
 {
     main.setFillColor(sf::Color::Blue);
     main.setOutlineColor(sf::Color::Black);
