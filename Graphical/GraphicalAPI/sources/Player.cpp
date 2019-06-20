@@ -29,17 +29,31 @@ void zapi::Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void zapi::Player::move(ORIENTATION direction)
 {
-    if (direction == NORTH) {
-        main.move(0, -(radius * 4));
-    }
-    if (direction == EAST) {
-        main.move(radius * 4, 0);
-    }
-    if (direction == WEST) {
-        main.move(-(radius * 4), 0);
-    }
-    if (direction == SOUTH) {
-        main.move(0, radius * 4);
+    switch (direction) {
+        case NORTH:
+            if (position.y - 100 > 0)
+                main.setPosition(sf::Vector2f(position.x, position.y - 100));
+            else
+                main.setPosition(sf::Vector2f(position.x, 3000 - (50 + radius)));
+            break;
+        case EAST:
+            if (position.x + 100 < 3000)
+                main.setPosition(sf::Vector2f(position.x + 100, position.y));
+            else
+                main.setPosition(sf::Vector2f(0 + (50 - radius), position.y));
+            break;
+        case WEST:
+            if (position.x - 100 > 0)
+                main.setPosition(sf::Vector2f(position.x - 100, position.y));
+            else
+                main.setPosition(sf::Vector2f(3000 - (50 + radius), position.y));
+            break;
+        case SOUTH:
+            if (position.y + 100 < 3000)
+                main.setPosition(sf::Vector2f(position.x, position.y + 100));
+            else
+                main.setPosition(sf::Vector2f(position.x, 0 + (50 - radius)));
+            break;
     }
 }
 
