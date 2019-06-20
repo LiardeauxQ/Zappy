@@ -16,7 +16,7 @@ int send_map_size(const void *data)
 {
     char *to_write = 0x0;
     char *tmp = 0x0;
-    size_t size = PKT_HDR_LEN + SRV_MAP_SIZE_LEN + 1;
+    size_t size = PKT_HDR_LEN + SRV_MAP_SIZE_LEN;
     sender_t *sender = get_senders_from_data(data);
     world_t *world = 0x0;
     pkt_header_t hdr = {SRV_MAP_SIZE, PROTOCOL_VERSION, SRV_MAP_SIZE_LEN, 0};

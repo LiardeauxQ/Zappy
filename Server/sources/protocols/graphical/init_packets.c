@@ -72,7 +72,7 @@ int init_server_actions_packets2(phr_t *reg)
     if (reg == 0x0)
         return (-1);
     add_pkt_info(reg, init_pkt(27, 0, "SRV_PLAYER_DEATH", &send_player_death));
-    add_pkt_info(reg, init_pkt(28, 0, "SRV_EGG_LAYED", &send_laid_egg));
+    add_pkt_info(reg, init_pkt(28, 0, "SRV_EGG_LAYED", &send_layed_egg));
     add_pkt_info(reg, init_pkt(29, 0, "SRV_EGG_HATCHING", &send_hatching_egg));
     add_pkt_info(reg, init_pkt(30, 0, "SRV_PLAYER_CONNECT_EGG",
                 &send_egg_connection));

@@ -59,7 +59,7 @@ size_t count_senders(const sender_t *senders)
     size_t size = 0;
 
     while (!senders[size++].is_last);
-    return (size + 1);
+    return (size);
 }
 
 void destroy_senders(sender_t *senders)
