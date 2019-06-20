@@ -8,6 +8,7 @@
 #pragma once
 
 #include "map.h"
+#include "teams.h"
 #include "resources.h"
 #include "graphical/protocols.h"
 #include "linked_list.h"
@@ -40,6 +41,7 @@ struct world_s {
     tile_content_t **tiles;
     resource_t *resources; // available resources
     linked_list_t players; // of type struct player_s
+    team_t *teams; // End with a team at 0
 };
 
 typedef struct world_s world_t;
