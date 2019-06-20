@@ -44,6 +44,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
 				protocols/ai/init_action_handlers.c	\
+				protocols/ai/read_ai_client.c	\
 				protocols/graphical/commands/broadcast.c	\
 				protocols/graphical/commands/eggs.c	\
 				protocols/graphical/commands/end_game.c	\
@@ -62,6 +63,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/tile_content.c	\
 				protocols/graphical/commands/time.c	\
 				protocols/graphical/sender.c	\
+				protocols/graphical/read_graph_client.c	\
 				handle_clients.c	\
 				game/resources/default_resources.c	\
 				game/resources/handle_resources.c	\

@@ -16,6 +16,7 @@
 
 #include "client.h"
 #include "graphical/protocols.h"
+#include "ai/protocols.h"
 #include "world.h"
 
 #define DEFAULT_PORT_AI 6000
@@ -45,6 +46,7 @@ typedef struct server_s server_t;
 
 struct game_s {
     phr_t handler_register;
+    ahr_t action_register;
     world_t world;
 };
 

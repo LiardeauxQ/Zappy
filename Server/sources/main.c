@@ -10,22 +10,27 @@
 
 #include "arguments.h"
 #include "graphical/commands.h"
+#include "graphical/client.h"
 #include "ai/protocols.h"
+#include "ai/client.h"
 #include "connection.h"
 #include "server.h"
+#include "client.h"
 
-void check_connection(game_t *game, server_t *server)
+void check_connection(game_t *game, server_t *server, client_reader reader)
 {
     int max_fd = 0;
     int sockfd = server->sockfd;
     fd_set readfds = server->readfds;
+    int clt_sockfd = 0;
 
     max_fd = set_fds(&readfds, server->clients, sockfd);
     if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
         exit_with_error("select");
-    if (get_new_connection(&readfds, &server->clients, sockfd) == 1)
-        write(sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
-    handle_clients(game, &server->clients, &readfds);
+    clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
+    if (clt_sockfd > 0)
+        write(clt_sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
+    handle_clients(game, &server->clients, &readfds, reader);
 }
 
 void start_server(info_t *info)
@@ -34,8 +39,8 @@ void start_server(info_t *info)
             || listen(info->server_graph.sockfd, MAX_CLIENT) == -1)
         exit_with_error("listen");
     while (1) {
-        check_connection(&info->game, &info->server_ai);
-        check_connection(&info->game, &info->server_graph);
+        check_connection(&info->game, &info->server_ai, &read_ai_client);
+        check_connection(&info->game, &info->server_graph, &read_graph_client);
     }
 }
 

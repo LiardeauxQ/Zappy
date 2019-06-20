@@ -73,5 +73,5 @@ int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
             break;
         }
     }
-    return (1);
+    return (new_socket);
 }

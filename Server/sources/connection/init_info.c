@@ -10,6 +10,7 @@
 #include "resources.h"
 #include "connection.h"
 #include "graphical/packets.h"
+#include "ai/init_action_handlers.h"
 
 info_t init_info(int ac, char **av)
 {       
@@ -18,6 +19,7 @@ info_t init_info(int ac, char **av)
     handle_arguments(ac, av, &info.input);
     parse_resources(info.input.resources_filename);
     init_packets(&info.game.handler_register);
+    init_action_handler_register(&info.game.action_register);
     info.server_ai.port = (info.input.port == 0 ? DEFAULT_PORT_AI
             : info.input.port);
     info.server_graph.port = (info.input.port == 0 ? DEFAULT_PORT_GRAPH
