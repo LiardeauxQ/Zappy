@@ -56,9 +56,10 @@ void zapi::Game::addTeam(const std::string &teamName)
 
 void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector2f &position)
 {
+    zapi::Tile *tile = findTile(position);
     for (auto &team : teams)
         if (team.getName() == teamName) {
-            team.addPlayer(id, position);
+            team.addPlayer(id, tile, position);
             return;
         }
     addTeam(teamName);
@@ -75,4 +76,5 @@ zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
             }
         }
     }
+    return (NULL);
 }

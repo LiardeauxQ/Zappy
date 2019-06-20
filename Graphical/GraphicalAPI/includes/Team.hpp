@@ -18,7 +18,7 @@ namespace zapi
         public:
             Team(const std::string &name = "trash");
             ~Team() = default;
-            void addPlayer(int id, const sf::Vector2f &position);
+            void addPlayer(int id, zapi::Tile *tile, const sf::Vector2f &position);
             std::string &getName() { return name; };
             std::list<Player> getPlayers() { return players; };
         private:

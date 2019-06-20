@@ -12,7 +12,7 @@ zapi::Team::Team(const std::string &name)
 , players()
 {}
 
-void zapi::Team::addPlayer(int id, const sf::Vector2f &position)
+void zapi::Team::addPlayer(int id, zapi::Tile *tile, const sf::Vector2f &position)
 {
-    players.push_back(Player(id, position));
+    players.push_back(Player(id, tile, position));
 }

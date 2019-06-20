@@ -7,11 +7,12 @@
 
 #include "Player.hpp"
 
-zapi::Player::Player(unsigned int id, const sf::Vector2f &position)
+zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &position)
 : Entity(position)
 , id(id)
 , radius(25)
 , main(radius)
+, tile(tile)
 , inventory()
 {
     main.setFillColor(sf::Color::Blue);
