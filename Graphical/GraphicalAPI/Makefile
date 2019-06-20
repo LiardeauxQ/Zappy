@@ -23,6 +23,7 @@ MAIN		:=
 
 SRC			:=	Core/Window.cpp \
 				Core/Game.cpp \
+				Utils.cpp \
 				Entity.cpp \
 				Tile.cpp \
 				Resource.cpp \

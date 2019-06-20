@@ -7,13 +7,13 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(sf::Texture *texture, const sf::Vector2f &size, const sf::Vector2f &position)
+zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
 : Entity(position)
 , quantity(0)
 , size(size)
 , sprite()
 {
-    sprite.setTexture(*texture);
+    sprite.setTexture(*(getResourceTexture()));
     sprite.setPosition(position);
 }
 

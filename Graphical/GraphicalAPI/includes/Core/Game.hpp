@@ -27,7 +27,5 @@ namespace zapi
             Window window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;
-            sf::Texture *tileTexture;
-            sf::Texture *resourceTexture;
     };
 }

@@ -17,4 +17,7 @@ namespace zapi
         SOUTH = 3,
         WEST  = 4
     };
+
+    sf::Texture *getTileTexture();
+    sf::Texture *getResourceTexture();
 }

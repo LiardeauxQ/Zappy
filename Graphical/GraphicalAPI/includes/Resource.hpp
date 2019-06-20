@@ -13,7 +13,7 @@ namespace zapi
 {
     class Resource : public Entity {
         public:
-            Resource(sf::Texture *texture, const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
+            Resource(const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
             ~Resource() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             Resource &operator++(int);

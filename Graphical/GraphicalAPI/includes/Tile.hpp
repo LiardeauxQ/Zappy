@@ -13,7 +13,7 @@ namespace zapi
 {
     class Tile : public Entity {
         public:
-            Tile(sf::Texture *texture, sf::Texture *resourceTexture, const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
+            Tile(const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
             ~Tile() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             std::vector<Resource> &getResources() { return resources; };
