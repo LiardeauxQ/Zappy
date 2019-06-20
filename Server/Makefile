@@ -63,8 +63,8 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/sender.c	\
 				protocols/ai/init_action_handlers.c	\
 				protocols/ai/handlers/movement_handlers.c \
-				protocols/ai/handlers/player_info_handlers.c \
 				protocols/ai/handlers/resources_handlers.c \
+				protocols/ai/handlers/player_info_handlers.c \
 				protocols/ai/handlers/utils.c \
 				handle_clients.c	\
 				game/create_map.c	\
@@ -89,6 +89,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/player/test_player_creation.c	\
 				handlers/ai/test_movement_handlers.c \
 				handlers/ai/test_resources_handlers.c \
+				handlers/ai/test_player_info_handlers.c \
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
 

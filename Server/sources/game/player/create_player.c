@@ -14,11 +14,12 @@
 
 void add_player(world_t *world, const unsigned int team_id)
 {
-    static int player_id;
+    static int player_id = 0;
     player_t *player = calloc(1, sizeof(player_t));
 
     if (world == 0x0)
         return;
+    player->level = 1;
     player->id = player_id;
     player->team_id = team_id;
     player->x = rand() % world->width;

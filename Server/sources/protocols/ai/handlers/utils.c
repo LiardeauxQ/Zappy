@@ -5,12 +5,13 @@
 ** Utils for the handlers
 */
 
+#include <criterion/criterion.h>
 #include <stdint.h>
 #include <time.h>
 
 #include "ai/handlers/utils.h"
 
-player_t *get_player(linked_list_t players, int id)
+player_t *get_player(linked_list_t players, unsigned int id)
 {
     node_t *cursor = players.head;
 
@@ -23,18 +24,24 @@ player_t *get_player(linked_list_t players, int id)
     return (0x0);
 }
 
-int *next_case(world_t *world, int *coords, int orientation, int inc)
+size_t *next_case(world_t *world, size_t *coords, int orientation, int inc)
 {
-    unsigned int x_inc[4] = {0, 1, 0, -1};
-    unsigned int y_inc[4] = {-1, 0, 1, 0};
-    unsigned int *next_case = calloc(1, sizeof(unsigned int) * 2);
+    int x_inc[4] = {0, 1, 0, -1};
+    int y_inc[4] = {-1, 0, 1, 0};
+    int new_coords[2] = {coords[0], coords[1]};
 
-    coords[0] = coords[0] + x_inc[orientation] * inc;
-    coords[1] = coords[1] + y_inc[orientation] * inc;
-    if (coords[0] >= world->width)
-        coords[0] -= world->width;
-    if (coords[1] >= world->height)
-        coords[1] -= world->height;
+    new_coords[0] += x_inc[orientation] * inc;
+    new_coords[1] += y_inc[orientation] * inc;
+    if (new_coords[0] >= (int) world->width)
+        new_coords[0] -= (int) world->width;
+    if (new_coords[0] < 0)
+        new_coords[0] += (int) world->width;
+    if (new_coords[1] >= (int) world->height)
+        new_coords[1] -= (int) world->height;
+    if (new_coords[1] < 0)
+        new_coords[1] += (int) world->height;
+    coords[0] = new_coords[0];
+    coords[1] = new_coords[1];
     return (coords);
 }
 
