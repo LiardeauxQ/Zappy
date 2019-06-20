@@ -86,6 +86,28 @@ void zapi::Game::movePlayer(unsigned int id, ORIENTATION direction)
             auto player = team.getPlayer(id);
             player.move(direction);
             player.resetTile(findTile(player.getPosition()));
+            return;
+        }
+    }
+}
+
+void zapi::Game::dropResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.dropResource(index);
+            return;
+        }
+    }
+}
+
+void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.pickUpResource(index);
         }
     }
 }
