@@ -4,7 +4,7 @@ import sys
 
 class Player:
 
-    def __init__(self):
+    def __init__(self, port = 6000, team = "test_team", host = "localhost"):
         self.client = SocketZappy()
         self.client.connect_zappy()
         self.level = 1
@@ -15,6 +15,10 @@ class Player:
         self.mendiane = 0
         self.phiras= 0
         self.thystame = 0
+        self.port = port
+        self.host = host
+        self.team = team
+  
 
     def forward(self):
         self.client.sendMessage("Forward\n")
@@ -75,6 +79,15 @@ class Player:
             return True
         else:
             return False
+
+    def __parseBroadcast(self, message):
+        message = message.replace("\x00", "").replace("\n", "").replace("[", "").replace("]", "").replace(",", "")
+        result = message.split(" ")
+        print(result)
+        return int(result[1])
+
+
+
 
     def checkElevation(self):
         if self.linemate >= CONSTANTS["linemate_necessary"][self.level] and\
