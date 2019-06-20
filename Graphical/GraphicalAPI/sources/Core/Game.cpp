@@ -64,3 +64,15 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
     addTeam(teamName);
     addPlayer(teamName, id, position);
 }
+
+zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
+{
+    for (int i = 0; i != tiles.size(); i++) {
+        if (tiles[i].getPosition().x > position.x) {
+            for (i--; i < tiles.size(); i += 30) {
+                if (tiles[i].getPosition().y > position.y)
+                    return &tiles[i--];
+            }
+        }
+    }
+}

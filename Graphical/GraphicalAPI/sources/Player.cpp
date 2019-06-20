@@ -40,3 +40,13 @@ void zapi::Player::move(ORIENTATION direction)
         main.move(0, radius * 4);
     }
 }
+
+void zapi::Player::addInventory(int index, int quantity)
+{
+    inventory[index] += quantity;
+}
+
+void zapi::Player::removeInventory(int index, int quantity)
+{
+    inventory[index] -= quantity;
+}

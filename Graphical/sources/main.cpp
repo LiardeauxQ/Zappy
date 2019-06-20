@@ -19,32 +19,9 @@ int main(int ac, char **av)
 //    interaction.requestTileContent();
 //    interaction.requestMapContent();
 
-    // sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test");
-    // sf::Sprite sprite;
-    // sf::Sprite copy;
-    // sf::Texture texture;
-    // sf::Texture crystal;
-    // sf::Event event;
-
-    // texture.loadFromFile("sprites/grass.png", sf::IntRect(0, 0, 100, 100));
-    // texture.setSmooth(true);
-    // sprite.setTexture(texture);
-    // crystal.loadFromFile("sprites/crystal.png", sf::IntRect(0, 0, 32, 64));
-    // crystal.setSmooth(true);
-    // copy.setTexture(crystal);
-    // copy.setPosition(200, 200);
-    // while (window.isOpen()) {
-    //     while(window.pollEvent(event)) {
-    //         if (event.type == sf::Event::Closed)
-    //             window.close();
-    //     }
-    //     window.clear();
-    //     window.draw(sprite);
-    //     window.draw(copy);
-    //     window.display();
-    // }
-
     zapi::Game game("Zappy");
+    game.addPlayer("Team", 0, sf::Vector2f(0, 0));
+    game.addPlayer("Team", 1, sf::Vector2f(26, 12));
     game.start();
     return (0);
 }
