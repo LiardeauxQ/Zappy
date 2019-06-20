@@ -76,7 +76,7 @@ void zapi::Player::pickUpResource(RESOURCE_NUMBER index)
     addInventory(index);
 }
 
-unsigned int zapi::Player::getId(void)
+sf::Vector2f zapi::Player::getPosition(void)
 {
-    return id;
+    return position;
 }

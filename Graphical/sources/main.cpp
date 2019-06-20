@@ -22,6 +22,7 @@ int main(int ac, char **av)
     zapi::Game game("Zappy");
     game.addPlayer("Team", 0, sf::Vector2f(0, 0));
     game.addPlayer("Team", 1, sf::Vector2f(26, 12));
+    game.movePlayer(0, SOUTH);
     game.start();
     return (0);
 }

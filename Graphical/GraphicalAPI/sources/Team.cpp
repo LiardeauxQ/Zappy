@@ -16,3 +16,19 @@ void zapi::Team::addPlayer(int id, zapi::Tile *tile, const sf::Vector2f &positio
 {
     players.push_back(Player(id, tile, position));
 }
+
+bool zapi::Team::checkPlayer(unsigned int id)
+{
+    for (auto &player : players) {
+        if (player.getId() == id)
+            return true;
+    }
+    return false;
+}
+
+zapi::Player &zapi::Team::getPlayer(unsigned int id)
+{
+    for (auto &player : players)
+        if (player.getId() == id)
+            return player;
+}

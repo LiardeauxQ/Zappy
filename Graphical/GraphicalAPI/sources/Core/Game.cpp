@@ -81,5 +81,11 @@ zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
 
 void zapi::Game::movePlayer(unsigned int id, ORIENTATION direction)
 {
-    
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.move(direction);
+            player.resetTile(findTile(player.getPosition()));
+        }
+    }
 }

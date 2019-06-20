@@ -26,7 +26,7 @@ namespace zapi
             void levelUp(void);
             void dropResource(RESOURCE_NUMBER index);
             void pickUpResource(RESOURCE_NUMBER index);
-            unsigned int getId(void);
+            sf::Vector2f getPosition(void);
 
         private:
             int level;
