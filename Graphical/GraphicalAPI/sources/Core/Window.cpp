@@ -25,7 +25,7 @@ void zapi::Window::update()
 void zapi::Window::drawEntities(std::vector<Tile> &entities)
 {
     for (auto &entity : entities) {
-        entity.update(this);
+        this->draw(entity);
         drawEntities(entity.getResources());
     }
 }
@@ -33,13 +33,13 @@ void zapi::Window::drawEntities(std::vector<Tile> &entities)
 void zapi::Window::drawEntities(std::vector<Resource> &entities)
 {
     for (auto &entity : entities)
-        entity.update(this);
+        this->draw(entity);
 }
 
 void zapi::Window::drawEntities(std::vector<Player> &entities)
 {
     for (auto &entity : entities)
-        entity.update(this);
+        this->draw(entity);
 }
 
 void zapi::Window::inputHandler()

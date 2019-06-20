@@ -7,26 +7,19 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
+zapi::Resource::Resource(sf::Texture *texture, const sf::Vector2f &size, const sf::Vector2f &position)
 : Entity(position)
 , quantity(0)
 , size(size)
-, main(size)
+, sprite()
 {
-    texture.loadFromFile("sprites/crystal.png", sf::IntRect(0, 0, 32, 64));
-    texture.setSmooth(true);
-    main.setFillColor(sf::Color::Yellow);
-    sprite.setTexture(texture);
+    sprite.setTexture(*texture);
     sprite.setPosition(position);
-    main.setOutlineColor(sf::Color::Black);
-    main.setOutlineThickness(1);
-    main.setPosition(position);
 }
 
-void zapi::Resource::update(sf::RenderWindow *window)
+void zapi::Resource::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    // window->draw(sprite);
-    window->draw(main);
+    target.draw(sprite, states);
 }
 
 zapi::Resource &zapi::Resource::operator++(int)

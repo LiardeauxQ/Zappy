@@ -13,16 +13,14 @@ namespace zapi
 {
     class Resource : public Entity {
         public:
-            Resource(const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
+            Resource(sf::Texture *texture, const sf::Vector2f &size, const sf::Vector2f &position = sf::Vector2f(0, 0));
             ~Resource() = default;
-            void update(sf::RenderWindow *window) final;
+            void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             Resource &operator++(int);
             Resource &operator--(int);
         private:
             unsigned int quantity;
             sf::Vector2f size;
-            sf::RectangleShape main;
-            sf::Texture texture;
             sf::Sprite sprite;
     };
 }

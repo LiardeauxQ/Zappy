@@ -12,6 +12,8 @@ zapi::Game::Game(const std::string &title)
 : window(title)
 , tiles()
 , teams()
+, tileTexture(new sf::Texture())
+, resourceTexture(new sf::Texture())
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -19,13 +21,17 @@ zapi::Game::Game(const std::string &title)
 
 void zapi::Game::initialize()
 {
+    tileTexture->loadFromFile("sprites/grass.png", sf::IntRect(0, 0, 100, 100));
+    resourceTexture->loadFromFile("sprites/crystal.png", sf::IntRect(0, 0, 32, 64));
+    tileTexture->setSmooth(true);
+    resourceTexture->setSmooth(true);
     for (float i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
         if (x >= 3000) {
             x = 0;
             y += 100;
             // y += 100 * std::sqrt(2);
         }
-        tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
+        tiles.push_back(Tile(tileTexture, resourceTexture, sf::Vector2f(100, 100), sf::Vector2f(x, y)));
     }
 }
 

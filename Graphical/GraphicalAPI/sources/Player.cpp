@@ -20,9 +20,9 @@ zapi::Player::Player(unsigned int id, const sf::Vector2f &position)
     main.setPosition(position);
 }
 
-void zapi::Player::update(sf::RenderWindow *window)
+void zapi::Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    window->draw(main);
+    target.draw(main, states);
 }
 
 void zapi::Player::move(ORIENTATION direction)

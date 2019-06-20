@@ -11,11 +11,11 @@
 
 namespace zapi
 {
-    class Entity {
+    class Entity : public sf::Drawable {
         public:
             Entity(const sf::Vector2f &position = sf::Vector2f(0, 0));
             virtual ~Entity() = default;
-            virtual void update(sf::RenderWindow *window);
+            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
         protected:
             sf::Vector2f position;
     };
