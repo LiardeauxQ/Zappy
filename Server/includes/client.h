@@ -7,13 +7,24 @@
 
 #pragma once
 
+#include <sys/select.h>
+
+#include "graphical/protocols.h"
+
 #define MAX_CLIENT 30
+
+typedef struct game_s game_t;
+typedef struct server_s server_t;
+typedef struct world_s world_t;
 
 typedef struct client_s {
     int sockfd;
+    int client_nb;
 } client_t;
+
+typedef int (*client_reader)(client_t *, game_t *);
 
 /* handle_clients.c */
 
-int handle_current_client(client_t *client);
-void handle_clients(struct client_s (*clients)[MAX_CLIENT], fd_set *readfds);
+void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
+        fd_set *readfds, client_reader reader);

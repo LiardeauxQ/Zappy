@@ -14,7 +14,7 @@ class SocketZappy:
 
     def connect_zappy(self):
 
-        buff_size = 2048;
+        buff_size = 8;
         buff = bytearray(buff_size)
         self.socket.connect((self.host, self.port))
         self.socket.recv_into(buff, buff_size);
