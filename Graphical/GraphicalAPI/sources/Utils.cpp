@@ -13,7 +13,7 @@ sf::Texture *zapi::getTileTexture()
 
     if (!tileTexture) {
         tileTexture = new sf::Texture();
-        tileTexture->loadFromFile("sprites/grass.png", sf::IntRect(0, 0, 100, 100));
+        tileTexture->loadFromFile("sprites/grass.png");
         tileTexture->setSmooth(true);
     }
     return tileTexture;

@@ -19,7 +19,8 @@ zapi::Resource::Resource(const sf::Vector2f &size, const sf::Vector2f &position)
 
 void zapi::Resource::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(sprite, states);
+    if (quantity)
+        target.draw(sprite, states);
 }
 
 zapi::Resource &zapi::Resource::operator++(int)

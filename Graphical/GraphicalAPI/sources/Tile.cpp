@@ -15,6 +15,8 @@ zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
 , sprite()
 {
     sprite.setTexture(*(getTileTexture()));
+    sprite.setTextureRect(sf::IntRect((std::rand() % 3) * 100, 0, 100, 100));
+    
     sprite.setPosition(position);
 
     for (int i = 0; i != 7; i++)
