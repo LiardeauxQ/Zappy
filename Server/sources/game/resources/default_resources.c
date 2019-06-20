@@ -24,11 +24,11 @@ static const struct resource_s default_resources[] = {
 
 resource_t *init_default_resources(void)
 {
-    resource_t *resources = malloc((RESOURCE_TYPES_NUMBER + 1)
+    resource_t *resources = malloc((DEFAULT_RESOURCES_NUMBER + 1)
         * sizeof(resource_t));
     size_t i = 0;
 
-    for (; i < RESOURCE_TYPES_NUMBER ; i++) {
+    for (; i < DEFAULT_RESOURCES_NUMBER ; i++) {
         resources[i].id = default_resources[i].id;
         resources[i].name = strdup(default_resources[i].name);
         resources[i].percentage = default_resources[i].percentage;
@@ -41,7 +41,7 @@ int find_id_for_resource(char *name)
 {
     if (!name)
         return (-2);
-    for (int i = 0 ; i < RESOURCE_TYPES_NUMBER ; i++)
+    for (int i = 0 ; i < DEFAULT_RESOURCES_NUMBER ; i++)
         if (!strcmp(name, default_resources[i].name))
             return (default_resources[i].id);
     return (-1);

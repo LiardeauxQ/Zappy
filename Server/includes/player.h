@@ -8,5 +8,7 @@
 #pragma once
 
 #include "world.h"
+#include "resources.h"
+#include "graphical/protocols.h"
 
-void add_player(world_t *world, const char *team_name);
+void add_player(world_t *world, const unsigned int team_id);

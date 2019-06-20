@@ -53,7 +53,7 @@ int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],
     return (max_fd);
 }
 
-void get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
+int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     int const main_socket)
 {
     int new_socket = 0;
@@ -61,12 +61,11 @@ void get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     socklen_t addrlen = sizeof(addr);
 
     if (!FD_ISSET(main_socket, readfds))
-        return;
+        return (0);
     new_socket = accept(main_socket, &addr, &addrlen);
-    printf("%d\n", new_socket);
     if (new_socket == -1) {
         perror("accept");
-        return;
+        return (-1);
     }
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         if ((*clients)[i].sockfd == 0) {
@@ -74,4 +73,5 @@ void get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
             break;
         }
     }
+    return (1);
 }

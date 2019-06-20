@@ -5,37 +5,45 @@
 ** main
 */
 
-#include "server.h"
-#include "arguments.h"
-#include "connection.h"
+#include <fcntl.h>
+#include <stdio.h>
 
-void start_server(client_t (*clients)[MAX_CLIENT], int const sockfd)
+#include "arguments.h"
+#include "graphical/commands.h"
+#include "ai/protocols.h"
+#include "connection.h"
+#include "server.h"
+
+void check_connection(game_t *game, server_t *server)
 {
     int max_fd = 0;
-    fd_set readfds = {0};
+    int sockfd = server->sockfd;
+    fd_set readfds = server->readfds;
 
-    if (listen(sockfd, MAX_CLIENT) == -1)
+    max_fd = set_fds(&readfds, server->clients, sockfd);
+    if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
+        exit_with_error("select");
+    if (get_new_connection(&readfds, &server->clients, sockfd) == 1)
+        write(sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
+    handle_clients(game, &server->clients, &readfds);
+}
+
+void start_server(info_t *info)
+{
+    if (listen(info->server_ai.sockfd, MAX_CLIENT) == -1
+            || listen(info->server_graph.sockfd, MAX_CLIENT) == -1)
         exit_with_error("listen");
     while (1) {
-        max_fd = set_fds(&readfds, *clients, sockfd);
-        if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
-            exit_with_error("select");
-        get_new_connection(&readfds, clients, sockfd);
-        handle_clients(clients, &readfds);
-        //TODO: communication between server and client with the protocol
+        check_connection(&info->game, &info->server_ai);
+        check_connection(&info->game, &info->server_graph);
     }
 }
 
 int main(int ac, char **av)
 {
-    info_t info = {0};
-    client_t clients[MAX_CLIENT] = {0};
+    info_t info = init_info(ac, av);
 
-    handle_arguments(ac, av, &info.input);
-    parse_resources(info.input.resources_filename);
-    //info.server.port = info.input.port;
-    //init_connection(&info.server);
-    //start_server(&clients, info.server.sockfd);
-    destroy_server_info(&info);
+    start_server(&info);
+    destroy_info(&info);
     return (0);
 }

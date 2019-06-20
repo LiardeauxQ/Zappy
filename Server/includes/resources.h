@@ -11,6 +11,7 @@
 #include "graphical/protocols.h"
 
 #define MINIMAL_RESOURCES 7
+#define DEFAULT_RESOURCES_NUMBER 8
 
 struct resource_s {
     enum RESOURCE_NUMBER id;

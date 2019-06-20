@@ -8,17 +8,16 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdlib.h>
+
+#define WELCOME_MSG "WELCOME\n"
+#define WELCOME_MSG_LEN 8
 
 #pragma pack(1)
 
 /*
 ** DANGLING_HANDLER -> Handler function is NULL
 */
-enum HANDLING_ERRORS {
-    NO_ERROR                = 0,
-    INVALID_PARAMETERS      = 1,
-    DANGLING_HANDLER        = 2
-};
 
 typedef int (*action_handler_fcnt)(const uint16_t limit_cycles, const char **args);
 

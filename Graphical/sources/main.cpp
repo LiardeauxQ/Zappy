@@ -11,11 +11,9 @@
 int main(int ac, char **av)
 {
     IO::InputParser iParser(ac, av);
-    communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
+    /*communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
             iParser.getCmdStringOption("-h"));
 
-    interaction.requestMapSize();
-    interaction.requestTileContent();
-    interaction.requestMapContent();
+    interaction.requestMapSize();*/
     return (0);
 }
