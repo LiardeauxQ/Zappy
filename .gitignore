@@ -11,3 +11,4 @@ zappy_ai
 zappy_graphical
 .cquery
 .vscode/
+__pycache__
