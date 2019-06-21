@@ -12,9 +12,11 @@
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 
-char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity);
+char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity,
+        resource_t *resources);
 
-enum RESOURCE_NUMBER resource_str_to_id(const char *resource);
+enum RESOURCE_NUMBER resource_str_to_id(const char *resource,
+        resource_t *resources);
 
 int take_object_handler(world_t *world, player_t *player, const char **args);
 

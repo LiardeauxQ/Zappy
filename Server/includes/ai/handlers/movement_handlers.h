@@ -12,6 +12,8 @@
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 
+void move_player(world_t *world, player_t *player, int x, int y);
+
 int forward_move_handler(world_t *world, player_t *player, const char **args);
 
 int left_move_handler(world_t *world, player_t *player, const char **args);

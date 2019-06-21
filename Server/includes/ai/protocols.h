@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** protocol.h
 ** File description:
-** protocols for AI client
+** Protocols for AI client
 */
 
 #pragma once

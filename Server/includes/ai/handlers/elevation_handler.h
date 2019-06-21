@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2018
-** movement_handlers.h
+** elevation_handler.h
 ** File description:
-** Movement handlers header
+** Elevation handlers header
 */
 
 #pragma once
@@ -14,5 +14,4 @@
 
 int is_enough_users(world_t *world, tile_content_t *tile, player_t *player);
 
-int elevation_handler(world_t *world, player_t *player,
-        const char __attribute__((unused)) **args);
+int elevation_handler(world_t *world, player_t *player, const char **args);

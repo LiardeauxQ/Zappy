@@ -6,7 +6,7 @@
 */
 
 #include <criterion/criterion.h>
-#include "ai/handlers/movement_handlers.h"
+#include "ai/handlers/elevation_handler.h"
 
 Test(elevation_handler, test_elevation_handler)
 {

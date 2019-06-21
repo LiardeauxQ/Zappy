@@ -12,7 +12,8 @@
 
 #include "ai/handlers/player_info_handlers.h"
 
-char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity, resource_t *resources)
+char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity,
+        resource_t *resources)
 {
     int ressource_string_len = strlen(resources[id].name);
     unsigned int len = 0;
@@ -32,7 +33,8 @@ char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity, reso
     return (str);
 }
 
-enum RESOURCE_NUMBER resource_str_to_id(const char *resource, resource_t *resources)
+enum RESOURCE_NUMBER resource_str_to_id(const char *resource,
+        resource_t *resources)
 {
     for (int i = 0; i < DEFAULT_RESOURCES_NUMBER; i++) {
         if (!strcmp(resources[i].name, resource))
@@ -58,7 +60,8 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
     return (NO_ERROR);
 }
 
-int set_down_object_handler(world_t *world, player_t *player, const char **args)
+int set_down_object_handler(world_t *world, player_t *player,
+        const char **args)
 {
     enum RESOURCE_NUMBER resource_id = 0;
 
@@ -85,7 +88,8 @@ int inventory_handler(world_t *world, player_t *player,
     for (int i = 1; i < DEFAULT_RESOURCES_NUMBER; i++) {
         resource_string = resource_to_string(i,
                 player->resources[i], world->resources);
-        inventory = realloc(inventory, strlen(inventory) + strlen(resource_string) + 3);
+        inventory = realloc(inventory, strlen(inventory) +
+                strlen(resource_string) + 3);
         strcat(inventory , resource_string);
         if (i == sizeof(player->resources) / 4 - 1)
             strcat(inventory , "]");

@@ -25,6 +25,8 @@ struct player_s {
     unsigned int id;
     unsigned int team_id;
     unsigned int hp;
+    unsigned int fork_left_time;
+    unsigned int hatch_left_time;
     enum ORIENTATION orientation;
     unsigned int resources[DEFAULT_RESOURCES_NUMBER];
     unsigned int x;

@@ -12,9 +12,10 @@
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 
-char *tile_to_str(world_t *world, size_t *coords, int current_player_id);
+void tile_to_str(world_t *world, size_t *coords, int team_id, char **str);
 
-void append_tile_to_look_table(char **look_table, char *tile);
+void append_tile_to_look_table(world_t *world, size_t *coords, int team_id,
+        char **look_table);
 
 int look_handler(world_t *world, player_t *player, const char **args);
 

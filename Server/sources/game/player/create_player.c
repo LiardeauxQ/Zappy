@@ -22,10 +22,12 @@ void add_player(world_t *world, const unsigned int team_id)
     player->level = 1;
     player->id = player_id;
     player->team_id = team_id;
+    player->hatch_left_time = 0;
     player->x = rand() % world->width;
     player->y = rand() % world->height;
     player->orientation = rand() % 4;
     memset(player->resources, 0, sizeof(player->resources));
     append(&world->players, player);
+    append(&world->tiles[player->x][player->y].players_id, &player->id);
     player_id++;
 }

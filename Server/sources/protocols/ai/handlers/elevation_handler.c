@@ -5,14 +5,10 @@
 ** Handle elevation
 */
 
-#include <criterion/criterion.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
-#include "ai/handlers/player_info_handlers.h"
-
+#include "ai/handlers/elevation_handler.h"
 
 ///
 /// Rules to authorize or not the elevation of a player
@@ -79,4 +75,5 @@ int elevation_handler(world_t *world, player_t *player,
     sprintf(res + strlen("Elevation underway\nCurrent level: "),
             "%d\n", player->level);
     set_response(res);
+    return (NO_ERROR);
 }
