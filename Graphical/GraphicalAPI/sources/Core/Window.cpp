@@ -11,8 +11,11 @@ zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
 , event()
+, shadow()
 {
     setView(camera);
+    shadow.setUniform("u_resolution", sf::Glsl::Vec2(100, 100));
+    shadow.loadFromFile("/home/night/tek/tek2/PSU_zappy_2018/Graphical/shader.frag", sf::Shader::Fragment);
 }
 
 void zapi::Window::update()

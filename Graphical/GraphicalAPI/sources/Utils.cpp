@@ -7,6 +7,18 @@
 
 #include "Utils.hpp"
 
+sf::Texture *zapi::getTileShadowTexture()
+{
+    static sf::Texture *tileShadowTexture;
+
+    if (!tileShadowTexture) {
+        tileShadowTexture = new sf::Texture();
+        tileShadowTexture->create(100, 100);
+        tileShadowTexture->setSmooth(true);
+    }
+    return tileShadowTexture;
+}
+
 sf::Texture *zapi::getTileTexture()
 {
     static sf::Texture *tileTexture;
@@ -25,7 +37,7 @@ sf::Texture *zapi::getResourceTexture()
 
     if (!resourceTexture) {
         resourceTexture = new sf::Texture();
-        resourceTexture->loadFromFile("sprites/crystal.png", sf::IntRect(0, 0, 32, 64));
+        resourceTexture->loadFromFile("sprites/resources.png");
         resourceTexture->setSmooth(true);
     }
     return resourceTexture;

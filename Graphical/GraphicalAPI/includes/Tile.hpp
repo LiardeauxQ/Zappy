@@ -19,7 +19,9 @@ namespace zapi
             std::vector<Resource> &getResources() { return resources; };
         private:
             sf::Vector2f size;
+            sf::RectangleShape main;
             std::vector<Resource> resources;
             sf::Sprite sprite;
+//            sf::Sprite shadow;
     };
 }

@@ -18,6 +18,7 @@ namespace zapi
         WEST  = 4
     };
 
+    sf::Texture *getTileShadowTexture();
     sf::Texture *getTileTexture();
     sf::Texture *getResourceTexture();
 }
