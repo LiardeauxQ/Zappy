@@ -10,13 +10,12 @@
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
+, HUD(sf::FloatRect(0.75f, 0.75f, 0.25f, 0.25f))
 , event()
-, shadow()
 , zoom(5)
 {
     setView(camera);
-    shadow.setUniform("u_resolution", sf::Glsl::Vec2(100, 100));
-    shadow.loadFromFile("shaders/shadow.frag", sf::Shader::Fragment);
+    // setView(HUD);
 }
 
 void zapi::Window::update()
@@ -24,6 +23,7 @@ void zapi::Window::update()
     clear();
     inputHandler();
     setView(camera);
+    // setView(HUD);
 }
 
 void zapi::Window::drawEntities(std::vector<Tile> &entities)

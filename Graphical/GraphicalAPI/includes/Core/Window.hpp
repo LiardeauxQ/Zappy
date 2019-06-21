@@ -9,8 +9,9 @@
 
 #include "Tile.hpp"
 #include "Team.hpp"
+#include "Player.hpp"
 #include <string>
-#include <vector>
+#include <list>
 
 namespace zapi
 {
@@ -27,8 +28,8 @@ namespace zapi
         private:
             void inputHandler();
             sf::View camera;
+            sf::View HUD;
             sf::Event event;
-            sf::Shader shadow;
             int zoom;
     };
 }
