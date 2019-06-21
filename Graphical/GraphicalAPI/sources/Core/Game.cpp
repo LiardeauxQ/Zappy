@@ -26,6 +26,7 @@ void zapi::Game::initialize()
         }
         tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
     }
+    addPlayer("BP", 0, sf::Vector2f(0, 0));
 }
 
 void zapi::Game::start()
@@ -38,6 +39,8 @@ void zapi::Game::loop()
     while (window.isOpen()) {
         window.update();
         window.drawEntities(tiles);
+        for (auto &team : teams)
+            window.drawEntities(team.getPlayers());
         window.display();
     }
 }
@@ -51,7 +54,7 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
 {
     for (auto &team : teams)
         if (team.getName() == teamName) {
-            team.addPlayer(id, position);
+            team.addPlayer(id, sf::Vector2f(50 - 28, 50 - 32));
             return;
         }
     addTeam(teamName);

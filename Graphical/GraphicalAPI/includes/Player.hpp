@@ -22,8 +22,7 @@ namespace zapi
 
         private:
             unsigned int id;
-            float radius;
-            sf::CircleShape main;
+            sf::Sprite sprite;
             std::array<int, 7> inventory {{0, 0, 0, 0, 0, 0, 0}};
     };
 }

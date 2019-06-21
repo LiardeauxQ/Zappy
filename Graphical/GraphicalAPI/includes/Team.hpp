@@ -20,7 +20,7 @@ namespace zapi
             ~Team() = default;
             void addPlayer(int id, const sf::Vector2f &position);
             std::string &getName() { return name; };
-            std::list<Player> getPlayers() { return players; };
+            std::list<Player> &getPlayers() { return players; };
         private:
             std::string name;
             std::list<Player> players;

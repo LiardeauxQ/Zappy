@@ -42,3 +42,15 @@ sf::Texture *zapi::getResourceTexture()
     }
     return resourceTexture;
 }
+
+sf::Texture *zapi::getPlayerTexture()
+{
+    static sf::Texture *resourceTexture;
+
+    if (!resourceTexture) {
+        resourceTexture = new sf::Texture();
+        resourceTexture->loadFromFile("sprites/player.png");
+        resourceTexture->setSmooth(true);
+    }
+    return resourceTexture;
+}

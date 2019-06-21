@@ -10,33 +10,32 @@
 zapi::Player::Player(unsigned int id, const sf::Vector2f &position)
 : Entity(position)
 , id(id)
-, radius(25)
-, main(radius)
+, sprite()
 , inventory()
 {
-    main.setFillColor(sf::Color::Blue);
-    main.setOutlineColor(sf::Color::Black);
-    main.setOutlineThickness(1);
-    main.setPosition(position);
+
+    sprite.setTexture(*(getPlayerTexture()));
+    sprite.setTextureRect(sf::IntRect(385, 388, 55, 64));
+    sprite.setPosition(position);
 }
 
 void zapi::Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(main, states);
+    target.draw(sprite);
 }
 
 void zapi::Player::move(ORIENTATION direction)
 {
     if (direction == NORTH) {
-        main.move(0, -(radius * 4));
+        sprite.move(0, -100);
     }
     if (direction == EAST) {
-        main.move(radius * 4, 0);
+        sprite.move(100, 0);
     }
     if (direction == WEST) {
-        main.move(-(radius * 4), 0);
+        sprite.move(-100, 0);
     }
     if (direction == SOUTH) {
-        main.move(0, radius * 4);
+        sprite.move(0, 100);
     }
 }

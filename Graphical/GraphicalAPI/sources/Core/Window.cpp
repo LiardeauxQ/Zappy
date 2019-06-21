@@ -15,7 +15,7 @@ zapi::Window::Window(const std::string &title)
 {
     setView(camera);
     shadow.setUniform("u_resolution", sf::Glsl::Vec2(100, 100));
-    shadow.loadFromFile("/home/night/tek/tek2/PSU_zappy_2018/Graphical/shader.frag", sf::Shader::Fragment);
+    shadow.loadFromFile("/home/night/tek/tek2/PSU_zappy_2018/Graphical/shaders/shadow.frag", sf::Shader::Fragment);
 }
 
 void zapi::Window::update()
@@ -39,7 +39,13 @@ void zapi::Window::drawEntities(std::vector<Resource> &entities)
         this->draw(entity);
 }
 
-void zapi::Window::drawEntities(std::vector<Player> &entities)
+void zapi::Window::drawEntities(std::vector<Team> &entities)
+{
+    for (auto &entity : entities)
+        drawEntities(entity.getPlayers());
+}
+
+void zapi::Window::drawEntities(std::list<Player> &entities)
 {
     for (auto &entity : entities)
         this->draw(entity);

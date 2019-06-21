@@ -8,7 +8,7 @@
 #pragma once
 
 #include "Tile.hpp"
-#include "Player.hpp"
+#include "Team.hpp"
 #include <string>
 #include <vector>
 
@@ -21,7 +21,8 @@ namespace zapi
             void update();
             void drawEntities(std::vector<Tile> &entities);
             void drawEntities(std::vector<Resource> &entities);
-            void drawEntities(std::vector<Player> &entities);
+            void drawEntities(std::vector<Team> &entities);
+            void drawEntities(std::list<Player> &entities);
 
         private:
             void inputHandler();

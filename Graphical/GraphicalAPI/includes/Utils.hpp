@@ -21,4 +21,5 @@ namespace zapi
     sf::Texture *getTileShadowTexture();
     sf::Texture *getTileTexture();
     sf::Texture *getResourceTexture();
+    sf::Texture *getPlayerTexture();
 }
