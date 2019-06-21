@@ -5,12 +5,12 @@
 ** handle server message
 */
 
-int send_message_to_client(const char *data)
+int send_message_to_client(const void __attribute__((unused)) *data)
 {
     return (0);
 }
 
-int unknown_command(const char *data)
+int unknown_command(const void __attribute__((unused)) *data)
 {
     return (0);
 }

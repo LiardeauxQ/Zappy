@@ -5,12 +5,12 @@
 ** handle player's position
 */
 
-int get_player_position(const char *data)
+int get_player_position(const void __attribute__((unused)) *data)
 {
     return (0);
 }
 
-int send_player_position(const char *data)
+int send_player_position(const void __attribute__((unused)) *data)
 {
     return (0);
 }

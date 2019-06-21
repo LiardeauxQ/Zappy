@@ -5,12 +5,12 @@
 ** handle player's level
 */
 
-int get_player_level(const char *data)
+int get_player_level(const void __attribute__((unused)) *data)
 {
     return (0);
 }
 
-int send_player_level(const char *data)
+int send_player_level(const void __attribute__((unused)) *data)
 {
     return (0);
 }

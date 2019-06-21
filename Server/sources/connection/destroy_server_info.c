@@ -23,9 +23,3 @@ void free_input(input_t *input)
     if (input->resources_filename)
         free(input->resources_filename);
 }
-
-void destroy_server_info(info_t *info)
-{
-    free_input(&info->input);
-    close(info->server.sockfd);
-}

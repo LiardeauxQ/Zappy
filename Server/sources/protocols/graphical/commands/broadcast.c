@@ -5,6 +5,7 @@
 ** handle broadcast
 */
 
-int send_broadcast(const char *data)
+int send_broadcast(const void __attribute__((unused)) *data)
 {
+    return (0);
 }

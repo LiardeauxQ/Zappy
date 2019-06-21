@@ -5,12 +5,12 @@
 ** handle teams's name
 */
 
-int get_name_teams(const char *data)
+int get_name_teams(const void __attribute__((unused)) *data)
 {
     return (0);
 }
 
-int send_name_teams(const char *data)
+int send_name_teams(const void __attribute__((unused)) *data)
 {
     return (0);
 }

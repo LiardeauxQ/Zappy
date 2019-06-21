@@ -5,7 +5,7 @@
 ** handle player connection
 */
 
-int send_player_connection(const char *data)
+int send_player_connection(const void __attribute__((unused)) *data)
 {
     return (0);
 }

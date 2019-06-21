@@ -11,3 +11,6 @@ tests_run
 zappy_server
 zappy_ai
 zappy_graphical
+.cquery
+.vscode/
+__pycache__
