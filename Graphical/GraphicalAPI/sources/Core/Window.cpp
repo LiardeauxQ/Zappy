@@ -21,7 +21,6 @@ void zapi::Window::update(void)
 {
     clear();
     inputHandler();
-    updateHUD();
     setView(camera);
 }
 

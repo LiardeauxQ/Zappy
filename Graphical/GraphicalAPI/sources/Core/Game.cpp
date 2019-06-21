@@ -41,6 +41,7 @@ void zapi::Game::loop()
         window.drawEntities(tiles);
         for (auto &team : teams)
             window.drawEntities(team.getPlayers());
+        window.updateHUD();
         window.display();
     }
 }
