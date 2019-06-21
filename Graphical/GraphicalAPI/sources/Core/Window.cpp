@@ -10,20 +10,25 @@
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
-, HUD(sf::FloatRect(0.75f, 0.75f, 0.25f, 0.25f))
+, hud()
 , event()
 , zoom(5)
 {
     setView(camera);
-    // setView(HUD);
 }
 
-void zapi::Window::update()
+void zapi::Window::update(void)
 {
     clear();
     inputHandler();
+    updateHUD();
     setView(camera);
-    // setView(HUD);
+}
+
+void zapi::Window::updateHUD(void)
+{
+    setView(getDefaultView());
+    draw(hud);
 }
 
 void zapi::Window::drawEntities(std::vector<Tile> &entities)

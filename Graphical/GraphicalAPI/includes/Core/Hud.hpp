@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Utils.hpp"
+#include "Resource.hpp"
 
 namespace zapi
 {
@@ -15,8 +16,8 @@ namespace zapi
         public:
             Hud();
             virtual ~Hud() = default;
+            void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
         protected:
-            sf::Texture texture;
-            sf::Sprite sprite;
+            std::vector<Resource> resources;
     };
 }
