@@ -56,10 +56,14 @@ class Player:
         self.client.sendMessage("Broadcast " + text + "\n")
 
     def connectNumber(self):
-        self.client.sendMessage("Connect_nbr\n")
+        res = self.client.sendMessage("Connect_nbr\n")
+        res = res[:-1]
+        return int(res)
 
     def fork(self):
-        self.client.sendMessage("Fork\n")
+        tmp = self.connectNumber()
+        if tmp > 0:
+            self.client.sendMessage("Fork\n")
 
     def eject(self):
         self.client.sendMessage("Eject\n")
@@ -132,6 +136,10 @@ class Player:
         print (result)
         return result
 
+    def countPlayerOnTile(self, array):
+        count = array[0].count("player")
+        return count
+
     def handleActions(self):
         while len(self.actions) > 0:
             print(self.actions)
@@ -175,6 +183,7 @@ class Player:
             self.look()
             if self.checkElevation():
                     self.dropItemsForElevation()
+                    self.fork()
                     self.startIncantation()
                     l = self.client.getData()
                     if l != "ko\n":
