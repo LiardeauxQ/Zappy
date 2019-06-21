@@ -62,6 +62,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/server_message.c	\
 				protocols/graphical/commands/tile_content.c	\
 				protocols/graphical/commands/time.c	\
+				protocols/graphical/commands/close_connection.c	\
 				protocols/graphical/sender.c	\
 				protocols/graphical/read_graph_client.c	\
 				handle_clients.c	\

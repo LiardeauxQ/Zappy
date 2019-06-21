@@ -88,7 +88,7 @@ enum GRAPHIC_PACKETS_FROM_CLIENT {
 ///
     CLT_MAP_SIZE            = 2,
     CLT_TILE_CONTENT        = 3,
-    CLT_MAP_CONTENT         = 4,
+    CLT_MAP_CONTENT         = 5,
     CLT_TEAMS_NAMES         = 5,
     CLT_PLAYER_POSITION     = 6,
     CLT_PLAYER_LEVEL        = 7,
@@ -98,7 +98,7 @@ enum GRAPHIC_PACKETS_FROM_CLIENT {
 ///
 /// Special commands reserved for addons.
 ///
-    CLT_CUSTOM              = 11
+    CLT_CLOSE_CONNECTION    = 11
 };
 
 enum GRAPHIC_PACKETS_FROM_SERVER {
@@ -178,7 +178,7 @@ enum RESOURCE_NUMBER {
 /// Each change to this document will need an incrementation of this value.
 ///
 
-#define PROTOCOL_VERSION    0xA
+#define PROTOCOL_VERSION    0xB
 
 #define SHORT_MSG_LEN 128
 #define LONG_MSG_LEN 1024
@@ -699,6 +699,18 @@ typedef struct srv_unknown_command srv_unknown_command_t;
 struct PACKED srv_bad_parameters {
     char tmp;
 };
+
+///
+/// Client close connection
+///
+
+struct PACKED clt_close_connection {
+    char tmp;
+};
+
+typedef struct clt_close_connection clt_close_connection_t;
+
+#define CLT_CLOSE_CONNECTION_LEN sizeof(struct clt_close_connection)
 
 typedef struct srv_bad_parameters srv_bad_parameters_t;
 

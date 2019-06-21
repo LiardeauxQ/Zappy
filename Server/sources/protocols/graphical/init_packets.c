@@ -26,7 +26,8 @@ int init_client_packets(phr_t *reg)
     add_pkt_info(reg, init_pkt(9, 0, "CLT_TIME_UNIT_REQUEST", &get_time_unit));
     add_pkt_info(reg, init_pkt(10, 0, "CLT_TIME_UNIT_CHANGE",
                 &get_time_update));
-    add_pkt_info(reg, init_pkt(11, 0, "CLT_CUSTOM", 0x0));
+    add_pkt_info(reg, init_pkt(11, 0, "CLT_CLOSE_CONNECTION",
+                &get_close_connection));
     return (0);
 }
 

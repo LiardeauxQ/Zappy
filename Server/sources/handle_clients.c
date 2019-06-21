@@ -16,11 +16,14 @@ void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
         fd_set *readfds, client_reader reader)
 {
     int fd = 0;
+    int result = 0;
 
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         fd = (*clients)[i].sockfd;
         if (!FD_ISSET(fd, readfds))
             continue;
-        reader(clients[i], game);
+        result = reader(&(*clients)[i], game);
+        if (result == CLT_CLOSE_CONNECTION)
+            FD_CLR(fd, readfds);
     }
 }

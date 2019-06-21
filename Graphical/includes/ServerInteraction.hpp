@@ -53,6 +53,8 @@ namespace communication {
         
         unsigned int getSocket(void) const { return _sockfd; }
     private:
+        void requestCloseConnection(void) const;
+
         unsigned int _port;
         int _sockfd;
     };

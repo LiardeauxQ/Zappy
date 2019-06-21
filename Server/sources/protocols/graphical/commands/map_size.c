@@ -21,6 +21,7 @@ int send_map_size(const void *data)
     world_t *world = 0x0;
     pkt_header_t hdr = {SRV_MAP_SIZE, PROTOCOL_VERSION, SRV_MAP_SIZE_LEN, 0};
     srv_map_size_t map = {0};
+    int result = 0;
 
     if (count_senders(senders) != MAX_SENDERS)
         return (-1);
@@ -29,9 +30,13 @@ int send_map_size(const void *data)
     map.y = world->height;
     map = (srv_map_size_t){world->width, world->height};
     to_write = calloc(1, size * sizeof(char));
-    to_write = memcpy(to_write, &hdr, PKT_HANDLER_LEN);
+    to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     tmp = to_write + PKT_HDR_LEN;
     tmp = memcpy(tmp, &map, SRV_MAP_SIZE_LEN);
-    write(senders->sockfd, to_write, size);
-    return (0);
+    result = write(senders->sockfd, to_write, size);
+    for (int i  = 0 ; i < size ; i++)
+        printf("%x ", to_write[i]);
+    printf("\n");
+    free(to_write);
+    return (result);
 }

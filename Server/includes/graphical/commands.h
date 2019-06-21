@@ -129,3 +129,8 @@ int get_time_unit(const void *data);
 int send_time_unit(const void *data);
 int get_time_update(const void *data);
 int send_time_update(const void *data);
+
+/* close_connection.c */
+
+int get_close_connection(const void *data);
+int send_close_connection(const void *data);
