@@ -24,6 +24,7 @@ namespace zapi
             bool checkPlayer(unsigned int id);
             zapi::Player &getPlayer(unsigned int id);
             void removePlayer(unsigned int id);
+            void updatePlayerOrientation(unsigned int id, ORIENTATION direction);
         private:
             std::string name;
             std::list<Player> players;

@@ -9,6 +9,7 @@
 
 zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &position)
 : Entity(position)
+, orientation(SOUTH)
 , level(0)
 , id(id)
 , radius(25)
@@ -35,24 +36,28 @@ void zapi::Player::move(ORIENTATION direction)
                 main.setPosition(sf::Vector2f(position.x, position.y - 100));
             else
                 main.setPosition(sf::Vector2f(position.x, 3000 - (50 + radius)));
+            orientation = NORTH;
             break;
         case EAST:
             if (position.x + 100 < 3000)
                 main.setPosition(sf::Vector2f(position.x + 100, position.y));
             else
                 main.setPosition(sf::Vector2f(0 + (50 - radius), position.y));
+            orientation = EAST;
             break;
         case WEST:
             if (position.x - 100 > 0)
                 main.setPosition(sf::Vector2f(position.x - 100, position.y));
             else
                 main.setPosition(sf::Vector2f(3000 - (50 + radius), position.y));
+            orientation = WEST;
             break;
         case SOUTH:
             if (position.y + 100 < 3000)
                 main.setPosition(sf::Vector2f(position.x, position.y + 100));
             else
                 main.setPosition(sf::Vector2f(position.x, 0 + (50 - radius)));
+            orientation = SOUTH;
             break;
     }
 }
@@ -93,4 +98,9 @@ void zapi::Player::pickUpResource(RESOURCE_NUMBER index)
 sf::Vector2f zapi::Player::getPosition(void)
 {
     return position;
+}
+
+void zapi::Player::updateOrientation(ORIENTATION direction)
+{
+    orientation = direction;
 }

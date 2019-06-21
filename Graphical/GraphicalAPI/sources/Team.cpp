@@ -37,3 +37,13 @@ void zapi::Team::removePlayer(unsigned int id)
 {
     players.remove_if([id](zapi::Player p){ return p.getId() == id; });
 }
+
+void zapi::Team::updatePlayerOrientation(unsigned int id, ORIENTATION direction)
+{
+    for (auto &player : players) {
+        if (player.getId() == id) {
+            player.updateOrientation(direction);
+            return;
+        }
+    }
+}

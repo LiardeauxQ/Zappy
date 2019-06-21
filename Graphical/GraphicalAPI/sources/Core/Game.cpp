@@ -114,7 +114,7 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
 
 void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> res)
 {
-    for (int i = 0; i < tiles.size(); i++) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
         if (tiles[i].getPosition() == vector) {
             tiles[i].updateResource(res);
             return;
@@ -127,6 +127,16 @@ void zapi::Game::removePlayer(unsigned int id)
     for (auto &team : teams) {
         if (team.checkPlayer(id)) {
             team.removePlayer(id);
+            return;
+        }
+    }
+}
+
+void zapi::Game::updatePlayerOrientation(unsigned int id, ORIENTATION direction)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            team.updatePlayerOrientation(id, direction);
             return;
         }
     }

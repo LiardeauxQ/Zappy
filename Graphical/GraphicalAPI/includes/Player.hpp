@@ -26,9 +26,11 @@ namespace zapi
             void levelUp(void);
             void dropResource(RESOURCE_NUMBER index);
             void pickUpResource(RESOURCE_NUMBER index);
+            void updateOrientation(ORIENTATION direction);
             sf::Vector2f getPosition(void);
 
         private:
+            ORIENTATION orientation;
             int level;
             unsigned int id;
             float radius;
