@@ -18,13 +18,13 @@ zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &posi
 {
 
     sprite.setTexture(*(getPlayerTexture()));
-    sprite.setTextureRect(sf::IntRect(385, 388, 55, 64));
+    sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
     sprite.setPosition(position);
 }
 
 void zapi::Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(sprite);
+    target.draw(sprite, states);
 }
 
 void zapi::Player::move(ORIENTATION direction)
@@ -32,33 +32,31 @@ void zapi::Player::move(ORIENTATION direction)
     switch (direction) {
         case NORTH:
             if (position.y - 100 > 0)
-                sprite.setPosition(sf::Vector2f(position.x, position.y - 100));
+                position = sf::Vector2f(position.x, position.y - 100);
             else
-                sprite.setPosition(sf::Vector2f(position.x, 3000 - (50)));
-            orientation = NORTH;
+                position = sf::Vector2f(position.x, 3000 - 50 - 32);
             break;
         case EAST:
             if (position.x + 100 < 3000)
-                sprite.setPosition(sf::Vector2f(position.x + 100, position.y));
+                position = sf::Vector2f(position.x + 100, position.y);
             else
-                sprite.setPosition(sf::Vector2f(0 + (50), position.y));
-            orientation = EAST;
+                position = sf::Vector2f(0 + 50 - 32, position.y);
             break;
         case WEST:
             if (position.x - 100 > 0)
-                sprite.setPosition(sf::Vector2f(position.x - 100, position.y));
+                position = sf::Vector2f(position.x - 100, position.y);
             else
-                sprite.setPosition(sf::Vector2f(3000 - (50), position.y));
-            orientation = WEST;
+                position = sf::Vector2f(3000 - 50 - 32, position.y);
             break;
         case SOUTH:
             if (position.y + 100 < 3000)
-                sprite.setPosition(sf::Vector2f(position.x, position.y + 100));
+                position = sf::Vector2f(position.x, position.y + 100);
             else
-                sprite.setPosition(sf::Vector2f(position.x, 0 + (50)));
-            orientation = SOUTH;
+                position = sf::Vector2f(position.x, 0 + 50 - 32);
             break;
     }
+    updateOrientation(direction);
+    sprite.setPosition(position);
 }
 
 void zapi::Player::addInventory(RESOURCE_NUMBER index)
@@ -102,4 +100,5 @@ sf::Vector2f zapi::Player::getPosition(void)
 void zapi::Player::updateOrientation(ORIENTATION direction)
 {
     orientation = direction;
+    sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
 }
