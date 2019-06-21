@@ -5,6 +5,7 @@
 ** handle player death
 */
 
-int send_player_death(const char *data)
+int send_player_death(const void __attribute__((unused)) *data)
 {
+    return (0);
 }

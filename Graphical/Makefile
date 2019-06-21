@@ -28,6 +28,7 @@ SRC			:=	protocol/ServerInteraction.cpp	\
 				Errors.cpp
 
 TEST_SRC	:=	test_InputParser.cpp	\
+				test_Game.cpp
 
 INCLUDES	=	-I includes
 

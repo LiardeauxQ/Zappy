@@ -5,10 +5,12 @@
 ** handle player's inventory
 */
 
-int get_player_inventory(const char *data)
+int get_player_inventory(const void __attribute__((unused)) *data)
 {
+    return (0);
 }
 
-int send_player_inventory(const char *data)
+int send_player_inventory(const void __attribute__((unused)) *data)
 {
+    return (0);
 }

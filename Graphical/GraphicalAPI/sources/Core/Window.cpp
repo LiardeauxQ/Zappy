@@ -12,6 +12,7 @@ zapi::Window::Window(const std::string &title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
 , event()
 , shadow()
+, zoom(5)
 {
     setView(camera);
     shadow.setUniform("u_resolution", sf::Glsl::Vec2(100, 100));
@@ -66,9 +67,13 @@ void zapi::Window::inputHandler()
             camera.move(-40, 0);
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
             camera.move(40, 0);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
-            camera.zoom(0.8);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z)
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A && zoom < 10) {
+            camera.zoom(0.9);
+            zoom++;
+        }
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z && zoom > 0) {
             camera.zoom(1.2);
+            zoom--;
+        }
     }
 }

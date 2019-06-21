@@ -5,7 +5,7 @@
 ** handle end game
 */
 
-int send_end_game(const char *data)
+int send_end_game(const void __attribute__((unused)) *data)
 {
     return (0);
 }

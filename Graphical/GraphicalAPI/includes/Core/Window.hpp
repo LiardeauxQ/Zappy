@@ -29,5 +29,6 @@ namespace zapi
             sf::View camera;
             sf::Event event;
             sf::Shader shadow;
+            int zoom;
     };
 }

@@ -52,11 +52,107 @@ void zapi::Game::addTeam(const std::string &teamName)
 
 void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector2f &position)
 {
+    zapi::Tile *tile = findTile(position);
     for (auto &team : teams)
         if (team.getName() == teamName) {
-            team.addPlayer(id, sf::Vector2f(50 - 28, 50 - 32));
+            team.addPlayer(id, tile, position);
             return;
         }
     addTeam(teamName);
     addPlayer(teamName, id, position);
+}
+
+zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
+{
+    for (unsigned long i = 0; i != tiles.size(); i++) {
+        if (tiles[i].getPosition().x > position.x) {
+            for (i--; i < tiles.size(); i += 30) {
+                if (tiles[i].getPosition().y > position.y)
+                    return &tiles[i--];
+            }
+        }
+    }
+    return (&tiles[tiles.size() - 1]);
+}
+
+void zapi::Game::movePlayer(unsigned int id, ORIENTATION direction)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.move(direction);
+            player.resetTile(findTile(player.getPosition()));
+            return;
+        }
+    }
+}
+
+void zapi::Game::dropResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.dropResource(index);
+            return;
+        }
+    }
+}
+
+void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.pickUpResource(index);
+        }
+    }
+}
+
+void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> res)
+{
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        if (tiles[i].getPosition() == vector) {
+            tiles[i].updateResource(res);
+            return;
+        }
+    }
+}
+
+void zapi::Game::removePlayer(unsigned int id)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            team.removePlayer(id);
+            return;
+        }
+    }
+}
+
+void zapi::Game::updatePlayerOrientation(unsigned int id, ORIENTATION direction)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            team.updatePlayerOrientation(id, direction);
+            return;
+        }
+    }
+}
+
+void zapi::Game::levelUpPlayer(unsigned int id)
+{
+    for (auto &team : teams) {
+        if (team.checkPlayer(id)) {
+            auto player = team.getPlayer(id);
+            player.levelUp();
+            return;
+        }
+    }
+}
+
+zapi::Player zapi::Game::getPlayer(unsigned int id)
+{
+    for (auto &team : teams)
+        if (team.checkPlayer(id))
+            return team.getPlayer(id);
+    return Player(-1, nullptr);
 }

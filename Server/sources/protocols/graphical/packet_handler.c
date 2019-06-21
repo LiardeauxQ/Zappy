@@ -5,6 +5,7 @@
 ** handle packet_handler struct
 */
 
+#include "graphical/protocols.h"
 #include "graphical/packets.h"
 
 pkt_handler_t *init_pkt(int id, ...)
@@ -34,4 +35,12 @@ phr_t *add_pkt_info(phr_t *reg, pkt_handler_t *handler)
     reg->handlers[reg->size - 1] = handler;
     reg->handlers[reg->size] = 0x0;
     return (reg);
+}
+
+data_handler get_data_handler_for_id(phr_t *reg, size_t id)
+{
+    for (size_t i = 0 ; reg->handlers[i] ; i++)
+        if (reg->handlers[i]->id == id)
+            return (reg->handlers[i]->handler);
+    return (0x0);
 }

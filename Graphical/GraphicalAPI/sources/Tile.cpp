@@ -37,3 +37,18 @@ void zapi::Tile::draw(sf::RenderTarget &target, sf::RenderStates states) const
       target.draw(sprite);
 //    target.draw(shadow, states);
 }
+
+void zapi::Tile::removeResource(RESOURCE_NUMBER index)
+{
+    resources[index]--;
+}
+
+void zapi::Tile::addResource(RESOURCE_NUMBER index)
+{
+    resources[index]++;
+}
+
+void zapi::Tile::updateResource(std::vector<Resource> res)
+{
+    resources = res;
+}

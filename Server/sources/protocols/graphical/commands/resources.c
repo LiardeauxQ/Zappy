@@ -5,12 +5,12 @@
 ** handle resources
 */
 
-int send_resource_drop(const char *data)
+int send_resource_drop(const void __attribute__((unused)) *data)
 {
     return (0);
 }
 
-int send_resource_collect(const char *data)
+int send_resource_collect(const void __attribute__((unused)) *data)
 {
     return (0);
 }
