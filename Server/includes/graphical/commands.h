@@ -107,6 +107,8 @@ int unknown_command(const void *data);
 
 srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
         const unsigned int x, const unsigned int y);
+char *write_tile_content(tile_content_t *tile,
+        const unsigned int x, const unsigned int y, const int subid);
 int get_tile_content(const void *data);
 int send_tile_content(const void *data);
 

@@ -13,7 +13,7 @@
 #include "graphical/commands.h"
 
 static srv_start_incantation_t
-fill_start_incantation_struct(const player_t *player, const world_t *world)
+fill_start_incantation_struct(const player_t *player, world_t *world)
 {
     srv_start_incantation_t incantation = {0};
     player_t *tmp_player = 0x0;
@@ -30,20 +30,20 @@ fill_start_incantation_struct(const player_t *player, const world_t *world)
     return (incantation);
 }
 
-int send_incantation_start(const void __attribute__((unused)) *data)
+int send_incantation_start(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
-    char *to_write = 0x0;
-    size_t size = PKT_HDR_LEN + SRV_START_INCANTATION_LEN;
-    srv_start_incantation_t srv = {0};
-    pkt_header_t hdr = {SRV_INCANTATION_START, PROTOCOL_VERSION,
-        SRV_START_INCANTATION_LEN, 0};
     world_t *world = 0x0;
     player_t *player = 0x0;
+    char *to_write = 0x0;
+    size_t size = PKT_HDR_LEN + SRV_START_INCANTATION_LEN;
+    pkt_header_t hdr = {SRV_INCANTATION_START, PROTOCOL_VERSION,
+        SRV_START_INCANTATION_LEN, 0};
+    srv_start_incantation_t srv = {0};
 
     if (count_senders(senders) != 2)
         return (-1);
-    world = (world_t*)(senders[1].data);
+    world = (world_t*)(senders[0].data);
     player = (player_t*)(senders[1].data);
     srv = fill_start_incantation_struct(player, world);
     to_write = calloc(1, size * sizeof(char));
@@ -69,7 +69,7 @@ int send_incantation_end(const void __attribute__((unused)) *data)
     srv = (srv_end_incantation_t*)senders[0].data;
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
-    memcpy(to_write + PKT_HDR_LEN, &srv, SRV_END_INCANTATION_LEN);
+    memcpy(to_write + PKT_HDR_LEN, srv, SRV_END_INCANTATION_LEN);
     write(senders[0].sockfd, to_write, size);
     free(senders);
     free(to_write);

@@ -178,7 +178,7 @@ enum RESOURCE_NUMBER {
 /// Each change to this document will need an incrementation of this value.
 ///
 
-#define PROTOCOL_VERSION    0x7
+#define PROTOCOL_VERSION    0xA
 
 #define SHORT_MSG_LEN 128
 #define LONG_MSG_LEN 1024
@@ -629,6 +629,44 @@ struct PACKED srv_end_game {
 typedef struct srv_end_game srv_end_game_t;
 
 #define SRV_END_GAME_LEN sizeof(struct srv_end_game)
+
+///
+/// Client time unit request packet.
+///
+
+struct PACKED clt_time_unit_request {
+    char tmp;
+};
+
+typedef struct clt_time_unit_request clt_time_unit_request_t;
+
+#define CLT_TIME_UNIT_REQUEST_LEN sizeof(struct clt_time_unit_request)
+
+///
+/// Server time unit response.
+/// Contain the frequency used for actions.
+///
+
+struct PACKED srv_time_unit_request {
+    int freq;  
+};
+
+typedef struct srv_time_unit_request srv_time_unit_request_t;
+
+#define SRV_TIME_UNIT_REQUEST_LEN sizeof(struct srv_time_unit_request)
+
+///
+/// Client time unit change packet.
+/// Contain the frequency to change, used for actions.
+///
+
+struct PACKED clt_time_unit_change {
+    int freq;  
+};
+
+typedef struct clt_time_unit_change clt_time_unit_change_t;
+
+#define CLT_TIME_UNIT_CHANGE_LEN sizeof(struct clt_time_unit_change)
 
 ///
 /// Message from server.

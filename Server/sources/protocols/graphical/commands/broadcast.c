@@ -24,9 +24,9 @@ int send_broadcast(const void *data)
 
     if (count_senders(senders) != 2)
         return (-1);
-    srv.player_num = *((int*)(senders[0].data));
-    if (senders[1].size == LONG_MSG_LEN)
-        strcpy(srv.message, (char*)(senders[1].data));
+    if (senders[0].size == LONG_MSG_LEN)
+        strcpy(srv.message, (char*)(senders[0].data));
+    srv.player_num = *((int*)(senders[1].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_BROADCAST_MSG_LEN);

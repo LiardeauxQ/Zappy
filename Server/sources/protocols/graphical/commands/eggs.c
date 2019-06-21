@@ -21,9 +21,9 @@ int send_laying_egg(const void *data)
     pkt_header_t hdr = {SRV_EGG_LAYING, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_LAYING_LEN, 0};
 
-    if (count_senders(senders) != 2)
+    if (count_senders(senders) != 1)
         return (-1);
-    srv.player_num = *((int*)(senders[1].data));
+    srv.player_num = *((int*)(senders[0].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_PLAYER_EGG_LAYING_LEN);
@@ -43,11 +43,11 @@ int send_layed_egg(const void *data)
     pkt_header_t hdr = {SRV_EGG_LAYED, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_LAYED_LEN, 0};
 
-    if (count_senders(senders) != 3)
+    if (count_senders(senders) != 2)
         return (-1);
-    player = (player_t*)(senders[1].data);
+    player = (player_t*)(senders[0].data);
     srv = (srv_player_egg_layed_t){player->id, 0, player->x, player->y};
-    srv.egg_num = *((int*)(senders[2].data));
+    srv.egg_num = *((int*)(senders[1].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_PLAYER_EGG_LAYED_LEN);
@@ -66,9 +66,9 @@ int send_hatching_egg(const void *data)
     pkt_header_t hdr = {SRV_EGG_HATCHING, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_HATCHING_LEN, 0};
 
-    if (count_senders(senders) != 2)
+    if (count_senders(senders) != 1)
         return (-1);
-    srv.egg_num = *((int*)(senders[1].data));
+    srv.egg_num = *((int*)(senders[0].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_PLAYER_EGG_HATCHING_LEN);
@@ -87,9 +87,9 @@ int send_egg_connection(const void *data)
     pkt_header_t hdr = {SRV_PLAYER_CONNECT_EGG, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_CONNECTION_LEN, 0};
 
-    if (count_senders(senders) != 2)
+    if (count_senders(senders) != 1)
         return (-1);
-    srv.egg_num = *((int*)(senders[1].data));
+    srv.egg_num = *((int*)(senders[0].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_PLAYER_EGG_CONNECTION_LEN);
@@ -108,9 +108,9 @@ int send_egg_hatched_death(const void *data)
     pkt_header_t hdr = {SRV_PLAYER_DEATH_EGG, PROTOCOL_VERSION,
         SRV_HATCHED_EGG_DEATH_LEN, 0};
 
-    if (count_senders(senders) != 2)
+    if (count_senders(senders) != 1)
         return (-1);
-    srv.egg_num = *((int*)(senders[1].data));
+    srv.egg_num = *((int*)(senders[0].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_HATCHED_EGG_DEATH_LEN);

@@ -71,6 +71,7 @@ SRC			:=	arguments/arguments.c	\
 				game/player/create_player.c	\
 				game/player/destroy_player.c	\
 				utils/get_next_line.c	\
+				commands/wrap_protocols_commands.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_freq_argument.c	\
@@ -90,7 +91,13 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
 				commands/test_tile_content.c	\
-				commands/wrap_protocols_commands.c	\
+				commands/test_eggs.c	\
+				commands/test_player.c	\
+				commands/test_expulsion.c	\
+				commands/test_incantation.c	\
+				commands/test_player_inventory.c	\
+				commands/test_end_game.c	\
+				commands/test_broadcast.c	\
 
 
 CFLAGS		=	$(INCLUDES) $(WARN)
@@ -162,6 +169,7 @@ cmd_gen:	$(ROOT)/$(COMPILER_COMMAND)
 $(TEST):	build_tests
 			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
 			$(V)./tests_run -f
+			$(V)find . -maxdepth 1 -type f -name 'tmp*' -delete
 
 debug:			 re
 
@@ -208,7 +216,7 @@ $(BUILD)/%.o.json:		$(TEST_DIR)/%.c
 
 clean:
 			$(V)rm -rf $(BUILD)
-			$(V)rm -f $(TMP_FILES)
+			$(V)find . -maxdepth 1 -type f -name 'tmp*' -delete
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:		clean

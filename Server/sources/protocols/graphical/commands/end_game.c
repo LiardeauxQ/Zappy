@@ -23,8 +23,10 @@ int send_end_game(const void *data)
 
     if (count_senders(senders) != 1)
         return (-1);
-    if (senders[1].size == SHORT_MSG_LEN)
-        strcpy(srv.winning_team, (char*)senders[0].data);
+    if (senders[0].size != SHORT_MSG_LEN)
+        return (-1);
+    for (int i = 0 ; i < SHORT_MSG_LEN ; i++)
+        srv.winning_team[i] = ((char*)senders[0].data)[i];
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_END_GAME_LEN);

@@ -19,13 +19,13 @@ Test(send_tile_content, simple_test)
     size_t size = PKT_HDR_LEN + SRV_TILE_CONTENT_LEN;
     int ressources[DEFAULT_RESOURCES_NUMBER + 1] = {0, 1, 2, 3, 4, 5, 6, -1};
     int player_nb = 9;
-    int fd = open("tmp", O_CREAT | O_RDWR, 0644);
+    int fd = open("tmp6", O_CREAT | O_RDWR, 0644);
     char buffer[80] = {0};
     clt_tile_content_t pos = {0, 0};
     char result[PKT_HDR_LEN + SRV_TILE_CONTENT_LEN + 1] = {0};
     pkt_header_t hdr = {14, PROTOCOL_VERSION, SRV_TILE_CONTENT_LEN, 0};
     srv_tile_content_t tile = {0, 0, 0, 1, 2, 3, 4, 5, 6, player_nb};
-    world_t world = {1, 1, 0, init_tiles(1, 1, 8), 0x0, {0}};
+    world_t world = {1, 1, 0, init_tiles(1, 1, 8), 0x0, {0}, 0x0};
     cmd_info_t cmd[] = {{&world, sizeof(world_t)}, {&pos, sizeof(pos)}, {0}};
 
     cr_assert_neq(fd, -1);
@@ -37,6 +37,7 @@ Test(send_tile_content, simple_test)
     read(fd, buffer, size);
     for (size_t i = 0 ; i < size ; i++)
         cr_assert_eq(buffer[i], result[i]);
+    close(fd);
 }
 
 Test(convert_to_srv_tile_content, simple_test)

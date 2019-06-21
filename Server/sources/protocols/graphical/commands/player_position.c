@@ -26,7 +26,7 @@ static void write_player_position(const srv_player_pos_t *pos, int sockfd)
 
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
-    memcpy(to_write + PKT_HDR_LEN, &pos, SRV_PLAYER_POS_LEN);
+    memcpy(to_write + PKT_HDR_LEN, pos, SRV_PLAYER_POS_LEN);
     write(sockfd, to_write, size);
     free(to_write);
 }
