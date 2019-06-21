@@ -39,7 +39,7 @@ namespace communication {
     public:
         ServerInteraction(unsigned int port, const std::string &ipAddress);
         ServerInteraction();
-        ~ServerInteraction() = default;
+        ~ServerInteraction();
 
         void requestMapSize(void) const;
         void requestTileContent(unsigned int x, unsigned int y) const;

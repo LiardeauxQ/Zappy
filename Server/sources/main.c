@@ -26,7 +26,7 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     fd_set readfds = server->readfds;
     int clt_sockfd = 0;
 
-    timeout.tv_usec = 500;
+    timeout.tv_usec = 1000;
     max_fd = set_fds(&readfds, server->clients, sockfd);
     if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
         exit_with_error("select");
@@ -51,7 +51,7 @@ int main(int ac, char **av)
 {
     info_t info = init_info(ac, av);
 
-//    start_server(&info);
+    start_server(&info);
     destroy_info(&info);  
     return (0);
 }

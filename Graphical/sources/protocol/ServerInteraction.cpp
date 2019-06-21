@@ -28,6 +28,11 @@ communication::ServerInteraction::ServerInteraction() : _port(0), _sockfd(-1)
 {
 }
 
+communication::ServerInteraction::~ServerInteraction()
+{
+    close(_sockfd);
+}
+
 void communication::ServerInteraction::requestMapSize(void) const
 {
     Packet<clt_map_size_t> pkt(CLT_MAP_SIZE, _sockfd);

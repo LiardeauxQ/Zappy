@@ -15,6 +15,9 @@
 #define SENDER_MAGIC_NUM 0x01041976 // Foundation of 
 #define SENDER_MAGIC_NUM_LEN 4
 
+#define MAX_SENDERS 5
+#define CUSTOM_SENDER_POS 4
+
 struct sender_s {
     const void *data;
     size_t size;
@@ -30,6 +33,14 @@ sender_t *get_senders_from_data(const void *data);
 void *convert_senders_to_data(const sender_t *senders);
 size_t count_senders(const sender_t *senders);
 void destroy_senders(sender_t *senders);
+
+/* Structure of the default sender array
+ * --> world_t
+ * --> player_t
+ * --> int
+ * --> char **
+ * --> custom
+ */
 
 /* handle_broadcast.c */
 
