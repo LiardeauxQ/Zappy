@@ -31,6 +31,7 @@ namespace zapi
             void pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index);
             void updatePlayerOrientation(unsigned int id, ORIENTATION direction);
             void levelUpPlayer(unsigned int id);
+            zapi::Player getPlayer(unsigned int id);
         private:
             Window window;
             std::vector<Tile> tiles;

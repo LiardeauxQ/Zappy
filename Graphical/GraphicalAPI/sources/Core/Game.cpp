@@ -152,3 +152,11 @@ void zapi::Game::levelUpPlayer(unsigned int id)
         }
     }
 }
+
+zapi::Player zapi::Game::getPlayer(unsigned int id)
+{
+    for (auto &team : teams)
+        if (team.checkPlayer(id))
+            return team.getPlayer(id);
+    return Player(-1, nullptr);
+}
