@@ -108,7 +108,7 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
     }
 }
 
-void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> res)
+void zapi::Game::updateTile(sf::Vector2f vector, std::vector<int> res)
 {
     for (unsigned int i = 0; i < tiles.size(); i++) {
         if (tiles[i].getPosition() == vector) {

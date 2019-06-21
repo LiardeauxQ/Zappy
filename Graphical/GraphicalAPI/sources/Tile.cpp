@@ -48,7 +48,9 @@ void zapi::Tile::addResource(RESOURCE_NUMBER index)
     resources[index]++;
 }
 
-void zapi::Tile::updateResource(std::vector<Resource> res)
+void zapi::Tile::updateResource(std::vector<int> res)
 {
-    resources = res;
+    for (int i = 0; i < 7; i++) {
+        resources[i] = res[i];
+    }
 }

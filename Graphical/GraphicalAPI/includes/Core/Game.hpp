@@ -21,7 +21,7 @@ namespace zapi
             void initialize();
             void start();
             void loop();
-            void updateTile(sf::Vector2f vector, std::vector<zapi::Resource> res);
+            void updateTile(sf::Vector2f vector, std::vector<int> res);
             void addTeam(const std::string &teamName);
             void addPlayer(const std::string &teamName, int id, const sf::Vector2f &position);
             void removePlayer(unsigned int id);
