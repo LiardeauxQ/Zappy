@@ -82,16 +82,12 @@ int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
         perror("accept");
         return (-1);
     }
-    printf("clients\n");
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
-        printf("%d ", (*clients)[i].sockfd);
         if ((*clients)[i].sockfd == 0) {
-            (*clients)[i].sockfd = new_socket;
-            (*clients)[i].client_nb = -1;
+            (*clients)[i] = (client_t){new_socket, -1, addr};
             break;
         }
     }
-    printf("\n");
     printf("Connection on socket %d with address %s\n", new_socket,
             inet_ntoa(addr.sin_addr));
     return (new_socket);

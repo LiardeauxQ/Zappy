@@ -26,8 +26,10 @@ Test(send_end_game, simple_test)
     pkt_header_t hdr = {SRV_END_GAME, PROTOCOL_VERSION,
         SRV_END_GAME_LEN, 0};
     srv_end_game_t srv = {"Winning team"};
-    cmd_info_t cmd[] = {{srv.winning_team, sizeof(srv.winning_team)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[MSG_SENDER_POS] = (cmd_info_t){srv.winning_team,
+        sizeof(srv.winning_team)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_end_game, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);

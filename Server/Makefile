@@ -46,7 +46,11 @@ SRC			:=	arguments/arguments.c	\
 				protocols/ai/init_action_handlers.c	\
 				protocols/ai/read_ai_client.c	\
 				protocols/graphical/commands/broadcast.c	\
-				protocols/graphical/commands/eggs.c	\
+				protocols/graphical/commands/egg_connection.c	\
+				protocols/graphical/commands/egg_hatching.c	\
+				protocols/graphical/commands/egg_laying.c	\
+				protocols/graphical/commands/egg_hatched_death.c	\
+				protocols/graphical/commands/egg_layed.c	\
 				protocols/graphical/commands/end_game.c	\
 				protocols/graphical/commands/expulsion.c	\
 				protocols/graphical/commands/incantation.c	\

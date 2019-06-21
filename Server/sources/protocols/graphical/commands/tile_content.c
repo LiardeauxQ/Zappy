@@ -34,16 +34,15 @@ srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
     return (content);
 }
 
-int get_tile_content(const void __attribute__((unused)) *data)
+int assign_tile_content(world_t *world, clt_tile_content_t *clt, int sockfd)
 {
-    /*sender_t *senders = get_senders_from_data(data);
-    size_t size = count_senders(senders);
+    sender_t senders[MAX_SENDERS] = {{0}};
 
-    if (size != 2)
-        return (-1);
-    send_map_content(data);
-    free(senders);*/
-    return (0);
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t),
+        sockfd, 0};
+    senders[CUSTOM_SENDER_POS] = (sender_t){clt, sizeof(clt_tile_content_t),
+        sockfd, 1};
+    return (send_tile_content(convert_senders_to_data(senders)));
 }
 
 char *write_tile_content(tile_content_t *tile,
@@ -67,20 +66,19 @@ int send_tile_content(const void *data)
     sender_t *senders = get_senders_from_data(data);
     size_t size = PKT_HDR_LEN + SRV_TILE_CONTENT_LEN;
     world_t *world = 0x0;
-    unsigned int *x = 0;
-    unsigned int *y = 0;
+    clt_tile_content_t *clt = {0};
     char *to_write = 0x0;
 
-    if (count_senders(senders) != 2)
+    if (senders == 0x0)
         return (-1);
-    x = (unsigned int*)(senders[1].data);
-    y = (unsigned int*)(senders[1].data + sizeof(unsigned int));
-    world = (world_t*)(senders[0].data);
-    if (*x >= world->width && *y >= world->height)
+    clt = (clt_tile_content_t*)senders[CUSTOM_SENDER_POS].data;
+    world = (world_t*)(senders[WORLD_SENDER_POS].data);
+    if (clt->x >= world->width && clt->y >= world->height)
         return (-1);
-    to_write = write_tile_content(&world->tiles[*x][*y], *x, *y, 0);
-    write(senders[0].sockfd, to_write, size);
+    to_write = write_tile_content(&world->tiles[clt->x][clt->y], clt->x,
+            clt->y, 0);
+    write(senders[WORLD_SENDER_POS].sockfd, to_write, size);
     free(senders);
     free(to_write);
-    return (0);
+    return (SRV_TILE_CONTENT);
 }

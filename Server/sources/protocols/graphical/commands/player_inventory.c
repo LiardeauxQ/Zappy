@@ -50,26 +50,37 @@ static void write_player_inventory(const srv_player_inventory_t *inv,
     free(to_write);
 }
 
+int assign_player_inventory(world_t *world,
+        struct clt_player_inventory *clt, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t),
+        sockfd, 0};
+    senders[CUSTOM_SENDER_POS] = (sender_t){clt,
+        sizeof(struct clt_player_inventory), sockfd, 1};
+    return (send_player_inventory(convert_senders_to_data(senders)));
+}
+
 int send_player_inventory(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
-    size_t size = count_senders(senders);
     world_t *world = 0x0;
     player_t *player = 0x0;
     struct clt_player_inventory *clt = {0};
     srv_player_inventory_t srv = {0};
     
-    if (size != 2)
+    if (senders == 0x0)
         return (-1);
-    world = (world_t*)(senders[0].data);
-    clt = (struct clt_player_inventory*)(senders[1].data);
+    world = (world_t*)(senders[WORLD_SENDER_POS].data);
+    clt = (struct clt_player_inventory*)(senders[CUSTOM_SENDER_POS].data);
     for (node_t *node = world->players.head ; node ; node = node->next) { 
         player = (player_t*)node->data;
         if (player->id == clt->player_num)
             break;
     }
     srv = fill_srv_player_inventory(player);
-    write_player_inventory(&srv, senders[0].sockfd);
+    write_player_inventory(&srv, senders[WORLD_SENDER_POS].sockfd);
     free(senders);
-    return (0);
+    return (SRV_PLAYER_INVENTORY);
 }

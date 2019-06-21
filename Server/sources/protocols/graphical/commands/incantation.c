@@ -30,6 +30,17 @@ fill_start_incantation_struct(const player_t *player, world_t *world)
     return (incantation);
 }
 
+int assign_incantation_start(world_t *world, player_t *player, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t), sockfd, 0};
+    senders[PLAYER_SENDER_POS] = (sender_t){player, sizeof(player_t),
+        sockfd, 0};
+    senders[CUSTOM_SENDER_POS].is_last = 1;
+    return (send_incantation_start(convert_senders_to_data(senders)));
+}
+
 int send_incantation_start(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
@@ -41,18 +52,27 @@ int send_incantation_start(const void *data)
         SRV_START_INCANTATION_LEN, 0};
     srv_start_incantation_t srv = {0};
 
-    if (count_senders(senders) != 2)
+    if (senders == 0x0)
         return (-1);
-    world = (world_t*)(senders[0].data);
-    player = (player_t*)(senders[1].data);
+    world = (world_t*)(senders[WORLD_SENDER_POS].data);
+    player = (player_t*)(senders[PLAYER_SENDER_POS].data);
     srv = fill_start_incantation_struct(player, world);
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_START_INCANTATION_LEN);
-    write(senders[0].sockfd, to_write, size);
+    write(senders[WORLD_SENDER_POS].sockfd, to_write, size);
     free(senders);
     free(to_write);
-    return (0);
+    return (SRV_INCANTATION_START);
+}
+
+int assign_incantation_end(srv_end_incantation_t *srv, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+
+    senders[CUSTOM_SENDER_POS] = (sender_t){srv,
+        sizeof(srv_end_incantation_t), sockfd, 1};
+    return (send_incantation_end(convert_senders_to_data(senders)));
 }
 
 int send_incantation_end(const void __attribute__((unused)) *data)
@@ -64,14 +84,14 @@ int send_incantation_end(const void __attribute__((unused)) *data)
     pkt_header_t hdr = {SRV_INCANTATION_END, PROTOCOL_VERSION,
         SRV_END_INCANTATION_LEN, 0};
 
-    if (count_senders(senders) != 1)
+    if (senders == 0x0)
         return (-1);
-    srv = (srv_end_incantation_t*)senders[0].data;
+    srv = (srv_end_incantation_t*)senders[CUSTOM_SENDER_POS].data;
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, srv, SRV_END_INCANTATION_LEN);
-    write(senders[0].sockfd, to_write, size);
+    write(senders[CUSTOM_SENDER_POS].sockfd, to_write, size);
     free(senders);
     free(to_write);
-    return (0);
+    return (SRV_INCANTATION_END);
 }

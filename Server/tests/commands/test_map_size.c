@@ -27,8 +27,9 @@ Test(send_map_size, simple_test)
     char result[PKT_HDR_LEN + SRV_MAP_SIZE_LEN + 1] = {0};
     pkt_header_t hdr = {13, PROTOCOL_VERSION, SRV_MAP_SIZE_LEN, 0};
     srv_map_size_t map_size = {34, 34};
-    cmd_info_t cmd[] = {{&world, sizeof(world_t)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[WORLD_SENDER_POS] = (cmd_info_t){&world, sizeof(world_t)};
     cr_assert_neq(fd, -1);
     world.width = 34;
     world.height = 34;
@@ -36,7 +37,9 @@ Test(send_map_size, simple_test)
     memcpy(result, &hdr, PKT_HDR_LEN);
     memcpy(result + PKT_HDR_LEN, &map_size, SRV_MAP_SIZE_LEN);
     read(fd, buffer, size);
-    for (size_t i = 0 ; i < size ; i++)
+    for (size_t i = 0 ; i < size ; i++) {
+        printf("%d %d\n", buffer[i], result[i]);
         cr_assert_eq(buffer[i], result[i]);
+    }
     close(fd);
 }

@@ -25,9 +25,9 @@ void wrap_graph_protocol_commands(data_handler handler, int fd,
     int offset = SENDER_MAGIC_NUM_LEN;
 
     memcpy(data, &magic_num, SENDER_MAGIC_NUM_LEN);
-    for (size_t i = 0 ; cmd[i].data ; i++) {
+    for (size_t i = 0 ; i < MAX_SENDERS ; i++) {
         data = realloc(data, offset + sizeof(sender_t));
-        if (cmd[i + 1].data == 0x0)
+        if (i + 1 == MAX_SENDERS)
             is_last = 1;
         sender = (sender_t){cmd[i].data, cmd[i].size, fd, is_last};
         memcpy(data + offset, &sender, sizeof(sender_t));

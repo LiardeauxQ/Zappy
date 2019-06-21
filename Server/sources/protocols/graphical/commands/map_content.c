@@ -12,6 +12,15 @@
 #include "graphical/protocols.h"
 #include "world.h"
 
+int assign_map_content(world_t *world, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t), sockfd, 0};
+    senders[CUSTOM_SENDER_POS].is_last = 1;
+    return (send_map_content(convert_senders_to_data(senders)));
+}
+
 int send_map_content(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
@@ -33,5 +42,5 @@ int send_map_content(const void *data)
         }
     }
     free(senders);
-    return (0);
+    return (CLT_MAP_CONTENT);
 }

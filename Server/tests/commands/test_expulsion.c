@@ -27,8 +27,9 @@ Test(send_player_expulsion, simple_test)
     pkt_header_t hdr = {SRV_EXPULSION, PROTOCOL_VERSION,
         SRV_PLAYER_EXPULSION_LEN, 0};
     srv_player_expulsion_t player = {34};
-    cmd_info_t cmd[] = {{&player_num, sizeof(int)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[INT_SENDER_POS] = (cmd_info_t){&player_num, sizeof(int)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_player_expulsion, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);

@@ -17,6 +17,17 @@ int get_player_position(const void __attribute__((unused)) *data)
     return (0);
 }
 
+int assign_player_position(world_t *world, clt_player_pos_t *pos, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t),
+        sockfd, 0};
+    senders[CUSTOM_SENDER_POS] = (sender_t){pos, sizeof(clt_player_pos_t),
+        sockfd, 1};
+    return (send_player_position(convert_senders_to_data(senders)));
+}
+
 static void write_player_position(const srv_player_pos_t *pos, int sockfd)
 {
     char *to_write = 0x0;
@@ -34,16 +45,15 @@ static void write_player_position(const srv_player_pos_t *pos, int sockfd)
 int send_player_position(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
-    size_t size = count_senders(senders);
     world_t *world = 0x0;
     player_t *player = 0x0;
     clt_player_pos_t *clt = {0};
     srv_player_pos_t srv = {0};
     
-    if (size != 2)
+    if (senders == 0x0)
         return (-1);
-    world = (world_t*)(senders[0].data);
-    clt = (clt_player_pos_t*)(senders[1].data);
+    world = (world_t*)(senders[WORLD_SENDER_POS].data);
+    clt = (clt_player_pos_t*)(senders[CUSTOM_SENDER_POS].data);
     for (node_t *node = world->players.head ; node ; node = node->next) { 
         player = (player_t*)node->data;
         if (player->id == clt->player_num)
@@ -51,7 +61,7 @@ int send_player_position(const void *data)
     }
     srv = (srv_player_pos_t){clt->player_num, player->x, player->y,
         player->direction};
-    write_player_position(&srv, senders[0].sockfd);
+    write_player_position(&srv, senders[WORLD_SENDER_POS].sockfd);
     free(senders);
-    return (0);
+    return (SRV_PLAYER_POSITION);
 }

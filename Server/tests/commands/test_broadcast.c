@@ -28,8 +28,10 @@ Test(send_broadcast, simple_test)
     pkt_header_t hdr = {SRV_BROADCAST, PROTOCOL_VERSION,
         SRV_BROADCAST_MSG_LEN, 0};
     srv_broadcast_msg_t srv = {22, {0}};
-    cmd_info_t cmd[] = {{msg, sizeof(msg)}, {&player_num, sizeof(int)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[MSG_SENDER_POS] = (cmd_info_t){msg, sizeof(msg)};
+    cmd[INT_SENDER_POS] = (cmd_info_t){&player_num, sizeof(int)};
     strcpy(srv.message, msg);
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_broadcast, fd, cmd);

@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <arpa/inet.h>
 
 #include "server.h"
 #include "graphical/protocols.h"
@@ -56,8 +57,9 @@ int read_graph_client(client_t *clt, game_t *g)
     do {
         result = dispatch_receive_data(g, senders, clt->sockfd);
         if (result == CLT_CLOSE_CONNECTION) {
+            printf("Connection close with %s on socket %d\n",
+                    inet_ntoa(clt->addr.sin_addr), clt->sockfd);
             *clt = (client_t){0};
-            printf("will close\n");
             return (CLT_CLOSE_CONNECTION);
         }
     } while (result == 1);

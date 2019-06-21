@@ -38,8 +38,10 @@ Test(send_player_inventory, simple_test)
         SRV_PLAYER_INVENTORY_LEN, 0};
     struct clt_player_inventory clt = {1};
     srv_player_inventory_t inv = {1, 3, 3, 0, 1, 2, 3, 4, 5, 6};
-    cmd_info_t cmd[] = {{&world, sizeof(world)}, {&clt, sizeof(clt)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[WORLD_SENDER_POS] = (cmd_info_t){&world, sizeof(world)};
+    cmd[CUSTOM_SENDER_POS] = (cmd_info_t){&clt, sizeof(clt)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_player_inventory, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);

@@ -27,8 +27,9 @@ Test(send_laying_egg, simple_test)
     pkt_header_t hdr = {SRV_EGG_LAYING, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_LAYING_LEN, 0};
     srv_player_egg_laying_t egg = {player_num};
-    cmd_info_t cmd[] = {{&player_num, sizeof(int)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[INT_SENDER_POS] = (cmd_info_t){&player_num, sizeof(int)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_laying_egg, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);
@@ -50,9 +51,10 @@ Test(send_layed_egg, simple_test)
         SRV_PLAYER_EGG_LAYED_LEN, 0};
     srv_player_egg_layed_t egg = {23, 34, 34, 34};
     player_t player = {23, 1, 0, 10, 1, {0}, 34, 34};
-    cmd_info_t cmd[] = {{&player, sizeof(player_t)}, {&egg_num, sizeof(int)},
-        {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[PLAYER_SENDER_POS] = (cmd_info_t){&player, sizeof(player_t)};
+    cmd[INT_SENDER_POS] = (cmd_info_t){&egg_num, sizeof(int)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_layed_egg, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);
@@ -73,8 +75,9 @@ Test(send_hatching_egg, simple_test)
     pkt_header_t hdr = {SRV_EGG_HATCHING, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_HATCHING_LEN, 0};
     srv_player_egg_hatching_t egg = {34};
-    cmd_info_t cmd[] = {{&egg_num, sizeof(int)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[INT_SENDER_POS] = (cmd_info_t){&egg_num, sizeof(int)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_hatching_egg, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);
@@ -95,8 +98,9 @@ Test(send_egg_connection, simple_test)
     pkt_header_t hdr = {SRV_PLAYER_CONNECT_EGG, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_CONNECTION_LEN, 0};
     srv_player_egg_connection_t egg = {34};
-    cmd_info_t cmd[] = {{&egg_num, sizeof(int)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[INT_SENDER_POS] = (cmd_info_t){&egg_num, sizeof(int)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_egg_connection, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);
@@ -117,8 +121,9 @@ Test(send_egg_hatched_death, simple_test)
     pkt_header_t hdr = {SRV_PLAYER_DEATH_EGG, PROTOCOL_VERSION,
         SRV_HATCHED_EGG_DEATH_LEN, 0};
     srv_player_egg_hatching_t egg = {34};
-    cmd_info_t cmd[] = {{&egg_num, sizeof(int)}, {0}};
+    cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
+    cmd[INT_SENDER_POS] = (cmd_info_t){&egg_num, sizeof(int)};
     cr_assert_neq(fd, -1);
     wrap_graph_protocol_commands(&send_egg_hatched_death, fd, cmd);
     memcpy(result, &hdr, PKT_HDR_LEN);

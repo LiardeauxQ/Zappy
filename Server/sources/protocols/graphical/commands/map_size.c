@@ -12,6 +12,15 @@
 #include "graphical/protocols.h"
 #include "world.h"
 
+int assign_map_siz(world_t *world, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t), sockfd, 0};
+    senders[CUSTOM_SENDER_POS].is_last = 1;
+    return (send_map_size(convert_senders_to_data(senders)));
+}
+
 int send_map_size(const void *data)
 {
     char *to_write = 0x0;
@@ -21,22 +30,16 @@ int send_map_size(const void *data)
     world_t *world = 0x0;
     pkt_header_t hdr = {SRV_MAP_SIZE, PROTOCOL_VERSION, SRV_MAP_SIZE_LEN, 0};
     srv_map_size_t map = {0};
-    int result = 0;
 
     if (count_senders(senders) != MAX_SENDERS)
         return (-1);
     world = (world_t*)senders->data;
-    map.x = world->width;
-    map.y = world->height;
     map = (srv_map_size_t){world->width, world->height};
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     tmp = to_write + PKT_HDR_LEN;
     tmp = memcpy(tmp, &map, SRV_MAP_SIZE_LEN);
-    result = write(senders->sockfd, to_write, size);
-    for (int i  = 0 ; i < size ; i++)
-        printf("%x ", to_write[i]);
-    printf("\n");
+    write(senders->sockfd, to_write, size);
     free(to_write);
-    return (result);
+    return (SRV_MAP_SIZE);
 }
