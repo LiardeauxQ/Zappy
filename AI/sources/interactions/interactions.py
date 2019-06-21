@@ -5,8 +5,11 @@ import sys
 class Player:
 
     def __init__(self, port = 6000, team = "test_team", host = "localhost"):
-        self.client = SocketZappy()
-        self.client.connect_zappy()
+        self.client = SocketZappy(host, port)
+        c = self.client.connect_zappy()
+        if c == 'ko':
+            print("Imposible to connect to zappy_server")
+            sys.exit(84)
         self.level = 1
         self.food = 10
         self.linemate = 0

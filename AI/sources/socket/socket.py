@@ -1,22 +1,25 @@
 import socket
 import random
 import time
-
+import sys
 
 class SocketZappy:
 
     def __init__(self, host = 'localhost', port = 6000):
         self.socketID = random.randint(0, 200000)
-        self.host = host#'10.109.252.51'
+        self.host = host
         self.port = port 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
 
     def connect_zappy(self):
-
         buff_size = 8;
         buff = bytearray(buff_size)
-        self.socket.connect((self.host, self.port))
+        try:
+            self.socket.connect((self.host, self.port))
+        except:
+            print("Imposible to connect to zappy_server")
+            sys.exit(84)
         self.socket.recv_into(buff, buff_size);
         print ("socket [", self.socketID, "]","Connection on http://", self.host, ":", self.port, " -> ", buff.decode(), sep='')
         self.connected = True
