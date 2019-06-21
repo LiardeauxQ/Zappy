@@ -14,3 +14,4 @@ __pycache__
 .cquery
 .vscode/
 __pycache__
+zappy_ai_*.log

@@ -1,15 +1,13 @@
 from AI.sources.socket.socket import *
 from AI.sources.ressources.dictionaries import *
 import sys
+import logging
 
 class Player:
 
     def __init__(self, port = 6000, team = "test_team", host = "localhost"):
         self.client = SocketZappy(host, port)
-        c = self.client.connect_zappy()
-        if c == 'ko':
-            print("Imposible to connect to zappy_server")
-            sys.exit(84)
+        self.client.connect_zappy()
         self.level = 1
         self.food = 10
         self.linemate = 0
@@ -36,11 +34,11 @@ class Player:
         l = self.client.sendMessage("Look\n")
         l = self. __parseLookString(l)
         self.checkLook(l)
-        print(l)
+        logging.debug(l)
 
     def inventory(self):
         l = self.client.sendMessage("Inventory\n")          
-        print(l)
+        logging.debug(l)
         self.__parseInventoryString(l)
 
     def __parseInventoryString(self, array):
@@ -50,7 +48,7 @@ class Player:
             result[i] = result[i].strip().split(' ')
         for i in range(len(result)):
             vars(self)[result[i][0]] = int(result[i][1]);
-        print (result)
+        logging.debug(result)
         return result
 
         
@@ -86,7 +84,7 @@ class Player:
     def __parseBroadcast(self, message):
         message = message.replace("\x00", "").replace("\n", "").replace("[", "").replace("]", "").replace(",", "")
         result = message.split(" ")
-        print(result)
+        logging.debug(result)
         return int(result[1])
 
 
@@ -132,12 +130,12 @@ class Player:
         result = array.split(',')
         for i in range(len(result)):
             result[i] = result[i].strip().split(' ')
-        print (result)
+        logging.debug(result)
         return result
 
     def handleActions(self):
         while len(self.actions) > 0:
-            print(self.actions)
+            logging.debug(self.actions)
             action = self.actions.pop(0)
             if action == "Left":
                 self.left()
@@ -174,7 +172,13 @@ class Player:
     def start(self):
         while True:
             self.inventory()
-            print("Inventory >", self.food, self.linemate)
+            logging.debug("Inventory >food " + str(self.food) +
+                                "; linemate"+ str(self.linemate) +
+                                "; mendiane"+ str(self.mendiane) +
+                                "; phiras"+ str(self.phiras) +
+                                "; sibur"+ str(self.sibur) +
+                                "; thystame"+ str(self.thystame) +
+                                "; deraumere"+ str(self.deraumere))
             self.look()
             if self.checkElevation():
                     self.dropItemsForElevation()

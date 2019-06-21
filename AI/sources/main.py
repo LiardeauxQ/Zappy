@@ -6,6 +6,7 @@ from AI.sources.socket.socket import *
 from AI.sources.interactions.interactions import *
 import getopt
 import sys
+import logging
 
 def usage():
     print("""USAGE: ./zappy_ai -p port -n name -h machine
@@ -15,6 +16,9 @@ def usage():
 
 if __name__ == "__main__":
 
+    log = 'zappy_ai_' + str(random.randint(0, 9999)) + '.log'
+    print("AI log file:", log)
+    logging.basicConfig(filename=log,level=logging.DEBUG)
     host = 'localhost'
     port = 6000
     team = 'test_team'
@@ -32,7 +36,7 @@ if __name__ == "__main__":
         elif o in ("-h"):
             host = a
         elif o in ("-p"):
-            port = a
+            port = int(a)
         elif o in ("-n"):
             team = a
     client = Player(port, team, host)
@@ -40,6 +44,7 @@ if __name__ == "__main__":
     print (c)
     if "ko" in c:
         print("Imposible to set team name ", team, " inside zappy_server http://", host, ":", port, sep = '')
+        logging.debug("Imposible to set team name ", team, " inside zappy_server http://", host, ":", port)
         sys.exit(84)
     client.start();
     
