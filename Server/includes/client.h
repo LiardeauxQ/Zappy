@@ -13,7 +13,8 @@
 
 #define MAX_CLIENT 30
 
-typedef struct info_s info_t;
+typedef struct game_s game_t;
+typedef struct server_s server_t;
 typedef struct world_s world_t;
 
 typedef struct client_s {
@@ -22,5 +23,6 @@ typedef struct client_s {
 
 /* handle_clients.c */
 
-int read_client(client_t *client, phr_t *reg, world_t *world);
-void handle_clients(info_t *info, fd_set *readfds);
+int read_client(client_t *clt, game_t *game);
+void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
+        fd_set *readfds);

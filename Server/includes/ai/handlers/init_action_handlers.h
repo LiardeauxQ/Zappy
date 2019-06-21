@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 #include "error.h"
+#include "manage_response.h"
 #include "ai/protocols.h"
 
 #include "ai/handlers/movement_handlers.h"

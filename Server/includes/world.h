@@ -37,6 +37,7 @@ struct world_s {
     size_t width;
     size_t height;
     unsigned int f;
+    unsigned int max_team_size;
     tile_content_t **tiles;
     resource_t *resources; // available resources
     linked_list_t players; // of type struct player_s

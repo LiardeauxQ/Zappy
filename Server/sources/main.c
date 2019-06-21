@@ -10,24 +10,32 @@
 
 #include "arguments.h"
 #include "graphical/commands.h"
+#include "ai/protocols.h"
 #include "connection.h"
 #include "server.h"
 
+void check_connection(game_t *game, server_t *server)
+{
+    int max_fd = 0;
+    int sockfd = server->sockfd;
+    fd_set readfds = server->readfds;
+
+    max_fd = set_fds(&readfds, server->clients, sockfd);
+    if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
+        exit_with_error("select");
+    if (get_new_connection(&readfds, &server->clients, sockfd) == 1)
+        write(sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
+    handle_clients(game, &server->clients, &readfds);
+}
+
 void start_server(info_t *info)
 {
-    int sockfd = info->server.sockfd;
-    int max_fd = 0;
-    fd_set readfds = {0};
-
-    if (listen(sockfd, MAX_CLIENT) == -1)
+    if (listen(info->server_ai.sockfd, MAX_CLIENT) == -1
+            || listen(info->server_graph.sockfd, MAX_CLIENT) == -1)
         exit_with_error("listen");
     while (1) {
-        max_fd = set_fds(&readfds, info->clients, sockfd);
-        if (select(max_fd + 1, &readfds, 0x0, 0x0, 0x0) == -1)
-            exit_with_error("select");
-        get_new_connection(&readfds, &info->clients, sockfd);
-        handle_clients(info, &readfds);
-        //TODO: communication between server and client with the protocol
+        check_connection(&info->game, &info->server_ai);
+        check_connection(&info->game, &info->server_graph);
     }
 }
 

@@ -17,17 +17,23 @@ info_t init_info(int ac, char **av)
 
     handle_arguments(ac, av, &info.input);
     parse_resources(info.input.resources_filename);
-    init_packets(&info.handler_register);
-    info.server.port = info.input.port;
-    init_connection(&info.server);
-    info.world = generate_world(info.input.width, info.input.height,
+    init_packets(&info.game.handler_register);
+    info.server_ai.port = (info.input.port == 0 ? DEFAULT_PORT_AI
+            : info.input.port);
+    info.server_graph.port = (info.input.port == 0 ? DEFAULT_PORT_GRAPH
+            : info.input.port + 1);
+    init_connection(&info.server_ai);
+    init_connection(&info.server_graph);
+    info.game.world = generate_world(info.input.width, info.input.height,
             info.input.frequence, info.input.resources_filename);
+    info.game.world.max_team_size = info.input.client_nbr;
     return (info);
 }
 
 void destroy_info(info_t *info)
 {
-    destroy_packets(&info->handler_register);
+    destroy_packets(&info->game.handler_register);
     free_input(&info->input);
-    close(info->server.sockfd);
+    close(info->server_ai.sockfd);
+    close(info->server_graph.sockfd);
 }

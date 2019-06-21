@@ -40,6 +40,7 @@ SRC			:=	arguments/arguments.c	\
 				connection/init_info.c	\
 				error.c	\
 				connection/init_connection.c	\
+				protocols/manage_response.c	\
 				protocols/graphical/protocols.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
@@ -62,12 +63,12 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/time.c	\
 				protocols/graphical/sender.c	\
 				protocols/ai/init_action_handlers.c	\
+				protocols/ai/handlers/elevation_handler.c \
 				protocols/ai/handlers/movement_handlers.c \
 				protocols/ai/handlers/resources_handlers.c \
 				protocols/ai/handlers/player_info_handlers.c \
 				protocols/ai/handlers/utils.c \
 				handle_clients.c	\
-				game/create_map.c	\
 				game/resources/default_resources.c	\
 				game/resources/handle_resources.c	\
 				game/world_generation.c	\
@@ -81,12 +82,14 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_client_nbr_argument.c	\
 				arguments/test_height_argument.c	\
 				test_init_connection.c	\
+				test_init_info.c	\
 				test_packet_handler.c	\
 				test_init_packets.c	\
 				game/test_world_generation.c		\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
+				handlers/ai/test_elevation_handler.c \
 				handlers/ai/test_movement_handlers.c \
 				handlers/ai/test_resources_handlers.c \
 				handlers/ai/test_player_info_handlers.c \

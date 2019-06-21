@@ -49,7 +49,7 @@ void append_tile_to_look_table(char **look_table, char *tile)
     strcat(*look_table, ",");
 }
 
-int look_handler(world_t *world, player_t *player, const uint16_t limit_cycles,
+int look_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     size_t current_line_start[2] = {player->x, player->y};
@@ -65,19 +65,32 @@ int look_handler(world_t *world, player_t *player, const uint16_t limit_cycles,
         next_case(world, current_line_start, player->orientation - 1, 1);
     }
     look_table[strlen(look_table) - 1] = ']';
-    return (0);
+    set_response(look_table);
+    return (NO_ERROR);
 }
 
 int connect_nbr_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char __attribute__((unused)) **args)
+        const char __attribute__((unused)) **args)
 {
-    // Unimplemented
-    return (0);
+    int player_in_team = 0;
+    char *res = 0x0;
+    node_t *player_node = world->players.head;
+
+    for (int i = 0; player_node; i++) {
+        if (((player_t *) player_node->data)->team_id == player->team_id)
+            player_in_team += 1;
+        player_node = player_node->next;
+    }
+    res = calloc(1, sizeof(char) * (snprintf(0x0, 0, "%d",
+                    world->max_team_size - player_in_team) + 1));
+    sprintf(res, "%d", world->max_team_size - player_in_team);
+    set_response(res);
+    return (NO_ERROR);
 }
 
 int death_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char __attribute__((unused)) **args)
+        const char __attribute__((unused)) **args)
 {
-    // send_message("dead");
+    set_response("dead");
     return (NO_ERROR);
 }

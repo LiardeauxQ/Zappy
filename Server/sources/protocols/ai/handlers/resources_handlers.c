@@ -41,11 +41,8 @@ enum RESOURCE_NUMBER resource_str_to_id(const char *resource, resource_t *resour
     return (-1);
 }
 
-int take_object_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char **args)
+int take_object_handler(world_t *world, player_t *player, const char **args)
 {
-    int time_limit_passed = 0;
-    clock_t start_time = clock();
     enum RESOURCE_NUMBER resource_id = 0;
 
     if (!args[0])
@@ -57,37 +54,30 @@ int take_object_handler(world_t *world, player_t *player,
         return (INVALID_PARAMETERS);
     player->resources[resource_id]++;
     world->tiles[player->x][player->y].resources[resource_id]--;
-    time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    // send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
+    set_response("ok");
+    return (NO_ERROR);
 }
 
-int set_down_object_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char **args)
+int set_down_object_handler(world_t *world, player_t *player, const char **args)
 {
-    int time_limit_passed = 0;
-    clock_t start_time = clock();
     enum RESOURCE_NUMBER resource_id = 0;
 
     if (!args[0])
-        return (AI_TOO_FEW_PARAMETERS);
+        return (TOO_FEW_PARAMETERS);
     else if (args[1])
-        return (AI_TOO_MUCH_PARAMETERS);
+        return (TOO_MUCH_PARAMETERS);
     resource_id = resource_str_to_id(args[0], world->resources);
     if ((int) resource_id == -1)
-        return (AI_INVALID_PARAMETERS);
+        return (INVALID_PARAMETERS);
     player->resources[resource_id]--;
     world->tiles[player->x][player->y].resources[resource_id]++;
-    time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    // send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
+    set_response("ok");
+    return (NO_ERROR);
 }
 
 int inventory_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char __attribute__((unused)) **args)
+        const char __attribute__((unused)) **args)
 {
-    int time_limit_passed = 0;
-    clock_t start_time = clock();
     char *resource_string = 0x0;
     char *inventory = calloc(1, 2);
 
@@ -102,7 +92,6 @@ int inventory_handler(world_t *world, player_t *player,
         else
             strcat(inventory , ", ");
     }
-    time_limit_passed = is_time_limit_passed(start_time, limit_cycles, world->f);
-    // send_message((!time_limit_passed) ? "ok" : "ko");
-    return ((!time_limit_passed) ? AI_NO_ERROR : AI_TIME_LIMIT_PASSED);
+    set_response(inventory);
+    return (NO_ERROR);
 }

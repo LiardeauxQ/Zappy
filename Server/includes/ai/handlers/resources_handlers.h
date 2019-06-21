@@ -8,6 +8,7 @@
 #pragma once
 
 #include "world.h"
+#include "manage_response.h"
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 
@@ -15,11 +16,9 @@ char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity);
 
 enum RESOURCE_NUMBER resource_str_to_id(const char *resource);
 
-int take_object_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char **args);
+int take_object_handler(world_t *world, player_t *player, const char **args);
 
 int set_down_object_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char **args);
+        const char **args);
 
-int inventory_handler(world_t *world, player_t *player,
-        const uint16_t limit_cycles, const char **args);
+int inventory_handler(world_t *world, player_t *player, const char **args);

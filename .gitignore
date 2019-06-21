@@ -12,3 +12,4 @@ zappy_graphical
 .*.session.vim
 .cquery
 .vscode/
+__pycache__

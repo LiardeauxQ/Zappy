@@ -19,8 +19,9 @@ Test(forward_move_handler, test_forward_move_handler)
     head->x = 1;
     head->y = 1;
     head->orientation = EAST;
-    forward_move_handler(&world, head, 100, 0x0);
+    forward_move_handler(&world, head, 0x0);
     cr_assert_eq(head->x, 2);
+    cr_assert_eq(strcmp(get_response(), "ok"), 0);
 }
 
 Test(left_move_handler, test_left_move_handler)
@@ -32,8 +33,9 @@ Test(left_move_handler, test_left_move_handler)
     add_player(&world, 0);
     head = (player_t *) world.players.head;
     head->orientation = EAST;
-    left_move_handler(&world, head, 100, 0x0);
+    left_move_handler(&world, head, 0x0);
     cr_assert_eq(head->orientation, NORTH);
+    cr_assert_eq(strcmp(get_response(), "ok"), 0);
 }
 
 Test(right_move_handler, test_right_move_handler)
@@ -45,6 +47,7 @@ Test(right_move_handler, test_right_move_handler)
     add_player(&world, 0);
     head = (player_t *) world.players.head;
     head->orientation = EAST;
-    right_move_handler(&world, head, 100, 0x0);
+    right_move_handler(&world, head, 0x0);
     cr_assert_eq(head->orientation, SOUTH);
+    cr_assert_eq(strcmp(get_response(), "ok"), 0);
 }

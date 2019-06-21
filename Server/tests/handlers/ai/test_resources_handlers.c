@@ -20,9 +20,10 @@ Test(take_object_handler, test_take_object_handler)
     head->x = 1;
     head->y = 1;
     world.tiles[1][1].resources[1] = 1;
-    take_object_handler(&world, head, 100, args);
+    take_object_handler(&world, head, args);
     cr_assert_eq(head->resources[1], 1);
     cr_assert_eq(world.tiles[1][1].resources[1], 0);
+    cr_assert_eq(strcmp(get_response(), "ok"), 0);
 }
 
 Test(set_down_object_handler, test_set_down_object_handler)
@@ -39,9 +40,10 @@ Test(set_down_object_handler, test_set_down_object_handler)
     head->y = 1;
     head->resources[1] = 1;
     old_resources_nbr_on_tile = world.tiles[1][1].resources[1];
-    set_down_object_handler(&world, head, 100, args);
+    set_down_object_handler(&world, head, args);
     cr_assert_eq(head->resources[1], 0);
     cr_assert_eq(world.tiles[1][1].resources[1], old_resources_nbr_on_tile + 1);
+    cr_assert_eq(strcmp(get_response(), "ok"), 0);
 }
 
 Test(inventory_handler, test_inventory_handler)
@@ -57,5 +59,7 @@ Test(inventory_handler, test_inventory_handler)
     head->resources[1] = 1;
     head->resources[2] = 5;
     head->resources[5] = 3;
-    inventory_handler(&world, head, 100, 0x0);
+    inventory_handler(&world, head, 0x0);
+    cr_assert_eq(strcmp(get_response(), "[Linemate 1, Deraumere 5, Sibur 0, "
+        "Mendiane 0, Phiras 3, Thystame 0, Custom 0]"), 0);
 }
