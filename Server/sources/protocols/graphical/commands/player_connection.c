@@ -13,6 +13,21 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
+int assign_new_player_connection(player_t *player, team_t *teams, int sockfd)
+{
+    sender_t senders[MAX_SENDERS] = {{0}};
+    int size = 0;
+
+    while (teams[size++].name);
+    senders[PLAYER_SENDER_POS] = (sender_t){player, sizeof(player_t),
+        sockfd, 0};
+    senders[TEAMS_SENDER_POS] = (sender_t){teams, size * sizeof(team_t),
+        sockfd, 0};
+    senders[CUSTOM_SENDER_POS].is_last = 1;
+    return (send_player_connection(convert_senders_to_data(senders)));
+
+}
+
 static srv_new_player_connect_t convert_player_to_srv(player_t *player,
         team_t *teams)
 {
@@ -24,7 +39,7 @@ static srv_new_player_connect_t convert_player_to_srv(player_t *player,
     srv.orientation = player->orientation;
     srv.level = player->level;
     for (int i = 0 ; teams[i].name ; i++) {
-        if (teams[i].id == player->team_id
+        if ((unsigned int)teams[i].id == player->team_id
                 && strlen(teams[i].name) < SHORT_MSG_LEN) {
             strcpy(srv.team_name, teams[i].name);
             break;
