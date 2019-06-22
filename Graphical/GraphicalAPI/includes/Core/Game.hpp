@@ -7,6 +7,8 @@
 
 #pragma once
 
+#define MAX_PLAYERS 7
+
 #include <cmath>
 #include "Tile.hpp"
 #include "Team.hpp"
@@ -21,7 +23,7 @@ namespace zapi
         protected:
             void initialize();
             void updateTile(sf::Vector2f &position, const std::vector<int> &res);
-            void addTeam(const std::string &teamName);
+            void addTeam(const std::string &teamName); // check if team exist
             void addPlayer(const std::string &teamName, int id, const sf::Vector2f &position);
             void removePlayer(unsigned int id);
             Tile *findTile(const sf::Vector2f &position);
@@ -32,10 +34,13 @@ namespace zapi
             void levelUpPlayer(unsigned int id);
             zapi::Player getPlayer(unsigned int id);
 
+            void updateGameMapSize(const sf::Vector2f &size);
             void updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction);
-            void updatePlayer(unsigned int id, const sf::Vector2f &position, std::array<int, 7> &resources);
+            void updatePlayer(unsigned int id, const sf::Vector2f &position,
+                    std::array<int, MAX_PLAYERS> &resources);
             void expulsePlayer(unsigned int id);
-            void startIncantation(unsigned int sender, const sf::Vector2f &position, std::array<int, 7> &players);
+            void startIncantation(unsigned int sender, const sf::Vector2f &position,
+                    std::array<int, MAX_PLAYERS> &players);
             void stopIncantation(RESULT result, const sf::Vector2f &position);
             void broadcast(unsigned int sender, const std::string &message);
             void eggLaying(unsigned int id);

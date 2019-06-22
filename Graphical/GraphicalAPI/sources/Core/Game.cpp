@@ -85,12 +85,10 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
 
 void zapi::Game::updateTile(sf::Vector2f &position, const std::vector<int> &res)
 {
-    for (unsigned int i = 0; i < tiles.size(); i++) {
-        if (tiles[i].getPosition() == position) {
-            tiles[i].updateResource(res);
-            return;
-        }
-    }
+    sf::Vector2f newPos(position.x * 100, position.y * 100);
+    Tile *tile = findTile(newPos);
+
+    tile->updateResource(res);
 }
 
 void zapi::Game::removePlayer(unsigned int id)
@@ -160,7 +158,10 @@ bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
     return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
 }
 
-
+void zapi::Game::updateGameMapSize(const sf::Vector2f &size)
+{
+    std::cout << "Update map size " << size.x << " " << size.y << std::endl;
+}
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
 {
