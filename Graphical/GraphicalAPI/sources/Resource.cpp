@@ -7,9 +7,9 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position, bool isHud)
+zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position, unsigned int quantity, bool isHud)
 : Entity(position)
-, quantity(0)
+, quantity(quantity)
 , sprite()
 , HUD(isHud)
 {

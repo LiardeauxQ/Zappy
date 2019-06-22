@@ -15,7 +15,7 @@ int init_client_packets(phr_t *reg)
         return (-1);
     add_pkt_info(reg, init_pkt(1, 0, "CLT_PROTOCOL_ADDONS", 0x0));
     add_pkt_info(reg, init_pkt(2, 0, "CLT_MAP_SIZE", &send_map_size));
-    add_pkt_info(reg, init_pkt(3, 0, "CLT_TILE_CONTENT", &get_tile_content));
+    add_pkt_info(reg, init_pkt(3, 0, "CLT_TILE_CONTENT", &send_tile_content));
     add_pkt_info(reg, init_pkt(4, 0, "CLT_MAP_CONTENT", &send_map_content));
     add_pkt_info(reg, init_pkt(5, 0, "CLT_TEAMS_NAMES", &get_name_teams));
     add_pkt_info(reg, init_pkt(6, 0, "CLT_PLAYER_POSITION",
@@ -26,7 +26,8 @@ int init_client_packets(phr_t *reg)
     add_pkt_info(reg, init_pkt(9, 0, "CLT_TIME_UNIT_REQUEST", &get_time_unit));
     add_pkt_info(reg, init_pkt(10, 0, "CLT_TIME_UNIT_CHANGE",
                 &get_time_update));
-    add_pkt_info(reg, init_pkt(11, 0, "CLT_CUSTOM", 0x0));
+    add_pkt_info(reg, init_pkt(11, 0, "CLT_CLOSE_CONNECTION",
+                &get_close_connection));
     return (0);
 }
 
@@ -72,7 +73,7 @@ int init_server_actions_packets2(phr_t *reg)
     if (reg == 0x0)
         return (-1);
     add_pkt_info(reg, init_pkt(27, 0, "SRV_PLAYER_DEATH", &send_player_death));
-    add_pkt_info(reg, init_pkt(28, 0, "SRV_EGG_LAYED", &send_laid_egg));
+    add_pkt_info(reg, init_pkt(28, 0, "SRV_EGG_LAYED", &send_layed_egg));
     add_pkt_info(reg, init_pkt(29, 0, "SRV_EGG_HATCHING", &send_hatching_egg));
     add_pkt_info(reg, init_pkt(30, 0, "SRV_PLAYER_CONNECT_EGG",
                 &send_egg_connection));

@@ -20,15 +20,15 @@ zapi::Window::Window(const std::string &title)
 
 void zapi::Window::update(void)
 {
-    // clear();
+    clear();
     inputHandler();
-    // setView(camera);
+    setView(camera);
 }
 
 void zapi::Window::updateHUD(void)
 {
-    setView(getDefaultView());
-    draw(hud);
+    // setView(getDefaultView());
+    // draw(hud);
 }
 
 void zapi::Window::drawEntities(std::vector<Tile> &entities)
@@ -59,7 +59,7 @@ void zapi::Window::drawEntities(std::list<Player> &entities)
 
 void zapi::Window::inputHandler()
 {
-    // while (pollEvent(event)) {
+    while (pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             close();
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
@@ -80,7 +80,7 @@ void zapi::Window::inputHandler()
             camera.zoom(1.2);
             zoom--;
         }
-    // }
+    }
 }
 
 sf::View &zapi::Window::getCamera(void)

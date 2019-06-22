@@ -27,56 +27,58 @@ srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
     content.q1 = tile->resources[1];
     content.q2 = tile->resources[2];
     content.q3 = tile->resources[3];
-    content.q4 = tile->resources[5];
-    content.q5 = tile->resources[6];
-    content.q6 = tile->resources[7];
+    content.q4 = tile->resources[4];
+    content.q5 = tile->resources[5];
+    content.q6 = tile->resources[6];
     content.players = tile->player_nb;
     return (content);
 }
 
-int get_tile_content(const void *data)
+int assign_tile_content(world_t *world, clt_tile_content_t *clt, int sockfd)
 {
-    sender_t *senders = get_senders_from_data(data);
-    size_t size = count_senders(senders);
+    sender_t senders[MAX_SENDERS] = {{0}};
 
-    if (size != 2)
-        return (-1);
-    send_map_content(data);
-    free(senders);
-    return (0);
+    senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t),
+        sockfd, 0};
+    senders[CUSTOM_SENDER_POS] = (sender_t){clt, sizeof(clt_tile_content_t),
+        sockfd, 1};
+    return (send_tile_content(convert_senders_to_data(senders)));
 }
 
-static void write_map_tile_content(tile_content_t *tile,
-        const unsigned int x, const unsigned int y, const int sockfd)
+char *write_tile_content(tile_content_t *tile,
+        const unsigned int x, const unsigned int y, const int subid)
 {
     char *to_write = 0x0;
-    size_t size = PKT_HANDLER_LEN + SRV_TILE_CONTENT_LEN + 1;
-    pkt_header_t hdr = {SRV_MAP_SIZE, PROTOCOL_VERSION, size, 0};
+    size_t size = PKT_HDR_LEN + SRV_TILE_CONTENT_LEN;
+    pkt_header_t hdr = {SRV_TILE_CONTENT, PROTOCOL_VERSION,
+        SRV_TILE_CONTENT_LEN, subid};
     srv_tile_content_t srv_content = {0};
 
     to_write = calloc(1, size * sizeof(char));
-    to_write = memcpy(to_write, &hdr, PKT_HANDLER_LEN);
+    to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     srv_content = convert_to_srv_tile_content(tile, x, y);
-    memcpy(to_write + PKT_HANDLER_LEN, &srv_content, SRV_TILE_CONTENT_LEN);
-    write(sockfd, to_write, size);
+    memcpy(to_write + PKT_HDR_LEN, &srv_content, SRV_TILE_CONTENT_LEN);
+    return (to_write);
 }
 
 int send_tile_content(const void *data)
 {
     sender_t *senders = get_senders_from_data(data);
-    size_t size = count_senders(senders);
+    size_t size = PKT_HDR_LEN + SRV_TILE_CONTENT_LEN;
     world_t *world = 0x0;
-    unsigned int *x = 0;
-    unsigned int *y = 0;
+    clt_tile_content_t *clt = {0};
+    char *to_write = 0x0;
 
-    if (size != 2)
+    if (senders == 0x0)
         return (-1);
-    x = (unsigned int*)(senders[0].data);
-    y = (unsigned int*)(senders[0].data + sizeof(unsigned int));
-    world = (world_t*)(senders[1].data);
-    if (*x >= world->width && *y >= world->height)
+    clt = (clt_tile_content_t*)senders[CUSTOM_SENDER_POS].data;
+    world = (world_t*)(senders[WORLD_SENDER_POS].data);
+    if (clt->x >= world->width && clt->y >= world->height)
         return (-1);
-    write_map_tile_content(&world->tiles[*x][*y], *x, *y, senders[0].sockfd);
+    to_write = write_tile_content(&world->tiles[clt->x][clt->y], clt->x,
+            clt->y, 0);
+    write(senders[WORLD_SENDER_POS].sockfd, to_write, size);
     free(senders);
-    return (0);
+    free(to_write);
+    return (SRV_TILE_CONTENT);
 }
