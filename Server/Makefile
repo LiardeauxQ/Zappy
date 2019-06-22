@@ -82,6 +82,7 @@ SRC			:=	arguments/arguments.c	\
 				game/player/create_player.c	\
 				game/player/destroy_player.c	\
 				utils/get_next_line.c	\
+				utils/str_to_tab.c	\
 				commands/wrap_protocols_commands.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
@@ -115,7 +116,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_broadcast.c	\
 
 
-CFLAGS		=	$(INCLUDES) $(WARN)
+CFLAGS		=	$(INCLUDES) $(WARN) -g3
 
 TESTCFLAGS	=	$(INCLUDES) $(WARN)
 

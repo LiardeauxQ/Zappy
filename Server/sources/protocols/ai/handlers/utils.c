@@ -45,7 +45,7 @@ size_t *next_case(world_t *world, size_t *coords, int orientation, int inc)
     return (coords);
 }
 
-int is_time_limit_passed(const clock_t start, const uint16_t limit_cycles,
+int is_time_limit_reached(const clock_t start, const uint16_t limit_cycles,
         const unsigned int f)
 {
     clock_t end = clock();

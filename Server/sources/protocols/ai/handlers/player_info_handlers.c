@@ -31,8 +31,8 @@ void tile_to_str(world_t *world, size_t *coords, int team_id, char **str)
     for (int i = 0; tile.resources[i] != -1; i++) {
         buffer = world->resources[tile.resources[i]].name;
         *str = realloc(*str, strlen(*str) + strlen(buffer) + 2);
-        strcat(*str, (tile.resources[i + 1] != -1) ?
-                strcat(buffer, " ") : buffer);
+        strcat(*str, buffer);
+        (tile.resources[i + 1] != -1) ? strcat(*str, " ") : 0x0;
     }
 }
 
