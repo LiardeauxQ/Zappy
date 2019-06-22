@@ -7,19 +7,21 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(sf::Texture *texture, const sf::Vector2f &size, const sf::Vector2f &position)
+zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position)
 : Entity(position)
 , quantity(0)
-, size(size)
 , sprite()
 {
-    sprite.setTexture(*texture);
+    sprite.setTexture(*(getResourceTexture()));
+    sprite.setTextureRect(sf::IntRect(96 * id, 0, 96, 96));
+    sprite.setScale(sf::Vector2f(0.2, 0.2));
     sprite.setPosition(position);
 }
 
 void zapi::Resource::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(sprite, states);
+    if (quantity)
+        target.draw(sprite, states);
 }
 
 zapi::Resource &zapi::Resource::operator++(int)

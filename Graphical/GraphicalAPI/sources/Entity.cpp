@@ -6,7 +6,6 @@
 */
 
 #include "Entity.hpp"
-#include <iostream>
 
 zapi::Entity::Entity(const sf::Vector2f &position)
 : position(position)

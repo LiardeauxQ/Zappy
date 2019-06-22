@@ -11,6 +11,7 @@ zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 800))
 , event()
+, zoom(5)
 {
     setView(camera);
 }
@@ -36,7 +37,13 @@ void zapi::Window::drawEntities(std::vector<Resource> &entities)
         this->draw(entity);
 }
 
-void zapi::Window::drawEntities(std::vector<Player> &entities)
+void zapi::Window::drawEntities(std::vector<Team> &entities)
+{
+    for (auto &entity : entities)
+        drawEntities(entity.getPlayers());
+}
+
+void zapi::Window::drawEntities(std::list<Player> &entities)
 {
     for (auto &entity : entities)
         this->draw(entity);
@@ -57,9 +64,13 @@ void zapi::Window::inputHandler()
             camera.move(-40, 0);
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
             camera.move(40, 0);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
-            camera.zoom(0.8);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z)
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A && zoom < 10) {
+            camera.zoom(0.9);
+            zoom++;
+        }
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z && zoom > 0) {
             camera.zoom(1.2);
+            zoom--;
+        }
     }
 }

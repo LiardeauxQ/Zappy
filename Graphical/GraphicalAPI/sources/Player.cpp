@@ -7,36 +7,98 @@
 
 #include "Player.hpp"
 
-zapi::Player::Player(unsigned int id, const sf::Vector2f &position)
+zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &position)
 : Entity(position)
+, orientation(SOUTH)
+, level(0)
 , id(id)
-, radius(25)
-, main(radius)
-, inventory({ 0, 0, 0, 0, 0, 0, 0 })
+, sprite()
+, tile(tile)
+, inventory()
 {
-    main.setFillColor(sf::Color::Blue);
-    main.setOutlineColor(sf::Color::Black);
-    main.setOutlineThickness(1);
-    main.setPosition(position);
+
+    sprite.setTexture(*(getPlayerTexture()));
+    sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
+    sprite.setPosition(position);
 }
 
 void zapi::Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(main, states);
+    target.draw(sprite, states);
 }
 
 void zapi::Player::move(ORIENTATION direction)
 {
-    if (direction == NORTH) {
-        main.move(0, -(radius * 4));
+    switch (direction) {
+        case NORTH:
+            if (position.y - 100 > 0)
+                position = sf::Vector2f(position.x, position.y - 100);
+            else
+                position = sf::Vector2f(position.x, 3000 - 50 - 32);
+            break;
+        case EAST:
+            if (position.x + 100 < 3000)
+                position = sf::Vector2f(position.x + 100, position.y);
+            else
+                position = sf::Vector2f(0 + 50 - 32, position.y);
+            break;
+        case WEST:
+            if (position.x - 100 > 0)
+                position = sf::Vector2f(position.x - 100, position.y);
+            else
+                position = sf::Vector2f(3000 - 50 - 32, position.y);
+            break;
+        case SOUTH:
+            if (position.y + 100 < 3000)
+                position = sf::Vector2f(position.x, position.y + 100);
+            else
+                position = sf::Vector2f(position.x, 0 + 50 - 32);
+            break;
     }
-    if (direction == EAST) {
-        main.move(radius * 4, 0);
-    }
-    if (direction == WEST) {
-        main.move(-(radius * 4), 0);
-    }
-    if (direction == SOUTH) {
-        main.move(0, radius * 4);
-    }
+    updateOrientation(direction);
+    sprite.setPosition(position);
+}
+
+void zapi::Player::addInventory(RESOURCE_NUMBER index)
+{
+    inventory[index] += 1;
+}
+
+void zapi::Player::removeInventory(RESOURCE_NUMBER index)
+{
+    if (inventory[index] > 0)
+        inventory[index] -= 1;
+}
+
+void zapi::Player::resetTile(zapi::Tile *tile)
+{
+    this->tile = tile;
+}
+
+void zapi::Player::levelUp(void)
+{
+    level++;
+}
+
+void zapi::Player::dropResource(RESOURCE_NUMBER index)
+{
+    tile->addResource(index);
+    removeInventory(index);
+}
+
+void zapi::Player::pickUpResource(RESOURCE_NUMBER index)
+{
+    tile->removeResource(index);
+    addInventory(index);
+}
+
+sf::Vector2f zapi::Player::getPosition()
+{
+    return sf::Vector2f(position.x - 18, position.y - 18);
+}
+
+void zapi::Player::updateOrientation(ORIENTATION direction)
+{
+    orientation = direction;
+    sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
 }
