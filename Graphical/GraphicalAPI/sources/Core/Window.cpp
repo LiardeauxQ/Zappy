@@ -16,7 +16,7 @@ zapi::Window::Window(const std::string &title)
 {
     setView(camera);
     shadow.setUniform("u_resolution", sf::Glsl::Vec2(100, 100));
-    shadow.loadFromFile("shaders/shadow.frag", sf::Shader::Fragment);
+    shadow.loadFromFile("Graphical/shaders/shadow.frag", sf::Shader::Fragment);
 }
 
 void zapi::Window::update()

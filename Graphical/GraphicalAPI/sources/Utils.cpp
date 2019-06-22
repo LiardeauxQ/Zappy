@@ -25,7 +25,7 @@ sf::Texture *zapi::getTileTexture()
 
     if (!tileTexture) {
         tileTexture = new sf::Texture();
-        tileTexture->loadFromFile("sprites/grass.png");
+        tileTexture->loadFromFile("Graphical/sprites/grass.png");
         tileTexture->setSmooth(true);
     }
     return tileTexture;
@@ -37,7 +37,7 @@ sf::Texture *zapi::getResourceTexture()
 
     if (!resourceTexture) {
         resourceTexture = new sf::Texture();
-        resourceTexture->loadFromFile("sprites/resources.png");
+        resourceTexture->loadFromFile("Graphical/sprites/resources.png");
         resourceTexture->setSmooth(true);
     }
     return resourceTexture;
@@ -49,7 +49,7 @@ sf::Texture *zapi::getPlayerTexture()
 
     if (!resourceTexture) {
         resourceTexture = new sf::Texture();
-        resourceTexture->loadFromFile("sprites/player.png");
+        resourceTexture->loadFromFile("Graphical/sprites/player.png");
         resourceTexture->setSmooth(true);
     }
     return resourceTexture;

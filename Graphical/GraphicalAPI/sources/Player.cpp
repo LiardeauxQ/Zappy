@@ -92,9 +92,9 @@ void zapi::Player::pickUpResource(RESOURCE_NUMBER index)
     addInventory(index);
 }
 
-sf::Vector2f zapi::Player::getPosition(void)
+sf::Vector2f zapi::Player::getPosition()
 {
-    return position;
+    return sf::Vector2f(position.x - 18, position.y - 18);
 }
 
 void zapi::Player::updateOrientation(ORIENTATION direction)
