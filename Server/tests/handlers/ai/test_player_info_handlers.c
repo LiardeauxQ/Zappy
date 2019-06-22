@@ -11,10 +11,13 @@
 Test(look_handler, test_look_handler)
 {
     int id = 0;
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *head = 0x0;
 
     world.f = 100;
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     append(&world.tiles[1][1].players_id, &id);
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
@@ -25,10 +28,13 @@ Test(look_handler, test_look_handler)
 
 Test(connect_nbr_handler, test_connect_nbr_handler)
 {
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *head = 0x0;
 
     world.f = 100;
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
     connect_nbr_handler(&world, head, 0x0);
@@ -37,10 +43,13 @@ Test(connect_nbr_handler, test_connect_nbr_handler)
 
 Test(death_handler, test_death_handler)
 {
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *head = 0x0;
 
     world.f = 100;
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
     look_handler(&world, head, 0x0);

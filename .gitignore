@@ -16,3 +16,4 @@ __pycache__
 .cquery
 .vscode/
 vgcore*
+.bash_history

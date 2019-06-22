@@ -10,10 +10,13 @@
 
 Test(elevation_handler, test_elevation_handler)
 {
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *player1 = 0x0;
     player_t *player2 = 0x0;
 
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     add_player(&world, 1);
     player1 = (player_t *) world.players.head->data;

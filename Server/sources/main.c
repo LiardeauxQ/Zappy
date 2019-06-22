@@ -49,8 +49,9 @@ void start_server(info_t *info)
 
 int main(int ac, char **av)
 {
-    info_t info = init_info(ac, av);
+    info_t info = {0};
 
+    init_info(ac, av, &info);
     start_server(&info);
     destroy_info(&info);  
     return (0);

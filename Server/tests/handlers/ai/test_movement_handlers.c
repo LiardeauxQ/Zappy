@@ -11,10 +11,13 @@
 Test(forward_move_handler, test_forward_move_handler)
 {
     int id_is_in_list = 0;
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *player = 0x0;
     node_t *player_id_node = 0x0;
 
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     player = (player_t *) world.players.head->data;
     player->x = 1;
@@ -36,9 +39,12 @@ Test(forward_move_handler, test_forward_move_handler)
 
 Test(left_move_handler, test_left_move_handler)
 {
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *player = 0x0;
 
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     player = (player_t *) world.players.head;
     player->orientation = EAST;
@@ -49,9 +55,12 @@ Test(left_move_handler, test_left_move_handler)
 
 Test(right_move_handler, test_right_move_handler)
 {
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *player = 0x0;
 
+    world.width = 4;
+    world.height = 4;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     player = (player_t *) world.players.head;
     player->orientation = EAST;
