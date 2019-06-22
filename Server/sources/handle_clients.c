@@ -19,7 +19,7 @@ void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
 
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         fd = (*clients)[i].sockfd;
-        if ((*clients)[i].client_nb != -1) {
+        if ((*clients)[i].type == AI && (*clients)[i].client_nb != -1) {
             player = get_player(game->world.players, (*clients)[i].client_nb);
             handle_awaiting_actions(fd, &game->world, player);
         }

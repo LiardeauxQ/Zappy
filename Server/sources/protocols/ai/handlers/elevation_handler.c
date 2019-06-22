@@ -45,7 +45,6 @@ void elevate(int client_fd, world_t *world, player_t *player)
         return;
     if (is_time_limit_reached(player->elevation_start_time,
                 ELEVATION_TIME, world->f)) {
-        printf("Elevation: %d\n", client_fd);
         player->level += 1;
         res = calloc(1, strlen("Current level: k\n") + 1);
         strcat(res, "Current level: ");

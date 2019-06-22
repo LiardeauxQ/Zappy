@@ -69,7 +69,6 @@ int look_handler(world_t *world, player_t *player,
     look_table[look_table_len - 1] = ']';
     look_table[look_table_len] = '\n';
     look_table[look_table_len + 1] = 0;
-    printf("Look: %s", look_table);
     set_response(look_table);
     return (NO_ERROR);
 }

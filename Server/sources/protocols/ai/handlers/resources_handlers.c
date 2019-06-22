@@ -96,7 +96,6 @@ int inventory_handler(world_t *world, player_t *player,
         else
             strcat(inventory, ", ");
     }
-    printf("Inventory: %s", inventory);
     set_response(inventory);
     return (NO_ERROR);
 }

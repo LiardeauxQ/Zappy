@@ -21,9 +21,15 @@ typedef struct game_s game_t;
 typedef struct server_s server_t;
 typedef struct world_s world_t;
 
+enum client_type {
+    AI,
+    GRAPH
+};
+
 typedef struct client_s {
     int sockfd;
     int client_nb;
+    enum client_type type;
     struct sockaddr_in addr;
 } client_t;
 

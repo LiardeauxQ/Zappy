@@ -13,7 +13,7 @@
 #include "ai/handlers/init_action_handlers.h"
 
 info_t init_info(int ac, char **av)
-{       
+{
     info_t info = {0};
 
     handle_arguments(ac, av, &info.input);
@@ -24,8 +24,8 @@ info_t init_info(int ac, char **av)
             : info.input.port);
     info.server_graph.port = (info.input.port == 0 ? DEFAULT_PORT_GRAPH
             : info.input.port + 1);
-    init_connection(&info.server_ai);
-    init_connection(&info.server_graph);
+    init_connection(&info.server_ai, AI);
+    init_connection(&info.server_graph, GRAPH);
     info.game.world = generate_world(info.input.width, info.input.height,
             info.input.frequence, info.input.resources_filename);
     info.game.world.max_team_size = info.input.client_nbr;
