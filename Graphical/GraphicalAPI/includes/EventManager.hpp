@@ -20,44 +20,44 @@ namespace communication {
     template <class T>
     class IEventListener {
     public:
-        virtual void update(const std::string &id, T data) = 0;
+        virtual void update(const std::string &eventType, int id, T data) = 0;
     };
 
     template <class T>
     class EventManager {
     public:
-        EventManager(std::vector<std::string> ids)
+        EventManager(std::vector<std::string> eventTypes)
         {
-            for (std::string id : ids) {
-                listeners.insert(std::make_pair(id,
+            for (std::string eventType : eventTypes) {
+                listeners.insert(std::make_pair(eventType,
                             std::vector<IEventListener<T>*>()));
             }
         }
 
         ~EventManager() = default;
 
-        void subscribe(const std::string &id, IEventListener<T> *listener)
+        void subscribe(const std::string &eventType, IEventListener<T> *listener)
         {
             try {
-                listeners.at(id).push_back(listener);
+                listeners.at(eventType).push_back(listener);
             } catch (std::exception e) {
                 std::cout << e.what() << std::endl;
             }
         }
 
-        void unsubscribe(const std::string &id, IEventListener<T> *listener)
+        void unsubscribe(const std::string &eventType, IEventListener<T> *listener)
         {
             try {
-                listeners.at(id).remove(listener);
+                listeners.at(eventType).remove(listener);
             } catch (std::exception e) {
                 std::cout << e.what() << std::endl;
             }
         }
 
-        void notify(const std::string &id, T data)
+        void notify(const std::string &eventType, int id, T data)
         {
-            for (auto listener : listeners[id]) {
-                listener->update(id, data);
+            for (auto listener : listeners[eventType]) {
+                listener->update(eventType, eventType, data);
             }
         }
     private:

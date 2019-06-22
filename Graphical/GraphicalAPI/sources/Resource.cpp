@@ -7,9 +7,10 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position)
+zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position,
+        unsigned int quantity)
 : Entity(position)
-, quantity(0)
+, quantity(quantity)
 , sprite()
 {
     sprite.setTexture(*(getResourceTexture()));

@@ -147,6 +147,6 @@ void communication::ServerInteraction::listenSocket(void)
     data = (char*)calloc(1, hdr.size);
     if (read(sockfd, data, hdr.size) == -1)
         throw ServerInteractionErrors("Unable to read");
-    events.notify("socket", data);
+    events.notify("socket", hdr.id, data);
     free(data);
 }

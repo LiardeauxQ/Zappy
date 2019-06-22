@@ -9,6 +9,7 @@
 #include "Core/Window.hpp"
 #include "ServerInteraction.hpp"
 #include "EventManager.hpp"
+#include "protocols.h"
 
 class App: public zapi::Game, public communication::IEventListener<char*> {
 public:
@@ -18,7 +19,9 @@ public:
     void start();
     void loop();
 
-    void update(const std::string &id, char* data) override;
+    void update(const std::string &eventType, int id, char *data) override;
+
+    void updateTileContent(char *data);
 private:
     zapi::Window window;
     communication::ServerInteraction &server;

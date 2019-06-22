@@ -83,14 +83,11 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
     std::cout << "Player " << id << " picked up something" << std::endl;
 }
 
-void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> &res)
+void zapi::Game::updateTile(sf::Vector2f vector, std::vector<int> &res)
 {
-    for (unsigned int i = 0; i < tiles.size(); i++) {
-        if (tiles[i].getPosition() == vector) {
-            tiles[i].updateResource(res);
-            return;
-        }
-    }
+    Tile *tile = findTile(vector);
+
+    tile->updateResource(res);
 }
 
 void zapi::Game::removePlayer(unsigned int id)
