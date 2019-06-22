@@ -19,6 +19,8 @@ public:
     void start();
     void loop();
 
+    typedef void (App::*cmdServerFun)(char *data);
+
     void update(const std::string &eventType, int id, char *data) override;
 
     void updateTileContent(char *data);
@@ -27,7 +29,7 @@ public:
     void updateHatchingEgg(char *data);
     void updateEggConnection(char *data);
     void updateEggHatchedDeath(char *data);
-    void updateEngGame(char *data);
+    void updateEndGame(char *data);
     void updatePlayerExpulsion(char *data);
     void updateStartIncantation(char *data);
     void updateEndIncantation(char *data);

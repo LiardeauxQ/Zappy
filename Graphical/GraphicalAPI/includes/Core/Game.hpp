@@ -23,7 +23,7 @@ namespace zapi
         protected:
             void initialize();
             void updateTile(sf::Vector2f &position, const std::vector<int> &res);
-            void addTeam(const std::string &teamName); // check if team exist
+            void addTeam(const std::string &teamName); //TODO: check if team exist
             void addPlayer(const std::string &teamName, int id, const sf::Vector2f &position);
             void removePlayer(unsigned int id);
             Tile *findTile(const sf::Vector2f &position);

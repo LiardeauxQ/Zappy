@@ -7,6 +7,35 @@
 
 #include "App.hpp"
 
+static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
+    std::make_tuple(SRV_MAP_SIZE, &App::updateMapSize),
+    std::make_tuple(SRV_TILE_CONTENT, &App::updateTileContent),
+    std::make_tuple(SRV_TEAMS_NAMES, &App::updateNameTeam),
+    std::make_tuple(SRV_NEW_PLAYER_CONNECT, &App::updatePlayerNewConnection),
+    std::make_tuple(SRV_PLAYER_POSITION, &App::updatePlayerPosition),
+    std::make_tuple(SRV_PLAYER_LEVEL, &App::updatePlayerLevel),
+    std::make_tuple(SRV_PLAYER_INVENTORY, &App::updatePlayerInventory),
+    std::make_tuple(SRV_EXPULSION, &App::updatePlayerExpulsion),
+    std::make_tuple(SRV_BROADCAST, &App::updateBroadcast),
+    std::make_tuple(SRV_INCANTATION_START, &App::updateStartIncantation),
+    std::make_tuple(SRV_INCANTATION_END, &App::updateEndIncantation),
+    std::make_tuple(SRV_EGG_LAYING, &App::updateLayingEgg),
+    std::make_tuple(SRV_RESOURCE_DROP, &App::updateResourceDroping),
+    std::make_tuple(SRV_RESOURCE_COLLECT, &App::updateResourceCollecting),
+    std::make_tuple(SRV_PLAYER_DEATH, &App::updatePlayerDeath),
+    std::make_tuple(SRV_EGG_LAYED, &App::updateLayedEgg),
+    std::make_tuple(SRV_EGG_HATCHING, &App::updateHatchingEgg),
+    std::make_tuple(SRV_PLAYER_CONNECT_EGG, nullptr),
+    std::make_tuple(SRV_PLAYER_DEATH_EGG, &App::updatePlayerDeath),
+    std::make_tuple(SRV_TIME_UNIT_REQUEST, &App::updateTime),
+    std::make_tuple(SRV_TIME_UNIT_CHANGE, &App::updateTime),
+    std::make_tuple(SRV_END_GAME, &App::updateEndGame),
+    std::make_tuple(SRV_MESSAGE_FROM_SRV, nullptr),
+    std::make_tuple(SRV_UNKNOWN_COMMAND, nullptr),
+    std::make_tuple(SRV_COMMAND_PARAMETER, nullptr),
+    std::make_tuple(SRV_CUSTOM, nullptr)
+};
+
 App::App(const std::string &title, communication::ServerInteraction &interaction) :
     zapi::Game(),
     window(title),
@@ -34,9 +63,17 @@ void App::loop()
 
 void App::update(const std::string &eventType, int id, char *data)
 {
-    std::cout << "has been updated\n" << std::endl;
+    cmdServerFun func;
+
     if (id == SRV_TILE_CONTENT)
         updateTileContent(data);
+    for (auto elem : cmds) {
+        if (std::get<0>(elem) == id) {
+            func = std::get<1>(elem);
+            ((*this).*(func))(data);
+            break;
+        }
+    }
 }
 
 void App::updateTileContent(char *data)
@@ -91,7 +128,7 @@ void App::updateEggHatchedDeath(char *data)
     eggHatchedDeath(srv->egg_num);
 }
 
-void App::updateEngGame(char *data)
+void App::updateEndGame(char *data)
 {
     srv_end_game_t *srv = (srv_end_game_t*)data;
 
@@ -202,10 +239,10 @@ void App::updateResourceCollecting(char *data)
 void App::updateTime(char *data)
 {
     srv_time_unit_request_t *srv = (srv_time_unit_request_t*)data;
-    //TO DO: time management
+    //TODO: time management
 }
 
 void App::updateBroadcast(char *data)
 {
-    //TO DO: Broacast
+    //TODO: Broacast
 }
