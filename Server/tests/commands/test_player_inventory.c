@@ -22,7 +22,7 @@ static linked_list_t init_players(void)
     player_t *player = calloc(1, sizeof(player_t));
     linked_list_t list = {0};
 
-    *player = (player_t){3, 1, 2, 4, 0, 4, {0, 1, 2, 3, 4, 5, 6}, 3, 3};
+    *player = (player_t){3, 1, 2, 4, {0, 1, 2, 3, 4, 5, 6}, 3, 3, 4, 0};
     append(&list, player);
     return (list);
 }

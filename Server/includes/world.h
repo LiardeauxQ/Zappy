@@ -26,11 +26,11 @@ struct player_s {
     unsigned int id;
     unsigned int team_id;
     unsigned int hp;
-    unsigned int hatch_time_left;
-    enum ORIENTATION orientation;
     unsigned int resources[DEFAULT_RESOURCES_NUMBER];
     unsigned int x;
     unsigned int y;
+    enum ORIENTATION orientation;
+    clock_t hatch_start_time;
 };
 
 typedef struct player_s player_t;

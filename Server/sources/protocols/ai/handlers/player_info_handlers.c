@@ -91,6 +91,7 @@ int connect_nbr_handler(world_t *world, player_t *player,
 int death_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
+    remove_player(world, player);
     set_response("dead");
     return (NO_ERROR);
 }

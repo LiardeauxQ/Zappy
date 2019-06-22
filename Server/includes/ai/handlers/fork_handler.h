@@ -11,7 +11,9 @@
 #include "manage_response.h"
 #include "ai/protocols.h"
 
-int hatch(world_t *world);
+#define HATCH_TIME 600
+
+void hatch(world_t *world, player_t *player, int f);
 
 int fork_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args);

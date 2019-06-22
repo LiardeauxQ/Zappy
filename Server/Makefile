@@ -70,6 +70,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/read_graph_client.c	\
 				protocols/ai/init_action_handlers.c	\
 				protocols/ai/read_ai_client.c	\
+				protocols/ai/handlers/fork_handler.c \
 				protocols/ai/handlers/elevation_handler.c \
 				protocols/ai/handlers/movement_handlers.c \
 				protocols/ai/handlers/resources_handlers.c \
