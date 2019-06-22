@@ -66,3 +66,8 @@ void zapi::Hud::switchDrawable(void)
 {
     isDraw ? isDraw = false : isDraw = true;
 }
+
+void zapi::Hud::updateTilePtr(Tile *tile_ptr)
+{
+    tile = tile_ptr;
+}

@@ -34,6 +34,8 @@ namespace zapi
             zapi::Player getPlayer(unsigned int id);
         private:
             void inputHandler(void);
+            void updateHud(void);
+            bool checkInsideGrid(sf::Vector2f const &coord);
             Window window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;

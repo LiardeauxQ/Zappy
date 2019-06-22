@@ -7,7 +7,6 @@
 
 #include "Core/Game.hpp"
 #include <cstdlib>
-#include <iostream>
 
 zapi::Game::Game(const std::string &title)
 : window(title)
@@ -155,11 +154,23 @@ void zapi::Game::inputHandler(void)
     window.clear();
     while(window.pollEvent(window.getEvent())) {
         window.inputHandler();
-        if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(), window.getCamera());
-            window.getHUD().switchDrawable();
-            std::cout << "x: " << worldCoord.x << " y: " << worldCoord.y << std::endl;
-        }
+        if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)
+            updateHud();
     }
     window.setView(window.getCamera());
+}
+
+void zapi::Game::updateHud(void)
+{
+     sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getCamera());
+
+    if (checkInsideGrid(worldCoord)) {
+        window.getHUD().updateTilePtr(findTile(worldCoord));
+        window.getHUD().switchDrawable();
+    }
+}
+
+bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
+{
+    return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
 }

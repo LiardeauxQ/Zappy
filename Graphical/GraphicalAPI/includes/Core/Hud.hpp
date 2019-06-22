@@ -20,6 +20,7 @@ namespace zapi
             virtual ~Hud() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             void switchDrawable(void);
+            void updateTilePtr(Tile *tile_ptr);
         protected:
             void initializeBackground(void);
             void initializeText(void);
