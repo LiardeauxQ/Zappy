@@ -21,7 +21,7 @@
 #include "ai/handlers/elevation_handler.h"
 #include "ai/handlers/fork_handler.h"
 
-act_handler_t *init_action_handler(char *command, uint16_t limit_cycles,
+act_handler_t *init_action_handler(char *command, int limit_cycles,
     uint16_t args_nbr, action_handler_fcnt handler);
 
 void register_action_handler(ahr_t *registrar, act_handler_t *handler);

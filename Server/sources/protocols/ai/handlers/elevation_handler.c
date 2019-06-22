@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "ai/handlers/elevation_handler.h"
 
@@ -35,6 +36,25 @@ static int elevation_rules[7][7] = {
         6, 2, 2, 2, 2, 2, 1
     }
 };
+
+void elevate(int client_fd, world_t *world, player_t *player)
+{
+    char *res = 0x0;
+
+    if (!player->elevation_start_time)
+        return;
+    if (is_time_limit_reached(player->elevation_start_time,
+                ELEVATION_TIME, world->f)) {
+        printf("Elevation: %d\n", client_fd);
+        player->level += 1;
+        res = calloc(1, strlen("Current level: k\n") + 1);
+        strcat(res, "Current level: ");
+        sprintf(res + strlen("Current level: "), "%d\n", player->level);
+        write(client_fd, res, strlen(res));
+        free(res);
+        player->elevation_start_time = 0;
+    }
+}
 
 int is_enough_users(world_t *world, tile_content_t *tile, player_t *player)
 {
@@ -69,7 +89,7 @@ int elevation_handler(world_t *world, player_t *player,
             return (INVALID_PARAMETERS);
         }
     }
-    player->level += 1;
+    player->elevation_start_time = clock();
     set_response("Elevation underway\n");
     return (NO_ERROR);
 }

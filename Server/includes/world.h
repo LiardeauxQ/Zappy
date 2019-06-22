@@ -31,6 +31,7 @@ struct player_s {
     unsigned int y;
     enum ORIENTATION orientation;
     clock_t hatch_start_time;
+    clock_t elevation_start_time;
 };
 
 typedef struct player_s player_t;

@@ -34,19 +34,9 @@ int init_connection(server_t *server)
     if (server->sockfd == -1)
         return (print_exit_msg("Error with socket initialization", -1));
     server->sockaddr = bind_socket(server->sockfd, server->port);
+    for (int i = 0; i < MAX_CLIENT; i++)
+        server->clients[i] = (client_t){0, -1, {0}};
     return (server->sockfd);
-}
-
-int init_non_blocking_connection(server_t *server)
-{
-    int sockfd = init_connection(server);
-    int flags = 0;
-
-    if (server->sockfd == -1)
-        return (print_exit_msg("Error with socket initialization", -1));
-    flags = fcntl(sockfd, F_GETFL, 0);
-    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
-    return (sockfd);
 }
 
 int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],

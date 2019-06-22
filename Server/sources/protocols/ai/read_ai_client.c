@@ -11,6 +11,14 @@
 
 #include "ai/client.h"
 
+void handle_awaiting_actions(int fd, world_t *world, player_t *player)
+{
+    if (!player)
+        return;
+    hatch(world, player);
+    elevate(fd, world, player);
+}
+
 void init_client_communication(client_t *clt, game_t *game)
 {
     char *team_name = 0x0;
@@ -56,7 +64,7 @@ void display_actions_log(player_t *player, char *action)
 {
     printf("==> Player (id: %d, team: %d): { x: %d, y: %d }\n", player->id,
             player->team_id, player->x, player->y);
-    printf("    -> Cmd: %s\n       Send: %s", action, get_response());
+    printf("    -> Cmd: %s\n       Send: %s\n", action, get_response());
 }
 
 int read_ai_client(client_t *client, game_t *game)
@@ -71,11 +79,11 @@ int read_ai_client(client_t *client, game_t *game)
         init_client_communication(client, game);
         return (0);
     }
-    hatch(&game->world, player);
     if (getline(&buffer, &line_len, cfp) < 0 || !buffer || !buffer[0])
         return (-1);
     buffer[strlen(buffer) - 1] = 0;
     splitted_cmd = str_to_tab(buffer, " ");
+    printf("Request sockfd: %d\n", client->sockfd);
     execute_action(client, game, player, (const char **) splitted_cmd);
     display_actions_log(player, buffer);
     write(client->sockfd, get_response(), strlen(get_response()));
