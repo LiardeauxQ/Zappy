@@ -1,3 +1,4 @@
+
 /*
 ** EPITECH PROJECT, 2018
 ** protocol.h
@@ -26,6 +27,15 @@
 #else
 #   define PACKED
 #endif
+
+#define AWAIT_ACTIONS_NBR 2
+
+enum awaiting_actions {
+    HATCH = 0,
+    ELEVATE = 1
+};
+
+typedef enum awaiting_actions awaiting_actions_t;
 
 /*
 ** Return an error flag in case of error (HANDLING_ERRORS).

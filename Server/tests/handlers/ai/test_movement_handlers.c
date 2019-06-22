@@ -31,7 +31,7 @@ Test(forward_move_handler, test_forward_move_handler)
         }
     }
     cr_assert_eq(id_is_in_list, 1);
-    cr_assert_eq(strcmp(get_response(), "ok"), 0);
+    cr_assert_eq(strcmp(get_response(), "ok\n"), 0);
 }
 
 Test(left_move_handler, test_left_move_handler)
@@ -44,7 +44,7 @@ Test(left_move_handler, test_left_move_handler)
     player->orientation = EAST;
     left_move_handler(&world, player, 0x0);
     cr_assert_eq(player->orientation, NORTH);
-    cr_assert_eq(strcmp(get_response(), "ok"), 0);
+    cr_assert_eq(strcmp(get_response(), "ok\n"), 0);
 }
 
 Test(right_move_handler, test_right_move_handler)
@@ -57,5 +57,5 @@ Test(right_move_handler, test_right_move_handler)
     player->orientation = EAST;
     right_move_handler(&world, player, 0x0);
     cr_assert_eq(player->orientation, SOUTH);
-    cr_assert_eq(strcmp(get_response(), "ok"), 0);
+    cr_assert_eq(strcmp(get_response(), "ok\n"), 0);
 }

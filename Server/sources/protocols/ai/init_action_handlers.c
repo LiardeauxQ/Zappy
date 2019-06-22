@@ -42,12 +42,12 @@ void init_action_handler_register(ahr_t *reg)
         init_action_handler("Inventory", 1, 0, &inventory_handler),
         init_action_handler("Broadcast", 7, 1, 0x0),
         init_action_handler("Connect_nbr", -1, 0, &connect_nbr_handler),
-        init_action_handler("Fork", 42, 0, 0x0),
+        init_action_handler("Fork", 42, 0, &fork_handler),
         init_action_handler("Eject", 7, 0, 0x0),
         init_action_handler("", -1, 0, &death_handler),
         init_action_handler("Take", 7, 1, &take_object_handler),
         init_action_handler("Set", 7, 1, &set_down_object_handler),
-        init_action_handler("Incantation", 300, 0, 0x0)
+        init_action_handler("Incantation", 300, 0, &elevation_handler)
     };
     for (int i = 0; i < 13; i++)
         register_action_handler(reg, handlers[i]);

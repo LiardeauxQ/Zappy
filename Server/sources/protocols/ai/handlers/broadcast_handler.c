@@ -21,6 +21,6 @@ int fork_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     player->hatch_left_time = 600;
-    set_response("ok");
+    set_response("ok\n");
     return (NO_ERROR);
 }

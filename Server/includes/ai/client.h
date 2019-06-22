@@ -18,8 +18,11 @@
 typedef struct client_s client_t;
 typedef struct game_s game_t;
 
-void execute_action(client_t *client, game_t *game, const char **splitted_cmd);
-
 void init_client_communication(client_t *clt, game_t *game);
+
+void execute_action(client_t *client, game_t *game, player_t *player,
+        const char **splitted_cmd);
+
+void display_actions_log(player_t *player, char *action);
 
 int read_ai_client(client_t *clt, game_t *g);

@@ -24,6 +24,5 @@ Test(elevation_handler, test_elevation_handler)
     append(&world.tiles[1][1].players_id, &player2->id);
     world.tiles[1][1].resources[1] = 1;
     elevation_handler(&world, player1, 0x0);
-    cr_assert_eq(strcmp(get_response(),
-                "Elevation underway\nCurrent level: 1\n"), 0);
+    cr_assert_eq(strcmp(get_response(), "Elevation underway\n"), 0);
 }

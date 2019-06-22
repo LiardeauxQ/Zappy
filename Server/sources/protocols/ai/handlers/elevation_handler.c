@@ -56,7 +56,6 @@ int is_enough_users(world_t *world, tile_content_t *tile, player_t *player)
 int elevation_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
-    char *res = 0x0;
     tile_content_t tile = world->tiles[player->x][player->y];
 
     if (!is_enough_users(world, &tile, player)) {
@@ -70,10 +69,7 @@ int elevation_handler(world_t *world, player_t *player,
             return (INVALID_PARAMETERS);
         }
     }
-    res = calloc(1, strlen("Elevation underway\nCurrent level: k\n") + 1);
-    strcat(res, "Elevation underway\nCurrent level: ");
-    sprintf(res + strlen("Elevation underway\nCurrent level: "),
-            "%d\n", player->level);
-    set_response(res);
+    player->level += 1;
+    set_response("Elevation underway\n");
     return (NO_ERROR);
 }

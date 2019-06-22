@@ -45,7 +45,7 @@ int forward_move_handler(world_t *world, player_t *player,
             move_player(world, player, player->x - 1, player->y);
             break;
     }
-    set_response("ok");
+    set_response("ok\n");
     return (NO_ERROR);
 }
 
@@ -53,7 +53,7 @@ int left_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     player->orientation--;
-    set_response("ok");
+    set_response("ok\n");
     return (NO_ERROR);
 }
 
@@ -61,6 +61,6 @@ int right_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     player->orientation++;
-    set_response("ok");
+    set_response("ok\n");
     return (NO_ERROR);
 }

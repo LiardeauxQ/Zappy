@@ -47,7 +47,7 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
 {
     enum RESOURCE_NUMBER resource_id = 0;
 
-    if (!args[0])
+    if (!args || !args[0])
         return (TOO_FEW_PARAMETERS);
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
@@ -56,7 +56,7 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
         return (INVALID_PARAMETERS);
     player->resources[resource_id]++;
     world->tiles[player->x][player->y].resources[resource_id]--;
-    set_response("ok");
+    set_response("ok\n");
     return (NO_ERROR);
 }
 
@@ -65,7 +65,7 @@ int set_down_object_handler(world_t *world, player_t *player,
 {
     enum RESOURCE_NUMBER resource_id = 0;
 
-    if (!args[0])
+    if (!args || !args[0])
         return (TOO_FEW_PARAMETERS);
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
@@ -74,7 +74,7 @@ int set_down_object_handler(world_t *world, player_t *player,
         return (INVALID_PARAMETERS);
     player->resources[resource_id]--;
     world->tiles[player->x][player->y].resources[resource_id]++;
-    set_response("ok");
+    set_response("ok\n");
     return (NO_ERROR);
 }
 
@@ -89,13 +89,14 @@ int inventory_handler(world_t *world, player_t *player,
         resource_string = resource_to_string(i,
                 player->resources[i], world->resources);
         inventory = realloc(inventory, strlen(inventory) +
-                strlen(resource_string) + 3);
-        strcat(inventory , resource_string);
+                strlen(resource_string) + 4);
+        strcat(inventory, resource_string);
         if (i == sizeof(player->resources) / 4 - 1)
-            strcat(inventory , "]");
+            strcat(inventory, "]\n");
         else
-            strcat(inventory , ", ");
+            strcat(inventory, ", ");
     }
+    printf("Inventory: %s", inventory);
     set_response(inventory);
     return (NO_ERROR);
 }

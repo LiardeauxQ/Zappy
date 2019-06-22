@@ -23,16 +23,16 @@ void tile_to_str(world_t *world, size_t *coords, int team_id, char **str)
         player = get_player(world->players,
                 *(unsigned int*) player_id_cursor->data);
         if (player && (int) player->team_id == team_id) {
-            *str = realloc(*str,
-                strlen(*str) + strlen((*str[0]) ? " player" : "player ") + 1);
-            strcat(*str, (*str[0]) ? " player" : "player ");
+            *str = realloc(*str, strlen(*str) + strlen("player ") + 1);
+            strcat(*str, "player ");
         }
     }
-    for (int i = 0; tile.resources[i] != -1; i++) {
-        buffer = world->resources[tile.resources[i]].name;
-        *str = realloc(*str, strlen(*str) + strlen(buffer) + 2);
-        strcat(*str, buffer);
-        (tile.resources[i + 1] != -1) ? strcat(*str, " ") : 0x0;
+    for (int i = 0; world->resources[i].name; i++) {
+        buffer = world->resources[i].name;
+        for (int j = 0; j < tile.resources[i]; j++) {
+            *str = realloc(*str, strlen(*str) + strlen(buffer) + 2);
+            strcat(strcat(*str, buffer), " ");
+        }
     }
 }
 
@@ -46,12 +46,13 @@ void append_tile_to_look_table(world_t *world, size_t *coords, int team_id,
         *look_table[0] = '[';
     *look_table = realloc(*look_table, strlen(*look_table) + strlen(tile) + 3);
     strcat(*look_table, tile);
-    strcat(*look_table, ",");
+    (*look_table)[strlen(*look_table) - 1] = ',';
 }
 
 int look_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
+    int look_table_len = 0;
     size_t current_line_start[2] = {player->x, player->y};
     char *look_table = calloc(1, 2);
 
@@ -64,7 +65,11 @@ int look_handler(world_t *world, player_t *player,
         next_case(world, current_line_start, player->orientation, 2 + i * 2);
         next_case(world, current_line_start, player->orientation - 1, 1);
     }
-    look_table[strlen(look_table) - 1] = ']';
+    look_table_len = strlen(look_table);
+    look_table[look_table_len - 1] = ']';
+    look_table[look_table_len] = '\n';
+    look_table[look_table_len + 1] = 0;
+    printf("Look: %s", look_table);
     set_response(look_table);
     return (NO_ERROR);
 }
@@ -81,9 +86,7 @@ int connect_nbr_handler(world_t *world, player_t *player,
             player_in_team += 1;
         player_node = player_node->next;
     }
-    res = calloc(1, sizeof(char) * (snprintf(0x0, 0, "%d",
-                    world->max_team_size - player_in_team) + 1));
-    sprintf(res, "%d", world->max_team_size - player_in_team);
+    asprintf(&res, "%d\n", world->max_team_size - player_in_team);
     set_response(res);
     return (NO_ERROR);
 }
@@ -92,6 +95,6 @@ int death_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     remove_player(world, player);
-    set_response("dead");
+    set_response("dead\n");
     return (NO_ERROR);
 }
