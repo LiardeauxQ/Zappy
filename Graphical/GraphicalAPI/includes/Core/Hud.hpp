@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Tile.hpp"
+#include "Player.hpp"
 #include "Utils.hpp"
 #include "Resource.hpp"
 
@@ -17,14 +19,17 @@ namespace zapi
             Hud();
             virtual ~Hud() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+            void switchDrawable(void);
+        protected:
             void initializeBackground(void);
             void initializeText(void);
             void initializeResourceOutputs(int i);
-        protected:
             std::vector<Resource> resources;
             std::vector<sf::Text> resourceOutputs;
             sf::RectangleShape background;
             sf::Text text;
             bool isDraw;
+            zapi::Tile *tile;
+            zapi::Player *player;
     };
 }

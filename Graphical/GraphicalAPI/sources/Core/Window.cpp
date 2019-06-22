@@ -79,5 +79,7 @@ void zapi::Window::inputHandler()
             camera.zoom(1.2);
             zoom--;
         }
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+            hud.switchDrawable();
     }
 }

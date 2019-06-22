@@ -5,10 +5,13 @@
 ** Hud
 */
 
+#include <iostream>
 #include "Core/Hud.hpp"
 
 zapi::Hud::Hud():
-isDraw(true)
+isDraw(false)
+, tile(nullptr)
+, player(nullptr)
 {
     initializeBackground();
     initializeText();
@@ -56,4 +59,9 @@ void zapi::Hud::initializeBackground(void)
     background.setOutlineColor(sf::Color::White);
     background.setOutlineThickness(5);
     background.setPosition(20, 20);
+}
+
+void zapi::Hud::switchDrawable(void)
+{
+    isDraw ? isDraw = false : isDraw = true;
 }
