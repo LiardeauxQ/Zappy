@@ -27,8 +27,6 @@ void zapi::Game::initialize()
         }
         tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
     }
-    addPlayer("BP", 1, sf::Vector2f(100, 500));
-    std::cout << "coord = [" << getPlayer(1).getPosition().x << ", " << getPlayer(1).getPosition().y << "]" << std::endl;
 }
 
 void zapi::Game::start()
