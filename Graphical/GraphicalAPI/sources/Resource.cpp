@@ -35,3 +35,15 @@ zapi::Resource &zapi::Resource::operator--(int)
         quantity--;
     return *this;
 }
+
+zapi::Resource &zapi::Resource::operator=(int amount)
+{
+    if (amount >= 0)
+        quantity = amount;
+    return *this;
+}
+
+unsigned int zapi::Resource::getQuantity(void)
+{
+    return quantity;
+}
