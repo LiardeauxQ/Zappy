@@ -20,7 +20,7 @@ namespace zapi
         public:
             Window(const std::string &title);
             ~Window() = default;
-            void update(void);
+            // void update(void);
             void updateHUD(void);
             void drawEntities(std::vector<Tile> &entities);
             void drawEntities(std::vector<Resource> &entities);

@@ -46,6 +46,9 @@ void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void zapi::Hud::updateResourceOutputs(void) //WIP!!
 {
+    if (tile == nullptr)
+        return;
+    tile->selected();
     for (int i = 0; i < 7; i++)
         resourceOutputs[i].setString(std::to_string(tile->getResources()[i].getQuantity()));
 }
@@ -60,8 +63,8 @@ void zapi::Hud::initializeText(void)
     tileTitle.setFont(*(getFont()));
     tileTitle.setCharacterSize(50);
     tileTitle.setFillColor(sf::Color::White);
-    tileTitle.setString("Title");
-    tileTitle.setPosition(230, 30);
+    tileTitle.setString("Tile");
+    tileTitle.setPosition(430, 30);
 }
 
 void zapi::Hud::initializeBackground(void)
@@ -73,6 +76,14 @@ void zapi::Hud::initializeBackground(void)
     background.setPosition(20, 20);
 }
 
+void zapi::Hud::resetTilePtr(void)
+{
+    if (tile == nullptr)
+        return;
+    tile->unselected();
+    tile = nullptr;
+}
+
 void zapi::Hud::switchDrawable(void)
 {
     isDraw ? isDraw = false : isDraw = true;
@@ -80,10 +91,21 @@ void zapi::Hud::switchDrawable(void)
 
 void zapi::Hud::updateTilePtr(Tile *tile_ptr)
 {
-    tile = tile_ptr;
+    if (tile != nullptr)
+        tile->unselected();
+    if (tile == tile_ptr) {
+        tile = nullptr;
+        isDraw = false;
+    } else
+        tile = tile_ptr;
 }
 
 void zapi::Hud::setDrawable(bool draw)
 {
     isDraw = draw;
+}
+
+zapi::Tile *zapi::Hud::getTilePtr(void)
+{
+    return tile;
 }

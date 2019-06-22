@@ -23,6 +23,8 @@ namespace zapi
             void setDrawable(bool draw);
             void updateTilePtr(Tile *tile_ptr);
             void updateResourceOutputs(void);
+            void resetTilePtr(void);
+            Tile *getTilePtr(void);
         protected:
             void initializeBackground(void);
             void initializeText(void);

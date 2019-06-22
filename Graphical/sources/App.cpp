@@ -71,9 +71,11 @@ void App::updateHud(void)
 {
      sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getCamera());
 
-    if (checkInsideGrid(worldCoord)) {
+    if (checkInsideGrid(worldCoord) && window.getHUD().getTilePtr() != findTile(worldCoord)) {
         window.getHUD().updateTilePtr(findTile(worldCoord));
         window.getHUD().setDrawable(true);
-    } else
+    } else {
         window.getHUD().setDrawable(false);
+        window.getHUD().resetTilePtr();
+    }
 }
