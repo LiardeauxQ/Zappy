@@ -33,6 +33,8 @@ INCLUDES	=	-I includes
 
 CXXFLAGS	=	$(INCLUDES) $(WARN) -pipe -march=native -std=c++17
 
+LDFLAGS		=	-L ./GraphicalAPI/ -lGraphicalAPI -lsfml-graphics -lsfml-system -lsfml-window
+
 TESTFLAGS	=	$(CXXFLAGS)
 
 WARN		=	-Wall -Wextra
@@ -73,7 +75,7 @@ debug:			CXXFLAGS += $(G)
 ## Directives
 ##
 
-all:			$(NAME)
+all:		$(NAME)
 
 $(NAME):	OBJS += $(MAIN_OBJ)
 $(NAME):	$(BUILD)/$(NAME)
@@ -83,7 +85,7 @@ $(NAME):	$(BUILD)/$(NAME)
 build_tests:		CXXFLAGS += --coverage
 build_tests:		LDFLAGS	+= -lcriterion --coverage
 build_tests:		OBJS +=	$(TEST_OBJS)
-build_tests:		fclean $(BUILD)/$(TEST) #find a solution to remove fclean rule
+build_tests:		fclean graphic_api $(BUILD)/$(TEST) #find a solution to remove fclean rule
 					$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
 					$(V)cp $(BUILD)/$(TEST) $(TEST)
 
@@ -95,7 +97,7 @@ debug:			 echo_d $(NAME)
 
 release:		 fclean echo_r $(NAME)
 
-$(BUILD)/$(NAME):	$(MAIN_OBJ) $(OBJS)
+$(BUILD)/$(NAME):	graphic_api $(MAIN_OBJ) $(OBJS)
 			$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
 			$(V)$(CXX) -o $(BUILD)/$(NAME) $(OBJS) $(LDFLAGS)
 			$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
@@ -115,14 +117,19 @@ $(BUILD)/%.o:		$(TEST_DIR)/%.cpp
 			$(V)printf "$(BLUE)Compiling [$(GREEN)$(notdir $<)$(BLUE) -> $(RED)$(notdir $@)$(BLUE)]\n$(WHITE)"
 			$(V)$(CXX) -o $@ -c $< $(TESTFLAGS)
 
+graphic_api:
+			$(V)make --no-print-directory -C $(ROOT)/$(CURRENT_DIR)/GraphicalAPI
+
 clean:
+			$(V)make clean --no-print-directory -C $(ROOT)/$(CURRENT_DIR)/GraphicalAPI
 			$(V)rm -f $(OBJS)
 			$(V)rm -f $(TEST_OBJS)
 			$(V)rm -f $(MAIN_OBJ)
 			$(V)rm -rf $(BUILD)
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
-fclean:		 clean
+fclean:		clean
+			$(V)make fclean --no-print-directory -C $(ROOT)/$(CURRENT_DIR)/GraphicalAPI
 			$(V)rm -f $(BUILD)/$(NAME)
 			$(V)rm -f $(BUILD)/$(TEST)
 			$(V)rm -f $(NAME)

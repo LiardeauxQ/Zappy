@@ -1,5 +1,7 @@
-gitqzappy_ai
 epitech_server
+.vscode/
+.DS_Store
+zappy_ai
 zappy_server
 tmp
 *.o
@@ -7,10 +9,9 @@ tmp
 *.so
 build/
 tests_run
-zappy_server
 zappy_ai
 zappy_graphical
 __pycache__
 .cquery
 .vscode/
-__pycache__
+vgcore*
