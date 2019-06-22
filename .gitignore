@@ -16,3 +16,4 @@ __pycache__
 .vscode/
 __pycache__
 vgcore*
+zappy_ai_*.log
