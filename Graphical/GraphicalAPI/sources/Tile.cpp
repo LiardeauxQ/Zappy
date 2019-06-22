@@ -33,8 +33,8 @@ zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
 
 void zapi::Tile::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-//    target.draw(main);
-      target.draw(sprite);
+    target.draw(main, states);
+    target.draw(sprite, states);
 //    target.draw(shadow, states);
 }
 
@@ -48,7 +48,7 @@ void zapi::Tile::addResource(RESOURCE_NUMBER index)
     resources[index]++;
 }
 
-void zapi::Tile::updateResource(std::vector<int> res)
+void zapi::Tile::updateResource(const std::vector<int> &res)
 {
     if (res.size() != 7)
         return;

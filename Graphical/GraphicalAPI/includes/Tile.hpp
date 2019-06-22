@@ -20,23 +20,7 @@ namespace zapi
             std::vector<Resource> &getResources() { return resources; };
             void removeResource(RESOURCE_NUMBER index);
             void addResource(RESOURCE_NUMBER index);
-            void updateResource(std::vector<int> res);
-        // friend class TileTest
-        // {
-        // private:
-        //     /* data */
-        // public:
-        //     TileTest(/* args */);
-        //     ~TileTest();
-        // };
-
-        // TileTest::TileTest(/* args */)
-        // {
-        // }
-
-        // TileTest::~TileTest()
-        // {
-        // }
+            void updateResource(const std::vector<int> &res);
         private:
             sf::Vector2f size;
             sf::RectangleShape main;

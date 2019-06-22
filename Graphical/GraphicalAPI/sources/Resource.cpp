@@ -24,6 +24,7 @@ zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position, bool isH
 
 void zapi::Resource::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    if (quantity)
         target.draw(sprite, states);
 }
 
