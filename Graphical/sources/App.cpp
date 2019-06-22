@@ -23,11 +23,11 @@ void App::start()
 void App::loop()
 {
     while (window.isOpen()) {
-        // server.listenSocket();
-        window.update();
+        inputHandler();
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
             window.drawEntities(team.getPlayers());
+        window.updateHUD();
         window.display();
     }
 }
@@ -54,4 +54,26 @@ void App::updateTileContent(char *data)
     res.push_back(srv->q6);
     std::cout << "Update tile " << pos.x << " " << pos.y << std::endl;
     updateTile(pos, res);
+}
+
+void App::inputHandler(void)
+{
+    window.clear();
+    while(window.pollEvent(window.getEvent())) {
+        window.inputHandler();
+        if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)
+            updateHud();
+    }
+    window.setView(window.getCamera());
+}
+
+void App::updateHud(void)
+{
+     sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getCamera());
+
+    if (checkInsideGrid(worldCoord)) {
+        window.getHUD().updateTilePtr(findTile(worldCoord));
+        window.getHUD().setDrawable(true);
+    } else
+        window.getHUD().setDrawable(false);
 }

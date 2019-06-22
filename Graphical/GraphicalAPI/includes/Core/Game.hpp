@@ -45,12 +45,13 @@ namespace zapi
             void eggHatchedDeath(unsigned int id);
             void endGame(const std::string &teamName);
 
+            bool checkInsideGrid(sf::Vector2f const &coord);
+
             std::vector<Tile> &getTiles(void) { return tiles; }
             std::vector<Team> &getTeams(void) { return teams; }
         private:
             // void inputHandler(void);
             // void updateHud(void);
-            bool checkInsideGrid(sf::Vector2f const &coord);
             // Window &window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;

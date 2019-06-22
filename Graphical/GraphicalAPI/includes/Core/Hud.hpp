@@ -20,7 +20,9 @@ namespace zapi
             virtual ~Hud() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             void switchDrawable(void);
+            void setDrawable(bool draw);
             void updateTilePtr(Tile *tile_ptr);
+            void updateResourceOutputs(void);
         protected:
             void initializeBackground(void);
             void initializeText(void);
@@ -29,6 +31,7 @@ namespace zapi
             std::vector<sf::Text> resourceOutputs;
             sf::RectangleShape background;
             sf::Text text;
+            sf::Text tileTitle;
             bool isDraw;
             zapi::Tile *tile;
             zapi::Player *player;

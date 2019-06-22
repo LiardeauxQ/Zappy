@@ -22,6 +22,8 @@ public:
     void update(const std::string &eventType, int id, char *data) override;
 
     void updateTileContent(char *data);
+    void inputHandler(void);
+    void updateHud(void);
 private:
     zapi::Window window;
     communication::ServerInteraction &server;
