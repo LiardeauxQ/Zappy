@@ -116,7 +116,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_broadcast.c	\
 
 
-CFLAGS		=	$(INCLUDES) $(WARN) -g3
+CFLAGS		=	$(INCLUDES) $(WARN)
 
 TESTCFLAGS	=	$(INCLUDES) $(WARN)
 
