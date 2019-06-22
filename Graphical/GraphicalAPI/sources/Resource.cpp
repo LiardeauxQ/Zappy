@@ -7,14 +7,18 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position)
+zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position, bool isHud)
 : Entity(position)
 , quantity(0)
 , sprite()
+, HUD(isHud)
 {
     sprite.setTexture(*(getResourceTexture()));
     sprite.setTextureRect(sf::IntRect(96 * id, 0, 96, 96));
-    sprite.setScale(sf::Vector2f(0.2, 0.2));
+    if (!HUD)
+        sprite.setScale(sf::Vector2f(0.2, 0.2));
+    else
+        sprite.setScale(sf::Vector2f(0.8, 0.8));
     sprite.setPosition(position);
 }
 

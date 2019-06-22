@@ -17,7 +17,13 @@ namespace zapi
             Hud();
             virtual ~Hud() = default;
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+            void initializeBackground(void);
+            void initializeText(void);
         protected:
             std::vector<Resource> resources;
+            sf::RectangleShape background;
+            sf::Font font;
+            sf::Text text;
+            bool isDraw;
     };
 }
