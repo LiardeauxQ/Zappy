@@ -54,3 +54,14 @@ sf::Texture *zapi::getPlayerTexture()
     }
     return resourceTexture;
 }
+
+sf::Font *zapi::getFont()
+{
+    static sf::Font *font;
+
+    if (!font) {
+        font = new sf::Font();
+        font->loadFromFile("fonts/arcadeClassic.ttf");
+    }
+    return font;
+}

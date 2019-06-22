@@ -19,10 +19,11 @@ namespace zapi
             void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             void initializeBackground(void);
             void initializeText(void);
+            void initializeResourceOutputs(int i);
         protected:
             std::vector<Resource> resources;
+            std::vector<sf::Text> resourceOutputs;
             sf::RectangleShape background;
-            sf::Font font;
             sf::Text text;
             bool isDraw;
     };

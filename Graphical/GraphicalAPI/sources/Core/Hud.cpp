@@ -10,10 +10,22 @@
 zapi::Hud::Hud():
 isDraw(true)
 {
-    initializeText();
-    for (int i = 0; i < 7; i++)
-        resources.push_back(Resource(i, sf::Vector2f((i * 120) + 30, 120), true));
     initializeBackground();
+    initializeText();
+    for (int i = 0; i < 7; i++) {
+        resources.push_back(Resource(i, sf::Vector2f((i * 120) + 40, 130), true));
+        initializeResourceOutputs(i);
+    }
+}
+
+void zapi::Hud::initializeResourceOutputs(int i)
+{
+    resourceOutputs.push_back(sf::Text());
+        resourceOutputs[i].setFont(*(getFont()));
+        resourceOutputs[i].setCharacterSize(70);
+        resourceOutputs[i].setFillColor(sf::Color::White);
+        resourceOutputs[i].setString("0");
+        resourceOutputs[i].setPosition(sf::Vector2f((i * 120) + 65, 210));
 }
 
 void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -24,16 +36,17 @@ void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(text);
     for (auto &resource : resources)
         target.draw(resource, states);
+    for (auto &resourceOutput : resourceOutputs)
+        target.draw(resourceOutput, states);
 }
 
 void zapi::Hud::initializeText(void)
 {
-    font.loadFromFile("fonts/arcadeClassic.ttf");
-    text.setFont(font);
+    text.setFont(*(getFont()));
     text.setCharacterSize(50);
     text.setFillColor(sf::Color::White);
-    text.setString("Inventory");
-    text.setPosition(200, 30);
+    text.setString("Inventory  of ");
+    text.setPosition(40, 30);
 }
 
 void zapi::Hud::initializeBackground(void)
@@ -42,5 +55,5 @@ void zapi::Hud::initializeBackground(void)
     background.setFillColor(sf::Color::Black);
     background.setOutlineColor(sf::Color::White);
     background.setOutlineThickness(5);
-    background.setPosition(10, 10);
+    background.setPosition(20, 20);
 }
