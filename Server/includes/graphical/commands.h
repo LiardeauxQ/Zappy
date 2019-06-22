@@ -13,14 +13,15 @@
 #include "world.h"
 
 #define SENDER_MAGIC_NUM 0x01041976 // Foundation of 
-#define SENDER_MAGIC_NUM_LEN 4
+#define SENDER_MAGIC_NUM_LEN 5
 
 #define MAX_SENDERS             5
 #define WORLD_SENDER_POS        0
 #define PLAYER_SENDER_POS       1
-#define INT_SENDER_POS          2
-#define MSG_SENDER_POS          3
-#define CUSTOM_SENDER_POS       4
+#define TEAMS_SENDER_POS        2
+#define INT_SENDER_POS          3
+#define MSG_SENDER_POS          4
+#define CUSTOM_SENDER_POS       5
 
 struct sender_s {
     const void *data;
