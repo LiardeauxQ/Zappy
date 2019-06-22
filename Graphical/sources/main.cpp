@@ -7,7 +7,7 @@
 
 #include "InputParser.hpp"
 #include "ServerInteraction.hpp"
-#include "Core/Game.hpp"
+#include "Core/Menu.hpp"
 
 int main(int __attribute__((unused)) ac, char __attribute__((unused)) **av)
 {
@@ -19,7 +19,7 @@ int main(int __attribute__((unused)) ac, char __attribute__((unused)) **av)
 //    interaction.requestTileContent();
 //    interaction.requestMapContent();
 
-    zapi::Game game("Zappy");
-    game.start();
+    zapi::Menu menu;
+    menu.start();
     return (0);
 }
