@@ -8,7 +8,6 @@
 #pragma once
 
 #include <cmath>
-#include "Window.hpp"
 #include "Tile.hpp"
 #include "Team.hpp"
 
@@ -16,11 +15,10 @@ namespace zapi
 {
     class Game {
         public:
-            Game(const std::string &title);
+            Game();
             ~Game() = default;
+        protected:
             void initialize();
-            void start();
-            void loop();
             void updateTile(sf::Vector2f vector, std::vector<zapi::Resource> &res);
             void addTeam(const std::string &teamName);
             void addPlayer(const std::string &teamName, int id, const sf::Vector2f &position);
@@ -46,8 +44,9 @@ namespace zapi
             void eggHatchedDeath(unsigned int id);
             void endGame(const std::string &teamName);
 
+            std::vector<Tile> &getTiles(void) { return tiles; }
+            std::vector<Team> &getTeams(void) { return teams; }
         private:
-            Window window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;
     };

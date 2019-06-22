@@ -9,10 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 
-zapi::Game::Game(const std::string &title)
-: window(title)
-, tiles()
-, teams()
+zapi::Game::Game() : tiles(), teams()
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -26,22 +23,6 @@ void zapi::Game::initialize()
             y += 100;
         }
         tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
-    }
-}
-
-void zapi::Game::start()
-{
-    loop();
-}
-
-void zapi::Game::loop()
-{
-    while (window.isOpen()) {
-        window.update();
-        window.drawEntities(tiles);
-        for (auto &team : teams)
-            window.drawEntities(team.getPlayers());
-        window.display();
     }
 }
 
