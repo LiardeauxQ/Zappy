@@ -66,11 +66,13 @@ int send_incantation_start(const void *data)
     return (SRV_INCANTATION_START);
 }
 
-int assign_incantation_end(srv_end_incantation_t *srv, int sockfd)
+int assign_incantation_end(unsigned int x, unsigned int y,
+        enum RESULT result, int sockfd)
 {
+    srv_end_incantation_t srv = {x, y, result};
     sender_t senders[MAX_SENDERS] = {{0}};
 
-    senders[CUSTOM_SENDER_POS] = (sender_t){srv,
+    senders[CUSTOM_SENDER_POS] = (sender_t){&srv,
         sizeof(srv_end_incantation_t), sockfd, 1};
     return (send_incantation_end(convert_senders_to_data(senders)));
 }
