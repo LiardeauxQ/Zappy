@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <time.h>
+
 #include "map.h"
 #include "teams.h"
 #include "resources.h"
