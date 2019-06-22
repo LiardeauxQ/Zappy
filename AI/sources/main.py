@@ -40,7 +40,7 @@ if __name__ == "__main__":
         elif o in ("-n"):
             team = a
     client = Player(port, team, host)
-    c = client.client.sendMessage(team + "\n")
+    m, c = client.client.sendMessage(team + "\n")
     print (c)
     if "ko" in c:
         print("Imposible to set team name ", team, " inside zappy_server http://", host, ":", port, sep = '')

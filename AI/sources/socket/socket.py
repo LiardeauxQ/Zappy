@@ -14,7 +14,7 @@ class SocketZappy:
         self.connected = False
 
     def connect_zappy(self):
-        buff_size = 8;
+        buff_size = 2048;
         buff = bytearray(buff_size)
         self.socket.connect((self.host, self.port))
         self.socket.recv_into(buff, buff_size);
@@ -47,11 +47,23 @@ class SocketZappy:
             logging.debug("socket [" + str(self.socketID) + "] Connection Error")
             self.connected = False
             return 84
-        buff_size = 2048;
+        buff_size = 2040800;
         buff = bytearray(buff_size)
         self.socket.recv_into(buff, buff_size);
         logging.debug("socket [" + str(self.socketID) + "] recive :" + buff.decode())
-        return buff.decode()
+        first = True
+        if "message" in buff.decode():
+            buff2 = bytearray(buff_size)
+            while first or "message" in buff2.decode():
+                buff2 = ""
+                buff2 = bytearray(buff_size)
+                first = False
+                self.socket.recv_into(buff2, buff_size);
+                logging.debug("socket [" + str(self.socketID) + "] recive 2:" + buff2.decode())
+                print("socket [" + str(self.socketID) + "] recive 2:" + buff2.decode())
+            return buff.decode(), buff2.decode()
+        else:
+             return "", buff.decode()
 
     def getInfo(self):
         return self.socketID, self.connected, self.host, self.port
