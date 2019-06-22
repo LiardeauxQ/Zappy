@@ -21,6 +21,22 @@ namespace zapi
             void removeResource(RESOURCE_NUMBER index);
             void addResource(RESOURCE_NUMBER index);
             void updateResource(std::vector<int> res);
+        // friend class TileTest
+        // {
+        // private:
+        //     /* data */
+        // public:
+        //     TileTest(/* args */);
+        //     ~TileTest();
+        // };
+
+        // TileTest::TileTest(/* args */)
+        // {
+        // }
+
+        // TileTest::~TileTest()
+        // {
+        // }
         private:
             sf::Vector2f size;
             sf::RectangleShape main;
@@ -28,4 +44,5 @@ namespace zapi
             sf::Sprite sprite;
 //            sf::Sprite shadow;
     };
+
 }
