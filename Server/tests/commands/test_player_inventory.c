@@ -22,14 +22,14 @@ static linked_list_t init_players(void)
     player_t *player = calloc(1, sizeof(player_t));
     linked_list_t list = {0};
 
-    *player = (player_t){1, 2, 3, 4, 4, {0, 1, 2, 3, 4, 5, 6}, 3, 3};
+    *player = (player_t){3, 1, 2, 4, 0, 4, {0, 1, 2, 3, 4, 5, 6}, 3, 3};
     append(&list, player);
     return (list);
 }
 
 Test(send_player_inventory, simple_test)
 {
-    world_t world = {0, 0, 0, 0x0, 0x0, init_players(), 0x0};
+    world_t world = {0, 0, 0, 0, 0x0, 0x0, init_players(), 0x0};
     int fd = open("tmp11", O_CREAT | O_RDWR, 0644);
     char buffer[80] = {0};
     const size_t size = PKT_HDR_LEN + SRV_PLAYER_INVENTORY_LEN;

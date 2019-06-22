@@ -60,7 +60,7 @@ int send_player_position(const void *data)
             break;
     }
     srv = (srv_player_pos_t){clt->player_num, player->x, player->y,
-        player->direction};
+        player->orientation};
     write_player_position(&srv, senders[WORLD_SENDER_POS].sockfd);
     free(senders);
     return (SRV_PLAYER_POSITION);

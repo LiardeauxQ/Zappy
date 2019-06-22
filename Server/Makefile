@@ -40,11 +40,10 @@ SRC			:=	arguments/arguments.c	\
 				connection/init_info.c	\
 				error.c	\
 				connection/init_connection.c	\
+				protocols/manage_response.c	\
 				protocols/graphical/protocols.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
-				protocols/ai/init_action_handlers.c	\
-				protocols/ai/read_ai_client.c	\
 				protocols/graphical/commands/broadcast.c	\
 				protocols/graphical/commands/egg_connection.c	\
 				protocols/graphical/commands/egg_hatching.c	\
@@ -69,6 +68,13 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/close_connection.c	\
 				protocols/graphical/sender.c	\
 				protocols/graphical/read_graph_client.c	\
+				protocols/ai/init_action_handlers.c	\
+				protocols/ai/read_ai_client.c	\
+				protocols/ai/handlers/elevation_handler.c \
+				protocols/ai/handlers/movement_handlers.c \
+				protocols/ai/handlers/resources_handlers.c \
+				protocols/ai/handlers/player_info_handlers.c \
+				protocols/ai/handlers/utils.c \
 				handle_clients.c	\
 				game/resources/default_resources.c	\
 				game/resources/handle_resources.c	\
@@ -76,6 +82,7 @@ SRC			:=	arguments/arguments.c	\
 				game/player/create_player.c	\
 				game/player/destroy_player.c	\
 				utils/get_next_line.c	\
+				utils/str_to_tab.c	\
 				commands/wrap_protocols_commands.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
@@ -93,6 +100,10 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
+				handlers/ai/test_elevation_handler.c \
+				handlers/ai/test_movement_handlers.c \
+				handlers/ai/test_resources_handlers.c \
+				handlers/ai/test_player_info_handlers.c \
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
 				commands/test_tile_content.c	\

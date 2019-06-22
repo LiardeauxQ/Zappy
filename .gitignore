@@ -10,7 +10,9 @@ tests_run
 zappy_server
 zappy_ai
 zappy_graphical
+.*.session.vim
 __pycache__
 .cquery
 .vscode/
 __pycache__
+vgcore*

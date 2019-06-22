@@ -10,7 +10,7 @@
 #include "resources.h"
 #include "connection.h"
 #include "graphical/packets.h"
-#include "ai/init_action_handlers.h"
+#include "ai/handlers/init_action_handlers.h"
 
 info_t init_info(int ac, char **av)
 {       
@@ -28,6 +28,7 @@ info_t init_info(int ac, char **av)
     init_non_blocking_connection(&info.server_graph);
     info.game.world = generate_world(info.input.width, info.input.height,
             info.input.frequence, info.input.resources_filename);
+    info.game.world.max_team_size = info.input.client_nbr;
     return (info);
 }
 

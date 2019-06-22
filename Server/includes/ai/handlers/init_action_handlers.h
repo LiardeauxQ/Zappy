@@ -11,8 +11,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "protocols.h"
 #include "error.h"
+#include "manage_response.h"
+#include "ai/protocols.h"
+
+#include "ai/handlers/movement_handlers.h"
+#include "ai/handlers/player_info_handlers.h"
+#include "ai/handlers/resources_handlers.h"
 
 act_handler_t *init_action_handler(char *command, uint16_t limit_cycles,
     uint16_t args_nbr, action_handler_fcnt handler);
