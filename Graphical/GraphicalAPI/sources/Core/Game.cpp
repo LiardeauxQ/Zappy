@@ -88,6 +88,7 @@ void zapi::Game::dropResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
             return;
         }
     }
+    std::cout << "Player " << id << " droped something" << std::endl;
 }
 
 void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
@@ -98,6 +99,7 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
             player.pickUpResource(index);
         }
     }
+    std::cout << "Player " << id << " picked up something" << std::endl;
 }
 
 void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> &res)
@@ -118,6 +120,7 @@ void zapi::Game::removePlayer(unsigned int id)
             return;
         }
     }
+    std::cout << "Player " << id << " die" << std::endl;
 }
 
 void zapi::Game::updatePlayerOrientation(unsigned int id, ORIENTATION direction)
@@ -139,6 +142,7 @@ void zapi::Game::levelUpPlayer(unsigned int id)
             return;
         }
     }
+    std::cout << "Player " << id << " leveled up" << std::endl;
 }
 
 zapi::Player zapi::Game::getPlayer(unsigned int id)
@@ -147,4 +151,67 @@ zapi::Player zapi::Game::getPlayer(unsigned int id)
         if (team.checkPlayer(id))
             return team.getPlayer(id);
     return Player(-1, nullptr);
+}
+
+
+
+
+void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
+{
+    std::cout << "Player " << id << " position updated" << std::endl;
+}
+
+void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, std::array<int, 7> &resources)
+{
+    std::cout << "Player " << id << " inventory updated" << std::endl;
+}
+
+void zapi::Game::expulsePlayer(unsigned int id)
+{
+    std::cout << "Player " << id << " expulsed" << std::endl;
+}
+
+void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position, std::array<int, 7> &players)
+{
+    std::cout << "Player " << sender << " start incantation at [" << position.x << ", " << position.y << "]" << std::endl;
+}
+
+void zapi::Game::stopIncantation(RESULT result, const sf::Vector2f &position)
+{
+    std::cout << "Incantation stop at [" << position.x << ", " << position.y << "]" << std::endl;
+}
+
+void zapi::Game::broadcast(unsigned int sender, const std::string &message)
+{
+    std::cout << "Player " << sender << " sayed: \'" << message << "\'" << std::endl;
+}
+
+void zapi::Game::eggLaying(unsigned int id)
+{
+    std::cout << "egg " << id << "is laying" << std::endl;
+}
+
+void zapi::Game::eggLayed(unsigned int sender, unsigned int id, const sf::Vector2f &position)
+{
+    std::cout << "egg " << id << "layed by player" << id << "at [" << position.x << ", " << position.y << "]" << std::endl;
+}
+
+void zapi::Game::eggHatching(unsigned int id)
+{
+    std::cout << "egg " << id << "is hatching" << std::endl;
+}
+
+void zapi::Game::eggHatched(unsigned int id)
+{
+    std::cout << "egg " << id << " hatched " << std::endl;
+}
+
+void zapi::Game::eggHatchedDeath(unsigned int id)
+{
+    std::cout << "egg " << id << " Hatched Death ?" << std::endl;
+}
+
+void zapi::Game::endGame(const std::string &teamName)
+{
+    std::cout << teamName << " beat the game" << std::endl;
 }
