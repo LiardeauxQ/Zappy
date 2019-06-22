@@ -5,6 +5,7 @@
 ** Window implementation
 */
 
+#include <iostream>
 #include "Core/Window.hpp"
 
 zapi::Window::Window(const std::string &title)
@@ -19,9 +20,9 @@ zapi::Window::Window(const std::string &title)
 
 void zapi::Window::update(void)
 {
-    clear();
+    // clear();
     inputHandler();
-    setView(camera);
+    // setView(camera);
 }
 
 void zapi::Window::updateHUD(void)
@@ -58,7 +59,7 @@ void zapi::Window::drawEntities(std::list<Player> &entities)
 
 void zapi::Window::inputHandler()
 {
-    while (pollEvent(event)) {
+    // while (pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             close();
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
@@ -79,7 +80,20 @@ void zapi::Window::inputHandler()
             camera.zoom(1.2);
             zoom--;
         }
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-            hud.switchDrawable();
-    }
+    // }
+}
+
+sf::View &zapi::Window::getCamera(void)
+{
+    return camera;
+}
+
+zapi::Hud &zapi::Window::getHUD(void)
+{
+    return hud;
+}
+
+sf::Event &zapi::Window::getEvent(void)
+{
+    return event;
 }

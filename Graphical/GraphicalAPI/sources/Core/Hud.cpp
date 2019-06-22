@@ -17,6 +17,7 @@ isDraw(false)
     initializeText();
     for (int i = 0; i < 7; i++) {
         resources.push_back(Resource(i, sf::Vector2f((i * 120) + 40, 130), true));
+        resources[i]++;
         initializeResourceOutputs(i);
     }
 }

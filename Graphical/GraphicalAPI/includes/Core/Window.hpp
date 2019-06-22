@@ -26,9 +26,11 @@ namespace zapi
             void drawEntities(std::vector<Resource> &entities);
             void drawEntities(std::vector<Team> &entities);
             void drawEntities(std::list<Player> &entities);
-
-        private:
+            sf::View &getCamera(void);
+            Hud &getHUD(void);
+            sf::Event &getEvent(void);
             void inputHandler();
+        private:
             sf::View camera;
             Hud hud;
             sf::Event event;

@@ -33,6 +33,7 @@ namespace zapi
             void levelUpPlayer(unsigned int id);
             zapi::Player getPlayer(unsigned int id);
         private:
+            void inputHandler(void);
             Window window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;

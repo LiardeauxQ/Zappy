@@ -37,7 +37,7 @@ void zapi::Game::start()
 void zapi::Game::loop()
 {
     while (window.isOpen()) {
-        window.update();
+        inputHandler();
         window.drawEntities(tiles);
         for (auto &team : teams)
             window.drawEntities(team.getPlayers());
@@ -148,4 +148,18 @@ zapi::Player zapi::Game::getPlayer(unsigned int id)
         if (team.checkPlayer(id))
             return team.getPlayer(id);
     return Player(-1, nullptr);
+}
+
+void zapi::Game::inputHandler(void)
+{
+    window.clear();
+    while(window.pollEvent(window.getEvent())) {
+        window.inputHandler();
+        if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left) {
+            sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(), window.getCamera());
+            window.getHUD().switchDrawable();
+            std::cout << "x: " << worldCoord.x << " y: " << worldCoord.y << std::endl;
+        }
+    }
+    window.setView(window.getCamera());
 }
