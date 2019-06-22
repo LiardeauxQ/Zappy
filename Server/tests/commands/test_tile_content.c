@@ -21,7 +21,7 @@ static void test_tile_content(int fd, char *result)
     clt_tile_content_t pos = {0, 0};
     pkt_header_t hdr = {14, PROTOCOL_VERSION, SRV_TILE_CONTENT_LEN, 0};
     srv_tile_content_t tile = {0, 0, 0, 1, 2, 3, 4, 5, 6, player_nb};
-    world_t world = {1, 1, 0, init_tiles(1, 1, 8), 0x0, {0}, 0x0};
+    world_t world = {1, 1, 0, 0, init_tiles(1, 1, 8), 0x0, {0}, 0x0};
     cmd_info_t cmd[MAX_SENDERS] = {{0}};
     
     cmd[0] = (cmd_info_t){&world, sizeof(world)};

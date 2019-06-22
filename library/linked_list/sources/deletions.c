@@ -34,8 +34,14 @@ void *delete_elem(linked_list_t *list, size_t pos)
         current_pos++;
     }
     data = tmp->data;
-    tmp->next->prev = tmp->prev;
-    tmp->prev->next = tmp->next;
+    if (tmp->next)
+        tmp->next->prev = tmp->prev;
+    if (tmp->prev)
+        tmp->prev->next = tmp->next;
+    if (tmp->next && !tmp->prev) {
+        list->head = 0x0;
+        list->tail = 0x0;
+    }
     free(tmp);
     return (data);
 }

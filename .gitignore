@@ -11,6 +11,7 @@ build/
 tests_run
 zappy_ai
 zappy_graphical
+.*.session.vim
 __pycache__
 .cquery
 .vscode/

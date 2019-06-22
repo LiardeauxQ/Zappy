@@ -36,7 +36,8 @@ tile_content_t **init_tiles(const size_t width, const size_t height,
         tiles[i] = calloc(1, height * sizeof(tile_content_t));
         check_malloc(tiles[i]);
         for (size_t j = 0 ; j < height ; j++) {
-            tiles[i][j].resources = calloc(1, (max_resources + 1) * sizeof(int));
+            tiles[i][j].resources = calloc(1,
+                    (max_resources + 1) * sizeof(int));
             check_malloc(tiles[i][j].resources);
             tiles[i][j].resources[max_resources] = -1;
         }

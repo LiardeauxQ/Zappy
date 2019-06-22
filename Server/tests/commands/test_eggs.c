@@ -50,7 +50,7 @@ Test(send_layed_egg, simple_test)
     pkt_header_t hdr = {SRV_EGG_LAYED, PROTOCOL_VERSION,
         SRV_PLAYER_EGG_LAYED_LEN, 0};
     srv_player_egg_layed_t egg = {23, 34, 34, 34};
-    player_t player = {23, 1, 0, 10, 1, {0}, 34, 34};
+    player_t player = {0, 23, 1, 10, 0, 1, {0}, 34, 34};
     cmd_info_t cmd[MAX_SENDERS] = {{0}};
 
     cmd[PLAYER_SENDER_POS] = (cmd_info_t){&player, sizeof(player_t)};

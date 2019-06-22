@@ -22,11 +22,12 @@ struct tile_content_s {
 typedef struct tile_content_s tile_content_t;
 
 struct player_s {
+    uint8_t level;
     unsigned int id;
     unsigned int team_id;
-    uint8_t level;
     unsigned int hp;
-    enum ORIENTATION direction;
+    unsigned int hatch_time_left;
+    enum ORIENTATION orientation;
     unsigned int resources[DEFAULT_RESOURCES_NUMBER];
     unsigned int x;
     unsigned int y;
@@ -38,6 +39,7 @@ struct world_s {
     size_t width;
     size_t height;
     unsigned int f;
+    unsigned int max_team_size;
     tile_content_t **tiles;
     resource_t *resources; // available resources
     linked_list_t players; // of type struct player_s
