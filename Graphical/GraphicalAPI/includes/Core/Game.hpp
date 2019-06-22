@@ -30,7 +30,7 @@ namespace zapi
             void pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index);
             void updatePlayerOrientation(unsigned int id, ORIENTATION direction);
             void levelUpPlayer(unsigned int id);
-            zapi::Player getPlayer(unsigned int id);
+            zapi::Player &getPlayer(unsigned int id);
 
             void updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction);
             void updatePlayer(unsigned int id, const sf::Vector2f &position, std::array<int, 7> &resources);
@@ -50,9 +50,6 @@ namespace zapi
             std::vector<Tile> &getTiles(void) { return tiles; }
             std::vector<Team> &getTeams(void) { return teams; }
         private:
-            // void inputHandler(void);
-            // void updateHud(void);
-            // Window &window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;
     };

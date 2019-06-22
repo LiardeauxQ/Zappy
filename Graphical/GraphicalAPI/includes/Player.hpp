@@ -27,6 +27,8 @@ namespace zapi
             void dropResource(RESOURCE_NUMBER index);
             void pickUpResource(RESOURCE_NUMBER index);
             void updateOrientation(ORIENTATION direction);
+            void updatePosition(const sf::Vector2f &new_pos);
+            void updateResources(std::array<int, 7> &new_resources);
             sf::Vector2f getPosition();
 
         private:

@@ -102,3 +102,14 @@ void zapi::Player::updateOrientation(ORIENTATION direction)
     orientation = direction;
     sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
 }
+
+void zapi::Player::updatePosition(const sf::Vector2f &new_pos)
+{
+    position = new_pos;
+    sprite.setPosition(position);
+}
+
+void zapi::Player::updateResources(std::array<int, 7> &new_resources)
+{
+    inventory = new_resources;
+}

@@ -126,12 +126,12 @@ void zapi::Game::levelUpPlayer(unsigned int id)
     std::cout << "Player " << id << " leveled up" << std::endl;
 }
 
-zapi::Player zapi::Game::getPlayer(unsigned int id)
+zapi::Player &zapi::Game::getPlayer(unsigned int id)
 {
     for (auto &team : teams)
         if (team.checkPlayer(id))
             return team.getPlayer(id);
-    return Player(-1, nullptr);
+    exit(84);
 }
 
 bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
@@ -139,15 +139,17 @@ bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
     return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
 }
 
-
-
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
 {
+    getPlayer(id).updateOrientation(direction);
+    getPlayer(id).updatePosition(position);
     std::cout << "Player " << id << " position updated" << std::endl;
 }
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, std::array<int, 7> &resources)
 {
+    getPlayer(id).updatePosition(position);
+    getPlayer(id).updateResources(resources);
     std::cout << "Player " << id << " inventory updated" << std::endl;
 }
 
