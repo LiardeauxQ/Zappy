@@ -20,12 +20,20 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
     _sockfd = socket(AF_INET, SOCK_STREAM, 0);
     std::cout << "Try connection to host: " << ipAddress << std::endl;
     if (connect(_sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
-        throw ServerInteractionErrors("Unable to connect to server");
+        perror("connect");
+        //throw ServerInteractionErrors("Unable to connect to server");
     std::cout << "Successful connection to host: " << ipAddress << std::endl;
 }
 
 communication::ServerInteraction::ServerInteraction() : _port(0), _sockfd(-1)
 {
+}
+
+communication::ServerInteraction::~ServerInteraction()
+{
+    this->requestCloseConnection();
+    close(_sockfd);
+    std::cout << "End connection" << std::endl;
 }
 
 void communication::ServerInteraction::requestMapSize(void) const
@@ -104,6 +112,17 @@ void communication::ServerInteraction::requestTimeUpdate(void) const
     pkt << 0x0;
 }
 
+void communication::ServerInteraction::requestCloseConnection(void) const
+{
+    clt_close_connection_t clt = {0};
+    Packet<clt_close_connection_t> pkt(CLT_CLOSE_CONNECTION, _sockfd,
+            CLT_CLOSE_CONNECTION_LEN);
+
+    pkt << &clt;
+    pkt >> &clt;
+    printf("close %d\n", clt.tmp);
+}
+
 template <class T>
 communication::Packet<T>::Packet(uint8_t id, int sockfd, uint16_t size, uint16_t subid)
     : id(id), sockfd(sockfd), size(size), subid(subid)
@@ -124,11 +143,12 @@ template <class T>
 void communication::Packet<T>::operator>>(T *data)
 {
     packet_header hdr = {0, 0, 0, 0};
+    int result = 0;
 
-    if (read(sockfd, &hdr, PKT_HDR_LEN) != PKT_HDR_LEN
-            || hdr.id > SRV_CUSTOM) {
+    result = read(sockfd, &hdr, PKT_HDR_LEN);
+    if (result != PKT_HDR_LEN || hdr.id > SRV_CUSTOM) {
         data = nullptr;
         return;
     }
-    read(sockfd, data, hdr.size);
+    result = read(sockfd, data, hdr.size);
 }

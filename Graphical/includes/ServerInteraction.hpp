@@ -39,7 +39,7 @@ namespace communication {
     public:
         ServerInteraction(unsigned int port, const std::string &ipAddress);
         ServerInteraction();
-        ~ServerInteraction() = default;
+        ~ServerInteraction();
 
         void requestMapSize(void) const;
         void requestTileContent(unsigned int x, unsigned int y) const;
@@ -53,6 +53,8 @@ namespace communication {
         
         unsigned int getSocket(void) const { return _sockfd; }
     private:
+        void requestCloseConnection(void) const;
+
         unsigned int _port;
         int _sockfd;
     };

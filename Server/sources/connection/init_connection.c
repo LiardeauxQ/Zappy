@@ -5,6 +5,9 @@
 ** init server connection
 */
 
+#include <fcntl.h>
+#include <arpa/inet.h>
+
 #include "server.h"
 #include "connection.h"
 #include "error.h"
@@ -31,7 +34,19 @@ int init_connection(server_t *server)
     if (server->sockfd == -1)
         return (print_exit_msg("Error with socket initialization", -1));
     server->sockaddr = bind_socket(server->sockfd, server->port);
-    return (0);
+    return (server->sockfd);
+}
+
+int init_non_blocking_connection(server_t *server)
+{
+    int sockfd = init_connection(server);
+    int flags = 0;
+
+    if (server->sockfd == -1)
+        return (print_exit_msg("Error with socket initialization", -1));
+    flags = fcntl(sockfd, F_GETFL, 0);
+    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+    return (sockfd);
 }
 
 int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],
@@ -57,21 +72,23 @@ int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     int const main_socket)
 {
     int new_socket = 0;
-    struct sockaddr addr = {0};
+    struct sockaddr_in addr = {0};
     socklen_t addrlen = sizeof(addr);
 
     if (!FD_ISSET(main_socket, readfds))
         return (0);
-    new_socket = accept(main_socket, &addr, &addrlen);
+    new_socket = accept(main_socket, (struct sockaddr*)&addr, &addrlen);
     if (new_socket == -1) {
         perror("accept");
         return (-1);
     }
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         if ((*clients)[i].sockfd == 0) {
-            (*clients)[i].sockfd = new_socket;
+            (*clients)[i] = (client_t){new_socket, -1, addr};
             break;
         }
     }
-    return (1);
+    printf("Connection on socket %d with address %s\n", new_socket,
+            inet_ntoa(addr.sin_addr));
+    return (new_socket);
 }

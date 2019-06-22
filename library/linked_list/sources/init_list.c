@@ -14,9 +14,10 @@ void append(linked_list_t *list, void *data)
     new->data = data;
     if (list->head == 0x0) {
         list->head = new;
+        list->tail = new;
         return;
     }
-    if (list->tail == 0x0) {
+    if (list->tail == list->head) {
         new->prev = list->head;
         list->tail = new;
         list->head->next = list->tail;

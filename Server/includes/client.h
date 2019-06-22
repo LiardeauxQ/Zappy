@@ -8,6 +8,7 @@
 #pragma once
 
 #include <sys/select.h>
+#include <sys/socket.h>
 
 #include "graphical/protocols.h"
 
@@ -19,10 +20,13 @@ typedef struct world_s world_t;
 
 typedef struct client_s {
     int sockfd;
+    int client_nb;
+    struct sockaddr_in addr;
 } client_t;
+
+typedef int (*client_reader)(client_t *, game_t *);
 
 /* handle_clients.c */
 
-int read_client(client_t *clt, game_t *game);
 void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
-        fd_set *readfds);
+        fd_set *readfds, client_reader reader);

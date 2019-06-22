@@ -8,6 +8,7 @@
 #pragma once
 
 #include "map.h"
+#include "teams.h"
 #include "resources.h"
 #include "graphical/protocols.h"
 #include "linked_list.h"
@@ -25,8 +26,7 @@ struct player_s {
     unsigned int id;
     unsigned int team_id;
     unsigned int hp;
-    unsigned int fork_left_time;
-    unsigned int hatch_left_time;
+    unsigned int hatch_time_left;
     enum ORIENTATION orientation;
     unsigned int resources[DEFAULT_RESOURCES_NUMBER];
     unsigned int x;
@@ -43,6 +43,7 @@ struct world_s {
     tile_content_t **tiles;
     resource_t *resources; // available resources
     linked_list_t players; // of type struct player_s
+    team_t *teams; // End with a team at 0
 };
 
 typedef struct world_s world_t;

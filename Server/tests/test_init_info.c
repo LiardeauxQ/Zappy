@@ -13,7 +13,7 @@ Test(init_info, simple_test)
 {
     int ac = 9;
     char *av[] = {"./zappy_server", "-f", "34", "-p", "23", "-x", "5",
-        "-y", "5"};
+        "-y", "5", 0x0};
     info_t info = init_info(ac, av);
 
     cr_assert_eq(info.input.width, 5);

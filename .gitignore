@@ -1,4 +1,5 @@
-zappy_ai
+gitqzappy_ai
+epitech_server
 zappy_server
 tmp
 *.o
@@ -10,6 +11,7 @@ zappy_server
 zappy_ai
 zappy_graphical
 .*.session.vim
+__pycache__
 .cquery
 .vscode/
 __pycache__
