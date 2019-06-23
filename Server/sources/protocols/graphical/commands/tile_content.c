@@ -73,8 +73,8 @@ int send_tile_content(const void *data)
 
     if (senders == 0x0)
         return (-1);
-    clt = (clt_tile_content_t*)senders[CUSTOM_SENDER_POS].data;
-    world = (world_t*)(senders[WORLD_SENDER_POS].data);
+    clt = (clt_tile_content_t *)senders[CUSTOM_SENDER_POS].data;
+    world = (world_t *)(senders[WORLD_SENDER_POS].data);
     if (clt->x >= world->width && clt->y >= world->height)
         return (-1);
     to_write = write_tile_content(&world->tiles[clt->x][clt->y], clt->x,

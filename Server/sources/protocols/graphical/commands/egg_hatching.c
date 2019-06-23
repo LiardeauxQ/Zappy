@@ -32,7 +32,7 @@ int send_hatching_egg(const void *data)
 
     if (senders == 0x0)
         return (-1);
-    srv.egg_num = *((int*)(senders[INT_SENDER_POS].data));
+    srv.egg_num = *((int *)(senders[INT_SENDER_POS].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_PLAYER_EGG_HATCHING_LEN);

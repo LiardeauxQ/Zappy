@@ -60,6 +60,6 @@ int main(int ac, char **av)
 
     init_info(ac, av, &info);
     start_server(&info);
-    destroy_info(&info);  
+    destroy_info(&info);
     return (0);
 }
