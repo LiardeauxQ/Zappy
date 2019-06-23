@@ -33,6 +33,8 @@ TEST_DIRS		:=	$(ROOT)/Server/tests	\
 					$(ROOT)/Graphical/tests	\
 					$(ROOT)/library/csv/tests
 
+DOX_CONFIG		=	.doxigen-config
+
 #COLOR
 
 GREEN		=	\e[1;32m
@@ -110,4 +112,7 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests tests_run
+doc:
+			doxygen $(DOX_CONFIG)
+
+.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests tests_run doc
