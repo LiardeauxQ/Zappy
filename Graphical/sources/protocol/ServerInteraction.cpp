@@ -23,7 +23,8 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1)
         throw ServerInteractionErrors("Invalid Socket");
-    std::cout << "Try connection to host: " << ipAddress << std::endl;
+    std::cout << "Try connection to host: " << ipAddress;
+    std::cout << "with socket " << sockfd << std::endl;
     if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
         throw ServerInteractionErrors("Unable to connect to server");
     std::cout << "Successful connection to host: " << ipAddress << std::endl;
@@ -149,8 +150,9 @@ void communication::ServerInteraction::listenSocket(void)
     if (result > 0)
         std::cout << "bytes: " << result << std::endl;
     data = (char*)calloc(1, hdr.size);
-    if (read(sockfd, data, hdr.size) == -1)
-        throw ServerInteractionErrors("Unable to read");
+    result = read(sockfd, data, hdr.size);
+    if (result <= 0)
+        return;
     events.notify("socket", hdr.id, data);
     free(data);
 }

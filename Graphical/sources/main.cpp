@@ -23,8 +23,8 @@ int main(int ac, char **av)
         App app("Zappy", interaction, map.x, map.y);
 
         app.start();
+        printf("before end\n");
         app.triggerEnd("test");
-
     } catch (std::exception e) {
         std::cout << "Error to init connection" << std::endl;
     }
