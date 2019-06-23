@@ -65,7 +65,8 @@ void App::loop()
 {
     while (window.isOpen()) {
         frameTime = frameClock.restart();
-        server->listenSocket();
+        if (server != nullptr)
+            server->listenSocket();
         menuState();
         inputHandler();
         window.drawEntities(getTiles());
