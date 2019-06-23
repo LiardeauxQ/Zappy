@@ -38,7 +38,8 @@ Test(connect_nbr_handler, test_connect_nbr_handler)
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
     connect_nbr_handler(&world, head, 0x0);
-    cr_assert_eq(atoi(get_response()), world.max_team_size - 1);
+    cr_assert_eq((unsigned int)atoi(get_response()),
+            world.max_team_size - 1);
 }
 
 Test(death_handler, test_death_handler)

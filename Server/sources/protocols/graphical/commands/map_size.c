@@ -12,7 +12,7 @@
 #include "graphical/protocols.h"
 #include "world.h"
 
-int assign_map_siz(world_t *world, int sockfd)
+int assign_map_size(world_t *world, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 

@@ -101,7 +101,7 @@ int send_map_content(const void *data);
 
 /* handle_map_size.c */
 
-int assign_map_siz(world_t *world, int sockfd);
+int assign_map_size(world_t *world, int sockfd);
 int send_map_size(const void *data);
 
 /* handle_name_teams.c */
