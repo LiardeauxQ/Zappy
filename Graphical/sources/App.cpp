@@ -5,6 +5,7 @@
 ** App
 */
 
+#include <iostream>
 #include "App.hpp"
 
 App::App(const std::string &title, communication::ServerInteraction &interaction, unsigned int width, unsigned int height) :
@@ -58,7 +59,7 @@ void App::updateTileContent(char *data)
 
 void App::inputHandler(void)
 {
-    window.clear();
+    window.clear(sf::Color(78, 137, 232));
     while(window.pollEvent(window.getEvent())) {
         window.inputHandler();
         if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)

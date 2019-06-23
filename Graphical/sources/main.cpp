@@ -14,7 +14,7 @@ int main(int ac, char **av)
     IO::InputParser iParser(ac, av);
     communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
             iParser.getCmdStringOption("-h"));
-    App app("Zappy", interaction, 5);
+    App app("Zappy", interaction, 5, 5);
 
     app.start();
     return (0);
