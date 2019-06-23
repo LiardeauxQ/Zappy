@@ -53,10 +53,11 @@ void App::loop()
 {
     while (window.isOpen()) {
         server.listenSocket();
-        window.update();
+        inputHandler();
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
             window.drawEntities(team.getPlayers());
+        window.updateHUD();
         window.display();
     }
 }
@@ -165,8 +166,6 @@ void App::updateMapSize(char *data)
 {
     srv_map_size_t *srv = (srv_map_size_t*)data;
     sf::Vector2f size(srv->x, srv->y);
-
-    updateGameMapSize(size);
 }
 
 void App::updateNameTeam(char *data)
@@ -245,4 +244,28 @@ void App::updateTime(char *data)
 void App::updateBroadcast(char *data)
 {
     //TODO: Broacast
+}
+
+void App::inputHandler(void)
+{
+    window.clear();
+    while(window.pollEvent(window.getEvent())) {
+        window.inputHandler();
+        if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)
+            updateHud();
+    }
+    window.setView(window.getCamera());
+}
+
+void App::updateHud(void)
+{
+     sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getCamera());
+
+    if (checkInsideGrid(worldCoord) && window.getHUD().getTilePtr() != findTile(worldCoord)) {
+        window.getHUD().updateTilePtr(findTile(worldCoord));
+        window.getHUD().setDrawable(true);
+    } else {
+        window.getHUD().setDrawable(false);
+        window.getHUD().resetTilePtr();
+    }
 }

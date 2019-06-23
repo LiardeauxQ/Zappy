@@ -18,17 +18,18 @@ zapi::Window::Window(const std::string &title)
     setView(camera);
 }
 
-void zapi::Window::update(void)
-{
-    clear();
-    inputHandler();
-    setView(camera);
-}
+// void zapi::Window::update(void)
+// {
+//     // clear();
+//     // inputHandler();
+//     // setView(camera);
+// }
 
 void zapi::Window::updateHUD(void)
 {
-    // setView(getDefaultView());
-    // draw(hud);
+    setView(getDefaultView());
+    hud.updateResourceOutputs();
+    draw(hud);
 }
 
 void zapi::Window::drawEntities(std::vector<Tile> &entities)
@@ -59,27 +60,25 @@ void zapi::Window::drawEntities(std::list<Player> &entities)
 
 void zapi::Window::inputHandler()
 {
-    while (pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
-            close();
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-            close();
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
-            camera.move(0, -40);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)
-            camera.move(0, 40);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)
-            camera.move(-40, 0);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
-            camera.move(40, 0);
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A && zoom < 10) {
-            camera.zoom(0.9);
-            zoom++;
-        }
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z && zoom > 0) {
-            camera.zoom(1.2);
-            zoom--;
-        }
+    if (event.type == sf::Event::Closed)
+        close();
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+        close();
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
+        camera.move(0, -40);
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)
+        camera.move(0, 40);
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)
+        camera.move(-40, 0);
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
+        camera.move(40, 0);
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A && zoom < 10) {
+        camera.zoom(0.9);
+        zoom++;
+    }
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z && zoom > 0) {
+        camera.zoom(1.2);
+        zoom--;
     }
 }
 

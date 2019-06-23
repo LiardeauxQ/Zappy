@@ -24,6 +24,7 @@ public:
     void update(const std::string &eventType, int id, char *data) override;
 
     void updateTileContent(char *data);
+
     void updateLayingEgg(char *data);
     void updateLayedEgg(char *data);
     void updateHatchingEgg(char *data);
@@ -44,6 +45,9 @@ public:
     void updateResourceCollecting(char *data);
     void updateTime(char *data);
     void updateBroadcast(char *data);
+
+    void inputHandler(void);
+    void updateHud(void);
 private:
     zapi::Window window;
     communication::ServerInteraction &server;
