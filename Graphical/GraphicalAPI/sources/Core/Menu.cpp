@@ -15,9 +15,10 @@ zapi::Menu::Menu()
     : window(sf::VideoMode(1920, 1080), "Zappy"),
     rectangleButton(sf::Vector2f(840 + 190,540 + 47)),
     rectSourceSprite(0, 0, 190, 47),
-    rectangle(sf::Vector2f(120, 50)),
-    inputHostStr("Bite"),
-    inputPortStr("Bite")
+    rectangleHost(sf::Vector2f(120, 50)),
+    rectanglePort(sf::Vector2f(120, 50)),
+    inputHostStr("Host : "),
+    inputPortStr("Port : ")
 
 {
         if (!buttonTexture.loadFromFile("Graphical/sprites/yellowSheet.png"))
@@ -27,13 +28,15 @@ zapi::Menu::Menu()
         buttonSprite = sf::Sprite(buttonTexture,rectSourceSprite);
         sprite = sf::Sprite(texture);
         font.loadFromFile("Graphical/GraphicalAPI/sources/Core/font.ttf");
-        buttonSprite.setPosition(sf::Vector2f(840, 540));
-        rectangle.setSize(sf::Vector2f(800, 200));
+        buttonSprite.setPosition(sf::Vector2f(840, 540));      
+        rectangleHost.setSize(sf::Vector2f(800, 200));
+        rectanglePort.setSize(sf::Vector2f(800, 200));
+        rectanglePort.setPosition(500, 500),
         inputHost.setCharacterSize(68);
         inputPort.setCharacterSize(68);
         inputHost.setColor(sf::Color::Red);
-        inputPort.setColor(sf::Color::Red);
-        inputPort.setPosition(500, 500);
+        inputPort.setColor(sf::Color::Blue);
+        inputPort.setPosition(510, 510);
         inputHost.setFont(font);
         inputPort.setFont(font);
         textButton.setCharacterSize(34);
@@ -41,9 +44,8 @@ zapi::Menu::Menu()
         textButton.setPosition(880, 540);
         textButton.setFont(font);
         textButton.setString("START");
-        clicked = false;
-
-
+        clickedHost = false;
+        clickedPort = false;
 }
 
 
@@ -70,31 +72,40 @@ void zapi::Menu::loop()
                     rectSourceSprite.top = 0;
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                if (rectangle.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
-                    clicked = true;
+                if (rectangleHost.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+                    clickedHost = true;
                 else
-                    clicked = false;
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                if (rectangle.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
-                    clicked = true;
+                    clickedHost = false;
+                if (rectanglePort.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))))
+                    clickedPort = true;
                 else
-                    clicked = false;
+                    clickedPort = false;
             }
-            if (event.type == sf::Event::TextEntered && clicked == true)
+            if (event.type == sf::Event::TextEntered && clickedPort == true) {
                 if (event.text.unicode >= 48 && event.text.unicode <= 57)
                     inputPortStr +=  (static_cast<char>(event.text.unicode));
+                else if (event.text.unicode == 8)
+                    inputPortStr = inputPortStr.substr(0, inputPortStr.size()-1);
             }
-            if (event.type == sf::Event::TextEntered && clicked == true)
-                if (event.text.unicode < 128)
-                    inputHostStr += (static_cast<char>(event.text.unicode));
-            inputHost.setString(inputHostStr);
             inputPort.setString(inputPortStr);
-
+            if (event.type == sf::Event::TextEntered && clickedHost == true) {
+                std::cout << "keypressed: " << event.text.unicode << std::endl;
+                if (event.text.unicode < 128 && event.text.unicode != 8 && event.text.unicode != 13)
+                    inputHostStr += (static_cast<char>(event.text.unicode));
+                else if (event.text.unicode == 8)
+                    inputHostStr = inputHostStr.substr(0, inputHostStr.size()-1);
+                else if (event.text.unicode == 13) {
+                    clickedHost = false;
+                    clickedPort = true;
+                }
+            }
+            inputHost.setString(inputHostStr);
         }
         buttonSprite.setTextureRect(rectSourceSprite);
         window.clear();
         window.draw(sprite);
-        window.draw(rectangle);
+        window.draw(rectangleHost);
+        window.draw(rectanglePort);
         window.draw(inputHost);
         window.draw(inputPort);
         window.draw(buttonSprite);
