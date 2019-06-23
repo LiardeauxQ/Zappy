@@ -63,11 +63,20 @@ void execute_action(client_t *client, game_t *game, player_t *player,
                 handler->limit_cycles, world.f));
 }
 
-void display_actions_log(player_t *player, char *action)
+void send_action_response(client_t *client, world_t *world,
+        player_t *player, char *action)
 {
+    static int i = 0;
+
     printf("==> Player (id: %d, team: %d): { x: %d, y: %d }\n", player->id,
             player->team_id, player->x, player->y);
     printf("    -> Cmd: %s\n       Send: %s\n", action, get_response());
+    write(client->sockfd, get_response(), strlen(get_response()));
+    i++;
+    if (i > 10) {
+        update_world_resources(world, 3);
+        i = 0;
+    }
 }
 
 int read_ai_client(client_t *client, game_t *game)
@@ -86,12 +95,8 @@ int read_ai_client(client_t *client, game_t *game)
         return (-1);
     buffer[strlen(buffer) - 1] = 0;
     splitted_cmd = str_to_tab(buffer, " ");
-    printf("==> %p %p %p %p\n", client, game, player, splitted_cmd);
     execute_action(client, game, player, (const char **) splitted_cmd);
-    display_actions_log(player, buffer);
-    write(client->sockfd, get_response(), strlen(get_response()));
-    // if (is_graph_request_ok())
-        // exec_graph_request();
+    send_action_response(client, &game->world, player, buffer);
     free(buffer);
     return (0);
 }
