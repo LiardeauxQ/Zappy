@@ -18,6 +18,6 @@ int main(int ac, char **av)
     App app("Zappy", interaction, 5, 5);
 
     app.start();
-    app.triggerEnd();
+    app.triggerEnd("test");
     return (0);
 }

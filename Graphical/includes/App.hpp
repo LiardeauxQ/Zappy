@@ -52,10 +52,7 @@ public:
 private:
     zapi::Window window;
     communication::ServerInteraction &server;
-<<<<<<< HEAD
-    bool isEnded;
-=======
+    bool __attribute__((unused)) isEnded;
     sf::Clock frameClock;
     sf::Time frameTime;
->>>>>>> develop
 };

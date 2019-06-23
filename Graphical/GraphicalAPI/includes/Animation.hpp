@@ -33,7 +33,7 @@ namespace zapi
             void setFrame(unsigned int index);
             void play();
         private:
-            PLAYER_ANIMATION id;
+            PLAYER_ANIMATION __attribute__((unused)) id;
             sf::Sprite sprite;
             std::vector<sf::IntRect> frames;
             unsigned int frameIndex;

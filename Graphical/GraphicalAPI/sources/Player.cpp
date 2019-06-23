@@ -15,12 +15,9 @@ zapi::Player::Player(unsigned int id, zapi::Tile *tile, unsigned int width, unsi
 , sprite()
 , tile(tile)
 , inventory()
-<<<<<<< HEAD
 , width(width)
 , height(height)
-=======
 , animations()
->>>>>>> develop
 {
 
     sprite.setTexture(*(getPlayerTexture()));

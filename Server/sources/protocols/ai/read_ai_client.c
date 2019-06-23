@@ -39,7 +39,8 @@ void init_client_communication(client_t *clt, game_t *game)
     free(team_name);
 }
 
-void execute_action(client_t *client, game_t *game, player_t *player,
+void execute_action(client_t __attribute__((unused))*client,
+        game_t *game, player_t *player,
         const char **splitted_cmd)
 {
     int action_found = 0;

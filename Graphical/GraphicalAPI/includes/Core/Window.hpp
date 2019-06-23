@@ -33,8 +33,8 @@ namespace zapi
         private:
             Hud hud;
             sf::Event event;
-            unsigned int width;
-            unsigned int height;
+            unsigned int __attribute__((unused)) width;
+            unsigned int __attribute__((unused)) height;
             sf::View camera;
     };
 }

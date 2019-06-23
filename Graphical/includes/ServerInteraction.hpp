@@ -49,7 +49,7 @@ namespace communication {
     private:
         void requestCloseConnection(void) const;
 
-        unsigned int port;
+        unsigned int __attribute__((unused)) port;
         int sockfd;
     };
 }

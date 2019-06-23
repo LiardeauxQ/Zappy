@@ -23,7 +23,8 @@ void hatch(world_t *world, player_t *player)
         send_hatching_egg(data);
     }
 }
-int fork_handler(world_t *world, player_t *player,
+
+int fork_handler(world_t __attribute__((unused)) *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     int sockfd = (get_graph_clients())[0].sockfd;

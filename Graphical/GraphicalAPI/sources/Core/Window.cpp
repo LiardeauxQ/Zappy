@@ -10,10 +10,6 @@
 
 zapi::Window::Window(const std::string &title, unsigned int width, unsigned int height)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
-<<<<<<< HEAD
-=======
-, camera(sf::FloatRect(700, 1100, 1600, 900))
->>>>>>> develop
 , hud()
 , event()
 , width(width)

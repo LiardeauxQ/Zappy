@@ -8,13 +8,6 @@
 #include <iostream>
 #include "App.hpp"
 
-<<<<<<< HEAD
-App::App(const std::string &title, communication::ServerInteraction &interaction, unsigned int width, unsigned int height) :
-    zapi::Game(width, height),
-    window(title, width, height),
-    server(interaction),
-    isEnded(false)
-=======
 static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
     std::make_tuple(SRV_MAP_SIZE, &App::updateMapSize),
     std::make_tuple(SRV_TILE_CONTENT, &App::updateTileContent),
@@ -44,13 +37,14 @@ static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
     std::make_tuple(SRV_CUSTOM, nullptr)
 };
 
-App::App(const std::string &title, communication::ServerInteraction &interaction) :
-    zapi::Game(),
-    window(title),
+App::App(const std::string &title, communication::ServerInteraction &interaction,
+        unsigned int width, unsigned int height) :
+    zapi::Game(width, height),
+    window(title, width, height),
     server(interaction),
+    isEnded(false),
     frameClock(),
     frameTime()
->>>>>>> develop
 {
     server.events.subscribe("socket", this);
 }
@@ -66,24 +60,16 @@ void App::loop()
         frameTime = frameClock.restart();
         server.listenSocket();
         inputHandler();
-<<<<<<< HEAD
-        // if (!isEnded) {
-            window.drawEntities(getTiles());
-            for (auto &team : getTeams())
-                window.drawEntities(team.getPlayers());
-        // } else
-            // triggerEnd();
-=======
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
             window.drawEntities(team.getPlayers(), frameTime);
->>>>>>> develop
         window.updateHUD();
         window.display();
     }
 }
 
-void App::update(const std::string &eventType, int id, char *data)
+void App::update(const std::string __attribute__((unused)) &eventType,
+        int id, char *data)
 {
     cmdServerFun func;
 
@@ -256,13 +242,13 @@ void App::updateResourceCollecting(char *data)
     pickUpResourcePlayer(srv->player_num, srv->resource);
 }
 
-void App::updateTime(char *data)
+void App::updateTime(char __attribute__((unused)) *data)
 {
-    srv_time_unit_request_t *srv = (srv_time_unit_request_t*)data;
+    srv_time_unit_request_t __attribute__((unused)) *srv = (srv_time_unit_request_t*)data;
     //TODO: time management
 }
 
-void App::updateBroadcast(char *data)
+void App::updateBroadcast(char __attribute__((unused)) *data)
 {
     //TODO: Broacast
 }
@@ -290,11 +276,8 @@ void App::updateHud(void)
         window.getHUD().resetTilePtr();
     }
 }
-<<<<<<< HEAD
 
 void App::triggerEnd(std::string const &teamName)
 {
     window.getHUD().setEnd(teamName);
 }
-=======
->>>>>>> develop
