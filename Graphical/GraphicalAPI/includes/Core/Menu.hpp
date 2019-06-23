@@ -36,6 +36,7 @@ namespace zapi
             std::string inputHostStr;
             std::string inputPortStr;
             sf::Text inputHost;
+            sf::Text textButton;
             sf::Text inputPort;
             sf::Font font;
             bool clicked;
