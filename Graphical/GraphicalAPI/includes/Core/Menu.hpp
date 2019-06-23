@@ -26,12 +26,13 @@ namespace zapi
             void updateInputs();
             void detectInputs();
             bool getGameStart(void);
+            std::string &getInputHost(void);
+            std::string &getInputPort(void);
 
         private:
+            bool checkPortHost(void);
             sf::RenderWindow *window;
-            sf::Texture texture;
             sf::String playerInput;
-            sf::Texture buttonTexture;
             sf::RectangleShape rectangleButton;
             sf::IntRect rectSourceSprite;
             sf::Sprite buttonSprite;
@@ -43,10 +44,11 @@ namespace zapi
             sf::Text inputHost;
             sf::Text textButton;
             sf::Text inputPort;
-            sf::Font font;
+            sf::Text errorMsg;
             sf::Event event;
             bool clickedHost;
             bool clickedPort;
             bool gameStart;
+            int error;
     };
 }

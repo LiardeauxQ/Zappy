@@ -53,12 +53,21 @@ void App::start()
     loop();
 }
 
+void App::menuState(void)
+{
+    if (window.getMenu().getGameStart())
+        return;
+    window.getMenu().start();
+    inputHost = window.getMenu().getInputHost();
+    inputPort = window.getMenu().getInputPort();
+}
+
 void App::loop()
 {
     while (window.isOpen()) {
         frameTime = frameClock.restart();
         server.listenSocket();
-        window.getMenu().start();
+        menuState();
         inputHandler();
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
@@ -278,5 +287,6 @@ void App::updateHud(void)
 
 void App::triggerEnd(std::string const &teamName)
 {
+    window.getHUD().setDrawable(false);
     window.getHUD().setEnd(teamName);
 }

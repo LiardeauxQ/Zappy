@@ -17,18 +17,13 @@ zapi::Menu::Menu(sf::RenderWindow &window)
     rectSourceSprite(0, 0, 190, 47),
     rectangleHost(sf::Vector2f(120, 50)),
     rectanglePort(sf::Vector2f(120, 50)),
-    inputHostStr("Host : "),
-    inputPortStr("Port : "),
+    inputHostStr("Host: "),
+    inputPortStr("Port: "),
     gameStart(false)
 
 {
-        if (!buttonTexture.loadFromFile("Graphical/sprites/yellowSheet.png"))
-            return;
-        if (!texture.loadFromFile("Graphical/sprites/menu.png"))
-            return;
-        buttonSprite = sf::Sprite(buttonTexture,rectSourceSprite);
-        sprite = sf::Sprite(texture);
-        font.loadFromFile("Graphical/GraphicalAPI/sources/Core/font.ttf");
+        buttonSprite = sf::Sprite(*(getButtonMenuTexture()),rectSourceSprite);
+        sprite = sf::Sprite(*(getBackgroundMenuTexture()));
         buttonSprite.setPosition(sf::Vector2f(840, 540));
         rectanglePort.setSize(sf::Vector2f(300, 47));
         rectangleHost.setSize(sf::Vector2f(600, 47));
@@ -42,13 +37,18 @@ zapi::Menu::Menu(sf::RenderWindow &window)
         inputPort.setColor(sf::Color::White);
         inputPort.setPosition(1055, 402);
         inputHost.setPosition(255, 402);
-        inputHost.setFont(font);
-        inputPort.setFont(font);
+        inputHost.setFont(*(getFont()));
+        inputPort.setFont(*(getFont()));
         textButton.setCharacterSize(34);
         textButton.setColor(sf::Color::Black);
         textButton.setPosition(880, 540);
-        textButton.setFont(font);
+        textButton.setFont(*(getFont()));
         textButton.setString("START");
+        errorMsg.setFont(*(getFont()));
+        errorMsg.setCharacterSize(40);
+        errorMsg.setFillColor(sf::Color::Red);
+        errorMsg.setPosition(730, 460);
+        errorMsg.setString("INVALID PORT OR HOST");
         clickedHost = false;
         clickedPort = false;
 }
@@ -72,6 +72,13 @@ void  zapi::Menu::setPositionButton()
         rectSourceSprite.top = 0;
 }
 
+bool zapi::Menu::checkPortHost(void)
+{
+    if (inputHostStr.size() <= 6 || inputPortStr.size() <= 6)
+        return false;
+    return true;
+}
+
 void zapi::Menu::detectedClick()
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
@@ -83,8 +90,12 @@ void zapi::Menu::detectedClick()
             clickedPort = true;
         else
             clickedPort = false;
-        if (textButton.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window))))
-            gameStart = true;
+        if (textButton.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)))) {
+            if (checkPortHost())
+                gameStart = true;
+            else
+                error = 3000;
+        }
     }
 }
 
@@ -98,6 +109,10 @@ void zapi::Menu::displayItems()
     window->draw(inputPort);
     window->draw(buttonSprite);
     window->draw(textButton);
+    if (error > 0) {
+        window->draw(errorMsg);
+        error--;
+    }
     window->display();
 }
 
@@ -144,6 +159,14 @@ void zapi::Menu::loop()
         buttonSprite.setTextureRect(rectSourceSprite);
         displayItems();
     }
+}
+
+std::string &zapi::Menu::getInputHost(void) {
+    return inputHostStr;
+}
+
+std::string &zapi::Menu::getInputPort(void) {
+    return inputPortStr;
 }
 
 bool zapi::Menu::getGameStart(void)

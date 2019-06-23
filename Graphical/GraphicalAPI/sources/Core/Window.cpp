@@ -53,8 +53,9 @@ void zapi::Window::inputHandler(void)
 {
     if (event.type == sf::Event::Closed)
         close();
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         close();
+    }
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
         camera.move(0, -40);
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)

@@ -15,7 +15,7 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
 {
     struct sockaddr_in sockaddr;
     int flags = 0;
-    
+
     memset(&sockaddr, 0, sizeof(sockaddr));
     sockaddr.sin_family = AF_INET;
     sockaddr.sin_port = htons(port);
@@ -136,7 +136,7 @@ void communication::ServerInteraction::listenSocket(void)
     pkt_header_t hdr = {0, 0, 0, 0};
     char *data = 0x0;
     int result = 0;
-    
+
     result = read(sockfd, &hdr, PKT_HDR_LEN);
     if (result <= 0)
         return;
