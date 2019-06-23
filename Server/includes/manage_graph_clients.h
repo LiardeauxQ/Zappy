@@ -11,3 +11,4 @@
 
 client_t *get_graph_clients(void);
 void set_graph_clients(client_t *clients);
+void send_graph_welcome(world_t *world, client_t *clients, int sockfd);
