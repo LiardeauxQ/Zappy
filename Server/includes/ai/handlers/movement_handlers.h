@@ -22,7 +22,7 @@
 #include "ai/handlers/utils.h"
 #include "graphical/commands.h"
 
-void move_player(world_t *world, player_t *player, int x, int y);
+void move_player(world_t *world, player_t *player, pos_t *pos);
 
 int forward_move_handler(world_t *world, player_t *player, const char **args);
 

@@ -5,6 +5,7 @@
 ** Handle every action on player informations.
 */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

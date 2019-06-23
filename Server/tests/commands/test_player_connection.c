@@ -26,7 +26,7 @@ Test(send_player_connection, simple_test)
     pkt_header_t hdr = {SRV_NEW_PLAYER_CONNECT, PROTOCOL_VERSION,
         SRV_NEW_PLAYER_CONNECT_LEN, 0};
     srv_new_player_connect_t srv = {1, 2, 3, 2, 3, "test"};
-    player_t player = {3, 1, 0, 2, {0}, 2, 3, 2, 0, 0};
+    player_t player = {3, 1, 0, 2, {0}, 2, 3, 2, 0, 0, 0};
     char team[] = "test";
     cmd_info_t cmd[MAX_SENDERS] = {{0}};
 

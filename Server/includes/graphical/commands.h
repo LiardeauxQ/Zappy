@@ -152,7 +152,11 @@ int send_player_position(const void *data);
 
 /* handle_resources.c */
 
+void *assign_resource_drop(int *player_num, enum RESOURCE_NUMBER *resource,
+        int sockfd);
 int send_resource_drop(const void *data);
+void *assign_resource_collect(int *player_num, enum RESOURCE_NUMBER *resource,
+        int sockfd);
 int send_resource_collect(const void *data);
 
 /* handle_server_message.c */

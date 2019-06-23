@@ -31,15 +31,12 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
         exit_with_error("select");
     clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
-    if (clt_sockfd > 0 && reader == &read_graph_client)
+    if (clt_sockfd > 0)
+        printf("socket %d %p\n", clt_sockfd, reader);
+    if (reader == &read_graph_client)
         send_graph_welcome(&game->world, server->clients, clt_sockfd);
     if (clt_sockfd > 0 && reader == &read_ai_client)
         write(clt_sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
-    else if (clt_sockfd > 0) {
-        for (size_t i = 0 ; i < game->world.width ; i++)
-            for (size_t j = 0 ; j < game->world.height ; j++)
-                assign_tile_content(&game->world, i, j, clt_sockfd);
-    }
     handle_clients(game, &server->clients, &readfds, reader);
 }
 

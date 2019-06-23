@@ -28,6 +28,10 @@
 
 #define DEFAULT_PORT_AI 6000
 #define DEFAULT_PORT_GRAPH 6001
+#define DEFAULT_FREQUENCE 1000
+#define DEFAULT_CLIENT_NB 4
+#define DEFAULT_MAP_WIDTH 5
+#define DEFAULT_MAP_HEIGHT 5
 
 struct input_s {
     unsigned int port;
