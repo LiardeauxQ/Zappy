@@ -8,22 +8,20 @@
 #include <iostream>
 #include "Core/Window.hpp"
 
-zapi::Window::Window(const std::string &title)
+zapi::Window::Window(const std::string &title, unsigned int width, unsigned int height)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
+<<<<<<< HEAD
+=======
 , camera(sf::FloatRect(700, 1100, 1600, 900))
+>>>>>>> develop
 , hud()
 , event()
-, zoom(5)
+, width(width)
+, height(height)
+, camera(sf::FloatRect((width <= 15) ? 0 : (((width * 100) / 2) - (1600 / 2)), (height <= 15) ? 0 : (((height * 100) / 2) - (900 / 2)), 1600, 900))
 {
     setView(camera);
 }
-
-// void zapi::Window::update(void)
-// {
-//     // clear();
-//     // inputHandler();
-//     // setView(camera);
-// }
 
 void zapi::Window::updateHUD(void)
 {
@@ -68,14 +66,14 @@ void zapi::Window::inputHandler()
         camera.move(-40, 0);
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
         camera.move(40, 0);
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A && zoom < 10) {
-        camera.zoom(0.9);
-        zoom++;
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
+        camera.zoom(0.99);
     }
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z && zoom > 0) {
-        camera.zoom(1.2);
-        zoom--;
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z) {
+        camera.zoom(1.01);
     }
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::T)
+        hud.setEnd("The Winnerzz");
 }
 
 sf::View &zapi::Window::getCamera(void)
