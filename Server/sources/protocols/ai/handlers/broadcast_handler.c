@@ -21,6 +21,7 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
     int k = 0;
     char *res = 0x0;
     player_t *tmp = 0x0;
+    int orientations[] = {6, 0, 2, 4};
 
     if (!player->broadcast_text)
         return;
@@ -30,8 +31,8 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
             continue;
         tmp = get_player(world->players,
                 (*clients)[i].client_nb);
-        k = getBroadcastTile(world, player, tmp);
-        k += ((tmp->orientation - 1) * 2) % 8;
+        k = (get_broadcast_tile(world, player, tmp) +
+                orientations[player->orientation - 1]) % 8;
         asprintf(&res, "message %d, %s\n", k, player->broadcast_text);
         if ((*clients)[i].sockfd)
             write((*clients)[i].sockfd, res, strlen(res));
@@ -41,7 +42,7 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
     player->broadcast_text = 0x0;
 }
 
-int getBroadcastTile(world_t *world, player_t *src_player, player_t *dest_player)
+int get_broadcast_tile(world_t *world, player_t *src_player, player_t *dest_player)
 {
     pos_t src_player_pos = {src_player->x, src_player->y};
     pos_t dest_player_pos = {dest_player->x, dest_player->y};
