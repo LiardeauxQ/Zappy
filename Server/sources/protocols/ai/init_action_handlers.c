@@ -36,8 +36,8 @@ void init_action_handler_register(ahr_t *reg)
 {
     act_handler_t *handlers[13] = {
         init_action_handler("Forward", 7, 0, &forward_move_handler),
-        init_action_handler("Right", 7, 0, &left_move_handler),
-        init_action_handler("Left", 7, 0, &right_move_handler),
+        init_action_handler("Left", 7, 0, &left_move_handler),
+        init_action_handler("Right", 7, 0, &right_move_handler),
         init_action_handler("Look", 7, 0, &look_handler),
         init_action_handler("Inventory", 1, 0, &inventory_handler),
         init_action_handler("Broadcast", 7, 1, &broadcast_handler),

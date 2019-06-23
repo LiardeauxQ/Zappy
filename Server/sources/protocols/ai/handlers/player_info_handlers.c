@@ -60,11 +60,10 @@ int look_handler(world_t *world, player_t *player,
         for (int j = 0; j < 1 + i * 2; j++) {
             append_tile_to_look_table(world, &current_pos,
                     player->team_id, &look_table);
-            next_case(world, &current_pos, player->orientation, 1);
+            next_case(world, &current_pos, player->orientation + 1, 1);
         }
-        next_case(world, &current_pos, player->orientation, 2 + i * 2);
-        next_case(world, &current_pos,
-                (player->orientation == 1) ? 4 : player->orientation - 1, 1);
+        next_case(world, &current_pos, player->orientation - 1, 2 + i * 2);
+        next_case(world, &current_pos, player->orientation, 1);
     }
     look_table_len = strlen(look_table);
     look_table[look_table_len - 1] = ']';

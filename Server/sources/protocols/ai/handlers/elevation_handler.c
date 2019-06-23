@@ -84,12 +84,14 @@ int elevation_handler(world_t *world, player_t *player,
     tile_content_t tile = world->tiles[player->x][player->y];
 
     if (!is_enough_users(world, &tile, player)) {
+        printf("User KO\n");
         set_response("ko\n");
         return (INVALID_PARAMETERS);
     }
     for (int i = 1; tile.resources[i] != -1 &&
             i < DEFAULT_RESOURCES_NUMBER - 1; i++) {
         if (tile.resources[i] < elevation_rules[player->level - 1][i]) {
+            printf("Ressources KO\n");
             set_response("ko\n");
             return (INVALID_PARAMETERS);
         }

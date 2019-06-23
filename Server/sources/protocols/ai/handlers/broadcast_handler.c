@@ -29,34 +29,31 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
             continue;
         player_t *tmp = get_player(world->players,
                 (*clients)[i].client_nb);
-        k = getBroadcastTile(player->x, player->y, tmp->x, tmp->y);
+        k = getBroadcastTile(world, player, tmp);
         k += ((tmp->orientation - 1) * 2) % 8;
-        asprintf(res, "message %d, %s\n", k, player->broadcast_text);
+        asprintf(&res, "message %d, %s\n", k, player->broadcast_text);
         write((*clients)[i].sockfd, res, strlen(res));
         free(player->broadcast_text);
         player->broadcast_text = 0x0;
     }
 }
 
-int getBroadcastTile(unsigned int xb, unsigned int yb,
-    unsigned int xa, unsigned int ya)
+int getBroadcastTile(world_t *world, player_t *src_player, player_t *dest_player)
 {
-    unsigned int mapx = 12; // map size X
-    unsigned int mapy = 12; // map size Y
     unsigned int xc = 0;
     unsigned int yc = 0;
     unsigned int tangente = 0;
     unsigned int alpha = 0;
 
-    if (xb - xa > mapx / 2)
-        xa = xa + mapx;
-    if (yb - ya > mapy / 2)
-        ya = ya + mapx;
-    xc = xb;
-    yc = ya;
+    if (src_player->x - dest_player->x > world->width / 2)
+        dest_player->x += world->width;
+    if (src_player->y - dest_player->y > world->height / 2)
+        dest_player->y += world->height;
+    xc = src_player->x;
+    yc = dest_player->y;
     tangente = xc / yc;
     alpha = atan(tangente);
-    alpha = (ya > yb) ? alpha + 180 : alpha;
+    alpha = (dest_player->y > src_player->y) ? alpha + 180 : alpha;
     return ((alpha - 22.5) / 45 + 1);
 }
 
@@ -67,7 +64,7 @@ int broadcast_handler(world_t *world, player_t *player,
         return (TOO_FEW_PARAMETERS);
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
-    player->broadcast_text = calloc(1, sizeof(char) * (strlen(args[0])));
+    player->broadcast_text = calloc(1, sizeof(char) * (strlen(args[0]) + 1));
     strcpy(player->broadcast_text, args[0]);
     set_response("ok\n");
     return (NO_ERROR);

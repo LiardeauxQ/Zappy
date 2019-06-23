@@ -55,11 +55,14 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
     resource_id = resource_str_to_id(args[0], world->resources);
     if ((int) resource_id == -1)
         return (INVALID_PARAMETERS);
-    player->resources[resource_id]++;
-    world->tiles[player->x][player->y].resources[resource_id]--;
-    set_response("ok\n");
-    set_graph_request(assign_player_inventory(world, &player->id, sockfd),
-        &send_player_inventory);
+    if (world->tiles[player->x][player->y].resources[resource_id] > 0) {
+        player->resources[resource_id]++;
+        world->tiles[player->x][player->y].resources[resource_id]--;
+        set_response("ok\n");
+        set_graph_request(assign_player_inventory(world, &player->id, sockfd),
+            &send_player_inventory);
+    } else
+        set_response("ko\n");
     return (NO_ERROR);
 }
 
@@ -76,10 +79,14 @@ int set_down_object_handler(world_t *world, player_t *player,
     resource_id = resource_str_to_id(args[0], world->resources);
     if ((int) resource_id == -1)
         return (INVALID_PARAMETERS);
-    player->resources[resource_id]--;
-    world->tiles[player->x][player->y].resources[resource_id]++;
-    set_graph_request(assign_player_inventory(world, &player->id, sockfd),
-        &send_player_inventory);
+    if (player->resources[resource_id] > 0) {
+        player->resources[resource_id]--;
+        world->tiles[player->x][player->y].resources[resource_id]++;
+        set_response("ok\n");
+        set_graph_request(assign_player_inventory(world, &player->id, sockfd),
+            &send_player_inventory);
+    } else
+        set_response("ko\n");
     return (NO_ERROR);
 }
 

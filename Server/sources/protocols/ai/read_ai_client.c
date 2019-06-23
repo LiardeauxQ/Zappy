@@ -74,8 +74,10 @@ void send_action_response(client_t *client, world_t *world,
 {
     static int i = 0;
 
-    printf("==> Player (id: %d, team: %d, level: %d): { x: %d, y: %d }\n",
-            player->id, player->team_id, player->level, player->x, player->y);
+    printf("==> Player (id: %d, team: %d, level: %d): "
+            "{ orientation: %d, x: %d, y: %d }\n",
+            player->id, player->team_id, player->level, player->orientation,
+            player->x, player->y);
     printf("    -> Cmd: %s\n       Send: %s\n", action, get_response());
     write(client->sockfd, get_response(), strlen(get_response()));
     i++;

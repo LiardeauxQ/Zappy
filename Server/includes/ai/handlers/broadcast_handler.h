@@ -18,8 +18,7 @@
 void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
         player_t *player);
 
-int getBroadcastTile(unsigned int xb, unsigned int yb,
-    unsigned int xa, unsigned int ya);
+int getBroadcastTile(world_t *world, player_t *src_player, player_t *dest_player);
 
 int broadcast_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args);
