@@ -7,11 +7,11 @@
 
 #include "ai/handlers/movement_handlers.h"
 
-void move_player(world_t *world, player_t *player, int x, int y)
+void move_player(world_t *world, player_t *player, pos_t *pos)
 {
     int is_found = 0;
     tile_content_t *tile = &world->tiles[player->x][player->y];
-    tile_content_t *dest_tile = &world->tiles[x][y];
+    tile_content_t *dest_tile = &world->tiles[pos->x][pos->y];
     node_t *player_node = tile->players_id.head;
 
     for (int i = 0; player_node; player_node = player_node->next, i++) {
@@ -23,8 +23,8 @@ void move_player(world_t *world, player_t *player, int x, int y)
     }
     if (is_found) {
         append(&dest_tile->players_id, &player->id);
-        player->x = x;
-        player->y = y;
+        player->x = pos->x;
+        player->y = pos->y;
     }
 }
 
@@ -32,21 +32,10 @@ int forward_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     int sockfd = (get_graph_clients())[0].sockfd;
+    pos_t current_pos = {player->x, player->y};
 
-    switch (player->orientation) {
-        case NORTH:
-            move_player(world, player, player->x, player->y - 1);
-            break;
-        case EAST:
-            move_player(world, player, player->x + 1, player->y);
-            break;
-        case SOUTH:
-            move_player(world, player, player->x, player->y + 1);
-            break;
-        case WEST:
-            move_player(world, player, player->x - 1, player->y);
-            break;
-    }
+    next_case(world, &current_pos, player->orientation, 1);
+    move_player(world, player, &current_pos);
     set_response("ok\n");
     set_graph_request(assign_player_position(world, &player->id, sockfd),
         &send_player_position);
