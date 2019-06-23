@@ -80,3 +80,8 @@ void App::updateHud(void)
         window.getHUD().resetTilePtr();
     }
 }
+
+// void App::triggerEnd(void)
+// {
+//     window.getHUD().setEnd();
+// }

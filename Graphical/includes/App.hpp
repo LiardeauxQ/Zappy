@@ -24,6 +24,7 @@ public:
     void updateTileContent(char *data);
     void inputHandler(void);
     void updateHud(void);
+    // void triggerEnd(void);
 private:
     zapi::Window window;
     communication::ServerInteraction &server;

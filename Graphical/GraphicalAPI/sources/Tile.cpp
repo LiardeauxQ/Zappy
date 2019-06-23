@@ -29,7 +29,7 @@ zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
     main.setOutlineThickness(1);
     main.setOutlineColor(sf::Color(78, 75, 66, 255));
     selectedOutline.setPosition(position);
-    selectedOutline.setFillColor(sf::Color::Yellow);
+    selectedOutline.setFillColor(sf::Color(70, 114, 52));
     // selectedOutline.setOutlineThickness(5);
     // selectedOutline.setOutlineColor(sf::Color::Yellow);
     for (int i = 0; i != 7; i++)

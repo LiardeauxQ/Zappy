@@ -6,12 +6,14 @@
 */
 
 #include <iostream>
+#include <unistd.h>
 #include "Core/Hud.hpp"
 
 zapi::Hud::Hud():
 isDraw(false)
 , tile(nullptr)
 , player(nullptr)
+, isEnded(false)
 {
     initializeBackground();
     initializeText();
@@ -33,6 +35,12 @@ void zapi::Hud::initializeResourceOutputs(int i)
 
 void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    // if (isEnded) {
+    //     target.draw(endBackground);
+    //     target.draw(endText);
+    //     usleep(4000);
+    //     exit(0);
+    // }
     if (!isDraw)
         return;
     target.draw(background);
@@ -65,6 +73,11 @@ void zapi::Hud::initializeText(void)
     tileTitle.setFillColor(sf::Color::White);
     tileTitle.setString("Tile");
     tileTitle.setPosition(430, 30);
+    endText.setFont(*(getFont()));
+    endText.setCharacterSize(70);
+    endText.setFillColor(sf::Color::White);
+    endText.setString("Team Beat the Game!!");
+    endText.setPosition(800, 450);
 }
 
 void zapi::Hud::initializeBackground(void)
@@ -74,6 +87,11 @@ void zapi::Hud::initializeBackground(void)
     background.setOutlineColor(sf::Color::White);
     background.setOutlineThickness(5);
     background.setPosition(20, 20);
+    endBackground.setSize(sf::Vector2f(830, 300));
+    endBackground.setFillColor(sf::Color::Black);
+    endBackground.setOutlineColor(sf::Color::White);
+    endBackground.setOutlineThickness(5);
+    endBackground.setPosition(700, 400);
 }
 
 void zapi::Hud::resetTilePtr(void)
@@ -109,3 +127,8 @@ zapi::Tile *zapi::Hud::getTilePtr(void)
 {
     return tile;
 }
+
+// void zapi::Hud::setEnd(void)
+// {
+//     isEnded = true;
+// }

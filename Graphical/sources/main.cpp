@@ -5,6 +5,7 @@
 ** main
 */
 
+#include <stdio.h>
 #include "InputParser.hpp"
 #include "ServerInteraction.hpp"
 #include "App.hpp"
@@ -17,5 +18,6 @@ int main(int ac, char **av)
     App app("Zappy", interaction, 5, 5);
 
     app.start();
+    app.triggerEnd();
     return (0);
 }
