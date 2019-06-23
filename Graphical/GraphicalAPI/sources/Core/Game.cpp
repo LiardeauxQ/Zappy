@@ -9,12 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 
-zapi::Game::Game(const std::string &title)
-: window(title)
-, tiles()
-, teams()
-, frameClock()
-, frameTime()
+zapi::Game::Game() : tiles(), teams()
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -28,23 +23,6 @@ void zapi::Game::initialize()
             y += 100;
         }
         tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
-    }
-}
-
-void zapi::Game::start()
-{
-    loop();
-}
-
-void zapi::Game::loop()
-{
-    while (window.isOpen()) {
-        frameTime = frameClock.restart();
-        window.update();
-        window.drawEntities(tiles);
-        for (auto &team : teams)
-            window.drawEntities(team.getPlayers(), frameTime);
-        window.display();
     }
 }
 
@@ -105,14 +83,12 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
     std::cout << "Player " << id << " picked up something" << std::endl;
 }
 
-void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> &res)
+void zapi::Game::updateTile(sf::Vector2f &position, const std::vector<int> &res)
 {
-    for (unsigned int i = 0; i < tiles.size(); i++) {
-        if (tiles[i].getPosition() == vector) {
-            tiles[i].updateResource(res);
-            return;
-        }
-    }
+    sf::Vector2f newPos(position.x * 100, position.y * 100);
+    Tile *tile = findTile(newPos);
+
+    tile->updateResource(res);
 }
 
 void zapi::Game::removePlayer(unsigned int id)
@@ -156,8 +132,36 @@ zapi::Player zapi::Game::getPlayer(unsigned int id)
     return Player(-1, nullptr);
 }
 
+// void zapi::Game::inputHandler(void)
+// {
+//     window.clear();
+//     while(window.pollEvent(window.getEvent())) {
+//         window.inputHandler();
+//         if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)
+//             updateHud();
+//     }
+//     window.setView(window.getCamera());
+// }
 
+// void zapi::Game::updateHud(void)
+// {
+//      sf::Vector2f worldCoord = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getCamera());
 
+//     if (checkInsideGrid(worldCoord)) {
+//         window.getHUD().updateTilePtr(findTile(worldCoord));
+//         window.getHUD().switchDrawable();
+//     }
+// }
+
+bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
+{
+    return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
+}
+
+void zapi::Game::updateGameMapSize(const sf::Vector2f &size)
+{
+    std::cout << "Update map size " << size.x << " " << size.y << std::endl;
+}
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
 {

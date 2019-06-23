@@ -5,22 +5,30 @@
 ** Window implementation
 */
 
+#include <iostream>
 #include "Core/Window.hpp"
 
 zapi::Window::Window(const std::string &title)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , camera(sf::FloatRect(700, 1100, 1600, 900))
+, hud()
 , event()
 , zoom(5)
 {
     setView(camera);
 }
 
-void zapi::Window::update()
+void zapi::Window::update(void)
 {
     clear();
     inputHandler();
     setView(camera);
+}
+
+void zapi::Window::updateHUD(void)
+{
+    // setView(getDefaultView());
+    // draw(hud);
 }
 
 void zapi::Window::drawEntities(std::vector<Tile> &entities)
@@ -69,4 +77,19 @@ void zapi::Window::inputHandler()
             zoom--;
         }
     }
+}
+
+sf::View &zapi::Window::getCamera(void)
+{
+    return camera;
+}
+
+zapi::Hud &zapi::Window::getHUD(void)
+{
+    return hud;
+}
+
+sf::Event &zapi::Window::getEvent(void)
+{
+    return event;
 }

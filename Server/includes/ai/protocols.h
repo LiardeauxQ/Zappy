@@ -2,10 +2,12 @@
 ** EPITECH PROJECT, 2018
 ** protocol.h
 ** File description:
-** protocols for AI client
+** Protocols for AI client
 */
 
 #pragma once
+ 
+#define _GNU_SOURCE
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -13,13 +15,23 @@
 #define WELCOME_MSG "WELCOME\n"
 #define WELCOME_MSG_LEN 8
 
-#pragma pack(1)
+#include "player.h"
+
+#ifdef __clang__
+#   pragma pack(1)
+#endif /* __clang__ */
+
+#if defined (__GNUC__) && (__GNUC__ >= 7)
+#   define PACKED __attribute__((packed))
+#else
+#   define PACKED
+#endif
 
 /*
-** DANGLING_HANDLER -> Handler function is NULL
+** Return an error flag in case of error (HANDLING_ERRORS).
 */
-
-typedef int (*action_handler_fcnt)(const uint16_t limit_cycles, const char **args);
+typedef int (*action_handler_fcnt)(world_t *world, player_t *player,
+        const char **args);
 
 /*
 ** Handle each actions by representing and describing each ones.
@@ -32,9 +44,9 @@ typedef int (*action_handler_fcnt)(const uint16_t limit_cycles, const char **arg
 ** -> handler - Function pointer to the handler.
 */
 struct action_handler {
-    char *command;
     uint16_t limit_cycles;
     uint16_t args_nbr;
+    char *command;
     action_handler_fcnt handler;
 };
 
@@ -51,5 +63,7 @@ struct action_handler_register {
 
 typedef struct action_handler_register ahr_t;
 
-#pragma options align=reset
+#ifdef __clang__
+#   pragma options align=reset
+#endif /* __clang__ */
 

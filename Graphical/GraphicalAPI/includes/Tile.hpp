@@ -20,11 +20,12 @@ namespace zapi
             std::vector<Resource> &getResources() { return resources; };
             void removeResource(RESOURCE_NUMBER index);
             void addResource(RESOURCE_NUMBER index);
-            void updateResource(std::vector<Resource> &res);
+            void updateResource(const std::vector<int> &res);
         private:
             sf::Vector2f size;
             sf::RectangleShape main;
             std::vector<Resource> resources;
             sf::Sprite sprite;
     };
+
 }

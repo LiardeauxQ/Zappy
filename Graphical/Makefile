@@ -25,7 +25,8 @@ MAIN		:=	main.cpp	\
 
 SRC			:=	protocol/ServerInteraction.cpp	\
 				InputParser.cpp	\
-				Errors.cpp
+				Errors.cpp	\
+				App.cpp	\
 
 TEST_SRC	:=	test_InputParser.cpp	\
 				test_Game.cpp
