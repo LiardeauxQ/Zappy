@@ -15,7 +15,6 @@ zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
 , selectedOutline(size)
 , resources()
 , isSelected(false)
-//, sprite()
 {
     sprite.setTexture(*(getTileTexture()));
     sprite.setTextureRect(sf::IntRect((std::rand() % 3) * 100, 0, 100, 100));
@@ -40,7 +39,6 @@ void zapi::Tile::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(sprite, states);
     if (isSelected)
         target.draw(selectedOutline, states);
-//    target.draw(shadow, states);
 }
 
 void zapi::Tile::removeResource(RESOURCE_NUMBER index)

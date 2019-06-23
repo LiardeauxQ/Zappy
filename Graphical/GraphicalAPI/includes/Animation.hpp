@@ -35,7 +35,7 @@ namespace zapi
 
     class Animation : public sf::Drawable {
         public:
-            Animation(PLAYER_ANIMATION id, sf::Sprite &sprite, sf::Time frameLength, bool isLoop = true);
+            Animation(sf::Sprite &sprite, sf::Time frameLength, bool isLoop = true);
             ~Animation() = default;
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
             bool update(sf::Time deltaTime);
@@ -46,7 +46,7 @@ namespace zapi
             void setIsLoop(bool value);
             void play(unsigned int cycle = 0, sf::Vector2f endPosition = sf::Vector2f(0, 0));
         private:
-            PLAYER_ANIMATION id;
+
             sf::Sprite sprite;
             std::vector<sf::IntRect> frames;
             unsigned int frameIndex;
