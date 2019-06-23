@@ -18,7 +18,8 @@
 typedef struct client_s client_t;
 typedef struct game_s game_t;
 
-void handle_awaiting_actions(int fd, world_t *world, player_t *player);
+void handle_awaiting_actions(client_t (*clients)[MAX_CLIENT], int client_pos,
+        world_t *world);
 
 void init_client_communication(client_t *clt, game_t *game);
 

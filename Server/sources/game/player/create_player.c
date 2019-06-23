@@ -22,7 +22,6 @@ int add_player(world_t *world, const unsigned int team_id)
     player->level = 1;
     player->id = player_id;
     player->team_id = team_id;
-    player->hatch_start_time = 0;
     player->x = rand() % world->width;
     player->y = rand() % world->height;
     player->orientation = rand() % 4 + 1;

@@ -14,12 +14,18 @@
 #include "ai/handlers/elevation_handler.h"
 #include "ai/handlers/fork_handler.h"
 
-void handle_awaiting_actions(int fd, world_t *world, player_t *player)
+void handle_awaiting_actions(client_t (*clients)[MAX_CLIENT], int client_pos,
+        world_t *world)
 {
+    int fd = (*clients)[client_pos].sockfd;
+    player_t *player = get_player(world->players,
+            (*clients)[client_pos].client_nb);
+
     if (!player)
         return;
     hatch(world, player);
     elevate(fd, world, player);
+    broadcast(clients, world, player);
 }
 
 void init_client_communication(client_t *clt, game_t *game)
@@ -68,8 +74,8 @@ void send_action_response(client_t *client, world_t *world,
 {
     static int i = 0;
 
-    printf("==> Player (id: %d, team: %d): { x: %d, y: %d }\n", player->id,
-            player->team_id, player->x, player->y);
+    printf("==> Player (id: %d, team: %d, level: %d): { x: %d, y: %d }\n",
+            player->id, player->team_id, player->level, player->x, player->y);
     printf("    -> Cmd: %s\n       Send: %s\n", action, get_response());
     write(client->sockfd, get_response(), strlen(get_response()));
     i++;

@@ -20,7 +20,7 @@ void generate_resources(int **resources, const resource_t *available,
         return;
     for (size_t i = 0 ; i < DEFAULT_RESOURCES_NUMBER ; i++)
         (*resources)[i] +=
-            ((rand() % 100) <= available[i].percentage / percentage_scale)
+            ((rand() % 100) < available[i].percentage / percentage_scale)
                 ? 1 : 0;
 }
 
