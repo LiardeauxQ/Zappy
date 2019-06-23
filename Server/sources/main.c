@@ -7,6 +7,7 @@
 
 #include <fcntl.h>
 #include <stdio.h>
+#include <signal.h>
 
 #include "arguments.h"
 #include "graphical/commands.h"
@@ -17,6 +18,13 @@
 #include "server.h"
 #include "client.h"
 #include "unit_tests.h"
+
+static info_t info = {0};
+
+void sigint_handler(int __attribute__((unused)) sig) {
+    destroy_info(&info);
+    exit(0);
+}
 
 void check_connection(game_t *game, server_t *server, client_reader reader)
 {
@@ -43,23 +51,25 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     handle_clients(game, &server->clients, &readfds, reader);
 }
 
-void start_server(info_t *info)
+int start_server(info_t *info)
 {
     if (listen(info->server_ai.sockfd, MAX_CLIENT) == -1
             || listen(info->server_graph.sockfd, MAX_CLIENT) == -1)
-        exit_with_error("listen");
+        return (84);
     while (1) {
         check_connection(&info->game, &info->server_ai, &read_ai_client);
         check_connection(&info->game, &info->server_graph, &read_graph_client);
     }
+    return (0);
 }
 
 int main(int ac, char **av)
 {
-    info_t info = {0};
+    int return_value = 0;
 
     init_info(ac, av, &info);
-    start_server(&info);
+    signal(SIGINT, sigint_handler);
+    return_value = start_server(&info);
     destroy_info(&info);
-    return (0);
+    return (return_value);
 }
