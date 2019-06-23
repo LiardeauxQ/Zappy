@@ -18,6 +18,8 @@
 typedef struct client_s client_t;
 typedef struct game_s game_t;
 
+void handle_awaiting_actions(int fd, world_t *world, player_t *player);
+
 void init_client_communication(client_t *clt, game_t *game);
 
 void execute_action(client_t *client, game_t *game, player_t *player,
