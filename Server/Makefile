@@ -102,11 +102,6 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
-				handlers/ai/test_elevation_handler.c \
-				handlers/ai/test_movement_handlers.c \
-				handlers/ai/test_resources_handlers.c \
-				handlers/ai/test_player_info_handlers.c \
-				handlers/ai/wrap_action_handlers.c \
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
 				commands/test_tile_content.c	\
