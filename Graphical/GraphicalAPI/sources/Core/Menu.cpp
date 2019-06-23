@@ -134,13 +134,13 @@ void zapi::Menu::detectInputs()
     if (event.type == sf::Event::TextEntered && clickedPort == true) {
         if (event.text.unicode >= 48 && event.text.unicode <= 57)
             inputPortStr +=  (static_cast<char>(event.text.unicode));
-        else if (event.text.unicode == 8 && inputPortStr.size() > 7)
+        else if (event.text.unicode == 8 && inputPortStr.size() > 6)
             inputPortStr = inputPortStr.substr(0, inputPortStr.size()-1);
     }
     if (event.type == sf::Event::TextEntered && clickedHost == true) {
         if (event.text.unicode < 128 && event.text.unicode != 8 && event.text.unicode != 13)
             inputHostStr += (static_cast<char>(event.text.unicode));
-        else if (event.text.unicode == 8 && inputHostStr.size() > 7)
+        else if (event.text.unicode == 8 && inputHostStr.size() > 6)
             inputHostStr = inputHostStr.substr(0, inputHostStr.size()-1);
         else if (event.text.unicode == 13) {
             clickedHost = false;
