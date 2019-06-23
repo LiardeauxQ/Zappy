@@ -9,11 +9,11 @@
 
 #include <sys/select.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+
 
 #include "graphical/protocols.h"
-#include "graphical/commands.h"
-#include "graphical/packets.h"
-#include "ai/handlers/utils.h"
 
 #define MAX_CLIENT 30
 

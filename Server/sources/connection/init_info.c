@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include "client.h"
 #include "arguments.h"
 #include "resources.h"
 #include "connection.h"

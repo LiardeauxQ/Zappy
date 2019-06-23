@@ -9,6 +9,7 @@
 
 #include "server.h"
 #include "client.h"
+#include "ai/handlers/utils.h"
 
 void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
         fd_set *readfds, client_reader reader)

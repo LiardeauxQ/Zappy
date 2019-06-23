@@ -9,7 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "graphical/client.h"
 #include "ai/client.h"
+#include "ai/handlers/elevation_handler.h"
+#include "ai/handlers/fork_handler.h"
 
 void handle_awaiting_actions(int fd, world_t *world, player_t *player)
 {
@@ -86,6 +89,7 @@ int read_ai_client(client_t *client, game_t *game)
     execute_action(client, game, player, (const char **) splitted_cmd);
     display_actions_log(player, buffer);
     write(client->sockfd, get_response(), strlen(get_response()));
+    exec_graph_request();
     free(buffer);
     return (0);
 }

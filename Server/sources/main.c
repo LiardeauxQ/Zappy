@@ -31,6 +31,8 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
         exit_with_error("select");
     clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
+    if (reader == &read_graph_client)
+        set_graph_clients(server->clients);
     if (clt_sockfd > 0 && reader == &read_ai_client)
         write(clt_sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
     handle_clients(game, &server->clients, &readfds, reader);

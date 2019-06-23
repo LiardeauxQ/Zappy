@@ -8,9 +8,11 @@
 #pragma once
 
 #include "world.h"
+#include "client.h"
 #include "manage_response.h"
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
+#include "graphical/commands.h"
 
 void move_player(world_t *world, player_t *player, int x, int y);
 

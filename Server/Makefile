@@ -39,6 +39,7 @@ SRC			:=	arguments/arguments.c	\
 				connection/destroy_server_info.c	\
 				connection/init_info.c	\
 				error.c	\
+				manage_graph_clients.c	\
 				connection/init_connection.c	\
 				protocols/manage_response.c	\
 				protocols/graphical/protocols.c	\
