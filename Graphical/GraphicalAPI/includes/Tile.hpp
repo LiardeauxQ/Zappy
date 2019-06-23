@@ -20,12 +20,17 @@ namespace zapi
             std::vector<Resource> &getResources() { return resources; };
             void removeResource(RESOURCE_NUMBER index);
             void addResource(RESOURCE_NUMBER index);
-            void updateResource(std::vector<Resource> &res);
+            void updateResource(const std::vector<int> &res);
+            void selected(void);
+            void unselected(void);
         private:
             sf::Vector2f size;
             sf::RectangleShape main;
+            sf::RectangleShape selectedOutline;
             std::vector<Resource> resources;
             sf::Sprite sprite;
+            bool isSelected;
 //            sf::Sprite shadow;
     };
+
 }

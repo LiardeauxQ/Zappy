@@ -11,35 +11,26 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
+#include <errno.h>
 
+#include <cstdlib>
 #include <iostream>
 #include <string>
+#include <tuple>
+#include <vector>
 
 #include "protocols.h"
 #include "Errors.hpp"
+#include "EventManager.hpp"
+#include "Packet.hpp"
 
 namespace communication {
-
-    template <class T>
-    class Packet {
-    public:
-        Packet(uint8_t id, int sockfd, uint16_t size = 0, uint16_t subid = 0);
-        ~Packet() = default;
-
-        Packet &operator<<(const T *data); // send
-        void operator>>(T *data); // receive
-    private:
-        uint8_t id;
-        int sockfd;
-        uint16_t size;
-        uint16_t subid;
-    };
-
     class ServerInteraction {
     public:
         ServerInteraction(unsigned int port, const std::string &ipAddress);
         ServerInteraction();
-        ~ServerInteraction() = default;
+        ~ServerInteraction();
 
         void requestMapSize(void) const;
         void requestTileContent(unsigned int x, unsigned int y) const;
@@ -50,10 +41,15 @@ namespace communication {
         void requestPlayerInventory(unsigned int id) const;
         void requestTimeUnit(void) const;
         void requestTimeUpdate(void) const;
+
+        void listenSocket(void);
         
-        unsigned int getSocket(void) const { return _sockfd; }
+        unsigned int getSocket(void) const { return sockfd; }
+        EventManager<char*> events;
     private:
-        unsigned int _port;
-        int _sockfd;
+        void requestCloseConnection(void) const;
+
+        unsigned int port;
+        int sockfd;
     };
 }

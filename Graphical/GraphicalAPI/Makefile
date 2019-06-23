@@ -23,6 +23,7 @@ MAIN		:=
 
 SRC			:=	Core/Window.cpp \
 				Core/Game.cpp \
+				Core/Hud.cpp \
 				Utils.cpp \
 				Entity.cpp \
 				Tile.cpp \
@@ -30,6 +31,7 @@ SRC			:=	Core/Window.cpp \
 				Player.cpp \
 				Team.cpp \
 				Core/Menu.cpp \
+				Animation.cpp \
 
 INCLUDES	=	-I includes
 

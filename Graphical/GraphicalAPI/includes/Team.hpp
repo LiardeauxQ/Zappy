@@ -16,7 +16,7 @@ namespace zapi
 {
     class Team {
         public:
-            Team(const std::string &name = "trash");
+            Team(unsigned int width, unsigned int height, const std::string &name = "trash");
             ~Team() = default;
             void addPlayer(int id, zapi::Tile *tile, const sf::Vector2f &position);
             std::string &getName() { return name; };
@@ -28,5 +28,7 @@ namespace zapi
         private:
             std::string name;
             std::list<Player> players;
+            unsigned int width;
+            unsigned int height;
     };
 }

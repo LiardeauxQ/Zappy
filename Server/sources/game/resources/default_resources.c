@@ -11,14 +11,14 @@
 #include "resources.h"
 
 static const struct resource_s default_resources[] = {
-    {0, 50, "Food"},
-    {1, 25, "Linemate"},
-    {2, 25, "Deraumere"},
-    {3, 10, "Sibur"},
-    {4, 10, "Mendiane"},
-    {5, 10, "Phiras"},
-    {6, 10, "Thystame"},
-    {10, 0, "Custom"},
+    {0, 50, "food"},
+    {1, 25, "linemate"},
+    {2, 25, "deraumere"},
+    {3, 10, "sibur"},
+    {4, 10, "mendiane"},
+    {5, 10, "phiras"},
+    {6, 10, "thystame"},
+    {10, 0, "custom"},
     {0, 0, 0x0},
 };
 

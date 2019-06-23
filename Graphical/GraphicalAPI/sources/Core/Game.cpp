@@ -9,10 +9,11 @@
 #include <cstdlib>
 #include <iostream>
 
-zapi::Game::Game(const std::string &title)
-: window(title)
-, tiles()
-, teams()
+zapi::Game::Game(unsigned int width, unsigned int height) :
+    tiles(),
+    teams(),
+    width(width),
+    height(height)
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -20,8 +21,8 @@ zapi::Game::Game(const std::string &title)
 
 void zapi::Game::initialize()
 {
-    for (float i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
-        if (x >= 3000) {
+    for (float i = 0, x = 0, y = 0; i != width * height; i++, x += 100) {
+        if (x >= width * 100) {
             x = 0;
             y += 100;
         }
@@ -29,25 +30,9 @@ void zapi::Game::initialize()
     }
 }
 
-void zapi::Game::start()
-{
-    loop();
-}
-
-void zapi::Game::loop()
-{
-    while (window.isOpen()) {
-        window.update();
-        window.drawEntities(tiles);
-        for (auto &team : teams)
-            window.drawEntities(team.getPlayers());
-        window.display();
-    }
-}
-
 void zapi::Game::addTeam(const std::string &teamName)
 {
-    teams.push_back(Team(teamName));
+    teams.push_back(Team(width, height, teamName));
 }
 
 void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector2f &position)
@@ -64,7 +49,7 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
 
 zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
 {
-    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * 30);
+    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * width);
     return &tiles[index];
 }
 
@@ -102,14 +87,12 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
     std::cout << "Player " << id << " picked up something" << std::endl;
 }
 
-void zapi::Game::updateTile(sf::Vector2f vector, std::vector<zapi::Resource> &res)
+void zapi::Game::updateTile(sf::Vector2f &position, const std::vector<int> &res)
 {
-    for (unsigned int i = 0; i < tiles.size(); i++) {
-        if (tiles[i].getPosition() == vector) {
-            tiles[i].updateResource(res);
-            return;
-        }
-    }
+    sf::Vector2f newPos(position.x * 100, position.y * 100);
+    Tile *tile = findTile(newPos);
+
+    tile->updateResource(res);
 }
 
 void zapi::Game::removePlayer(unsigned int id)
@@ -145,24 +128,30 @@ void zapi::Game::levelUpPlayer(unsigned int id)
     std::cout << "Player " << id << " leveled up" << std::endl;
 }
 
-zapi::Player zapi::Game::getPlayer(unsigned int id)
+zapi::Player &zapi::Game::getPlayer(unsigned int id)
 {
     for (auto &team : teams)
         if (team.checkPlayer(id))
             return team.getPlayer(id);
-    return Player(-1, nullptr);
+    exit(84);
 }
 
-
-
+bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
+{
+    return (coord.x < 0 || coord.x > width * 100 || coord.y < 0 || coord.y > height * 100) ? false : true;
+}
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
 {
+    getPlayer(id).updateOrientation(direction);
+    getPlayer(id).updatePosition(position);
     std::cout << "Player " << id << " position updated" << std::endl;
 }
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, std::array<int, 7> &resources)
 {
+    getPlayer(id).updatePosition(position);
+    getPlayer(id).updateResources(resources);
     std::cout << "Player " << id << " inventory updated" << std::endl;
 }
 

@@ -25,17 +25,18 @@ void *delete_elem(linked_list_t *list, size_t pos)
 {
     node_t *tmp = list->head;
     void *data = 0x0;
-    size_t current_pos = 0;
 
     if (tmp == 0x0)
         return (0x0);
-    while (tmp->next && current_pos < pos) {
+    if (!pos)
+        list->head = tmp->next;
+    for (int i = 0; tmp->next && i < pos; i++)
         tmp = tmp->next;
-        current_pos++;
-    }
     data = tmp->data;
-    tmp->next->prev = tmp->prev;
-    tmp->prev->next = tmp->next;
+    if (tmp->next)
+        tmp->next->prev = tmp->prev;
+    if (tmp->prev)
+        tmp->prev->next = tmp->next;
     free(tmp);
     return (data);
 }

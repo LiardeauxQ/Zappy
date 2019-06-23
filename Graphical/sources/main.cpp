@@ -5,21 +5,18 @@
 ** main
 */
 
+#include <stdio.h>
 #include "InputParser.hpp"
 #include "ServerInteraction.hpp"
-#include "Core/Menu.hpp"
+#include "App.hpp"
 
-int main(int __attribute__((unused)) ac, char __attribute__((unused)) **av)
+int main(int ac, char **av)
 {
-//    IO::InputParser iParser(ac, av);
-//    communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
-//            iParser.getCmdStringOption("-h"));
-//
-//    interaction.requestMapSize();
-//    interaction.requestTileContent();
-//    interaction.requestMapContent();
+    IO::InputParser iParser(ac, av);
+    communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
+            iParser.getCmdStringOption("-h"));
+    App app("Zappy", interaction, 5, 5);
 
-    zapi::Menu menu;
-    menu.start();
+    app.start();
     return (0);
 }

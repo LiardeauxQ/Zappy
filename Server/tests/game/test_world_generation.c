@@ -66,8 +66,11 @@ Test(update_world_resources, simple_test)
 {
     int height = 4;
     int width = 4;
-    world_t world = generate_world(width, height, 0, 0x0);
-
+    world_t world = {0};
+    
+    world.width = width;
+    world.height = height;
+    generate_world(&world, 0x0);
     update_world_resources(&world);
     for (int i = 0 ; i < width ; i++) {
         for (int j = 0 ; j < height ; j++) {

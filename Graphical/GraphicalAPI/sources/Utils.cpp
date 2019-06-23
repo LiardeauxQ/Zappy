@@ -25,7 +25,8 @@ sf::Texture *zapi::getTileTexture()
 
     if (!tileTexture) {
         tileTexture = new sf::Texture();
-        tileTexture->loadFromFile("Graphical/sprites/grass.png");
+        if (!tileTexture->loadFromFile("Graphical/sprites/grass.png"))
+            tileTexture->loadFromFile("sprites/grass.png");
         tileTexture->setSmooth(true);
     }
     return tileTexture;
@@ -37,7 +38,8 @@ sf::Texture *zapi::getResourceTexture()
 
     if (!resourceTexture) {
         resourceTexture = new sf::Texture();
-        resourceTexture->loadFromFile("Graphical/sprites/resources.png");
+        if (!resourceTexture->loadFromFile("Graphical/sprites/resources.png"))
+            resourceTexture->loadFromFile("sprites/resources.png");
         resourceTexture->setSmooth(true);
     }
     return resourceTexture;
@@ -49,8 +51,21 @@ sf::Texture *zapi::getPlayerTexture()
 
     if (!resourceTexture) {
         resourceTexture = new sf::Texture();
-        resourceTexture->loadFromFile("Graphical/sprites/player.png");
+        if (!resourceTexture->loadFromFile("Graphical/sprites/player.png"))
+            resourceTexture->loadFromFile("sprites/player.png");
         resourceTexture->setSmooth(true);
     }
     return resourceTexture;
+}
+
+sf::Font *zapi::getFont()
+{
+    static sf::Font *font;
+
+    if (!font) {
+        font = new sf::Font();
+        if (!font->loadFromFile("Graphical/fonts/arcadeClassic.ttf"))
+            font->loadFromFile("fonts/arcadeClassic.ttf");
+    }
+    return font;
 }

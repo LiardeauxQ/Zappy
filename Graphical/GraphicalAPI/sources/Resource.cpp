@@ -7,14 +7,18 @@
 
 #include "Resource.hpp"
 
-zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position)
+zapi::Resource::Resource(unsigned int id, const sf::Vector2f &position, unsigned int quantity, bool isHud)
 : Entity(position)
-, quantity(0)
+, quantity(quantity)
 , sprite()
+, HUD(isHud)
 {
     sprite.setTexture(*(getResourceTexture()));
     sprite.setTextureRect(sf::IntRect(96 * id, 0, 96, 96));
-    sprite.setScale(sf::Vector2f(0.2, 0.2));
+    if (!HUD)
+        sprite.setScale(sf::Vector2f(0.2, 0.2));
+    else
+        sprite.setScale(sf::Vector2f(0.8, 0.8));
     sprite.setPosition(position);
 }
 
@@ -35,4 +39,16 @@ zapi::Resource &zapi::Resource::operator--(int)
     if (quantity != 0)
         quantity--;
     return *this;
+}
+
+zapi::Resource &zapi::Resource::operator=(int amount)
+{
+    if (amount >= 0)
+        quantity = amount;
+    return *this;
+}
+
+unsigned int zapi::Resource::getQuantity(void)
+{
+    return quantity;
 }
