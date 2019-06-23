@@ -89,7 +89,8 @@ int read_ai_client(client_t *client, game_t *game)
     execute_action(client, game, player, (const char **) splitted_cmd);
     display_actions_log(player, buffer);
     write(client->sockfd, get_response(), strlen(get_response()));
-    exec_graph_request();
+    // if (is_graph_request_ok())
+        // exec_graph_request();
     free(buffer);
     return (0);
 }

@@ -78,7 +78,6 @@ int set_down_object_handler(world_t *world, player_t *player,
         return (INVALID_PARAMETERS);
     player->resources[resource_id]--;
     world->tiles[player->x][player->y].resources[resource_id]++;
-    set_response("ok\n");
     set_graph_request(assign_player_inventory(world, player->id, sockfd),
         &send_player_inventory);
     return (NO_ERROR);

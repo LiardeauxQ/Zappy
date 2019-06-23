@@ -12,12 +12,7 @@
 
 #include "ai/handlers/player_info_handlers.h"
 
-int hatch(world_t *world)
-{
-    world->max_team_size += 1;
-}
-
-int fork_handler(world_t *world, player_t *player,
+int broadcast_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     player->hatch_left_time = 600;
