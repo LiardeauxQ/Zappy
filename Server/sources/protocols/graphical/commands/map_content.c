@@ -34,12 +34,10 @@ int send_map_content(const void *data)
     world = (world_t*)(senders[WORLD_SENDER_POS].data);
     for (unsigned int i = 0 ; i < world->width ; i++) {
         for (unsigned int j = 0 ; j < world->height ; j++) {
-            printf("before write to %d %d\n", i, j);
             subid = (j + 1 == world->height && i + 1 == world->width)
                 ? 1 : SRV_TILE_CONTENT;
             to_write = write_tile_content(&world->tiles[i][j], i, j, subid);
             write(senders[WORLD_SENDER_POS].sockfd, to_write, size);
-            printf("after write to %d %d\n", i, j);
             free(to_write);
         }
     }

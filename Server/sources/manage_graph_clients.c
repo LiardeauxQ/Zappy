@@ -29,12 +29,7 @@ void set_graph_clients(client_t *clients)
 
 void send_graph_welcome(world_t *world, client_t *clients, int sockfd)
 {
-    printf("size %d %d\n", world->width, world->height);
     send_map_size(assign_map_size(world, sockfd));
-    printf("map content 1\n");
-    void *data = assign_map_content(world, sockfd);
-    printf("map content 2\n");
-    send_map_content(data);
-    printf("map content 3\n");
+    send_map_content(assign_map_content(world, sockfd));
     manage_graph_clients(1, clients);
 }

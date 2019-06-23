@@ -135,7 +135,6 @@ void communication::ServerInteraction::requestCloseConnection(void) const
 
     pkt << &clt;
     pkt >> &clt;
-    printf("close %d\n", clt.tmp);
 }
 
 void communication::ServerInteraction::listenSocket(void)
@@ -145,8 +144,6 @@ void communication::ServerInteraction::listenSocket(void)
     int result = 0;
 
     result = read(sockfd, &hdr, PKT_HDR_LEN);
-    if (result != -1)
-        printf("read: %d\n", result);
     if (result <= 0)
         return;
     if (result > 0)
