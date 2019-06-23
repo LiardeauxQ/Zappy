@@ -50,5 +50,7 @@ namespace zapi
             Window window;
             std::vector<Tile> tiles;
             std::vector<Team> teams;
+            sf::Clock frameClock;
+            sf::Time frameTime;
     };
 }

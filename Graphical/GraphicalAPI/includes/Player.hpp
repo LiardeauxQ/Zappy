@@ -10,6 +10,7 @@
 #include <array>
 #include "Entity.hpp"
 #include "Tile.hpp"
+#include "Animation.hpp"
 
 namespace zapi
 {
@@ -28,7 +29,12 @@ namespace zapi
             void pickUpResource(RESOURCE_NUMBER index);
             void updateOrientation(ORIENTATION direction);
             sf::Vector2f getPosition();
+    
+            void update(sf::Time elapsedTime);
+            void createPlayerAnimation(PLAYER_ANIMATION id);
+            std::shared_ptr<Animation> getPlayerAnimation(PLAYER_ANIMATION id);
 
+            std::shared_ptr<Animation> currentAnimation;
         private:
             ORIENTATION orientation;
             int level;
@@ -36,5 +42,6 @@ namespace zapi
             sf::Sprite sprite;
             Tile *tile;
             std::array<int, 7> inventory {{0, 0, 0, 0, 0, 0, 0}};
+            std::vector<Animation> animations;
     };
 }

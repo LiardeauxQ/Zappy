@@ -13,6 +13,8 @@ zapi::Game::Game(const std::string &title)
 : window(title)
 , tiles()
 , teams()
+, frameClock()
+, frameTime()
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -37,10 +39,11 @@ void zapi::Game::start()
 void zapi::Game::loop()
 {
     while (window.isOpen()) {
+        frameTime = frameClock.restart();
         window.update();
         window.drawEntities(tiles);
         for (auto &team : teams)
-            window.drawEntities(team.getPlayers());
+            window.drawEntities(team.getPlayers(), frameTime);
         window.display();
     }
 }

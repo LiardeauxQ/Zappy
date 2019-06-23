@@ -21,8 +21,7 @@ namespace zapi
             void update();
             void drawEntities(std::vector<Tile> &entities);
             void drawEntities(std::vector<Resource> &entities);
-            void drawEntities(std::vector<Team> &entities);
-            void drawEntities(std::list<Player> &entities);
+            void drawEntities(std::list<Player> &entities, sf::Time frameTime);
 
         private:
             void inputHandler();

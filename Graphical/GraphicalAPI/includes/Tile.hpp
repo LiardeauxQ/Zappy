@@ -26,6 +26,5 @@ namespace zapi
             sf::RectangleShape main;
             std::vector<Resource> resources;
             sf::Sprite sprite;
-//            sf::Sprite shadow;
     };
 }
