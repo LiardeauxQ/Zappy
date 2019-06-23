@@ -234,7 +234,7 @@ class Player:
                                 "; thystame"+ str(self.thystame) +
                                 "; deraumere"+ str(self.deraumere))
             ret = self.look()
-            if self.checkElevation():
+            if self.checkElevation() and ret != 1:
                 if CONSTANT["playerNeededForElevation"][self.level] == self.countPlayerOnTile(self.view):
                     self.dropItemsForElevation()
                     self.fork()
