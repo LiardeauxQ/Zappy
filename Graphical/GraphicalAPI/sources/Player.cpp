@@ -7,7 +7,7 @@
 
 #include "Player.hpp"
 
-zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &position)
+zapi::Player::Player(unsigned int id, zapi::Tile *tile, unsigned int width, unsigned int height, const sf::Vector2f &position)
 : Entity(position)
 , orientation(SOUTH)
 , level(0)
@@ -15,6 +15,8 @@ zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &posi
 , sprite()
 , tile(tile)
 , inventory()
+, width(width)
+, height(height)
 , animations()
 {
 
@@ -40,7 +42,7 @@ void zapi::Player::move(ORIENTATION direction)
             if (position.y - 100 > 0)
                 newPosition = sf::Vector2f(position.x, position.y - 100);
             else
-                position = sf::Vector2f(position.x, 3000 - 50 - 32);
+                position = sf::Vector2f(position.x, (height * 100) - 50 - 32);
             break;
         case EAST:
             if (position.x + 100 < 3000)
@@ -52,11 +54,11 @@ void zapi::Player::move(ORIENTATION direction)
             if (position.x - 100 > 0)
                 newPosition = sf::Vector2f(position.x - 100, position.y);
             else
-                newPosition = sf::Vector2f(3000 - 50 - 32, position.y);
+                position = sf::Vector2f((width * 100) - 50 - 32, position.y);
             break;
         case SOUTH:
-            if (position.y + 100 < 3000)
-                newPosition = sf::Vector2f(position.x, position.y + 100);
+            if (position.y + 100 < height * 100)
+                position = sf::Vector2f(position.x, position.y + 100);
             else
                 newPosition = sf::Vector2f(position.x, 0 + 50 - 32);
             break;
@@ -91,12 +93,16 @@ void zapi::Player::levelUp(void)
 
 void zapi::Player::dropResource(RESOURCE_NUMBER index)
 {
+    currentAnimation = getPlayerAnimation(PLAYER_ANIMATION::PICK_AND_DROP);
+    currentAnimation->play(1);
     tile->addResource(index);
     removeInventory(index);
 }
 
 void zapi::Player::pickUpResource(RESOURCE_NUMBER index)
 {
+    currentAnimation = getPlayerAnimation(PLAYER_ANIMATION::PICK_AND_DROP);
+    currentAnimation->play(1);
     tile->removeResource(index);
     addInventory(index);
 }
@@ -110,6 +116,36 @@ void zapi::Player::updateOrientation(ORIENTATION direction)
 {
     orientation = direction;
     sprite.setTextureRect(sf::IntRect(0, (64 * orientation), 64, 64));
+}
+
+void zapi::Player::broadcast()
+{
+    currentAnimation = getPlayerAnimation((PLAYER_ANIMATION)(orientation + 11));
+    currentAnimation->play(1);
+}
+
+void zapi::Player::startIncantation()
+{
+    currentAnimation = getPlayerAnimation(PLAYER_ANIMATION::START_INCANTATION);
+    currentAnimation->play(1);
+}
+
+void zapi::Player::incantation()
+{
+    currentAnimation = getPlayerAnimation(PLAYER_ANIMATION::INCANTATION);
+    currentAnimation->play();
+}
+
+void zapi::Player::stopIncantation()
+{
+    currentAnimation = getPlayerAnimation(PLAYER_ANIMATION::STOP_INCANTATION);
+    currentAnimation->play(1);
+}
+
+void zapi::Player::egg()
+{
+    currentAnimation = getPlayerAnimation(PLAYER_ANIMATION::EGG);
+    currentAnimation->play();
 }
 
 void zapi::Player::updatePosition(const sf::Vector2f &newPos)
@@ -131,7 +167,7 @@ bool zapi::Player::update(sf::Time elapsedTime)
 
 void zapi::Player::createPlayerAnimation(PLAYER_ANIMATION id)
 {
-    Animation animation(id, sprite, sf::seconds(0.10));
+    Animation animation(sprite, sf::seconds(0.10));
     switch (id) {
         case IDLE_NORTH:
             animation.addFrame(sf::IntRect(0, 0, 64, 64));
@@ -182,15 +218,19 @@ void zapi::Player::createPlayerAnimation(PLAYER_ANIMATION id)
                 animation.addFrame(sf::IntRect((64 * i), 640, 64, 64));
             break;
         case BROADCAST_NORTH:
+            animation.setFrameLength(sf::seconds(3.0));
             animation.addFrame(sf::IntRect(0, 704, 64, 64));
             break;
         case BROADCAST_EAST:
+            animation.setFrameLength(sf::seconds(3.0));
             animation.addFrame(sf::IntRect(0, 768, 64, 64));
             break;
         case BROADCAST_SOUTH:
+            animation.setFrameLength(sf::seconds(3.0));
             animation.addFrame(sf::IntRect(0, 832, 64, 64));
             break;
         case BROADCAST_WEST:
+            animation.setFrameLength(sf::seconds(3.0));
             animation.addFrame(sf::IntRect(0, 896, 64, 64));
             break;
         case DIE:
@@ -204,7 +244,7 @@ void zapi::Player::createPlayerAnimation(PLAYER_ANIMATION id)
                 animation.addFrame(sf::IntRect((64 * i), 1024, 64, 64));
             break;
         case EGG:
-            animation.setFrameLength(sf::seconds(0.8));
+            animation.setFrameLength(sf::seconds(1.5));
             for (int i = 0; i != 5; i++)
                 animation.addFrame(sf::IntRect((64 * i), 1088, 64, 64));
             break;

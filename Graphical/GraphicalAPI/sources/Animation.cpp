@@ -7,9 +7,8 @@
 
 #include "Animation.hpp"
 
-zapi::Animation::Animation(PLAYER_ANIMATION id, sf::Sprite &sprite, sf::Time frameLength, bool isLoop)
-: id(id)
-, sprite(sprite)
+zapi::Animation::Animation(sf::Sprite &sprite, sf::Time frameLength, bool isLoop)
+: sprite(sprite)
 , frames()
 , frameIndex(0)
 , frameLength(frameLength)

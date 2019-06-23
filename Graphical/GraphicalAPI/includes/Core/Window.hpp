@@ -11,6 +11,7 @@
 #include "Team.hpp"
 #include "Player.hpp"
 #include "Core/Hud.hpp"
+#include "Core/Menu.hpp"
 #include <string>
 #include <list>
 
@@ -18,7 +19,7 @@ namespace zapi
 {
     class Window : public sf::RenderWindow {
         public:
-            Window(const std::string &title);
+            Window(const std::string &title, unsigned int width, unsigned int height);
             ~Window() = default;
             // void update(void);
             void updateHUD(void);
@@ -28,12 +29,15 @@ namespace zapi
             sf::View &getCamera(void);
             Hud &getHUD(void);
             sf::Event &getEvent(void);
-            void inputHandler();
+            void inputHandler(void);
+            Menu &getMenu(void);
 
         private:
-            sf::View camera;
             Hud hud;
+            Menu menu;
             sf::Event event;
-            int zoom;
+            unsigned int width;
+            unsigned int height;
+            sf::View camera;
     };
 }

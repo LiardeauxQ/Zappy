@@ -5,17 +5,12 @@
 ** main
 */
 
-#include "InputParser.hpp"
-#include "ServerInteraction.hpp"
+#include <stdio.h>
 #include "App.hpp"
 
 int main(int ac, char **av)
 {
-    IO::InputParser iParser(ac, av);
-    communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
-            iParser.getCmdStringOption("-h"));
-    App app("Zappy", interaction);
-
+    App app("Zappy", 5, 5);
     app.start();
     return (0);
 }

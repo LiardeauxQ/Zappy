@@ -6,12 +6,14 @@
 */
 
 #include <iostream>
+#include <unistd.h>
 #include "Core/Hud.hpp"
 
 zapi::Hud::Hud():
 isDraw(false)
 , tile(nullptr)
 , player(nullptr)
+, isEnded(false)
 {
     initializeBackground();
     initializeText();
@@ -28,11 +30,15 @@ void zapi::Hud::initializeResourceOutputs(int i)
         resourceOutputs[i].setCharacterSize(70);
         resourceOutputs[i].setFillColor(sf::Color::White);
         resourceOutputs[i].setString("0");
-        resourceOutputs[i].setPosition(sf::Vector2f((i * 120) + 65, 210));
+        resourceOutputs[i].setPosition(sf::Vector2f((i * 120) + 60, 210));
 }
 
 void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    if (isEnded) {
+        target.draw(endBackground);
+        target.draw(endText);
+    }
     if (!isDraw)
         return;
     target.draw(background);
@@ -44,7 +50,7 @@ void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
         target.draw(resourceOutput, states);
 }
 
-void zapi::Hud::updateResourceOutputs(void) //WIP!!
+void zapi::Hud::updateResourceOutputs(void)
 {
     if (tile == nullptr)
         return;
@@ -58,13 +64,17 @@ void zapi::Hud::initializeText(void)
     text.setFont(*(getFont()));
     text.setCharacterSize(50);
     text.setFillColor(sf::Color::White);
-    text.setString("Inventory  of ");
+    text.setString("Inventory:");
     text.setPosition(30, 30);
     tileTitle.setFont(*(getFont()));
     tileTitle.setCharacterSize(50);
     tileTitle.setFillColor(sf::Color::White);
     tileTitle.setString("Tile");
     tileTitle.setPosition(430, 30);
+    endText.setFont(*(getFont()));
+    endText.setCharacterSize(70);
+    endText.setFillColor(sf::Color::White);
+    endText.setPosition(1130, 610);
 }
 
 void zapi::Hud::initializeBackground(void)
@@ -74,6 +84,11 @@ void zapi::Hud::initializeBackground(void)
     background.setOutlineColor(sf::Color::White);
     background.setOutlineThickness(5);
     background.setPosition(20, 20);
+    endBackground.setSize(sf::Vector2f(1300, 100));
+    endBackground.setFillColor(sf::Color::Black);
+    endBackground.setOutlineColor(sf::Color::White);
+    endBackground.setOutlineThickness(5);
+    endBackground.setPosition(1100, 600);
 }
 
 void zapi::Hud::resetTilePtr(void)
@@ -108,4 +123,10 @@ void zapi::Hud::setDrawable(bool draw)
 zapi::Tile *zapi::Hud::getTilePtr(void)
 {
     return tile;
+}
+
+void zapi::Hud::setEnd(std::string const &teamName)
+{
+    isEnded = true;
+    endText.setString("Team " + teamName + " beat the game!!");
 }

@@ -16,5 +16,7 @@ namespace zapi
     sf::Texture *getTileTexture();
     sf::Texture *getResourceTexture();
     sf::Texture *getPlayerTexture();
+    sf::Texture *getButtonMenuTexture();
+    sf::Texture *getBackgroundMenuTexture();
     sf::Font *getFont();
 }

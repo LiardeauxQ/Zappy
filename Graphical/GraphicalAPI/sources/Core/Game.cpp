@@ -9,7 +9,11 @@
 #include <cstdlib>
 #include <iostream>
 
-zapi::Game::Game() : tiles(), teams()
+zapi::Game::Game(unsigned int width, unsigned int height) :
+    tiles(),
+    teams(),
+    width(width),
+    height(height)
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -17,8 +21,8 @@ zapi::Game::Game() : tiles(), teams()
 
 void zapi::Game::initialize()
 {
-    for (float i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
-        if (x >= 3000) {
+    for (float i = 0, x = 0, y = 0; i != width * height; i++, x += 100) {
+        if (x >= width * 100) {
             x = 0;
             y += 100;
         }
@@ -29,12 +33,11 @@ void zapi::Game::initialize()
 //        getPlayer(i).currentAnimation = getPlayer(i).getPlayerAnimation((PLAYER_ANIMATION)i);
 //        getPlayer(i).currentAnimation->play();
 //    }
-    
 }
 
 void zapi::Game::addTeam(const std::string &teamName)
 {
-    teams.push_back(Team(teamName));
+    teams.push_back(Team(width, height, teamName));
 }
 
 void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector2f &position)
@@ -51,7 +54,7 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
 
 zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
 {
-    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * 30);
+    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * width);
     return &tiles[index];
 }
 
@@ -140,7 +143,7 @@ zapi::Player &zapi::Game::getPlayer(unsigned int id)
 
 bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
 {
-    return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
+    return (coord.x < 0 || coord.x > width * 100 || coord.y < 0 || coord.y > height * 100) ? false : true;
 }
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
@@ -164,6 +167,7 @@ void zapi::Game::expulsePlayer(unsigned int id)
 
 void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position, std::array<int, 7> &players)
 {
+    getPlayer(sender).incantation();
     std::cout << "Player " << sender << " start incantation at [" << position.x << ", " << position.y << "]" << std::endl;
 }
 
@@ -174,31 +178,37 @@ void zapi::Game::stopIncantation(RESULT result, const sf::Vector2f &position)
 
 void zapi::Game::broadcast(unsigned int sender, const std::string &message)
 {
+    getPlayer(sender).broadcast();
     std::cout << "Player " << sender << " sayed: \'" << message << "\'" << std::endl;
 }
 
 void zapi::Game::eggLaying(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << "is laying" << std::endl;
 }
 
 void zapi::Game::eggLayed(unsigned int sender, unsigned int id, const sf::Vector2f &position)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << "layed by player" << id << "at [" << position.x << ", " << position.y << "]" << std::endl;
 }
 
 void zapi::Game::eggHatching(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << "is hatching" << std::endl;
 }
 
 void zapi::Game::eggHatched(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << " hatched " << std::endl;
 }
 
 void zapi::Game::eggHatchedDeath(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << " Hatched Death ?" << std::endl;
 }
 

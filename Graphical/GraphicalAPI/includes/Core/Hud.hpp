@@ -25,6 +25,7 @@ namespace zapi
             void updateResourceOutputs(void);
             void resetTilePtr(void);
             Tile *getTilePtr(void);
+            void setEnd(std::string const &teamname);
         protected:
             void initializeBackground(void);
             void initializeText(void);
@@ -32,10 +33,13 @@ namespace zapi
             std::vector<Resource> resources;
             std::vector<sf::Text> resourceOutputs;
             sf::RectangleShape background;
+            sf::RectangleShape endBackground;
+            sf::Text endText;
             sf::Text text;
             sf::Text tileTitle;
             bool isDraw;
             zapi::Tile *tile;
             zapi::Player *player;
+            bool isEnded;
     };
 }

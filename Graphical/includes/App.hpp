@@ -13,11 +13,12 @@
 
 class App: public zapi::Game, public communication::IEventListener<char*> {
 public:
-    App(const std::string &title, communication::ServerInteraction &interaction);
+    App(const std::string &title, unsigned int width = 30, unsigned int height = 30);
     ~App() = default;
 
     void start();
     void loop();
+    void setupConnection();
 
     typedef void (App::*cmdServerFun)(char *data);
 
@@ -48,9 +49,14 @@ public:
 
     void inputHandler(void);
     void updateHud(void);
+    void triggerEnd(std::string const &teamName);
 private:
+    void menuState(void);
     zapi::Window window;
-    communication::ServerInteraction &server;
+    communication::ServerInteraction *server;
+    bool isEnded;
     sf::Clock frameClock;
     sf::Time frameTime;
+    std::string inputPort;
+    std::string inputHost;
 };
