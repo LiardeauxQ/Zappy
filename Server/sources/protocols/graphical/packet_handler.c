@@ -27,7 +27,8 @@ phr_t *add_pkt_info(phr_t *reg, pkt_handler_t *handler)
     if (reg == 0x0)
         return (0x0);
     reg->size += 1;
-    reg->handlers = realloc(reg->handlers, (reg->size + 1) * sizeof(pkt_handler_t*));
+    reg->handlers = realloc(reg->handlers, (reg->size + 1)
+        * sizeof(pkt_handler_t*));
     if (reg->handlers == 0x0) {
         fprintf(stderr, "Error with realloc\n");
         return (0x0);

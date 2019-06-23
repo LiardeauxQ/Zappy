@@ -5,6 +5,13 @@
 ** ai client header
 */
 
+/**
+ * \file client.h
+ * \brief client functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "server.h"
@@ -17,9 +24,6 @@
 
 typedef struct client_s client_t;
 typedef struct game_s game_t;
-
-void handle_awaiting_actions(client_t (*clients)[MAX_CLIENT], int client_pos,
-        world_t *world);
 
 void init_client_communication(client_t *clt, game_t *game);
 

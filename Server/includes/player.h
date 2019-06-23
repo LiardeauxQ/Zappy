@@ -5,6 +5,13 @@
 ** player header
 */
 
+/**
+ * \file player.h
+ * \brief player functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "world.h"

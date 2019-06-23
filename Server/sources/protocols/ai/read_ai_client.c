@@ -5,6 +5,7 @@
 ** catch clients commands
 */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +14,7 @@
 #include "ai/client.h"
 #include "ai/handlers/elevation_handler.h"
 #include "ai/handlers/fork_handler.h"
+#include "ai/handlers/broadcast_handler.h"
 
 void handle_awaiting_actions(client_t (*clients)[MAX_CLIENT], int client_pos,
         world_t *world)

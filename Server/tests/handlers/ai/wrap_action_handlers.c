@@ -10,7 +10,7 @@
 #include "server.h"
 #include "ai/handlers/elevation_handler.h"
 
-world_t *wrap_action_handlers()
+world_t *wrap_action_handlers(void)
 {
     const char *args[] = {NULL};
     info_t info = {0};

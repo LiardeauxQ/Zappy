@@ -5,6 +5,13 @@
 ** Protocols for AI client
 */
 
+/**
+ * \file protocol.h
+ * \brief protocole functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
  
 #define _GNU_SOURCE

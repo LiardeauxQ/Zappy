@@ -35,8 +35,8 @@ int send_broadcast(const void *data)
     if (senders == 0x0)
         return (-1);
     if (senders[MSG_SENDER_POS].size == LONG_MSG_LEN)
-        strcpy(srv.message, (char*)(senders[MSG_SENDER_POS].data));
-    srv.player_num = *((int*)(senders[INT_SENDER_POS].data));
+        strcpy(srv.message, (char *)(senders[MSG_SENDER_POS].data));
+    srv.player_num = *((int *)(senders[INT_SENDER_POS].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_BROADCAST_MSG_LEN);

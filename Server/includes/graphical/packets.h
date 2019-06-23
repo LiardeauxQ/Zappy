@@ -5,6 +5,13 @@
 ** packets header
 */
 
+/**
+ * \file packets.h
+ * \brief packets functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdarg.h>

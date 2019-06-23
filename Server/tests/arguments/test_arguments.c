@@ -56,7 +56,8 @@ Test(test_arguments, with_arguments_2)
 Test(test_arguments, with_arguments_names)
 {
     input_t input = {0};
-    char *av[] = {"./zappy_server", "-n", "name1", "name2", "name3", "-c", "34", 0x0};
+    char *av[] = {"./zappy_server", "-n", "name1",
+        "name2", "name3", "-c", "34", 0x0};
 
     handle_arguments(7, av, &input);
     cr_assert_eq(input.port, 0);

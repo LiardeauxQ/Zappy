@@ -58,6 +58,12 @@ int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],
     return (max_fd);
 }
 
+void print_connection(int port, char *host)
+{
+    printf("Connection on socket %d with address %s\n", port,
+            host);
+}
+
 int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     int const main_socket)
 {
@@ -67,18 +73,18 @@ int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
 
     if (!FD_ISSET(main_socket, readfds))
         return (0);
-    new_socket = accept(main_socket, (struct sockaddr*)&addr, &addrlen);
+    new_socket = accept(main_socket, (struct sockaddr *)&addr, &addrlen);
     if (new_socket == -1) {
         perror("accept");
         return (-1);
     }
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         if ((*clients)[i].sockfd == 0) {
-            (*clients)[i] = (client_t){new_socket, -1, (*clients)[i].type, addr};
+            (*clients)[i] = (client_t){new_socket, -1,
+                (*clients)[i].type, addr};
             break;
         }
     }
-    printf("Connection on socket %d with address %s\n", new_socket,
-            inet_ntoa(addr.sin_addr));
+    print_connection(new_socket, inet_ntoa(addr.sin_addr));
     return (new_socket);
 }

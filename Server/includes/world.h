@@ -5,6 +5,13 @@
 ** world generation header
 */
 
+/**
+ * \file world.h
+ * \brief world functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <time.h>

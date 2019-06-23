@@ -42,9 +42,7 @@ int dispatch_receive_data(game_t *g, sender_t *default_senders, int sockfd)
     default_senders[CUSTOM_SENDER_POS] = sender;
     handler = get_data_handler_for_id(&g->handler_register, hdr.id);
     result = handler(convert_senders_to_data(default_senders));
-    if (result > 0 && hdr.subid == 0)
-        return (result);
-    if (result < 0)
+    if ((result > 0 && hdr.subid == 0) || (result < 0))
         return (result);
     return (hdr.subid > 0 ? 1 : 0);
 }
