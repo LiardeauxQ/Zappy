@@ -90,13 +90,13 @@ int inventory_handler(world_t *world, player_t *player,
     char *inventory = calloc(1, 2);
 
     strcat(inventory, "[");
-    for (int i = 1; i < DEFAULT_RESOURCES_NUMBER; i++) {
+    for (int i = 1; i < DEFAULT_RESOURCES_NUMBER - 1; i++) {
         resource_string = resource_to_string(i,
                 player->resources[i], world->resources);
         inventory = realloc(inventory, strlen(inventory) +
                 strlen(resource_string) + 4);
         strcat(inventory, resource_string);
-        if (i == sizeof(player->resources) / 4 - 1)
+        if (i == DEFAULT_RESOURCES_NUMBER  - 2)
             strcat(inventory, "]\n");
         else
             strcat(inventory, ", ");

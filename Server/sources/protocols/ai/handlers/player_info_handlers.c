@@ -46,6 +46,8 @@ void append_tile_to_look_table(world_t *world, size_t *coords, int team_id,
         *look_table[0] = '[';
     *look_table = realloc(*look_table, strlen(*look_table) + strlen(tile) + 3);
     strcat(*look_table, tile);
+    if (strlen(tile) <= 1)
+        (*look_table)[strlen(*look_table)] = ',';
     (*look_table)[strlen(*look_table) - 1] = ',';
 }
 
