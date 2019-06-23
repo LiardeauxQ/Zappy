@@ -16,7 +16,7 @@ namespace zapi
 {
     class Menu {
         public:
-            Menu();
+            Menu(sf::RenderWindow &window);
             ~Menu() = default;
             void start();
             void loop();
@@ -25,11 +25,12 @@ namespace zapi
             void displayItems();
             void updateInputs();
             void detectInputs();
+            bool getGameStart(void);
 
         private:
-            sf::RenderWindow window;
+            sf::RenderWindow *window;
             sf::Texture texture;
-            sf::String playerInput; 
+            sf::String playerInput;
             sf::Texture buttonTexture;
             sf::RectangleShape rectangleButton;
             sf::IntRect rectSourceSprite;
@@ -46,5 +47,6 @@ namespace zapi
             sf::Event event;
             bool clickedHost;
             bool clickedPort;
+            bool gameStart;
     };
 }

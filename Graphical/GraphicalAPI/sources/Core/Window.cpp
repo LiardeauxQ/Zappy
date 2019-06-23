@@ -11,6 +11,7 @@
 zapi::Window::Window(const std::string &title, unsigned int width, unsigned int height)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , hud()
+, menu(*this)
 , event()
 , width(width)
 , height(height)
@@ -48,7 +49,7 @@ void zapi::Window::drawEntities(std::list<Player> &entities, sf::Time frameTime)
     }
 }
 
-void zapi::Window::inputHandler()
+void zapi::Window::inputHandler(void)
 {
     if (event.type == sf::Event::Closed)
         close();
@@ -85,4 +86,9 @@ zapi::Hud &zapi::Window::getHUD(void)
 sf::Event &zapi::Window::getEvent(void)
 {
     return event;
+}
+
+zapi::Menu &zapi::Window::getMenu()
+{
+    return menu;
 }

@@ -51,7 +51,7 @@ public:
     void triggerEnd(std::string const &teamName);
 private:
     zapi::Window window;
-    communication::ServerInteraction &server;
+    // communication::ServerInteraction &server;
     bool isEnded;
     sf::Clock frameClock;
     sf::Time frameTime;
