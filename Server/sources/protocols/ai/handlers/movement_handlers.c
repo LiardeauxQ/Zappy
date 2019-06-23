@@ -31,6 +31,8 @@ void move_player(world_t *world, player_t *player, int x, int y)
 int forward_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
+    int sockfd = (get_graph_clients())[0].sockfd;
+
     switch (player->orientation) {
         case NORTH:
             move_player(world, player, player->x, player->y - 1);
@@ -45,22 +47,32 @@ int forward_move_handler(world_t *world, player_t *player,
             move_player(world, player, player->x - 1, player->y);
             break;
     }
-    set_response("ok");
+    set_response("ok\n");
+    set_graph_request(assign_player_position(world, player->id, sockfd),
+        &send_player_position);
     return (NO_ERROR);
 }
 
 int left_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
+    int sockfd = (get_graph_clients())[0].sockfd;
+
     player->orientation--;
-    set_response("ok");
+    set_response("ok\n");
+    set_graph_request(assign_player_position(world, player->id, sockfd),
+        &send_player_position);
     return (NO_ERROR);
 }
 
 int right_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
+    int sockfd = (get_graph_clients())[0].sockfd;
+
     player->orientation++;
-    set_response("ok");
+    set_response("ok\n");
+    set_graph_request(assign_player_position(world, player->id, sockfd),
+        &send_player_position);
     return (NO_ERROR);
 }

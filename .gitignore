@@ -14,5 +14,7 @@ zappy_graphical
 __pycache__
 .cquery
 vgcore*
+<<<<<<< HEAD
+zappy_ai_*.log
 .bash_history
 *.vimsess

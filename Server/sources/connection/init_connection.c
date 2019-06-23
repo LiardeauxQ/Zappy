@@ -27,13 +27,15 @@ static struct sockaddr_in bind_socket(int const sockfd, int const port)
     return (sockaddr);
 }
 
-int init_connection(server_t *server)
+int init_connection(server_t *server, enum client_type type)
 {
     server->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     if (server->sockfd == -1)
         return (print_exit_msg("Error with socket initialization", -1));
     server->sockaddr = bind_socket(server->sockfd, server->port);
+    for (int i = 0; i < MAX_CLIENT; i++)
+        server->clients[i] = (client_t){0, -1, type, {0}};
     return (server->sockfd);
 }
 
@@ -72,7 +74,7 @@ int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],
     }
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         if ((*clients)[i].sockfd == 0) {
-            (*clients)[i] = (client_t){new_socket, -1, addr};
+            (*clients)[i] = (client_t){new_socket, -1, (*clients)[i].type, addr};
             break;
         }
     }

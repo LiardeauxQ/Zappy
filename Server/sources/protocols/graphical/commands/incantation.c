@@ -30,7 +30,7 @@ fill_start_incantation_struct(const player_t *player, world_t *world)
     return (incantation);
 }
 
-int assign_incantation_start(world_t *world, player_t *player, int sockfd)
+void *assign_incantation_start(world_t *world, player_t *player, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 
@@ -38,7 +38,7 @@ int assign_incantation_start(world_t *world, player_t *player, int sockfd)
     senders[PLAYER_SENDER_POS] = (sender_t){player, sizeof(player_t),
         sockfd, 0};
     senders[CUSTOM_SENDER_POS].is_last = 1;
-    return (send_incantation_start(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 int send_incantation_start(const void *data)
@@ -66,13 +66,15 @@ int send_incantation_start(const void *data)
     return (SRV_INCANTATION_START);
 }
 
-int assign_incantation_end(srv_end_incantation_t *srv, int sockfd)
+void *assign_incantation_end(unsigned int x, unsigned int y,
+        enum RESULT result, int sockfd)
 {
+    srv_end_incantation_t srv = {x, y, result};
     sender_t senders[MAX_SENDERS] = {{0}};
 
-    senders[CUSTOM_SENDER_POS] = (sender_t){srv,
+    senders[CUSTOM_SENDER_POS] = (sender_t){&srv,
         sizeof(srv_end_incantation_t), sockfd, 1};
-    return (send_incantation_end(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 int send_incantation_end(const void __attribute__((unused)) *data)

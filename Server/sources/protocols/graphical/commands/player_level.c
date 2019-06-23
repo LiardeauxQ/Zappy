@@ -17,15 +17,16 @@ int get_player_level(const void __attribute__((unused)) *data)
     return (0);
 }
 
-int assign_player_level(world_t *world, clt_player_level_t *clt, int sockfd)
+void *assign_player_level(world_t *world, unsigned int player_num, int sockfd)
 {
+    clt_player_level_t clt = {player_num};
     sender_t senders[MAX_SENDERS] = {{0}};
 
     senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world),
         sockfd, 0};
-    senders[CUSTOM_SENDER_POS] = (sender_t){clt, sizeof(clt_player_level_t),
+    senders[CUSTOM_SENDER_POS] = (sender_t){&clt, sizeof(clt_player_level_t),
         sockfd, 1};
-    return (send_player_level(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 static void write_player_level(const srv_player_level_t *lvl, int sockfd)

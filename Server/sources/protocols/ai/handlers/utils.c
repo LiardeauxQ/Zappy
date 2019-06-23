@@ -11,12 +11,14 @@
 
 #include "ai/handlers/utils.h"
 
-player_t *get_player(linked_list_t players, unsigned int id)
+player_t *get_player(linked_list_t players, int id)
 {
     node_t *cursor = players.head;
 
+    if (id < 0)
+        return (0x0);
     while (cursor) {
-        if (((player_t *) cursor->data)->id == id) {
+        if (((player_t *) cursor->data)->id == (unsigned int) id) {
             return ((player_t *) cursor->data);
         }
         cursor = cursor->next;

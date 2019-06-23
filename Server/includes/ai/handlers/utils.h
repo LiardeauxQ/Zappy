@@ -9,7 +9,7 @@
 
 #include "world.h"
 
-player_t *get_player(linked_list_t players, unsigned int id);
+player_t *get_player(linked_list_t players, int id);
 
 size_t *next_case(world_t *world_t, size_t *coords, int orientation, int inc);
 

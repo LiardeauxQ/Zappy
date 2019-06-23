@@ -23,7 +23,7 @@ Test(add_player, simple_test)
     world.height = height;
     generate_world(&world, 0x0);
     add_player(&world, 0);
-    player = (player_t*)world.players.head->data;
+    player = (player_t*) world.players.head->data;
     cr_assert_eq(player->id, 0);
     cr_assert(player->x > 0 && player->x < width);
     cr_assert(player->y > 0 && player->y < height);
