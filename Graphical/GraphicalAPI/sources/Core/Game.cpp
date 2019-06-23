@@ -16,7 +16,6 @@ zapi::Game::Game(unsigned int width, unsigned int height) :
     height(height)
 {
     std::srand(std::time(nullptr));
-    initialize();
 }
 
 void zapi::Game::initialize()

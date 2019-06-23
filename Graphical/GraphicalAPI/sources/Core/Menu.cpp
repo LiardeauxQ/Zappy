@@ -77,7 +77,7 @@ void  zapi::Menu::setPositionButton()
 
 bool zapi::Menu::checkPortHost(void)
 {
-    if (inputHostStr.size() <= 6 || inputPortStr.size() <= 6)
+    if (inputHostStr.size() == 0 || inputPortStr.size() == 0)
         return false;
     return true;
 }
@@ -165,6 +165,7 @@ void zapi::Menu::loop()
         buttonSprite.setTextureRect(rectSourceSprite);
         displayItems();
     }
+    std::cout << "test menu" << std::endl;
 }
 
 std::string &zapi::Menu::getInputHost(void) {

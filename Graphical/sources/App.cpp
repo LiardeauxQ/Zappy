@@ -48,6 +48,7 @@ App::App(const std::string &title, unsigned int width, unsigned int height) :
 
 void App::start()
 {
+    menuState();
     loop();
 }
 
@@ -64,23 +65,35 @@ void App::menuState(void)
 void App::loop()
 {
     while (window.isOpen()) {
+        std::cout << "loop" << std::endl;
         frameTime = frameClock.restart();
         if (server != nullptr)
             server->listenSocket();
-        menuState();
+        std::cout << "end socket" << std::endl;
         inputHandler();
+        std::cout << "input handler" << std::endl;
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
             window.drawEntities(team.getPlayers(), frameTime);
+        std::cout << "draw entities" << std::endl;
         window.updateHUD();
         window.display();
+        std::cout << "end window displaying" << std::endl;
     }
 }
 
 void App::setupConnection()
 {
+    srv_map_size_t map = {0};
+
     server = new communication::ServerInteraction(std::stoi(inputPort), inputHost);
     server->events.subscribe("socket", this);
+
+    map = server->requestMapSize();
+    width = map.x;
+    height = map.y;
+    initialize();
+    server->setNonBlockingSocket();
 }
 
 void App::update(const std::string &eventType, int id, char *data)
