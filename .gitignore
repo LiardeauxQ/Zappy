@@ -1,6 +1,6 @@
-gitqzappy_ai
 epitech_server
-zappy_server
+.vscode/
+.DS_Store
 tmp
 *.o
 *.a
@@ -10,8 +10,11 @@ tests_run
 zappy_server
 zappy_ai
 zappy_graphical
+.*.session.vim
 __pycache__
 .cquery
-.vscode/
-__pycache__
+vgcore*
+<<<<<<< HEAD
 zappy_ai_*.log
+.bash_history
+*.vimsess

@@ -16,6 +16,7 @@
 #include "connection.h"
 #include "server.h"
 #include "client.h"
+#include "unit_tests.h"
 
 void check_connection(game_t *game, server_t *server, client_reader reader)
 {
@@ -25,13 +26,20 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     fd_set readfds = server->readfds;
     int clt_sockfd = 0;
 
-    timeout.tv_usec = 500;
+    timeout.tv_usec = 1000;
     max_fd = set_fds(&readfds, server->clients, sockfd);
     if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
         exit_with_error("select");
     clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
-    if (clt_sockfd > 0)
+    if (reader == &read_graph_client)
+        set_graph_clients(server->clients);
+    if (clt_sockfd > 0 && reader == &read_ai_client)
         write(clt_sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
+    else if (clt_sockfd > 0) {
+        for (size_t i = 0 ; i < game->world.width ; i++)
+            for (size_t j = 0 ; j < game->world.height ; j++)
+                assign_tile_content(&game->world, i, j, clt_sockfd);
+    }
     handle_clients(game, &server->clients, &readfds, reader);
 }
 
@@ -48,9 +56,10 @@ void start_server(info_t *info)
 
 int main(int ac, char **av)
 {
-    info_t info = init_info(ac, av);
+    info_t info = {0};
 
+    init_info(ac, av, &info);
     start_server(&info);
-    destroy_info(&info);
+    destroy_info(&info);  
     return (0);
 }

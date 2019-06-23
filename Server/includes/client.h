@@ -8,6 +8,10 @@
 #pragma once
 
 #include <sys/select.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+
 
 #include "graphical/protocols.h"
 
@@ -17,9 +21,16 @@ typedef struct game_s game_t;
 typedef struct server_s server_t;
 typedef struct world_s world_t;
 
+enum client_type {
+    AI,
+    GRAPH
+};
+
 typedef struct client_s {
     int sockfd;
     int client_nb;
+    enum client_type type;
+    struct sockaddr_in addr;
 } client_t;
 
 typedef int (*client_reader)(client_t *, game_t *);

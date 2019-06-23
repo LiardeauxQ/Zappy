@@ -110,4 +110,4 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests
+.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests tests_run

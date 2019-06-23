@@ -49,6 +49,8 @@ void *convert_senders_to_data(const sender_t *senders)
         tmp = memcpy(tmp, &senders[i++], sizeof(sender_t));
         offset += sizeof(sender_t);
     }
+    if (i == 0)
+        data = realloc(data, offset + sizeof(sender_t));
     tmp = data + offset;
     tmp = memcpy(tmp, &senders[i], sizeof(sender_t));
     return (data);
@@ -59,7 +61,7 @@ size_t count_senders(const sender_t *senders)
     size_t size = 0;
 
     while (!senders[size++].is_last);
-    return (size + 1);
+    return (size);
 }
 
 void destroy_senders(sender_t *senders)

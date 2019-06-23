@@ -14,7 +14,7 @@ Test(init_connection, test_simple_connection)
       server_t server = {0};
 
     server.port = 5660;
-    init_connection(&server);
+    init_connection(&server, AI);
     cr_assert_neq(server.sockfd, -1);
     cr_assert_eq(server.sockaddr.sin_port, htons(server.port));
     cr_assert_eq(server.sockaddr.sin_family, AF_INET);

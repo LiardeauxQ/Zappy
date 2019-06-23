@@ -7,13 +7,15 @@
 
 #include "InputParser.hpp"
 #include "ServerInteraction.hpp"
+#include "App.hpp"
 
 int main(int ac, char **av)
 {
     IO::InputParser iParser(ac, av);
     communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
             iParser.getCmdStringOption("-h"));
+    App app("Zappy", interaction);
 
-    interaction.requestMapSize();
+    app.start();
     return (0);
 }
