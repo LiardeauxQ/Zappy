@@ -40,8 +40,10 @@ class Player:
         self.view = l
         if "message" in m:
             self.moveToElevation(m)
+            return 1
         self.checkLook(l)
         logging.debug(l)
+        return 0
 
     def inventory(self):
         m, l = self.client.sendMessage("Inventory\n")
@@ -63,13 +65,16 @@ class Player:
     def getPositionFromBroadcast(self, message):
         message = message.replace("\x00", "").replace("\n", "").replace("[", "").replace("]", "").replace(",", "")
         result = message.split(" ")
-        tmp = result[len(result)]
-        return int(tmp[:1])
+        tmp = result[1]
+        if tmp[0] == "-":
+            return int(tmp[:2]) % 9
+        else:
+            return int(tmp[:1]) % 9
 
     def getLevelFromBroadcast(self, message):
         message = message.replace("\x00", "").replace("\n", "").replace("[", "").replace("]", "").replace(",", "")
-        result = message.split(" ")
-        tmp = result[1]
+        result = message.split("_")
+        tmp = result[len(result) - 1]
         return int(tmp[:1])
 
     def checkLevelForBroadcast(self, message):
@@ -133,7 +138,7 @@ class Player:
     def checkRessource(self, name):
         if name == "player" or name == "food" or name == "":
             return False
-        elif vars(self)[name] < CONSTANTS[name + "_desirable"][self.level]:
+        elif vars(self)[name] < CONSTANTS[name + "_necessary"][self.level]:
             return True
         else:
             return False
@@ -210,12 +215,14 @@ class Player:
 
     def moveToElevation(self, message):
         tile = self.getPositionFromBroadcast(message)
-        print("MOVING TO THE ORIGIN OF THE BROADCAST")
+        print("MOVING TO THE ORIGIN OF THE BROADCAST and TITLE : ", tile)
         if tile == 0:
-
             return
-        self.actions = CONSTANTS["move_to_sound"][tile]
-        self.handleActions()
+        if self.checkLevelForBroadcast(message):
+            print("LETS MOVE")
+            self.actions = CONSTANTS["move_to_sound"][tile]
+            print("ACTION TO JOIN SOUND IS: ", self.actions)
+            self.handleActions()
 
     def start(self):
         while True:
@@ -226,7 +233,7 @@ class Player:
                                 "; sibur"+ str(self.sibur) +
                                 "; thystame"+ str(self.thystame) +
                                 "; deraumere"+ str(self.deraumere))
-            self.look()
+            ret = self.look()
             if self.checkElevation():
                 if CONSTANT["playerNeededForElevation"][self.level] == self.countPlayerOnTile(self.view):
                     self.dropItemsForElevation()

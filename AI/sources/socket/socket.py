@@ -49,7 +49,11 @@ class SocketZappy:
             return 84
         buff_size = 2040800;
         buff = bytearray(buff_size)
-        self.socket.recv_into(buff, buff_size);
+        res = ""
+        res2 = ""
+        while not "\n" in res:
+            self.socket.recv_into(buff, buff_size);
+            res += buff.decode()
         logging.debug("socket [" + str(self.socketID) + "] receive :" + buff.decode())
         first = True
         if "message" in buff.decode():
@@ -58,12 +62,14 @@ class SocketZappy:
                 buff2 = ""
                 buff2 = bytearray(buff_size)
                 first = False
-                self.socket.recv_into(buff2, buff_size);
+                while not "\n" in res2:
+                    self.socket.recv_into(buff2, buff_size);
+                    res2 += buff2.decode()
                 logging.debug("socket [" + str(self.socketID) + "] receive 2:" + buff2.decode())
                 print("socket [" + str(self.socketID) + "] receive 2:" + buff2.decode())
-            return buff.decode(), buff2.decode()
+            return res, buff2.decode()
         else:
-             return "", buff.decode()
+             return "", res
 
     def getInfo(self):
         return self.socketID, self.connected, self.host, self.port
