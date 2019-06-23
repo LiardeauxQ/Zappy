@@ -22,3 +22,4 @@ size_t *next_case(world_t *world_t, size_t *coords, int orientation, int inc);
 
 int is_time_limit_reached(const clock_t start, const uint16_t limit_cycles,
         const unsigned int f);
+void handle_awaiting_actions(int fd, world_t *world, player_t *player);

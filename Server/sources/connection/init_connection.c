@@ -58,7 +58,7 @@ int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],
     return (max_fd);
 }
 
-int print_connection(int port, char **host)
+void print_connection(int port, char *host)
 {
     printf("Connection on socket %d with address %s\n", port,
             host);

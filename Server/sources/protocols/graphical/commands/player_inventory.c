@@ -12,7 +12,6 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-
 int get_player_inventory(const void __attribute__((unused)) *data)
 {
     return (0);

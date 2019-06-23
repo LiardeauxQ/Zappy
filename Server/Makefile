@@ -42,6 +42,7 @@ SRC			:=	arguments/arguments.c	\
 				manage_graph_clients.c	\
 				connection/init_connection.c	\
 				protocols/manage_response.c	\
+				protocols/manage_response_graph.c	\
 				protocols/graphical/protocols.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\

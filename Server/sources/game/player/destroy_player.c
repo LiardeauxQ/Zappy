@@ -30,7 +30,8 @@ int remove_player(world_t *world, player_t *player)
             break;
         }
     }
-    // delete_elem(&world->teams[player->team_id].players_id, pos);
     delete_elem(&world->players, pos);
     return (0);
 }
+
+// delete_elem(&world->teams[player->team_id].players_id, pos);
