@@ -29,18 +29,22 @@ zapi::Menu::Menu()
         sprite = sf::Sprite(texture);
         font.loadFromFile("Graphical/GraphicalAPI/sources/Core/font.ttf");
         buttonSprite.setPosition(sf::Vector2f(840, 540));      
-        rectangleHost.setSize(sf::Vector2f(800, 200));
-        rectanglePort.setSize(sf::Vector2f(800, 200));
-        rectanglePort.setPosition(500, 500),
-        inputHost.setCharacterSize(68);
-        inputPort.setCharacterSize(68);
-        inputHost.setColor(sf::Color::Red);
-        inputPort.setColor(sf::Color::Blue);
-        inputPort.setPosition(510, 510);
+        rectanglePort.setSize(sf::Vector2f(300, 47));
+        rectangleHost.setSize(sf::Vector2f(600, 47));
+        rectanglePort.setFillColor(sf::Color(212, 212, 212, 127));
+        rectangleHost.setFillColor(sf::Color(212, 212, 212, 127));
+        rectangleHost.setPosition(350, 400),
+        rectanglePort.setPosition(1150, 400),
+        inputHost.setCharacterSize(34);
+        inputPort.setCharacterSize(34);
+        inputHost.setColor(sf::Color::White);
+        inputPort.setColor(sf::Color::White);
+        inputPort.setPosition(1155, 402);
+        inputHost.setPosition(355, 402);
         inputHost.setFont(font);
         inputPort.setFont(font);
         textButton.setCharacterSize(34);
-        textButton.setColor(sf::Color::Red);
+        textButton.setColor(sf::Color::Black);
         textButton.setPosition(880, 540);
         textButton.setFont(font);
         textButton.setString("START");
