@@ -72,6 +72,8 @@ void zapi::Window::inputHandler()
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z) {
         camera.zoom(1.01);
     }
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::T)
+        hud.setEnd("The Winnerzz");
 }
 
 sf::View &zapi::Window::getCamera(void)

@@ -25,7 +25,7 @@ namespace zapi
             void updateResourceOutputs(void);
             void resetTilePtr(void);
             Tile *getTilePtr(void);
-            void setEnd(void);
+            void setEnd(std::string const &teamname);
         protected:
             void initializeBackground(void);
             void initializeText(void);

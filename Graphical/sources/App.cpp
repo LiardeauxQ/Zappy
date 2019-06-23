@@ -11,7 +11,8 @@
 App::App(const std::string &title, communication::ServerInteraction &interaction, unsigned int width, unsigned int height) :
     zapi::Game(width, height),
     window(title, width, height),
-    server(interaction)
+    server(interaction),
+    isEnded(false)
 {
     // server.events.subscribe("socket", this);
 }
@@ -25,9 +26,12 @@ void App::loop()
 {
     while (window.isOpen()) {
         inputHandler();
-        window.drawEntities(getTiles());
-        for (auto &team : getTeams())
-            window.drawEntities(team.getPlayers());
+        // if (!isEnded) {
+            window.drawEntities(getTiles());
+            for (auto &team : getTeams())
+                window.drawEntities(team.getPlayers());
+        // } else
+            // triggerEnd();
         window.updateHUD();
         window.display();
     }
@@ -81,7 +85,7 @@ void App::updateHud(void)
     }
 }
 
-// void App::triggerEnd(void)
-// {
-//     window.getHUD().setEnd();
-// }
+void App::triggerEnd(std::string const &teamName)
+{
+    window.getHUD().setEnd(teamName);
+}

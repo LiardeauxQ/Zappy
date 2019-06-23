@@ -24,8 +24,9 @@ public:
     void updateTileContent(char *data);
     void inputHandler(void);
     void updateHud(void);
-    // void triggerEnd(void);
+    void triggerEnd(std::string const &teamName);
 private:
     zapi::Window window;
     communication::ServerInteraction &server;
+    bool isEnded;
 };
