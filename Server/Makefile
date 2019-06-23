@@ -39,6 +39,7 @@ SRC			:=	arguments/arguments.c	\
 				connection/destroy_server_info.c	\
 				connection/init_info.c	\
 				error.c	\
+				manage_graph_clients.c	\
 				connection/init_connection.c	\
 				protocols/manage_response.c	\
 				protocols/graphical/protocols.c	\
@@ -70,6 +71,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/read_graph_client.c	\
 				protocols/ai/init_action_handlers.c	\
 				protocols/ai/read_ai_client.c	\
+				protocols/ai/handlers/fork_handler.c \
 				protocols/ai/handlers/elevation_handler.c \
 				protocols/ai/handlers/movement_handlers.c \
 				protocols/ai/handlers/resources_handlers.c \
@@ -100,10 +102,6 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
-				handlers/ai/test_elevation_handler.c \
-				handlers/ai/test_movement_handlers.c \
-				handlers/ai/test_resources_handlers.c \
-				handlers/ai/test_player_info_handlers.c \
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
 				commands/test_tile_content.c	\
@@ -112,8 +110,10 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_expulsion.c	\
 				commands/test_incantation.c	\
 				commands/test_player_inventory.c	\
+				commands/test_player_connection.c	\
 				commands/test_end_game.c	\
 				commands/test_broadcast.c	\
+				commands/test_team_name.c	\
 
 
 CFLAGS		=	$(INCLUDES) $(WARN)

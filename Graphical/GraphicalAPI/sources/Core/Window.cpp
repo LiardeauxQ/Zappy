@@ -10,6 +10,10 @@
 
 zapi::Window::Window(const std::string &title, unsigned int width, unsigned int height)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
+<<<<<<< HEAD
+=======
+, camera(sf::FloatRect(700, 1100, 1600, 900))
+>>>>>>> develop
 , hud()
 , event()
 , width(width)
@@ -40,16 +44,12 @@ void zapi::Window::drawEntities(std::vector<Resource> &entities)
         this->draw(entity);
 }
 
-void zapi::Window::drawEntities(std::vector<Team> &entities)
+void zapi::Window::drawEntities(std::list<Player> &entities, sf::Time frameTime)
 {
-    for (auto &entity : entities)
-        drawEntities(entity.getPlayers());
-}
-
-void zapi::Window::drawEntities(std::list<Player> &entities)
-{
-    for (auto &entity : entities)
-        this->draw(entity);
+    for (auto &entity : entities) {
+        entity.update(frameTime);
+        this->draw(*entity.currentAnimation);
+    }
 }
 
 void zapi::Window::inputHandler()

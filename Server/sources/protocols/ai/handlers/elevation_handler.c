@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "ai/handlers/elevation_handler.h"
 
@@ -36,6 +37,27 @@ static int elevation_rules[7][7] = {
     }
 };
 
+void elevate(int client_fd, world_t *world, player_t *player)
+{
+    int sockfd = (get_graph_clients())[0].sockfd;
+    char *res = 0x0;
+
+    if (!player->elevation_start_time)
+        return;
+    if (is_time_limit_reached(player->elevation_start_time,
+                ELEVATION_TIME, world->f)) {
+        player->level += 1;
+        res = calloc(1, strlen("Current level: k\n") + 1);
+        strcat(res, "Current level: ");
+        sprintf(res + strlen("Current level: "), "%d\n", player->level);
+        write(client_fd, res, strlen(res));
+        free(res);
+        player->elevation_start_time = 0;
+        set_graph_request(assign_player_level(world, player->id, sockfd),
+            &send_player_level);
+    }
+}
+
 int is_enough_users(world_t *world, tile_content_t *tile, player_t *player)
 {
     int i = 0;
@@ -56,7 +78,7 @@ int is_enough_users(world_t *world, tile_content_t *tile, player_t *player)
 int elevation_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
-    char *res = 0x0;
+    int sockfd = (get_graph_clients())[0].sockfd;
     tile_content_t tile = world->tiles[player->x][player->y];
 
     if (!is_enough_users(world, &tile, player)) {
@@ -70,10 +92,10 @@ int elevation_handler(world_t *world, player_t *player,
             return (INVALID_PARAMETERS);
         }
     }
-    res = calloc(1, strlen("Elevation underway\nCurrent level: k\n") + 1);
-    strcat(res, "Elevation underway\nCurrent level: ");
-    sprintf(res + strlen("Elevation underway\nCurrent level: "),
-            "%d\n", player->level);
-    set_response(res);
+    player->elevation_start_time = clock();
+    set_response("Elevation underway\n");
+    send_incantation_start(assign_incantation_start(world, player, sockfd));
+    set_graph_request(assign_incantation_end(player->x, player->y, OK, sockfd),
+        &send_incantation_end);
     return (NO_ERROR);
 }

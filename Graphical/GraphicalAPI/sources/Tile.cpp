@@ -21,9 +21,6 @@ zapi::Tile::Tile(const sf::Vector2f &size, const sf::Vector2f &position)
     sprite.setTextureRect(sf::IntRect((std::rand() % 3) * 100, 0, 100, 100));
     sprite.setPosition(position);
 
-//    shadow.setTexture(*(getTileTexture()));
-//    shadow.setPosition(position);
-
     main.setPosition(position);
     main.setFillColor(sf::Color(218, 212, 187, 255));
     main.setOutlineThickness(1);

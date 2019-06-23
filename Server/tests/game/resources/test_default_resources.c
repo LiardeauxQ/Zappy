@@ -14,18 +14,18 @@ Test(init_default_resources, simple_test)
     resource_t *resources = init_default_resources();
 
     cr_assert_eq(resources[0].id, 0);
-    cr_assert_str_eq(resources[0].name, "Food");
-    cr_assert_str_eq(resources[6].name, "Thystame");
+    cr_assert_str_eq(resources[0].name, "food");
+    cr_assert_str_eq(resources[6].name, "thystame");
     free(resources);
 }
 
 Test(find_if_for_resources, simple_test)
 {
-    cr_assert_eq(find_id_for_resource("Food"), 0);
-    cr_assert_eq(find_id_for_resource("Linemate"), 1);
-    cr_assert_eq(find_id_for_resource("Deraumere"), 2);
-    cr_assert_eq(find_id_for_resource("Phiras"), 5);
-    cr_assert_eq(find_id_for_resource("Custom"), 10);
+    cr_assert_eq(find_id_for_resource("food"), 0);
+    cr_assert_eq(find_id_for_resource("linemate"), 1);
+    cr_assert_eq(find_id_for_resource("deraumere"), 2);
+    cr_assert_eq(find_id_for_resource("phiras"), 5);
+    cr_assert_eq(find_id_for_resource("custom"), 10);
 }
 
 Test(find_if_for_resources, bad_value_test)

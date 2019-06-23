@@ -44,8 +44,8 @@ typedef int (*action_handler_fcnt)(world_t *world, player_t *player,
 ** -> handler - Function pointer to the handler.
 */
 struct action_handler {
-    uint16_t limit_cycles;
     uint16_t args_nbr;
+    int limit_cycles;
     char *command;
     action_handler_fcnt handler;
 };
