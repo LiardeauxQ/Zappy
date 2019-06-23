@@ -40,12 +40,12 @@ static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
 App::App(const std::string &title, communication::ServerInteraction &interaction, unsigned int width, unsigned int height) :
     zapi::Game(width, height),
     window(title, width, height),
-    // server(interaction),
+    server(interaction),
     frameClock(),
     frameTime(),
     isEnded(false)
 {
-    // server.events.subscribe("socket", this);
+    server.events.subscribe("socket", this);
 }
 
 void App::start()
@@ -53,12 +53,21 @@ void App::start()
     loop();
 }
 
+void App::menuState(void)
+{
+    if (window.getMenu().getGameStart())
+        return;
+    window.getMenu().start();
+    inputHost = window.getMenu().getInputHost();
+    inputPort = window.getMenu().getInputPort();
+}
+
 void App::loop()
 {
     while (window.isOpen()) {
         frameTime = frameClock.restart();
-        // server.listenSocket();
-        // window.getMenu().start();
+        server.listenSocket();
+        menuState();
         inputHandler();
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
@@ -278,5 +287,6 @@ void App::updateHud(void)
 
 void App::triggerEnd(std::string const &teamName)
 {
+    window.getHUD().setDrawable(false);
     window.getHUD().setEnd(teamName);
 }

@@ -13,23 +13,23 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
     port(port),
     sockfd(0)
 {
-    // struct sockaddr_in sockaddr;
-    // int flags = 0;
+    struct sockaddr_in sockaddr;
+    int flags = 0;
 
-    // memset(&sockaddr, 0, sizeof(sockaddr));
-    // sockaddr.sin_family = AF_INET;
-    // sockaddr.sin_port = htons(port);
-    // if (inet_aton(ipAddress.c_str(), &sockaddr.sin_addr) == -1)
-    //     throw ServerInteractionErrors("Can't convert ip address");
-    // sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    // if (sockfd == -1)
-    //     throw ServerInteractionErrors("Invalid Socket");
-    // std::cout << "Try connection to host: " << ipAddress << std::endl;
-    // if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
-    //     throw ServerInteractionErrors("Unable to connect to server");
-    // flags = fcntl(sockfd, F_GETFL, 0);
-    // fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
-    // std::cout << "Successful connection to host: " << ipAddress << std::endl;
+    memset(&sockaddr, 0, sizeof(sockaddr));
+    sockaddr.sin_family = AF_INET;
+    sockaddr.sin_port = htons(port);
+    if (inet_aton(ipAddress.c_str(), &sockaddr.sin_addr) == -1)
+        throw ServerInteractionErrors("Can't convert ip address");
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1)
+        throw ServerInteractionErrors("Invalid Socket");
+    std::cout << "Try connection to host: " << ipAddress << std::endl;
+    if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
+        throw ServerInteractionErrors("Unable to connect to server");
+    flags = fcntl(sockfd, F_GETFL, 0);
+    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+    std::cout << "Successful connection to host: " << ipAddress << std::endl;
 }
 
 communication::ServerInteraction::ServerInteraction() :
@@ -135,18 +135,18 @@ void communication::ServerInteraction::requestCloseConnection(void) const
 
 void communication::ServerInteraction::listenSocket(void)
 {
-    // pkt_header_t hdr = {0, 0, 0, 0};
-    // char *data = 0x0;
-    // int result = 0;
+    pkt_header_t hdr = {0, 0, 0, 0};
+    char *data = 0x0;
+    int result = 0;
 
-    // result = read(sockfd, &hdr, PKT_HDR_LEN);
-    // if (result <= 0)
-    //     return;
-    // if (result > 0)
-    //     std::cout << "bytes: " << result << std::endl;
-    // data = (char*)calloc(1, hdr.size);
-    // if (read(sockfd, data, hdr.size) == -1)
-    //     throw ServerInteractionErrors("Unable to read");
-    // events.notify("socket", hdr.id, data);
-    // free(data);
+    result = read(sockfd, &hdr, PKT_HDR_LEN);
+    if (result <= 0)
+        return;
+    if (result > 0)
+        std::cout << "bytes: " << result << std::endl;
+    data = (char*)calloc(1, hdr.size);
+    if (read(sockfd, data, hdr.size) == -1)
+        throw ServerInteractionErrors("Unable to read");
+    events.notify("socket", hdr.id, data);
+    free(data);
 }
