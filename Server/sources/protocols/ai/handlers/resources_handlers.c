@@ -53,7 +53,7 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
     resource_id = resource_str_to_id(args[0], world->resources);
-    if ((int) resource_id == -1)
+    if ((int) resource_id < 0)
         return (INVALID_PARAMETERS);
     if (world->tiles[player->x][player->y].resources[resource_id] > 0) {
         player->resources[resource_id]++;
