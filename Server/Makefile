@@ -98,6 +98,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				test_init_info.c	\
 				test_packet_handler.c	\
 				test_init_packets.c	\
+				test_init_packets_2.c	\
 				game/test_world_generation.c		\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\

@@ -5,6 +5,13 @@
 ** resources header
 */
 
+/**
+ * \file resources.h
+ * \brief resources functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "csv.h"

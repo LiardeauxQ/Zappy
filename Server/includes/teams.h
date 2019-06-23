@@ -5,6 +5,13 @@
 ** teams header
 */
 
+/**
+ * \file teams.h
+ * \brief teams functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "linked_list.h"

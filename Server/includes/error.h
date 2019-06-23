@@ -5,6 +5,13 @@
 ** handle errors
 */
 
+/**
+ * \file error.h
+ * \brief error functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdio.h>
