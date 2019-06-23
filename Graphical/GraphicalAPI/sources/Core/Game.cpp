@@ -85,7 +85,7 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
 
 void zapi::Game::updateTile(sf::Vector2f &position, const std::vector<int> &res)
 {
-    sf::Vector2f newPos(position.x * 100, position.y * 100);
+    sf::Vector2f newPos(position.x, position.y);
     Tile *tile = findTile(newPos);
 
     tile->updateResource(res);
