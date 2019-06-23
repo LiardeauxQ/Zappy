@@ -72,6 +72,7 @@ SRC			:=	arguments/arguments.c	\
 				protocols/ai/init_action_handlers.c	\
 				protocols/ai/read_ai_client.c	\
 				protocols/ai/handlers/fork_handler.c \
+				protocols/ai/handlers/broadcast_handler.c \
 				protocols/ai/handlers/elevation_handler.c \
 				protocols/ai/handlers/movement_handlers.c \
 				protocols/ai/handlers/resources_handlers.c \
@@ -120,7 +121,7 @@ CFLAGS		=	$(INCLUDES) $(WARN)
 
 TESTCFLAGS	=	$(INCLUDES) $(WARN)
 
-LDFLAGS		=	-lcsv -L ../library/csv -llinkedlist -L ../library/linked_list
+LDFLAGS		=	-lm -lcsv -L ../library/csv -llinkedlist -L ../library/linked_list
 
 WARN		=	-Wall -Wextra
 

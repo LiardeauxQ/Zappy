@@ -31,6 +31,10 @@ pos_t *next_case(world_t *world, pos_t *pos, int orientation, int inc)
     int x_inc[4] = {0, 1, 0, -1};
     int y_inc[4] = {-1, 0, 1, 0};
 
+    if (orientation < 1)
+        orientation = 4 - orientation;
+    else if (orientation > 4)
+        orientation = orientation - 4;
     orientation--;
     pos->x += x_inc[orientation] * inc;
     pos->y += y_inc[orientation] * inc;
