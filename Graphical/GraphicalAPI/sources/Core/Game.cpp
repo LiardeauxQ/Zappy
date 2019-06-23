@@ -9,7 +9,11 @@
 #include <cstdlib>
 #include <iostream>
 
-zapi::Game::Game() : tiles(), teams()
+zapi::Game::Game(unsigned int width, unsigned int height) :
+    tiles(),
+    teams(),
+    width(width),
+    height(height)
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -17,8 +21,8 @@ zapi::Game::Game() : tiles(), teams()
 
 void zapi::Game::initialize()
 {
-    for (float i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
-        if (x >= 3000) {
+    for (float i = 0, x = 0, y = 0; i != width * height; i++, x += 100) {
+        if (x >= width * 100) {
             x = 0;
             y += 100;
         }
@@ -28,7 +32,7 @@ void zapi::Game::initialize()
 
 void zapi::Game::addTeam(const std::string &teamName)
 {
-    teams.push_back(Team(teamName));
+    teams.push_back(Team(width, height, teamName));
 }
 
 void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector2f &position)
@@ -45,7 +49,7 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
 
 zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
 {
-    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * 30);
+    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * width);
     return &tiles[index];
 }
 
@@ -136,7 +140,7 @@ zapi::Player &zapi::Game::getPlayer(unsigned int id)
 
 bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
 {
-    return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
+    return (coord.x < 0 || coord.x > width * 100 || coord.y < 0 || coord.y > height * 100) ? false : true;
 }
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)

@@ -7,14 +7,16 @@
 
 #include "Team.hpp"
 
-zapi::Team::Team(const std::string &name)
+zapi::Team::Team(unsigned int width, unsigned int height, const std::string &name)
 : name(name)
 , players()
+, width(width)
+, height(height)
 {}
 
 void zapi::Team::addPlayer(int id, zapi::Tile *tile, const sf::Vector2f &position)
 {
-    players.push_back(Player(id, tile, position));
+    players.push_back(Player(id, tile, width, height, position));
 }
 
 bool zapi::Team::checkPlayer(unsigned int id)

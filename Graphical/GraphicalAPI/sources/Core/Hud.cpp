@@ -44,7 +44,7 @@ void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
         target.draw(resourceOutput, states);
 }
 
-void zapi::Hud::updateResourceOutputs(void) //WIP!!
+void zapi::Hud::updateResourceOutputs(void)
 {
     if (tile == nullptr)
         return;

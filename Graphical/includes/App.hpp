@@ -13,7 +13,7 @@
 
 class App: public zapi::Game, public communication::IEventListener<char*> {
 public:
-    App(const std::string &title, communication::ServerInteraction &interaction);
+    App(const std::string &title, communication::ServerInteraction &interaction, unsigned int width = 30, unsigned int height = 30);
     ~App() = default;
 
     void start();

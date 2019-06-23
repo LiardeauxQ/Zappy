@@ -8,12 +8,13 @@
 #include <iostream>
 #include "Core/Window.hpp"
 
-zapi::Window::Window(const std::string &title)
+zapi::Window::Window(const std::string &title, unsigned int width, unsigned int height)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
-, camera(sf::FloatRect(700, 1100, 1600, 800))
 , hud()
 , event()
-, zoom(5)
+, width(width)
+, height(height)
+, camera(sf::FloatRect(((5 * 100) / 2 - (1600 / 2)), ((30 * 100) / 2 - (900 / 2)), 1600, 800))
 {
     setView(camera);
 }
@@ -72,13 +73,11 @@ void zapi::Window::inputHandler()
         camera.move(-40, 0);
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
         camera.move(40, 0);
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A && zoom < 10) {
-        camera.zoom(0.9);
-        zoom++;
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
+        camera.zoom(0.99);
     }
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z && zoom > 0) {
-        camera.zoom(1.2);
-        zoom--;
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z) {
+        camera.zoom(1.01);
     }
 }
 

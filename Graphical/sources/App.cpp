@@ -7,9 +7,9 @@
 
 #include "App.hpp"
 
-App::App(const std::string &title, communication::ServerInteraction &interaction) :
-    zapi::Game(),
-    window(title),
+App::App(const std::string &title, communication::ServerInteraction &interaction, unsigned int width, unsigned int height) :
+    zapi::Game(width, height),
+    window(title, width, height),
     server(interaction)
 {
     // server.events.subscribe("socket", this);

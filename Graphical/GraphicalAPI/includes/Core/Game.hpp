@@ -16,7 +16,7 @@ namespace zapi
 {
     class Game {
         public:
-            Game();
+            Game(unsigned int width = 30, unsigned int height = 30);
             ~Game() = default;
         protected:
             void initialize();
@@ -52,5 +52,7 @@ namespace zapi
         private:
             std::vector<Tile> tiles;
             std::vector<Team> teams;
+            unsigned int width;
+            unsigned int height;
     };
 }
