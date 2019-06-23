@@ -28,11 +28,12 @@ namespace zapi
             void dropResource(RESOURCE_NUMBER index);
             void pickUpResource(RESOURCE_NUMBER index);
             void updateOrientation(ORIENTATION direction);
-            void updatePosition(const sf::Vector2f &new_pos);
-            void updateResources(std::array<int, 7> &new_resources);
+            void updatePosition(const sf::Vector2f &newPos);
+            void updateResources(std::array<int, 7> &newResources);
             sf::Vector2f getPosition();
+            ORIENTATION getOrientation() const { return orientation; };
     
-            void update(sf::Time elapsedTime);
+            bool update(sf::Time elapsedTime);
             void createPlayerAnimation(PLAYER_ANIMATION id);
             std::shared_ptr<Animation> getPlayerAnimation(PLAYER_ANIMATION id);
 

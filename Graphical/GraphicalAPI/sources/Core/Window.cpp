@@ -43,7 +43,10 @@ void zapi::Window::drawEntities(std::vector<Resource> &entities)
 void zapi::Window::drawEntities(std::list<Player> &entities, sf::Time frameTime)
 {
     for (auto &entity : entities) {
-        entity.update(frameTime);
+        if (!entity.update(frameTime)) {
+            entity.currentAnimation = entity.getPlayerAnimation((PLAYER_ANIMATION)entity.getOrientation());
+            entity.currentAnimation->play();
+        }
         this->draw(*entity.currentAnimation);
     }
 }

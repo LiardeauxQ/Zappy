@@ -21,9 +21,9 @@ zapi::Player::Player(unsigned int id, zapi::Tile *tile, unsigned int width, unsi
 {
 
     sprite.setTexture(*(getPlayerTexture()));
-    sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
+    sprite.setTextureRect(sf::IntRect(0, (64 * orientation), 64, 64));
     sprite.setPosition(position);
-    for (int i = 1; i != 9; i++)
+    for (int i = 1; i != 19; i++)
         createPlayerAnimation((PLAYER_ANIMATION)i);
     currentAnimation = getPlayerAnimation((PLAYER_ANIMATION)orientation);
     currentAnimation->play();
@@ -36,36 +36,38 @@ void zapi::Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void zapi::Player::move(ORIENTATION direction)
 {
+    sf::Vector2f newPosition;
     switch (direction) {
         case NORTH:
             if (position.y - 100 > 0)
-                position = sf::Vector2f(position.x, position.y - 100);
+                newPosition = sf::Vector2f(position.x, position.y - 100);
             else
-                position = sf::Vector2f(position.x, (height * 100) - 50 - 32);
+                newPosition = sf::Vector2f(position.x, (height * 100) - 50 - 32);
             break;
         case EAST:
-            if (position.x + 100 < 3000)
-                position = sf::Vector2f(position.x + 100, position.y);
+            if (position.x + 100 < width * 100)
+                newPosition = sf::Vector2f(position.x + 100, position.y);
             else
-                position = sf::Vector2f(0 + 50 - 32, position.y);
+                newPosition = sf::Vector2f(0 + 50 - 32, position.y);
             break;
         case WEST:
             if (position.x - 100 > 0)
-                position = sf::Vector2f(position.x - 100, position.y);
+                newPosition = sf::Vector2f(position.x - 100, position.y);
             else
-                position = sf::Vector2f((width * 100) - 50 - 32, position.y);
+                newPosition = sf::Vector2f((width * 100) - 50 - 32, position.y);
             break;
         case SOUTH:
             if (position.y + 100 < height * 100)
-                position = sf::Vector2f(position.x, position.y + 100);
+                newPosition = sf::Vector2f(position.x, position.y + 100);
             else
-                position = sf::Vector2f(position.x, 0 + 50 - 32);
+                newPosition = sf::Vector2f(position.x, 0 + 50 - 32);
             break;
     }
     updateOrientation(direction);
-    currentAnimation = getPlayerAnimation((PLAYER_ANIMATION)orientation);
-    currentAnimation->play();
-    sprite.setPosition(position);
+    updatePosition(newPosition);
+    animations[orientation - 1].setPosition(position);
+    currentAnimation = getPlayerAnimation((PLAYER_ANIMATION)(orientation + 4));
+    currentAnimation->play(2, newPosition);
 }
 
 void zapi::Player::addInventory(RESOURCE_NUMBER index)
@@ -109,23 +111,24 @@ sf::Vector2f zapi::Player::getPosition()
 void zapi::Player::updateOrientation(ORIENTATION direction)
 {
     orientation = direction;
-    sprite.setTextureRect(sf::IntRect(0, 448 + (64 * orientation), 64, 64));
+    sprite.setTextureRect(sf::IntRect(0, (64 * orientation), 64, 64));
 }
 
-void zapi::Player::updatePosition(const sf::Vector2f &new_pos)
+void zapi::Player::updatePosition(const sf::Vector2f &newPos)
 {
-    position = new_pos;
+    position = newPos;
     sprite.setPosition(position);
+    currentAnimation->setPosition(position);
 }
 
-void zapi::Player::updateResources(std::array<int, 7> &new_resources)
+void zapi::Player::updateResources(std::array<int, 7> &newResources)
 {
-    inventory = new_resources;
+    inventory = newResources;
 }
 
-void zapi::Player::update(sf::Time elapsedTime)
+bool zapi::Player::update(sf::Time elapsedTime)
 {
-    currentAnimation->update(elapsedTime);
+    return currentAnimation->update(elapsedTime);
 }
 
 void zapi::Player::createPlayerAnimation(PLAYER_ANIMATION id)
@@ -133,32 +136,79 @@ void zapi::Player::createPlayerAnimation(PLAYER_ANIMATION id)
     Animation animation(id, sprite, sf::seconds(0.10));
     switch (id) {
         case IDLE_NORTH:
-            animation.addFrame(sf::IntRect(0, 512, 64, 64));
+            animation.addFrame(sf::IntRect(0, 0, 64, 64));
             break;
         case IDLE_EAST:
-            animation.addFrame(sf::IntRect(0, 576, 64, 64));
+            animation.addFrame(sf::IntRect(0, 64, 64, 64));
             break;
         case IDLE_SOUTH:
-            animation.addFrame(sf::IntRect(0, 640, 64, 64));
+            animation.addFrame(sf::IntRect(0, 128, 64, 64));
             break;
         case IDLE_WEST:
-            animation.addFrame(sf::IntRect(0, 704, 64, 64));
+            animation.addFrame(sf::IntRect(0, 192, 64, 64));
             break;
         case MOVE_NORTH:
-            for (int i = 1; i != 8; i++)
-                animation.addFrame(sf::IntRect((64 * i), 512, 64, 64));
+            animation.setFrameLength(sf::seconds(0.05));
+            animation.setIsLoop(false);
+            for (int i = 0; i != 8; i++)
+                animation.addFrame(sf::IntRect((64 * i), 256, 64, 64));
             break;
         case MOVE_EAST:
-            for (int i = 1; i != 8; i++)
-                animation.addFrame(sf::IntRect((64 * i), 576, 64, 64));
+            animation.setFrameLength(sf::seconds(0.05));
+            animation.setIsLoop(false);
+            for (int i = 0; i != 8; i++)
+                animation.addFrame(sf::IntRect((64 * i), 320, 64, 64));
             break;
         case MOVE_SOUTH:
-            for (int i = 1; i != 8; i++)
-                animation.addFrame(sf::IntRect((64 * i), 640, 64, 64));
+            animation.setFrameLength(sf::seconds(0.05));
+            animation.setIsLoop(false);
+            for (int i = 0; i != 8; i++)
+                animation.addFrame(sf::IntRect((64 * i), 384, 64, 64));
             break;
         case MOVE_WEST:
-            for (int i = 1; i != 8; i++)
-                animation.addFrame(sf::IntRect((64 * i), 704, 64, 64));
+            animation.setFrameLength(sf::seconds(0.05));
+            animation.setIsLoop(false);
+            for (int i = 0; i != 8; i++)
+                animation.addFrame(sf::IntRect((64 * i), 448, 64, 64));
+            break;
+        case START_INCANTATION:
+            for (int i = 0; i != 4; i++)
+                animation.addFrame(sf::IntRect((64 * i), 512, 64, 64));
+            break;
+        case INCANTATION:
+            for (int i = 0; i != 8; i++)
+                animation.addFrame(sf::IntRect((64 * i), 576, 64, 64));
+            break;
+        case STOP_INCANTATION:
+            for (int i = 1; i != 5; i++)
+                animation.addFrame(sf::IntRect((64 * i), 640, 64, 64));
+            break;
+        case BROADCAST_NORTH:
+            animation.addFrame(sf::IntRect(0, 704, 64, 64));
+            break;
+        case BROADCAST_EAST:
+            animation.addFrame(sf::IntRect(0, 768, 64, 64));
+            break;
+        case BROADCAST_SOUTH:
+            animation.addFrame(sf::IntRect(0, 832, 64, 64));
+            break;
+        case BROADCAST_WEST:
+            animation.addFrame(sf::IntRect(0, 896, 64, 64));
+            break;
+        case DIE:
+            animation.setFrameLength(sf::seconds(0.3));
+            for (int i = 0; i != 5; i++)
+                animation.addFrame(sf::IntRect((64 * i), 960, 64, 64));
+            break;
+        case PICK_AND_DROP:
+            animation.setFrameLength(sf::seconds(0.25));
+            for (int i = 0; i != 3; i++)
+                animation.addFrame(sf::IntRect((64 * i), 1024, 64, 64));
+            break;
+        case EGG:
+            animation.setFrameLength(sf::seconds(0.8));
+            for (int i = 0; i != 5; i++)
+                animation.addFrame(sf::IntRect((64 * i), 1088, 64, 64));
             break;
     }
     animations.push_back(animation);
