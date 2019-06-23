@@ -32,6 +32,11 @@ namespace zapi
             void updateResources(std::array<int, 7> &newResources);
             sf::Vector2f getPosition();
             ORIENTATION getOrientation() const { return orientation; };
+            void broadcast();
+            void startIncantation();
+            void incantation();
+            void stopIncantation();
+            void egg();
     
             bool update(sf::Time elapsedTime);
             void createPlayerAnimation(PLAYER_ANIMATION id);

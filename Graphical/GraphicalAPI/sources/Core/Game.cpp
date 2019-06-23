@@ -16,7 +16,6 @@ zapi::Game::Game(unsigned int width, unsigned int height) :
     height(height)
 {
     std::srand(std::time(nullptr));
-    initialize();
 }
 
 void zapi::Game::initialize()
@@ -33,7 +32,6 @@ void zapi::Game::initialize()
 //        getPlayer(i).currentAnimation = getPlayer(i).getPlayerAnimation((PLAYER_ANIMATION)i);
 //        getPlayer(i).currentAnimation->play();
 //    }
-    
 }
 
 void zapi::Game::addTeam(const std::string &teamName)
@@ -169,6 +167,7 @@ void zapi::Game::expulsePlayer(unsigned int id)
 void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position,
         std::array<int, 7> __attribute__((unused)) &players)
 {
+    getPlayer(sender).incantation();
     std::cout << "Player " << sender << " start incantation at [" << position.x << ", " << position.y << "]" << std::endl;
 }
 
@@ -179,32 +178,38 @@ void zapi::Game::stopIncantation(RESULT __attribute__((unused)) result, const sf
 
 void zapi::Game::broadcast(unsigned int sender, const std::string &message)
 {
+    getPlayer(sender).broadcast();
     std::cout << "Player " << sender << " sayed: \'" << message << "\'" << std::endl;
 }
 
 void zapi::Game::eggLaying(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << "is laying" << std::endl;
 }
 
 void zapi::Game::eggLayed(unsigned int __attribute__((unused)) sender,
         unsigned int id, const sf::Vector2f &position)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << "layed by player" << id << "at [" << position.x << ", " << position.y << "]" << std::endl;
 }
 
 void zapi::Game::eggHatching(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << "is hatching" << std::endl;
 }
 
 void zapi::Game::eggHatched(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << " hatched " << std::endl;
 }
 
 void zapi::Game::eggHatchedDeath(unsigned int id)
 {
+    getPlayer(id).egg();
     std::cout << "egg " << id << " Hatched Death ?" << std::endl;
 }
 

@@ -15,6 +15,8 @@
 
 int init_info(int ac, char **av, info_t *info)
 {
+    info->input = (input_t){DEFAULT_PORT_AI, DEFAULT_MAP_WIDTH,
+        DEFAULT_MAP_HEIGHT, DEFAULT_CLIENT_NB, DEFAULT_FREQUENCE, 0x0, 0x0};
     handle_arguments(ac, av, &info->input);
     parse_resources(info->input.resources_filename);
     init_packets(&info->game.handler_register);

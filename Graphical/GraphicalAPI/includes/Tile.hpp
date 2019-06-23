@@ -30,7 +30,6 @@ namespace zapi
             std::vector<Resource> resources;
             sf::Sprite sprite;
             bool isSelected;
-//            sf::Sprite shadow;
     };
 
 }
