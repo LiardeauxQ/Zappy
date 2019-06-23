@@ -31,7 +31,7 @@ namespace zapi
 
         private:
             bool checkPortHost(void);
-            sf::RenderWindow *window;
+            sf::RenderWindow &window;
             sf::String playerInput;
             sf::RectangleShape rectangleButton;
             sf::IntRect rectSourceSprite;
@@ -50,5 +50,6 @@ namespace zapi
             bool clickedPort;
             bool gameStart;
             int error;
+            sf::View camera;
     };
 }
