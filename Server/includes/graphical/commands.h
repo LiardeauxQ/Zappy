@@ -49,31 +49,32 @@ void destroy_senders(sender_t *senders);
 /* handle_broadcast.c */
 
 int send_broadcast(const void *data);
-void *assign_broadcast(char *msg, int size, int player_num, int sockfd);
+void *assign_broadcast(char *msg, int size, unsigned int *player_num,
+        int sockfd);
 
 /* egg_laying.c */
 
-void *assign_laying_egg(int egg_num, int sockfd);
+void *assign_laying_egg(unsigned int *egg_num, int sockfd);
 int send_laying_egg(const void *data);
 
 /* egg_layed.c */
 
-void *assign_layed_egg(player_t *player, int egg_num, int sockfd);
+void *assign_layed_egg(player_t *player, unsigned int *egg_num, int sockfd);
 int send_layed_egg(const void *data);
 
 /* egg_hatching.c */
 
-void *assign_hatching_egg(int egg_num, int sockfd);
+void *assign_hatching_egg(unsigned int *egg_num, int sockfd);
 int send_hatching_egg(const void *data);
 
 /* egg_connection.c */
 
 int send_egg_connection(const void *data);
-void *assign_egg_connection(int egg_num, int sockfd);
+void *assign_egg_connection(unsigned int *egg_num, int sockfd);
 
 /* egg_hatched_egg.c */
 
-void *assign_egg_hatched_egg(int egg_num, int sockfd);
+void *assign_egg_hatched_egg(unsigned int *egg_num, int sockfd);
 int send_egg_hatched_death(const void *data);
 
 /* handle_end_game.c */
@@ -83,7 +84,7 @@ int send_end_game(const void *data);
 
 /* handle_expulsion.c */
 
-void *assign_player_expulsion(int player_num, int sockfd);
+void *assign_player_expulsion(unsigned int *player_num, int sockfd);
 int send_player_expulsion(const void *data);
 
 /* handle_incantation.c */
@@ -118,25 +119,26 @@ int send_player_connection(const void *data);
 
 /* handle_player_death.c */
 
-void *assign_player_death(int player_num, int sockfd);
+void *assign_player_death(unsigned int *player_num, int sockfd);
 int send_player_death(const void *data);
 
 /* handle_player_inventory.c */
 
-void *assign_player_inventory(world_t *world, unsigned int player_num,
+void *assign_player_inventory(world_t *world, unsigned int *player_num,
         int sockfd);
 int get_player_inventory(const void *data);
 int send_player_inventory(const void *data);
 
 /* handle_player_level.c */
 
-void *assign_player_level(world_t *world, unsigned int player_num, int sockfd);
+void *assign_player_level(world_t *world, unsigned int *player_num,
+        int sockfd);
 int get_player_level(const void *data);
 int send_player_level(const void *data);
 
 /* handle_player_position.c */
 
-void *assign_player_position(world_t *world, unsigned int player_num,
+void *assign_player_position(world_t *world, unsigned int *player_num,
         int sockfd);
 int get_player_position(const void *data);
 int send_player_position(const void *data);

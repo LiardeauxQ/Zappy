@@ -48,7 +48,7 @@ int forward_move_handler(world_t *world, player_t *player,
             break;
     }
     set_response("ok\n");
-    set_graph_request(assign_player_position(world, player->id, sockfd),
+    set_graph_request(assign_player_position(world, &player->id, sockfd),
         &send_player_position);
     return (NO_ERROR);
 }
@@ -63,7 +63,7 @@ int left_move_handler(world_t *world, player_t *player,
     else
         player->orientation--;
     set_response("ok\n");
-    set_graph_request(assign_player_position(world, player->id, sockfd),
+    set_graph_request(assign_player_position(world, &player->id, sockfd),
         &send_player_position);
     return (NO_ERROR);
 }
@@ -78,7 +78,7 @@ int right_move_handler(world_t *world, player_t *player,
     else
         player->orientation++;
     set_response("ok\n");
-    set_graph_request(assign_player_position(world, player->id, sockfd),
+    set_graph_request(assign_player_position(world, &player->id, sockfd),
         &send_player_position);
     return (NO_ERROR);
 }
