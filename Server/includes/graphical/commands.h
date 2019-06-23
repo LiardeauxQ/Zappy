@@ -90,7 +90,8 @@ int send_player_expulsion(const void *data);
 
 void *assign_incantation_start(world_t *world, player_t *player, int sockfd);
 int send_incantation_start(const void *data);
-void *assign_incantation_end(srv_end_incantation_t *srv, int sockfd);
+void *assign_incantation_end(unsigned int x, unsigned int y,
+        enum RESULT result, int sockfd);
 int send_incantation_end(const void *data);
 
 /* handle_map_content.c */
@@ -111,7 +112,8 @@ int send_name_teams(const void *data);
 
 /* handle_player_connection.c */
 
-void *assign_new_player_connection(player_t *player, team_t *teams, int sockfd);
+void *assign_new_player_connection(player_t *player, team_t *teams,
+        int sockfd);
 int send_player_connection(const void *data);
 
 /* handle_player_death.c */
@@ -121,20 +123,21 @@ int send_player_death(const void *data);
 
 /* handle_player_inventory.c */
 
-void *assign_player_inventory(world_t *world,
-        struct clt_player_inventory *clt, int sockfd);
+void *assign_player_inventory(world_t *world, unsigned int player_num,
+        int sockfd);
 int get_player_inventory(const void *data);
 int send_player_inventory(const void *data);
 
 /* handle_player_level.c */
 
-void *assign_player_level(world_t *world, clt_player_level_t *clt, int sockfd);
+void *assign_player_level(world_t *world, unsigned int player_num, int sockfd);
 int get_player_level(const void *data);
 int send_player_level(const void *data);
 
 /* handle_player_position.c */
 
-void *assign_player_position(world_t *world, clt_player_pos_t *pos, int sockfd);
+void *assign_player_position(world_t *world, unsigned int player_num,
+        int sockfd);
 int get_player_position(const void *data);
 int send_player_position(const void *data);
 
@@ -154,7 +157,8 @@ srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
         const unsigned int x, const unsigned int y);
 char *write_tile_content(tile_content_t *tile,
         const unsigned int x, const unsigned int y, const int subid);
-void *assign_tile_content(world_t *world, clt_tile_content_t *clt, int sockfd);
+void *assign_tile_content(world_t *world, unsigned int x, unsigned int y,
+        int sockfd);
 int get_tile_content(const void *data);
 int send_tile_content(const void *data);
 

@@ -11,6 +11,7 @@
 #include "manage_response.h"
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
+#include "graphical/commands.h"
 
 void tile_to_str(world_t *world, size_t *coords, int team_id, char **str);
 

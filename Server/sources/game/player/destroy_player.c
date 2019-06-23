@@ -24,12 +24,13 @@ int remove_player(world_t *world, player_t *player)
     }
     pos = 0;
     tile = &world->tiles[player->x][player->y];
-    for (node_t *node = tile->players_id.head ; node
-            ; node = node->next, pos++)
-        if (*((unsigned int*)node->data) == player->id)
+    for (node_t *node = tile->players_id.head; node; node = node->next, pos++) {
+        if (*(unsigned int*) node->data == player->id) {
             delete_elem(&tile->players_id, pos);
-
-    delete_elem(&world->teams[player->team_id].players_id, pos);
+            break;
+        }
+    }
+    // delete_elem(&world->teams[player->team_id].players_id, pos);
     delete_elem(&world->players, pos);
     return (0);
 }

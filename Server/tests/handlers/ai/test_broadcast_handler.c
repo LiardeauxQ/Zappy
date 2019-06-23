@@ -14,6 +14,6 @@ Test(broadcast_handler, test_broadcast_handler)
     player_t *player = 0x0;
 
     add_player(&world, 0);
-    cr_assert_eq(strcmp(get_response(), "ok"), 0);
+    cr_assert_eq(strcmp(get_response(), "ok\n"), 0);
 }
 

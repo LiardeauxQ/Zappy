@@ -10,7 +10,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "ai/handlers/player_info_handlers.h"
+#include "ai/handlers/resources_handlers.h"
 
 char *resource_to_string(const enum RESOURCE_NUMBER id, const int quantity,
         resource_t *resources)
@@ -45,9 +45,10 @@ enum RESOURCE_NUMBER resource_str_to_id(const char *resource,
 
 int take_object_handler(world_t *world, player_t *player, const char **args)
 {
+    int sockfd = (get_graph_clients())[0].sockfd;
     enum RESOURCE_NUMBER resource_id = 0;
 
-    if (!args[0])
+    if (!args || !args[0])
         return (TOO_FEW_PARAMETERS);
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
@@ -56,16 +57,19 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
         return (INVALID_PARAMETERS);
     player->resources[resource_id]++;
     world->tiles[player->x][player->y].resources[resource_id]--;
-    set_response("ok");
+    set_response("ok\n");
+    set_graph_request(assign_player_inventory(world, player->id, sockfd),
+        &send_player_inventory);
     return (NO_ERROR);
 }
 
 int set_down_object_handler(world_t *world, player_t *player,
         const char **args)
 {
+    int sockfd = (get_graph_clients())[0].sockfd;
     enum RESOURCE_NUMBER resource_id = 0;
 
-    if (!args[0])
+    if (!args || !args[0])
         return (TOO_FEW_PARAMETERS);
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
@@ -74,7 +78,9 @@ int set_down_object_handler(world_t *world, player_t *player,
         return (INVALID_PARAMETERS);
     player->resources[resource_id]--;
     world->tiles[player->x][player->y].resources[resource_id]++;
-    set_response("ok");
+    set_response("ok\n");
+    set_graph_request(assign_player_inventory(world, player->id, sockfd),
+        &send_player_inventory);
     return (NO_ERROR);
 }
 
@@ -89,12 +95,12 @@ int inventory_handler(world_t *world, player_t *player,
         resource_string = resource_to_string(i,
                 player->resources[i], world->resources);
         inventory = realloc(inventory, strlen(inventory) +
-                strlen(resource_string) + 3);
-        strcat(inventory , resource_string);
+                strlen(resource_string) + 4);
+        strcat(inventory, resource_string);
         if (i == sizeof(player->resources) / 4 - 1)
-            strcat(inventory , "]");
+            strcat(inventory, "]\n");
         else
-            strcat(inventory , ", ");
+            strcat(inventory, ", ");
     }
     set_response(inventory);
     return (NO_ERROR);

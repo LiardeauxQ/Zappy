@@ -10,9 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-
-#include "manage_response.h"
 
 char *get_response();
 void set_response(char *value);
+
+void exec_graph_request();
+void set_graph_request(void *data, int (*fct)(const void *));
