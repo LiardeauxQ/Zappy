@@ -12,11 +12,11 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-void *assign_hatching_egg(int egg_num, int sockfd)
+void *assign_hatching_egg(unsigned int *egg_num, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 
-    senders[INT_SENDER_POS] = (sender_t){&egg_num, sizeof(int), sockfd, 0};
+    senders[INT_SENDER_POS] = (sender_t){egg_num, sizeof(int), sockfd, 0};
     senders[CUSTOM_SENDER_POS].is_last = 1;
     return (convert_senders_to_data(senders));
 }

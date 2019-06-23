@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "ai/handlers/elevation_handler.h"
 
@@ -53,7 +54,7 @@ void elevate(int client_fd, world_t *world, player_t *player)
         write(client_fd, res, strlen(res));
         free(res);
         player->elevation_start_time = 0;
-        set_graph_request(assign_player_level(world, player->id, sockfd),
+        set_graph_request(assign_player_level(world, &player->id, sockfd),
             &send_player_level);
     }
 }
