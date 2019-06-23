@@ -7,7 +7,7 @@
 
 #include "Player.hpp"
 
-zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &position)
+zapi::Player::Player(unsigned int id, zapi::Tile *tile, unsigned int width, unsigned int height, const sf::Vector2f &position)
 : Entity(position)
 , orientation(SOUTH)
 , level(0)
@@ -15,6 +15,8 @@ zapi::Player::Player(unsigned int id, zapi::Tile *tile, const sf::Vector2f &posi
 , sprite()
 , tile(tile)
 , inventory()
+, width(width)
+, height(height)
 , animations()
 {
 
@@ -40,7 +42,7 @@ void zapi::Player::move(ORIENTATION direction)
             if (position.y - 100 > 0)
                 newPosition = sf::Vector2f(position.x, position.y - 100);
             else
-                position = sf::Vector2f(position.x, 3000 - 50 - 32);
+                position = sf::Vector2f(position.x, (height * 100) - 50 - 32);
             break;
         case EAST:
             if (position.x + 100 < 3000)
@@ -52,11 +54,11 @@ void zapi::Player::move(ORIENTATION direction)
             if (position.x - 100 > 0)
                 newPosition = sf::Vector2f(position.x - 100, position.y);
             else
-                newPosition = sf::Vector2f(3000 - 50 - 32, position.y);
+                position = sf::Vector2f((width * 100) - 50 - 32, position.y);
             break;
         case SOUTH:
-            if (position.y + 100 < 3000)
-                newPosition = sf::Vector2f(position.x, position.y + 100);
+            if (position.y + 100 < height * 100)
+                position = sf::Vector2f(position.x, position.y + 100);
             else
                 newPosition = sf::Vector2f(position.x, 0 + 50 - 32);
             break;

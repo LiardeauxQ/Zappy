@@ -5,6 +5,7 @@
 ** App
 */
 
+#include <iostream>
 #include "App.hpp"
 
 static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
@@ -36,14 +37,13 @@ static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
     std::make_tuple(SRV_CUSTOM, nullptr)
 };
 
-App::App(const std::string &title, communication::ServerInteraction &interaction) :
-    zapi::Game(),
-    window(title),
-    server(interaction),
+App::App(const std::string &title, unsigned int width, unsigned int height) :
+    zapi::Game(width, height),
+    window(title, width, height),
     frameClock(),
-    frameTime()
+    frameTime(),
+    isEnded(false)
 {
-//    server.events.subscribe("socket", this);
 }
 
 void App::start()
@@ -51,11 +51,22 @@ void App::start()
     loop();
 }
 
+void App::menuState(void)
+{
+    if (window.getMenu().getGameStart())
+        return;
+    window.getMenu().start();
+    inputHost = window.getMenu().getInputHost().erase(0, 6);
+    inputPort = window.getMenu().getInputPort().erase(0, 6);
+    setupConnection();
+}
+
 void App::loop()
 {
     while (window.isOpen()) {
         frameTime = frameClock.restart();
-//        server.listenSocket();
+        server->listenSocket();
+        menuState();
         inputHandler();
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
@@ -63,6 +74,12 @@ void App::loop()
         window.updateHUD();
         window.display();
     }
+}
+
+void App::setupConnection()
+{
+    server = new communication::ServerInteraction(std::stoi(inputPort), inputHost);
+    server->events.subscribe("socket", this);
 }
 
 void App::update(const std::string &eventType, int id, char *data)
@@ -251,7 +268,7 @@ void App::updateBroadcast(char *data)
 
 void App::inputHandler(void)
 {
-    window.clear();
+    window.clear(sf::Color(78, 137, 232));
     while(window.pollEvent(window.getEvent())) {
         window.inputHandler();
         if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)
@@ -271,4 +288,10 @@ void App::updateHud(void)
         window.getHUD().setDrawable(false);
         window.getHUD().resetTilePtr();
     }
+}
+
+void App::triggerEnd(std::string const &teamName)
+{
+    window.getHUD().setDrawable(false);
+    window.getHUD().setEnd(teamName);
 }
