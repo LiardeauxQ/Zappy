@@ -5,6 +5,13 @@
 ** Elevation handlers header
 */
 
+/**
+ * \file elevation_handler.h
+ * \brief player elevation functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "world.h"

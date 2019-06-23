@@ -5,6 +5,13 @@
 ** Player informations handlers header
 */
 
+/**
+ * \file player_info_handlers.h
+ * \brief handle player informations functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "world.h"

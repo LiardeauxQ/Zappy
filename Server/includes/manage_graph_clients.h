@@ -5,6 +5,13 @@
 ** Manage graph clients header
 */
 
+/**
+ * \file manage_graph_clients.h
+ * \brief manage graphical clients functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "client.h"

@@ -5,6 +5,13 @@
 ** utils header
 */
 
+/**
+ * \file utils.h
+ * \brief utils  functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #define READ_SIZE 2048

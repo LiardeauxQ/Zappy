@@ -5,6 +5,13 @@
 ** Manage responses header
 */
 
+/**
+ * \file manage_response.h
+ * \brief manage response functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdio.h>

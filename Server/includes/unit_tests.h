@@ -5,6 +5,13 @@
 ** unit_tests header
 */
 
+/**
+ * \file unit_tests.h
+ * \brief unit_tests functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "world.h"

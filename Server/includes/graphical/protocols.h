@@ -43,6 +43,13 @@
 /// The packet_header subid field of the header permit to handle custom form of data.
 ///
 
+/**
+ * \file protocol.h
+ * \brief initialise action functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdint.h>

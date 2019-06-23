@@ -5,6 +5,13 @@
 ** Resources handlers header
 */
 
+/**
+ * \file resources_handlers.h
+ * \brief handle ressources functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "world.h"

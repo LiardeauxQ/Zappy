@@ -5,6 +5,13 @@
 ** commands header
 */
 
+/**
+ * \file commands.h
+ * \brief graphical command functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdlib.h>

@@ -5,6 +5,13 @@
 ** ai client header
 */
 
+/**
+ * \file client.h
+ * \brief client functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "server.h"
