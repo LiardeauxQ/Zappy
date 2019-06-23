@@ -23,7 +23,7 @@ void tile_to_str(world_t *world, pos_t *pos, int team_id, char **str)
             player_id_cursor = player_id_cursor->next) {
         player = get_player(world->players,
                 *(unsigned int*) player_id_cursor->data);
-        if (player && (int) player->team_id == team_id) {
+        if (player) {
             *str = realloc(*str, strlen(*str) + strlen("player ") + 1);
             strcat(*str, "player ");
         }
