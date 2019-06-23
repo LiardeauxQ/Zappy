@@ -131,10 +131,9 @@ class Player:
             return False
 
     def checkRessource(self, name):
-        # replace 'neceassry' by 'desirable'
         if name == "player" or name == "food" or name == "":
             return False
-        elif vars(self)[name] < CONSTANTS[name + "_necessary"][self.level]:
+        elif vars(self)[name] < CONSTANTS[name + "_desirable"][self.level]:
             return True
         else:
             return False
@@ -220,13 +219,13 @@ class Player:
 
     def start(self):
         while True:
-            #logging.debug("Inventory >food " + str(self.food) +
-            #                    "; linemate"+ str(self.linemate) +
-            #                    "; mendiane"+ str(self.mendiane) +
-            #                    "; phiras"+ str(self.phiras) +
-            #                    "; sibur"+ str(self.sibur) +
-            #                    "; thystame"+ str(self.thystame) +
-            #                    "; deraumere"+ str(self.deraumere))
+            logging.debug("Inventory >food " + str(self.food) +
+                                "; linemate"+ str(self.linemate) +
+                                "; mendiane"+ str(self.mendiane) +
+                                "; phiras"+ str(self.phiras) +
+                                "; sibur"+ str(self.sibur) +
+                                "; thystame"+ str(self.thystame) +
+                                "; deraumere"+ str(self.deraumere))
             self.look()
             if self.checkElevation():
                 if CONSTANT["playerNeededForElevation"][self.level] == self.countPlayerOnTile(self.view):
@@ -235,6 +234,6 @@ class Player:
                     self.startIncantation()
                     self.updateLevel()
                 else:
-                    self.broadcast("elevation for level " + str(self.level))
+                    self.broadcast("elevation_for_level_" + str(self.level))
                     print("SENDING BROADCAST FOR ELEVATION !!")
             self.inventory()
