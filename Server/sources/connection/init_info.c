@@ -23,8 +23,8 @@ int init_info(int ac, char **av, info_t *info)
             : info->input.port);
     info->server_graph.port = (info->input.port == 0 ? DEFAULT_PORT_GRAPH
             : info->input.port + 1);
-    init_connection(&info.server_ai, AI);
-    init_connection(&info.server_graph, GRAPH);
+    init_connection(&info->server_ai, AI);
+    init_connection(&info->server_graph, GRAPH);
     info->game.world.width = info->input.width;
     info->game.world.height = info->input.height;
     info->game.world.f = info->input.frequence;

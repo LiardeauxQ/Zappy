@@ -7,12 +7,7 @@
 
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#include "graphical/client.h"
+#include "client.h"
 
 client_t *get_graph_clients(void);
 void set_graph_clients(client_t *clients);

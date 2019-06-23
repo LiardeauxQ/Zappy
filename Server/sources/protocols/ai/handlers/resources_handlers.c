@@ -45,7 +45,7 @@ enum RESOURCE_NUMBER resource_str_to_id(const char *resource,
 
 int take_object_handler(world_t *world, player_t *player, const char **args)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
     enum RESOURCE_NUMBER resource_id = 0;
 
     if (!args || !args[0])
@@ -66,7 +66,7 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
 int set_down_object_handler(world_t *world, player_t *player,
         const char **args)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
     enum RESOURCE_NUMBER resource_id = 0;
 
     if (!args || !args[0])

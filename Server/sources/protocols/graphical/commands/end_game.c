@@ -12,13 +12,13 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-int assign_end_game(char *msg, int size, int sockfd)
+void *assign_end_game(char *msg, int size, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 
     senders[MSG_SENDER_POS] = (sender_t){&msg, size, sockfd, 0};
     senders[CUSTOM_SENDER_POS].is_last = 1;
-    return (send_end_game(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 int send_end_game(const void *data)

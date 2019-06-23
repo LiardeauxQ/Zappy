@@ -31,7 +31,7 @@ void move_player(world_t *world, player_t *player, int x, int y)
 int forward_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
 
     switch (player->orientation) {
         case NORTH:
@@ -56,7 +56,7 @@ int forward_move_handler(world_t *world, player_t *player,
 int left_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
 
     player->orientation--;
     set_response("ok\n");
@@ -68,7 +68,7 @@ int left_move_handler(world_t *world, player_t *player,
 int right_move_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
 
     player->orientation++;
     set_response("ok\n");

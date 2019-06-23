@@ -10,6 +10,7 @@
 #include "world.h"
 #include "client.h"
 #include "manage_response.h"
+#include "manage_graph_clients.h"
 #include "ai/protocols.h"
 #include "ai/handlers/utils.h"
 #include "graphical/commands.h"

@@ -50,7 +50,7 @@ static void write_player_inventory(const srv_player_inventory_t *inv,
     free(to_write);
 }
 
-int assign_player_inventory(world_t *world, unsigned int player_num,
+void *assign_player_inventory(world_t *world, unsigned int player_num,
         int sockfd)
 {
     struct clt_player_inventory clt = {player_num};
@@ -60,7 +60,7 @@ int assign_player_inventory(world_t *world, unsigned int player_num,
         sockfd, 0};
     senders[CUSTOM_SENDER_POS] = (sender_t){&clt,
         sizeof(struct clt_player_inventory), sockfd, 1};
-    return (send_player_inventory(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 int send_player_inventory(const void *data)

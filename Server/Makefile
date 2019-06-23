@@ -106,6 +106,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				handlers/ai/test_movement_handlers.c \
 				handlers/ai/test_resources_handlers.c \
 				handlers/ai/test_player_info_handlers.c \
+				handlers/ai/wrap_action_handlers.c \
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
 				commands/test_tile_content.c	\
@@ -114,8 +115,10 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_expulsion.c	\
 				commands/test_incantation.c	\
 				commands/test_player_inventory.c	\
+				commands/test_player_connection.c	\
 				commands/test_end_game.c	\
 				commands/test_broadcast.c	\
+				commands/test_team_name.c	\
 
 
 CFLAGS		=	$(INCLUDES) $(WARN)

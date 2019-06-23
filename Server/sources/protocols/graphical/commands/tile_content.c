@@ -34,8 +34,8 @@ srv_tile_content_t convert_to_srv_tile_content(tile_content_t *tile,
     return (content);
 }
 
-int assign_tile_content(world_t *world, unsigned int x, unsigned int y,
-    int sockfd)
+void *assign_tile_content(world_t *world, unsigned int x, unsigned int y,
+        int sockfd)
 {
     clt_tile_content_t clt = {x, y};
     sender_t senders[MAX_SENDERS] = {{0}};
@@ -44,7 +44,7 @@ int assign_tile_content(world_t *world, unsigned int x, unsigned int y,
         sockfd, 0};
     senders[CUSTOM_SENDER_POS] = (sender_t){&clt, sizeof(clt_tile_content_t),
         sockfd, 1};
-    return (send_tile_content(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 char *write_tile_content(tile_content_t *tile,

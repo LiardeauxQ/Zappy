@@ -17,7 +17,7 @@ int get_player_position(const void __attribute__((unused)) *data)
     return (0);
 }
 
-int assign_player_position(world_t *world, unsigned int player_num,
+void *assign_player_position(world_t *world, unsigned int player_num,
         int sockfd)
 {
     clt_player_pos_t pos = {player_num};
@@ -27,7 +27,7 @@ int assign_player_position(world_t *world, unsigned int player_num,
         sockfd, 0};
     senders[CUSTOM_SENDER_POS] = (sender_t){&pos, sizeof(clt_player_pos_t),
         sockfd, 1};
-    return (send_player_position(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 static void write_player_position(const srv_player_pos_t *pos, int sockfd)

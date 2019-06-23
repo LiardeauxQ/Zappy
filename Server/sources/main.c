@@ -38,7 +38,7 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     else if (clt_sockfd > 0) {
         for (size_t i = 0 ; i < game->world.width ; i++)
             for (size_t j = 0 ; j < game->world.height ; j++)
-                assign_tile_content(&game->world, &((clt_tile_content_t){i, j}),clt_sockfd);
+                assign_tile_content(&game->world, i, j, clt_sockfd);
     }
     handle_clients(game, &server->clients, &readfds, reader);
 }

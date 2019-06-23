@@ -5,11 +5,6 @@
 ** Manage graph clients
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
 #include "manage_graph_clients.h"
 
 static client_t *manage_graph_clients(int option, client_t *clients)

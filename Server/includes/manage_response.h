@@ -15,4 +15,4 @@ char *get_response();
 void set_response(char *value);
 
 void exec_graph_request();
-void set_graph_request(char *data, int (*fct)(char *));
+void set_graph_request(void *data, int (*fct)(const void *));

@@ -39,7 +39,7 @@ static int elevation_rules[7][7] = {
 
 void elevate(int client_fd, world_t *world, player_t *player)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
     char *res = 0x0;
 
     if (!player->elevation_start_time)
@@ -78,7 +78,7 @@ int is_enough_users(world_t *world, tile_content_t *tile, player_t *player)
 int elevation_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
-    int sockfd = ((client_t *) get_graph_clients())[0].sockfd;
+    int sockfd = (get_graph_clients())[0].sockfd;
     tile_content_t tile = world->tiles[player->x][player->y];
 
     if (!is_enough_users(world, &tile, player)) {
@@ -94,7 +94,7 @@ int elevation_handler(world_t *world, player_t *player,
     }
     player->elevation_start_time = clock();
     set_response("Elevation underway\n");
-    send_laying_egg(assign_incantation_start(world, player, sockfd));
+    send_incantation_start(assign_incantation_start(world, player, sockfd));
     set_graph_request(assign_incantation_end(player->x, player->y, OK, sockfd),
         &send_incantation_end);
     return (NO_ERROR);

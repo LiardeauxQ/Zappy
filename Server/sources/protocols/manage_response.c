@@ -36,10 +36,10 @@ void set_response(char *value)
     manage_response(1, new_value);
 }
 
-void manage_graph_request(int option, char *data, int (*fct)(char *))
+void manage_graph_request(int option, void *data, int (*fct)(const void *))
 {
-    static char *request = 0x0;
-    static int (*handler)(char *) = 0x0;
+    static void *request = 0x0;
+    static int (*handler)(const void *) = 0x0;
 
     if (!option) {
         request = data;
@@ -54,7 +54,7 @@ void exec_graph_request()
     manage_graph_request(1, 0x0, 0x0);
 }
 
-void set_graph_request(char *data, int (*fct)(char *))
+void set_graph_request(void *data, int (*fct)(const void *))
 {
     manage_graph_request(0, data, fct);
 }
