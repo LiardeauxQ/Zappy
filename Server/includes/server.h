@@ -70,5 +70,5 @@ void free_input(input_t *input);
 
 /* init_info.c */
 
-info_t init_info(int ac, char **av);
+int init_info(int ac, char **av, info_t *info);
 void destroy_info(info_t *info);

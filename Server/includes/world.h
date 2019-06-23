@@ -51,8 +51,7 @@ struct world_s {
 
 typedef struct world_s world_t;
 
-world_t generate_world(const size_t width, const size_t height,
-        const size_t f, const char *resources_filename);
+int generate_world(world_t *world, const char *resources_filename);
 void generate_resources(int **resources, const resource_t *available);
 tile_content_t **init_tiles(const size_t width, const size_t height,
         const int max_resources);

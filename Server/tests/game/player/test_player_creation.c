@@ -16,9 +16,12 @@ Test(add_player, simple_test)
 {
     unsigned int width = 4;
     unsigned int height = 4;
-    world_t world = generate_world(width, height, 0, 0x0);
+    world_t world = {0};
     player_t *player = 0x0;
 
+    world.width = width;
+    world.height = height;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     player = (player_t*) world.players.head->data;
     cr_assert_eq(player->id, 0);

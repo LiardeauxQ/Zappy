@@ -36,7 +36,7 @@ int send_layed_egg(const void *data)
     if (senders == 0x0)
         return (-1);
     player = (player_t*)(senders[PLAYER_SENDER_POS].data);
-    srv = (srv_player_egg_layed_t){player->id, 0, player->x, player->y};
+    srv = (srv_player_egg_layed_t){player->id, 0, player->x, player->y}; //TO DO egg num
     srv.egg_num = *((int*)(senders[INT_SENDER_POS].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);

@@ -14,7 +14,6 @@
 #include "client.h"
 
 int init_connection(server_t *server, enum client_type type);
-int init_non_blocking_connection(server_t *server);
 int set_fds(fd_set *readfds, client_t const clients[MAX_CLIENT],
     int const sockfd);
 int get_new_connection(fd_set *readfds, client_t (*clients)[MAX_CLIENT],

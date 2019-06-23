@@ -45,23 +45,19 @@ tile_content_t **init_tiles(const size_t width, const size_t height,
     return (tiles);
 }
 
-world_t generate_world(const size_t width, const size_t height,
-        const size_t f, const char *resources_filename)
+int generate_world(world_t *world, const char *resources_filename)
 {
-    world_t world = {0};
     size_t max_resources = 0;
 
-    world.width = width;
-    world.height = height;
-    world.f = f;
-    world.resources = parse_resources(resources_filename);
-    while (world.resources[max_resources++].name != 0x0);
-    world.tiles = init_tiles(width, height, max_resources);
-    for (size_t x = 0 ; x < world.width ; x++) {
-        for (size_t y = 0 ; y < world.height ; y++)
-            generate_resources(&world.tiles[x][y].resources, world.resources);
+    world->resources = parse_resources(resources_filename);
+    while (world->resources[max_resources++].name != 0x0);
+    world->tiles = init_tiles(world->width, world->height, max_resources);
+    for (size_t x = 0 ; x < world->width ; x++) {
+        for (size_t y = 0 ; y < world->height ; y++)
+            generate_resources(&world->tiles[x][y].resources,
+                    world->resources);
     }
-    return (world);
+    return (0);
 }
 
 world_t *worlddup(world_t *world)

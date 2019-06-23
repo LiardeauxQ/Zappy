@@ -14,7 +14,10 @@ Test(take_object_handler, test_take_object_handler)
     world_t world = generate_world(4, 4, 0, 0x0);
     player_t *head = 0x0;
 
+    world.width = 4;
+    world.height = 4;
     world.f = 100;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
     head->x = 1;
@@ -33,7 +36,10 @@ Test(set_down_object_handler, test_set_down_object_handler)
     player_t *head = 0x0;
     int old_resources_nbr_on_tile = 0;
 
+    world.width = 4;
+    world.height = 4;
     world.f = 100;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
     head->x = 1;
@@ -48,10 +54,13 @@ Test(set_down_object_handler, test_set_down_object_handler)
 
 Test(inventory_handler, test_inventory_handler)
 {
-    world_t world = generate_world(4, 4, 0, 0x0);
+    world_t world = {0};
     player_t *head = 0x0;
 
+    world.width = 4;
+    world.height = 4;
     world.f = 100;
+    generate_world(&world, 0x0);
     add_player(&world, 0);
     head = (player_t *) world.players.head->data;
     head->x = 1;
