@@ -44,11 +44,8 @@ namespace zapi
             sf::Sprite sprite;
             Tile *tile;
             std::array<int, 7> inventory {{0, 0, 0, 0, 0, 0, 0}};
-<<<<<<< HEAD
             unsigned int width;
             unsigned int height;
-=======
             std::vector<Animation> animations;
->>>>>>> develop
     };
 }
