@@ -22,7 +22,6 @@ namespace zapi
             void loop();
             void event();
 
-
         private:
             sf::RenderWindow window;
             sf::Texture texture;
@@ -32,14 +31,14 @@ namespace zapi
             sf::IntRect rectSourceSprite;
             sf::Sprite buttonSprite;
             sf::Sprite sprite;
-            sf::RectangleShape rectangle;
+            sf::RectangleShape rectangleHost;
+            sf::RectangleShape rectanglePort;
             std::string inputHostStr;
             std::string inputPortStr;
             sf::Text inputHost;
             sf::Text inputPort;
             sf::Font font;
-            bool clicked;
-
-
+            bool clickedHost;
+            bool clickedPort;
     };
 }
