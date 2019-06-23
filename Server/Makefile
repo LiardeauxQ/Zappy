@@ -39,13 +39,19 @@ SRC			:=	arguments/arguments.c	\
 				connection/destroy_server_info.c	\
 				connection/init_info.c	\
 				error.c	\
+				manage_graph_clients.c	\
 				connection/init_connection.c	\
+				protocols/manage_response.c	\
+				protocols/manage_response_graph.c	\
 				protocols/graphical/protocols.c	\
 				protocols/graphical/init_packets.c	\
 				protocols/graphical/packet_handler.c	\
-				protocols/ai/init_action_handlers.c	\
 				protocols/graphical/commands/broadcast.c	\
-				protocols/graphical/commands/eggs.c	\
+				protocols/graphical/commands/egg_connection.c	\
+				protocols/graphical/commands/egg_hatching.c	\
+				protocols/graphical/commands/egg_laying.c	\
+				protocols/graphical/commands/egg_hatched_death.c	\
+				protocols/graphical/commands/egg_layed.c	\
 				protocols/graphical/commands/end_game.c	\
 				protocols/graphical/commands/expulsion.c	\
 				protocols/graphical/commands/incantation.c	\
@@ -61,12 +67,27 @@ SRC			:=	arguments/arguments.c	\
 				protocols/graphical/commands/server_message.c	\
 				protocols/graphical/commands/tile_content.c	\
 				protocols/graphical/commands/time.c	\
+				protocols/graphical/commands/close_connection.c	\
 				protocols/graphical/sender.c	\
+				protocols/graphical/read_graph_client.c	\
+				protocols/ai/init_action_handlers.c	\
+				protocols/ai/read_ai_client.c	\
+				protocols/ai/handlers/fork_handler.c \
+				protocols/ai/handlers/broadcast_handler.c \
+				protocols/ai/handlers/elevation_handler.c \
+				protocols/ai/handlers/movement_handlers.c \
+				protocols/ai/handlers/resources_handlers.c \
+				protocols/ai/handlers/player_info_handlers.c \
+				protocols/ai/handlers/utils.c \
 				handle_clients.c	\
 				game/resources/default_resources.c	\
 				game/resources/handle_resources.c	\
 				game/world_generation.c	\
 				game/player/create_player.c	\
+				game/player/destroy_player.c	\
+				utils/get_next_line.c	\
+				utils/str_to_tab.c	\
+				commands/wrap_protocols_commands.c	\
 
 TEST_SRC	:=	arguments/test_arguments.c	\
 				arguments/test_freq_argument.c	\
@@ -79,19 +100,31 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				test_init_info.c	\
 				test_packet_handler.c	\
 				test_init_packets.c	\
+				test_init_packets_2.c	\
 				game/test_world_generation.c		\
 				game/resources/test_resources.c	\
 				game/resources/test_default_resources.c	\
 				game/player/test_player_creation.c	\
 				commands/test_sender.c	\
 				commands/test_map_size.c	\
+				commands/test_tile_content.c	\
+				commands/test_eggs.c	\
+				commands/test_player.c	\
+				commands/test_expulsion.c	\
+				commands/test_incantation.c	\
+				commands/test_player_inventory.c	\
+				commands/test_player_connection.c	\
+				commands/test_end_game.c	\
+				commands/test_broadcast.c	\
+				commands/test_team_name.c	\
+				commands/test_resources.c	\
 
 
 CFLAGS		=	$(INCLUDES) $(WARN)
 
 TESTCFLAGS	=	$(INCLUDES) $(WARN)
 
-LDFLAGS		=	-lcsv -L ../library/csv -llinkedlist -L ../library/linked_list
+LDFLAGS		=	-lm -lcsv -L ../library/csv -llinkedlist -L ../library/linked_list
 
 WARN		=	-Wall -Wextra
 
@@ -156,6 +189,7 @@ cmd_gen:	$(ROOT)/$(COMPILER_COMMAND)
 $(TEST):	build_tests
 			$(V)printf "$(GREEN)Execute tests for $(NAME):$(WHITE)\n"
 			$(V)./tests_run -f
+			$(V)find . -maxdepth 1 -type f -name 'tmp*' -delete
 
 debug:			 re
 
@@ -202,7 +236,7 @@ $(BUILD)/%.o.json:		$(TEST_DIR)/%.c
 
 clean:
 			$(V)rm -rf $(BUILD)
-			$(V)rm -f $(TMP_FILES)
+			$(V)find . -maxdepth 1 -type f -name 'tmp*' -delete
 			$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:		clean

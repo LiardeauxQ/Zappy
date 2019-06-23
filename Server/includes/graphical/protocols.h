@@ -1,9 +1,9 @@
-///
-/// EPITECH PROJECT, 2018
-/// protocols
-/// File description:
-/// protocols
-///
+/*
+** EPITECH PROJECT, 2018
+** protocols
+** File description:
+** protocols
+*/
 
 /// \mainpage Zappy documentation
 ///
@@ -42,6 +42,13 @@
 /// The scalability lay on the `CLT_CUSTOM` and `SRV_CUSTOM` requests `id`
 /// The packet_header subid field of the header permit to handle custom form of data.
 ///
+
+/**
+ * \file protocol.h
+ * \brief initialise action functions.
+ * \date Jun, 23 2019
+ *
+ */
 
 #pragma once
 
@@ -88,7 +95,7 @@ enum GRAPHIC_PACKETS_FROM_CLIENT {
 ///
     CLT_MAP_SIZE            = 2,
     CLT_TILE_CONTENT        = 3,
-    CLT_MAP_CONTENT         = 4,
+    CLT_MAP_CONTENT         = 5,
     CLT_TEAMS_NAMES         = 5,
     CLT_PLAYER_POSITION     = 6,
     CLT_PLAYER_LEVEL        = 7,
@@ -98,7 +105,7 @@ enum GRAPHIC_PACKETS_FROM_CLIENT {
 ///
 /// Special commands reserved for addons.
 ///
-    CLT_CUSTOM              = 11
+    CLT_CLOSE_CONNECTION    = 11
 };
 
 enum GRAPHIC_PACKETS_FROM_SERVER {
@@ -178,7 +185,7 @@ enum RESOURCE_NUMBER {
 /// Each change to this document will need an incrementation of this value.
 ///
 
-#define PROTOCOL_VERSION    0x6
+#define PROTOCOL_VERSION    0xB
 
 #define SHORT_MSG_LEN 128
 #define LONG_MSG_LEN 1024
@@ -499,7 +506,7 @@ struct PACKED srv_start_incantation {
     unsigned int players[32];
 };
 
-typedef struct srv_start_incantation_msg srv_start_incantation_msg_t;
+typedef struct srv_start_incantation srv_start_incantation_t;
 
 #define SRV_START_INCANTATION_LEN sizeof(struct srv_start_incantation)
 
@@ -513,7 +520,7 @@ struct PACKED srv_end_incantation {
     enum RESULT result;
 };
 
-typedef struct srv_end_incantation_msg srv_end_incantation_msg_t;
+typedef struct srv_end_incantation srv_end_incantation_t;
 
 #define SRV_END_INCANTATION_LEN sizeof(struct srv_end_incantation)
 
@@ -631,6 +638,44 @@ typedef struct srv_end_game srv_end_game_t;
 #define SRV_END_GAME_LEN sizeof(struct srv_end_game)
 
 ///
+/// Client time unit request packet.
+///
+
+struct PACKED clt_time_unit_request {
+    char tmp;
+};
+
+typedef struct clt_time_unit_request clt_time_unit_request_t;
+
+#define CLT_TIME_UNIT_REQUEST_LEN sizeof(struct clt_time_unit_request)
+
+///
+/// Server time unit response.
+/// Contain the frequency used for actions.
+///
+
+struct PACKED srv_time_unit_request {
+    int freq;  
+};
+
+typedef struct srv_time_unit_request srv_time_unit_request_t;
+
+#define SRV_TIME_UNIT_REQUEST_LEN sizeof(struct srv_time_unit_request)
+
+///
+/// Client time unit change packet.
+/// Contain the frequency to change, used for actions.
+///
+
+struct PACKED clt_time_unit_change {
+    int freq;  
+};
+
+typedef struct clt_time_unit_change clt_time_unit_change_t;
+
+#define CLT_TIME_UNIT_CHANGE_LEN sizeof(struct clt_time_unit_change)
+
+///
 /// Message from server.
 ///
 
@@ -661,6 +706,18 @@ typedef struct srv_unknown_command srv_unknown_command_t;
 struct PACKED srv_bad_parameters {
     char tmp;
 };
+
+///
+/// Client close connection
+///
+
+struct PACKED clt_close_connection {
+    char tmp;
+};
+
+typedef struct clt_close_connection clt_close_connection_t;
+
+#define CLT_CLOSE_CONNECTION_LEN sizeof(struct clt_close_connection)
 
 typedef struct srv_bad_parameters srv_bad_parameters_t;
 

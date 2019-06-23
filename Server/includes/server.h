@@ -5,6 +5,13 @@
 ** server header
 */
 
+/**
+ * \file server.h
+ * \brief server functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdlib.h>
@@ -16,10 +23,15 @@
 
 #include "client.h"
 #include "graphical/protocols.h"
+#include "ai/protocols.h"
 #include "world.h"
 
 #define DEFAULT_PORT_AI 6000
 #define DEFAULT_PORT_GRAPH 6001
+#define DEFAULT_FREQUENCE 1000
+#define DEFAULT_CLIENT_NB 4
+#define DEFAULT_MAP_WIDTH 5
+#define DEFAULT_MAP_HEIGHT 5
 
 struct input_s {
     unsigned int port;
@@ -45,6 +57,7 @@ typedef struct server_s server_t;
 
 struct game_s {
     phr_t handler_register;
+    ahr_t action_register;
     world_t world;
 };
 
@@ -68,5 +81,5 @@ void free_input(input_t *input);
 
 /* init_info.c */
 
-info_t init_info(int ac, char **av);
+int init_info(int ac, char **av, info_t *info);
 void destroy_info(info_t *info);

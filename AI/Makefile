@@ -17,10 +17,11 @@ TEST		=	tests_run
 
 MAIN		:=	$(SRC_DIR)/main.py	\
 
+TEST_MAIN	:=	$(TEST_DIR)/tests.py	\
+
 SRC			:=	
 
 TEST_SRC	:=
-
 
 LIB		?=	1
 
@@ -54,13 +55,18 @@ all:			$(NAME)
 $(NAME):
 			$(V)printf "$(GREEN)Creating binary.$(WHITE)\n"
 			$(V)touch $(NAME)
-			$(V)echo "#!/usr/bin/env python3\n" >> $(NAME)
+			$(V)echo "#!/usr/bin/env python3" >> $(NAME)
 			$(V)cat $(MAIN) >> $(NAME)
 			$(V)chmod +x $(NAME)
 
 $(TEST):
 				$(V)printf "$(GREEN)Duping binary.$(WHITE)\n"
+				$(V)touch ../$(TEST)
+				$(V)echo "#!/usr/bin/env python3" >> ../$(TEST)
+				$(V)cat $(TEST_MAIN) >> ../$(TEST)
+				$(V)chmod +x ../$(TEST)
 				$(V)printf "$(GREEN)Executing tests for $(NAME):$(WHITE)\n"
+				$(V)../$(TEST)
 
 debug:			 echo_d $(NAME)
 

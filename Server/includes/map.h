@@ -5,6 +5,13 @@
 ** handle map
 */
 
+/**
+ * \file map.h
+ * \brief mapfunctions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include "graphical/protocols.h"

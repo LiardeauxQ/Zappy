@@ -33,6 +33,8 @@ TEST_DIRS		:=	$(ROOT)/Server/tests	\
 					$(ROOT)/Graphical/tests	\
 					$(ROOT)/library/csv/tests
 
+DOX_CONFIG		=	.doxigen-config
+
 #COLOR
 
 GREEN		=	\e[1;32m
@@ -90,12 +92,14 @@ clean:
 		$(V)$(foreach var, $(LIBS), make clean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
 		$(V)rm -f $(TMP_FILES)
+		$(V) find . -name '*.log' -type f -delete
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
 		$(V)$(foreach var, $(LIBS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(BINARIES), rm -f $(var);)
+		$(V) find . -name '*.log' -type f -delete
 		$(V)rm -f $(TMP_FILES)
 		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
 
@@ -110,4 +114,7 @@ echo_d:
 echo_r:
 			$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
 
-.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests
+doc:
+			doxygen $(DOX_CONFIG)
+
+.PHONY:		 clean fclean debug all re echo_debug buildrepo libraries build_tests tests_run doc
