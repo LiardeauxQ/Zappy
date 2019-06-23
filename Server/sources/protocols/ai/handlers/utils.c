@@ -32,6 +32,7 @@ size_t *next_case(world_t *world, size_t *coords, int orientation, int inc)
     int y_inc[4] = {-1, 0, 1, 0};
     int new_coords[2] = {coords[0], coords[1]};
 
+    orientation--;
     new_coords[0] += x_inc[orientation] * inc;
     new_coords[1] += y_inc[orientation] * inc;
     if (new_coords[0] >= (int) world->width)

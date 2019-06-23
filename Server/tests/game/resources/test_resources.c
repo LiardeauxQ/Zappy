@@ -51,7 +51,7 @@ Test(fill_resources, simple_test)
     cr_assert_eq(resources[1].percentage, 5);
     cr_assert_eq(resources[2].id, 3);
     cr_assert_str_eq(resources[2].name, "sibur");
-    cr_assert_eq(resources[2].percentage, 50);
+   cr_assert_eq(resources[2].percentage, 50);
 }
 
 Test(fill_resources, test_with_data_error)

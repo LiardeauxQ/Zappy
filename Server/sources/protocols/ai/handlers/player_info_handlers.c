@@ -63,7 +63,8 @@ int look_handler(world_t *world, player_t *player,
             next_case(world, current_line_start, player->orientation, 1);
         }
         next_case(world, current_line_start, player->orientation, 2 + i * 2);
-        next_case(world, current_line_start, player->orientation - 1, 1);
+        next_case(world, current_line_start,
+                (player->orientation == 1) ? 4 : player->orientation - 1, 1);
     }
     look_table_len = strlen(look_table);
     look_table[look_table_len - 1] = ']';
