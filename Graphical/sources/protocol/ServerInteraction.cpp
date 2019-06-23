@@ -147,8 +147,6 @@ void communication::ServerInteraction::listenSocket(void)
     result = read(sockfd, &hdr, PKT_HDR_LEN);
     if (result <= 0)
         return;
-    if (result > 0)
-        std::cout << "bytes: " << result << std::endl;
     data = (char*)calloc(1, hdr.size);
     result = read(sockfd, data, hdr.size);
     if (result <= 0)

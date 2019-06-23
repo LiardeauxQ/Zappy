@@ -6,25 +6,13 @@
 */
 
 #include <stdio.h>
-#include "InputParser.hpp"
-#include "ServerInteraction.hpp"
 #include "App.hpp"
 
 int main(int ac, char **av)
 {
-    IO::InputParser iParser(ac, av);
-
     try {
-        communication::ServerInteraction interaction(iParser.getCmdIntOption("-p"),
-                iParser.getCmdStringOption("-h"));
-        srv_map_size_t map = interaction.requestMapSize();
-        std::cout << map.x << " " << map.y << std::endl;
-        interaction.setNonBlockingSocket();
-        App app("Zappy", interaction, map.x, map.y);
-
+        App app("Zappy", 20, 20);
         app.start();
-        printf("before end\n");
-        app.triggerEnd("test");
     } catch (std::exception e) {
         std::cout << "Error to init connection" << std::endl;
     }

@@ -30,6 +30,7 @@ SRC			:=	Core/Window.cpp \
 				Resource.cpp \
 				Player.cpp \
 				Team.cpp \
+				Core/Menu.cpp \
 				Animation.cpp \
 
 INCLUDES	=	-I includes

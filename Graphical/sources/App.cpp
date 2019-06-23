@@ -37,39 +37,66 @@ static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
     std::make_tuple(SRV_CUSTOM, nullptr)
 };
 
-App::App(const std::string &title, communication::ServerInteraction &interaction,
-        unsigned int width, unsigned int height) :
+App::App(const std::string &title, unsigned int width, unsigned int height) :
     zapi::Game(width, height),
     window(title, width, height),
-    server(interaction),
-    isEnded(false),
     frameClock(),
-    frameTime()
+    frameTime(),
+    isEnded(false)
 {
-    server.events.subscribe("socket", this);
 }
 
 void App::start()
 {
+    menuState();
     loop();
+}
+
+void App::menuState(void)
+{
+    if (window.getMenu().getGameStart())
+        return;
+    window.getMenu().start();
+    inputHost = window.getMenu().getInputHost().erase(0, 6);
+    inputPort = window.getMenu().getInputPort().erase(0, 6);
+    setupConnection();
 }
 
 void App::loop()
 {
     while (window.isOpen()) {
+        std::cout << "loop" << std::endl;
         frameTime = frameClock.restart();
-        server.listenSocket();
+        if (server != nullptr)
+            server->listenSocket();
+        std::cout << "end socket" << std::endl;
         inputHandler();
+        std::cout << "input handler" << std::endl;
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
             window.drawEntities(team.getPlayers(), frameTime);
+        std::cout << "draw entities" << std::endl;
         window.updateHUD();
         window.display();
+        std::cout << "end window displaying" << std::endl;
     }
 }
 
-void App::update(const std::string __attribute__((unused)) &eventType,
-        int id, char *data)
+void App::setupConnection()
+{
+    srv_map_size_t map = {0};
+
+    server = new communication::ServerInteraction(std::stoi(inputPort), inputHost);
+    server->events.subscribe("socket", this);
+
+    map = server->requestMapSize();
+    width = map.x;
+    height = map.y;
+    initialize();
+    server->setNonBlockingSocket();
+}
+
+void App::update(const std::string &eventType, int id, char *data)
 {
     cmdServerFun func;
 
@@ -279,5 +306,6 @@ void App::updateHud(void)
 
 void App::triggerEnd(std::string const &teamName)
 {
+    window.getHUD().setDrawable(false);
     window.getHUD().setEnd(teamName);
 }

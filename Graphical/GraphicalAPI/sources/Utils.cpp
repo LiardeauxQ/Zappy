@@ -58,13 +58,39 @@ sf::Texture *zapi::getPlayerTexture()
     return resourceTexture;
 }
 
+sf::Texture *zapi::getButtonMenuTexture()
+{
+    static sf::Texture *resourceTexture;
+
+    if (!resourceTexture) {
+        resourceTexture = new sf::Texture();
+        if (!resourceTexture->loadFromFile("Graphical/sprites/yellowSheet.png"))
+            resourceTexture->loadFromFile("Graphical/sprites/yellowSheet.png");
+        resourceTexture->setSmooth(true);
+    }
+    return resourceTexture;
+}
+
+sf::Texture *zapi::getBackgroundMenuTexture()
+{
+    static sf::Texture *resourceTexture;
+
+    if (!resourceTexture) {
+        resourceTexture = new sf::Texture();
+        if (!resourceTexture->loadFromFile("Graphical/sprites/menu.png"))
+            resourceTexture->loadFromFile("Graphical/sprites/menu.png");
+        resourceTexture->setSmooth(true);
+    }
+    return resourceTexture;
+}
+
 sf::Font *zapi::getFont()
 {
     static sf::Font *font;
 
     if (!font) {
         font = new sf::Font();
-        if (!font->loadFromFile("Graphical/fonts/arcadeClassic.ttf"))
+        if (!font->loadFromFile("Graphical/fonts/arcade.ttf"))
             font->loadFromFile("fonts/arcadeClassic.ttf");
     }
     return font;
