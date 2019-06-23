@@ -29,7 +29,9 @@ void set_graph_clients(client_t *clients)
 
 void send_graph_welcome(world_t *world, client_t *clients, int sockfd)
 {
-    send_map_size(assign_map_size(world, sockfd));
-    send_map_content(assign_map_content(world, sockfd));
+    if (sockfd > 0) {
+        send_map_size(assign_map_size(world, sockfd));
+        send_map_content(assign_map_content(world, sockfd));
+    }
     manage_graph_clients(1, clients);
 }

@@ -35,28 +35,3 @@ void set_response(char *value)
     strcpy(new_value, value);
     manage_response(1, new_value);
 }
-
-int manage_graph_request(int option, const void *data,
-        int (*fct)(const void *))
-{
-    static void *request = 0x0;
-    static int (*handler)(const void *) = 0x0;
-
-    if (!option) {
-        request = data;
-        handler = fct;
-        exec_graph_request();
-    } else if (option == 1) {
-        handler(request);
-        request = 0x0;
-        handler = 0x0;
-    } else {
-        return (request && handler);
-    }
-    return (1);
-}
-
-int is_graph_request_ok()
-{
-    return manage_graph_request(2, 0x0, 0x0);
-}
