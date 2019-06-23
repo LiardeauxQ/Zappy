@@ -20,7 +20,11 @@ namespace zapi
             ~Menu() = default;
             void start();
             void loop();
-            void event();
+            void setPositionButton();
+            void detectedClick();
+            void displayItems();
+            void updateInputs();
+            void detectInputs();
 
         private:
             sf::RenderWindow window;
@@ -39,6 +43,7 @@ namespace zapi
             sf::Text textButton;
             sf::Text inputPort;
             sf::Font font;
+            sf::Event event;
             bool clickedHost;
             bool clickedPort;
     };
