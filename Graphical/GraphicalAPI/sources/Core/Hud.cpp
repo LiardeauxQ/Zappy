@@ -30,7 +30,7 @@ void zapi::Hud::initializeResourceOutputs(int i)
         resourceOutputs[i].setCharacterSize(70);
         resourceOutputs[i].setFillColor(sf::Color::White);
         resourceOutputs[i].setString("0");
-        resourceOutputs[i].setPosition(sf::Vector2f((i * 120) + 65, 210));
+        resourceOutputs[i].setPosition(sf::Vector2f((i * 120) + 60, 210));
 }
 
 void zapi::Hud::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -64,7 +64,7 @@ void zapi::Hud::initializeText(void)
     text.setFont(*(getFont()));
     text.setCharacterSize(50);
     text.setFillColor(sf::Color::White);
-    text.setString("Inventory  of ");
+    text.setString("Inventory:");
     text.setPosition(30, 30);
     tileTitle.setFont(*(getFont()));
     tileTitle.setCharacterSize(50);
@@ -74,7 +74,6 @@ void zapi::Hud::initializeText(void)
     endText.setFont(*(getFont()));
     endText.setCharacterSize(70);
     endText.setFillColor(sf::Color::White);
-    endText.setString("Team Beat the Game!!");
     endText.setPosition(1130, 610);
 }
 
@@ -129,5 +128,5 @@ zapi::Tile *zapi::Hud::getTilePtr(void)
 void zapi::Hud::setEnd(std::string const &teamName)
 {
     isEnded = true;
-    endText.setString("Team  " + teamName + "  beat  the  game!!");
+    endText.setString("Team " + teamName + " beat the game!!");
 }

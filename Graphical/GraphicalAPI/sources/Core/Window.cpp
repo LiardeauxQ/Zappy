@@ -11,10 +11,11 @@
 zapi::Window::Window(const std::string &title, unsigned int width, unsigned int height)
 : sf::RenderWindow(sf::VideoMode::getDesktopMode(), title)
 , hud()
+, menu(*this)
 , event()
 , width(width)
 , height(height)
-, camera(sf::FloatRect((width <= 15) ? 0 : (((width * 100) / 2) - (1600 / 2)), (height <= 15) ? 0 : (((height * 100) / 2) - (900 / 2)), 1600, 900))
+, camera(sf::FloatRect(0, 0, 1920, 1080))
 {
     setView(camera);
 }
@@ -51,12 +52,13 @@ void zapi::Window::drawEntities(std::list<Player> &entities, sf::Time frameTime)
     }
 }
 
-void zapi::Window::inputHandler()
+void zapi::Window::inputHandler(void)
 {
     if (event.type == sf::Event::Closed)
         close();
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         close();
+    }
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
         camera.move(0, -40);
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)
@@ -88,4 +90,9 @@ zapi::Hud &zapi::Window::getHUD(void)
 sf::Event &zapi::Window::getEvent(void)
 {
     return event;
+}
+
+zapi::Menu &zapi::Window::getMenu()
+{
+    return menu;
 }

@@ -117,6 +117,7 @@ TEST_SRC	:=	arguments/test_arguments.c	\
 				commands/test_end_game.c	\
 				commands/test_broadcast.c	\
 				commands/test_team_name.c	\
+				commands/test_resources.c	\
 
 
 CFLAGS		=	$(INCLUDES) $(WARN)

@@ -53,10 +53,10 @@ namespace zapi
 
             std::vector<Tile> &getTiles(void) { return tiles; }
             std::vector<Team> &getTeams(void) { return teams; }
-        private:
             std::vector<Tile> tiles;
-            std::vector<Team> teams;
             unsigned int width;
             unsigned int height;
+        private:
+            std::vector<Team> teams;
     };
 }

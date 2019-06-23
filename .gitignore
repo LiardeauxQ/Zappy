@@ -18,3 +18,5 @@ vgcore*
 zappy_ai_*.log
 .bash_history
 *.vimsess
+html
+latex
