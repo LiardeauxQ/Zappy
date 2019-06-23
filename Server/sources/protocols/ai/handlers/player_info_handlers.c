@@ -12,11 +12,11 @@
 
 #include "ai/handlers/player_info_handlers.h"
 
-void tile_to_str(world_t *world, size_t *coords, int team_id, char **str)
+void tile_to_str(world_t *world, pos_t *pos, int team_id, char **str)
 {
     char *buffer = 0x0;
     player_t *player = 0x0;
-    tile_content_t tile = world->tiles[coords[0]][coords[1]];
+    tile_content_t tile = world->tiles[pos->x][pos->y];
 
     for (node_t *player_id_cursor = tile.players_id.head; player_id_cursor;
             player_id_cursor = player_id_cursor->next) {
@@ -36,12 +36,12 @@ void tile_to_str(world_t *world, size_t *coords, int team_id, char **str)
     }
 }
 
-void append_tile_to_look_table(world_t *world, size_t *coords, int team_id,
+void append_tile_to_look_table(world_t *world, pos_t *pos, int team_id,
         char **look_table)
 {
     char *tile = calloc(1, 1);
 
-    tile_to_str(world, coords, team_id, &tile);
+    tile_to_str(world, pos, team_id, &tile);
     if (!*look_table[0])
         *look_table[0] = '[';
     *look_table = realloc(*look_table, strlen(*look_table) + strlen(tile) + 3);
@@ -55,17 +55,17 @@ int look_handler(world_t *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     int look_table_len = 0;
-    size_t current_line_start[2] = {player->x, player->y};
+    pos_t current_pos = {player->x, player->y};
     char *look_table = calloc(1, 2);
 
     for (int i = 0; i <= player->level; i++) {
         for (int j = 0; j < 1 + i * 2; j++) {
-            append_tile_to_look_table(world, current_line_start,
+            append_tile_to_look_table(world, &current_pos,
                     player->team_id, &look_table);
-            next_case(world, current_line_start, player->orientation, 1);
+            next_case(world, &current_pos, player->orientation, 1);
         }
-        next_case(world, current_line_start, player->orientation, 2 + i * 2);
-        next_case(world, current_line_start, player->orientation - 1, 1);
+        next_case(world, &current_pos, player->orientation, 2 + i * 2);
+        next_case(world, &current_pos, player->orientation - 1, 1);
     }
     look_table_len = strlen(look_table);
     look_table[look_table_len - 1] = ']';

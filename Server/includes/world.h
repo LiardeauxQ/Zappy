@@ -23,6 +23,13 @@ struct tile_content_s {
 
 typedef struct tile_content_s tile_content_t;
 
+struct pos_s {
+    int x;
+    int y;
+};
+
+typedef struct pos_s pos_t;
+
 struct player_s {
     uint8_t level;
     unsigned int id;

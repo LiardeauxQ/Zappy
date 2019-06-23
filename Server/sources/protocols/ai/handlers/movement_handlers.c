@@ -58,7 +58,7 @@ int left_move_handler(world_t *world, player_t *player,
 {
     int sockfd = (get_graph_clients())[0].sockfd;
 
-    player->orientation--;
+    player->orientation = (player->orientation - 1) % 4;
     set_response("ok\n");
     set_graph_request(assign_player_position(world, player->id, sockfd),
         &send_player_position);
@@ -70,7 +70,7 @@ int right_move_handler(world_t *world, player_t *player,
 {
     int sockfd = (get_graph_clients())[0].sockfd;
 
-    player->orientation++;
+    player->orientation =  (player->orientation + 1) % 4;
     set_response("ok\n");
     set_graph_request(assign_player_position(world, player->id, sockfd),
         &send_player_position);

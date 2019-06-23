@@ -86,6 +86,7 @@ int read_ai_client(client_t *client, game_t *game)
         return (-1);
     buffer[strlen(buffer) - 1] = 0;
     splitted_cmd = str_to_tab(buffer, " ");
+    printf("==> %p %p %p %p\n", client, game, player, splitted_cmd);
     execute_action(client, game, player, (const char **) splitted_cmd);
     display_actions_log(player, buffer);
     write(client->sockfd, get_response(), strlen(get_response()));

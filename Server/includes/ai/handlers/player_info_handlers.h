@@ -13,9 +13,9 @@
 #include "ai/handlers/utils.h"
 #include "graphical/commands.h"
 
-void tile_to_str(world_t *world, size_t *coords, int team_id, char **str);
+void tile_to_str(world_t *world, pos_t *pos, int team_id, char **str);
 
-void append_tile_to_look_table(world_t *world, size_t *coords, int team_id,
+void append_tile_to_look_table(world_t *world, pos_t *pos, int team_id,
         char **look_table);
 
 int look_handler(world_t *world, player_t *player, const char **args);
