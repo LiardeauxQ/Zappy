@@ -21,7 +21,7 @@ static char *manage_response(int option, char *value)
     return (response);
 }
 
-char *get_response()
+char *get_response(void)
 {
     return (manage_response(0, 0x0));
 }
@@ -34,27 +34,4 @@ void set_response(char *value)
         free(get_response());
     strcpy(new_value, value);
     manage_response(1, new_value);
-}
-
-void manage_graph_request(int option, void *data, int (*fct)(const void *))
-{
-    static void *request = 0x0;
-    static int (*handler)(const void *) = 0x0;
-
-    if (!option) {
-        request = data;
-        handler = fct;
-    } else {
-        handler(request);
-    }
-}
-
-void exec_graph_request()
-{
-    manage_graph_request(1, 0x0, 0x0);
-}
-
-void set_graph_request(void *data, int (*fct)(const void *))
-{
-    manage_graph_request(0, data, fct);
 }

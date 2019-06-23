@@ -10,7 +10,11 @@
 
 int main(int ac, char **av)
 {
-    App app("Zappy", 5, 5);
-    app.start();
+    try {
+        App app("Zappy", 20, 20);
+        app.start();
+    } catch (std::exception e) {
+        std::cout << "Error to init connection" << std::endl;
+    }
     return (0);
 }

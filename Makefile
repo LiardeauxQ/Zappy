@@ -92,12 +92,14 @@ clean:
 		$(V)$(foreach var, $(LIBS), make clean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
 		$(V)rm -f $(TMP_FILES)
+		$(V) find . -name '*.log' -type f -delete
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
 		$(V)$(foreach var, $(LIBS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make fclean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(BINARIES), rm -f $(var);)
+		$(V) find . -name '*.log' -type f -delete
 		$(V)rm -f $(TMP_FILES)
 		$(V)printf "$(ORANGE)Removing binary files.$(WHITE)\n"
 

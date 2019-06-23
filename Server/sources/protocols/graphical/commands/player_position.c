@@ -17,10 +17,10 @@ int get_player_position(const void __attribute__((unused)) *data)
     return (0);
 }
 
-void *assign_player_position(world_t *world, unsigned int player_num,
+void *assign_player_position(world_t *world, unsigned int *player_num,
         int sockfd)
 {
-    clt_player_pos_t pos = {player_num};
+    clt_player_pos_t pos = {*player_num};
     sender_t senders[MAX_SENDERS] = {{0}};
 
     senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world_t),

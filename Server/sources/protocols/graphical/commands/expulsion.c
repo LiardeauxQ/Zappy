@@ -12,11 +12,11 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-void *assign_player_expulsion(int player_num, int sockfd)
+void *assign_player_expulsion(unsigned int *player_num, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 
-    senders[INT_SENDER_POS] = (sender_t){&player_num, sizeof(int), sockfd, 0};
+    senders[INT_SENDER_POS] = (sender_t){player_num, sizeof(int), sockfd, 0};
     senders[CUSTOM_SENDER_POS].is_last = 1;
     return (convert_senders_to_data(senders));
 }

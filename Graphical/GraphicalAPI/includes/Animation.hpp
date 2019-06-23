@@ -46,7 +46,6 @@ namespace zapi
             void setIsLoop(bool value);
             void play(unsigned int cycle = 0, sf::Vector2f endPosition = sf::Vector2f(0, 0));
         private:
-
             sf::Sprite sprite;
             std::vector<sf::IntRect> frames;
             unsigned int frameIndex;

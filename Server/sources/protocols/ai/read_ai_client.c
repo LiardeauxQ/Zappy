@@ -5,6 +5,7 @@
 ** catch clients commands
 */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,13 +14,20 @@
 #include "ai/client.h"
 #include "ai/handlers/elevation_handler.h"
 #include "ai/handlers/fork_handler.h"
+#include "ai/handlers/broadcast_handler.h"
 
-void handle_awaiting_actions(int fd, world_t *world, player_t *player)
+void handle_awaiting_actions(client_t (*clients)[MAX_CLIENT], int client_pos,
+        world_t *world)
 {
+    int fd = (*clients)[client_pos].sockfd;
+    player_t *player = get_player(world->players,
+            (*clients)[client_pos].client_nb);
+
     if (!player)
         return;
     hatch(world, player);
     elevate(fd, world, player);
+    broadcast(clients, world, player);
 }
 
 void init_client_communication(client_t *clt, game_t *game)
@@ -39,7 +47,8 @@ void init_client_communication(client_t *clt, game_t *game)
     free(team_name);
 }
 
-void execute_action(client_t *client, game_t *game, player_t *player,
+void execute_action(client_t __attribute__((unused))*client,
+        game_t *game, player_t *player,
         const char **splitted_cmd)
 {
     int action_found = 0;
@@ -63,11 +72,22 @@ void execute_action(client_t *client, game_t *game, player_t *player,
                 handler->limit_cycles, world.f));
 }
 
-void display_actions_log(player_t *player, char *action)
+void send_action_response(client_t *client, world_t *world,
+        player_t *player, char *action)
 {
-    printf("==> Player (id: %d, team: %d): { x: %d, y: %d }\n", player->id,
-            player->team_id, player->x, player->y);
+    static int i = 0;
+
+    printf("==> Player (id: %d, team: %d, level: %d): "
+            "{ orientation: %d, x: %d, y: %d }\n",
+            player->id, player->team_id, player->level, player->orientation,
+            player->x, player->y);
     printf("    -> Cmd: %s\n       Send: %s\n", action, get_response());
+    write(client->sockfd, get_response(), strlen(get_response()));
+    i++;
+    if (i > 10) {
+        update_world_resources(world, 3);
+        i = 0;
+    }
 }
 
 int read_ai_client(client_t *client, game_t *game)
@@ -87,9 +107,7 @@ int read_ai_client(client_t *client, game_t *game)
     buffer[strlen(buffer) - 1] = 0;
     splitted_cmd = str_to_tab(buffer, " ");
     execute_action(client, game, player, (const char **) splitted_cmd);
-    display_actions_log(player, buffer);
-    write(client->sockfd, get_response(), strlen(get_response()));
-    exec_graph_request();
+    send_action_response(client, &game->world, player, buffer);
     free(buffer);
     return (0);
 }

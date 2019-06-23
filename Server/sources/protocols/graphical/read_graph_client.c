@@ -32,19 +32,20 @@ int dispatch_receive_data(game_t *g, sender_t *default_senders, int sockfd)
     int byte = 0;
     int result = 0;
 
+    printf("-> sockfd: %d\n", sockfd);
     byte = read(sockfd, &hdr, PKT_HDR_LEN);
+    perror("read");
+    printf("byte %d\n", byte);
+    if (errno == EBADF)
+        return (CLT_CLOSE_CONNECTION);
     if (byte != PKT_HDR_LEN)
         return (-1);
-    if (errno == EBADF)
-        return (CLT_PLAYER_POSITION);
     sender = (sender_t){0x0, hdr.size, sockfd, 1};
     read(sockfd, (char*)(sender.data), sender.size);
     default_senders[CUSTOM_SENDER_POS] = sender;
     handler = get_data_handler_for_id(&g->handler_register, hdr.id);
     result = handler(convert_senders_to_data(default_senders));
-    if (result > 0 && hdr.subid == 0)
-        return (result);
-    if (result < 0)
+    if ((result > 0 && hdr.subid == 0) || (result < 0))
         return (result);
     return (hdr.subid > 0 ? 1 : 0);
 }

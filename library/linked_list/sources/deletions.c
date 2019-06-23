@@ -30,7 +30,7 @@ void *delete_elem(linked_list_t *list, size_t pos)
         return (0x0);
     if (!pos)
         list->head = tmp->next;
-    for (int i = 0; tmp->next && i < pos; i++)
+    for (unsigned int i = 0; tmp->next && i < pos; i++)
         tmp = tmp->next;
     data = tmp->data;
     if (tmp->next)

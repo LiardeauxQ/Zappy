@@ -12,7 +12,7 @@
 
 sender_t *get_senders_from_data(const void *data)
 {
-    int *magic_num = (int*)(data);
+    int *magic_num = (int *)(data);
     int offset = sizeof(int);
     sender_t *senders = 0x0;
     sender_t *tmp = 0x0;
@@ -69,7 +69,7 @@ void destroy_senders(sender_t *senders)
     size_t i = 0;
 
     while (!senders[i].is_last)
-        free((char*)senders[i++].data);
-    free((char*)senders[i].data);
+        free((char *)senders[i++].data);
+    free((char *)senders[i].data);
     free(senders);
 }

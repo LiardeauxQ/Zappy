@@ -7,7 +7,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "ai/handlers/elevation_handler.h"
 
@@ -53,7 +56,7 @@ void elevate(int client_fd, world_t *world, player_t *player)
         write(client_fd, res, strlen(res));
         free(res);
         player->elevation_start_time = 0;
-        set_graph_request(assign_player_level(world, player->id, sockfd),
+        set_graph_request(assign_player_level(world, &player->id, sockfd),
             &send_player_level);
     }
 }
@@ -82,12 +85,14 @@ int elevation_handler(world_t *world, player_t *player,
     tile_content_t tile = world->tiles[player->x][player->y];
 
     if (!is_enough_users(world, &tile, player)) {
+        printf("User KO\n");
         set_response("ko\n");
         return (INVALID_PARAMETERS);
     }
     for (int i = 1; tile.resources[i] != -1 &&
             i < DEFAULT_RESOURCES_NUMBER - 1; i++) {
         if (tile.resources[i] < elevation_rules[player->level - 1][i]) {
+            printf("Ressources KO\n");
             set_response("ko\n");
             return (INVALID_PARAMETERS);
         }

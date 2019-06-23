@@ -94,7 +94,7 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
 
 void zapi::Game::updateTile(sf::Vector2f &position, const std::vector<int> &res)
 {
-    sf::Vector2f newPos(position.x * 100, position.y * 100);
+    sf::Vector2f newPos(position.x, position.y);
     Tile *tile = findTile(newPos);
 
     tile->updateResource(res);
@@ -165,13 +165,14 @@ void zapi::Game::expulsePlayer(unsigned int id)
     std::cout << "Player " << id << " expulsed" << std::endl;
 }
 
-void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position, std::array<int, 7> &players)
+void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position,
+        std::array<int, 7> __attribute__((unused)) &players)
 {
     getPlayer(sender).incantation();
     std::cout << "Player " << sender << " start incantation at [" << position.x << ", " << position.y << "]" << std::endl;
 }
 
-void zapi::Game::stopIncantation(RESULT result, const sf::Vector2f &position)
+void zapi::Game::stopIncantation(RESULT __attribute__((unused)) result, const sf::Vector2f &position)
 {
     std::cout << "Incantation stop at [" << position.x << ", " << position.y << "]" << std::endl;
 }
@@ -188,7 +189,8 @@ void zapi::Game::eggLaying(unsigned int id)
     std::cout << "egg " << id << "is laying" << std::endl;
 }
 
-void zapi::Game::eggLayed(unsigned int sender, unsigned int id, const sf::Vector2f &position)
+void zapi::Game::eggLayed(unsigned int __attribute__((unused)) sender,
+        unsigned int id, const sf::Vector2f &position)
 {
     getPlayer(id).egg();
     std::cout << "egg " << id << "layed by player" << id << "at [" << position.x << ", " << position.y << "]" << std::endl;

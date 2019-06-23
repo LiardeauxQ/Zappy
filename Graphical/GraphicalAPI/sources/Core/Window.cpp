@@ -15,7 +15,7 @@ zapi::Window::Window(const std::string &title, unsigned int width, unsigned int 
 , event()
 , width(width)
 , height(height)
-, camera(sf::FloatRect((width <= 15) ? 0 : (((width * 100) / 2) - (1600 / 2)), (height <= 15) ? 0 : (((height * 100) / 2) - (900 / 2)), 1600, 900))
+, camera(sf::FloatRect(0, 0, 1920, 1080))
 {
     setView(camera);
 }

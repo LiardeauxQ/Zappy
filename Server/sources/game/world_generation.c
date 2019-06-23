@@ -13,13 +13,14 @@
 #include "graphical/protocols.h"
 #include "error.h"
 
-void generate_resources(int **resources,
-        const resource_t *available)
+void generate_resources(int **resources, const resource_t *available,
+        int percentage_scale)
 {
     if (resources == 0x0 || available == 0x0)
         return;
     for (size_t i = 0 ; i < DEFAULT_RESOURCES_NUMBER ; i++)
-        (*resources)[i] += ((rand() % 100) <= available[i].percentage)
+        (*resources)[i] +=
+            ((rand() % 100) < available[i].percentage / percentage_scale)
                 ? 1 : 0;
 }
 
@@ -52,11 +53,7 @@ int generate_world(world_t *world, const char *resources_filename)
     world->resources = parse_resources(resources_filename);
     while (world->resources[max_resources++].name != 0x0);
     world->tiles = init_tiles(world->width, world->height, max_resources);
-    for (size_t x = 0 ; x < world->width ; x++) {
-        for (size_t y = 0 ; y < world->height ; y++)
-            generate_resources(&world->tiles[x][y].resources,
-                    world->resources);
-    }
+    update_world_resources(world, 1);
     return (0);
 }
 
@@ -73,10 +70,12 @@ world_t *worlddup(world_t *world)
     return (new);
 }
 
-void update_world_resources(world_t *world)
+void update_world_resources(world_t *world, int percentage_scale)
 {
     for (size_t x = 0 ; x < world->width ; x++) {
-        for (size_t y = 0 ; y < world->height ; y++)
-            generate_resources(&world->tiles[x][y].resources, world->resources);
+        for (size_t y = 0 ; y < world->height ; y++) {
+            generate_resources(&world->tiles[x][y].resources,
+                    world->resources, percentage_scale);
+        }
     }
 }

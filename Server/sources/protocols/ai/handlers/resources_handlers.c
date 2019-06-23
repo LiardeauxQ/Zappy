@@ -53,13 +53,16 @@ int take_object_handler(world_t *world, player_t *player, const char **args)
     else if (args[1])
         return (TOO_MUCH_PARAMETERS);
     resource_id = resource_str_to_id(args[0], world->resources);
-    if ((int) resource_id == -1)
+    if ((int) resource_id < 0)
         return (INVALID_PARAMETERS);
-    player->resources[resource_id]++;
-    world->tiles[player->x][player->y].resources[resource_id]--;
-    set_response("ok\n");
-    set_graph_request(assign_player_inventory(world, player->id, sockfd),
-        &send_player_inventory);
+    if (world->tiles[player->x][player->y].resources[resource_id] > 0) {
+        player->resources[resource_id]++;
+        world->tiles[player->x][player->y].resources[resource_id]--;
+        set_response("ok\n");
+        set_graph_request(assign_player_inventory(world, &player->id, sockfd),
+            &send_player_inventory);
+    } else
+        set_response("ko\n");
     return (NO_ERROR);
 }
 
@@ -76,11 +79,14 @@ int set_down_object_handler(world_t *world, player_t *player,
     resource_id = resource_str_to_id(args[0], world->resources);
     if ((int) resource_id == -1)
         return (INVALID_PARAMETERS);
-    player->resources[resource_id]--;
-    world->tiles[player->x][player->y].resources[resource_id]++;
-    set_response("ok\n");
-    set_graph_request(assign_player_inventory(world, player->id, sockfd),
-        &send_player_inventory);
+    if (player->resources[resource_id] > 0) {
+        player->resources[resource_id]--;
+        world->tiles[player->x][player->y].resources[resource_id]++;
+        set_response("ok\n");
+        set_graph_request(assign_player_inventory(world, &player->id, sockfd),
+            &send_player_inventory);
+    } else
+        set_response("ko\n");
     return (NO_ERROR);
 }
 
@@ -91,13 +97,13 @@ int inventory_handler(world_t *world, player_t *player,
     char *inventory = calloc(1, 2);
 
     strcat(inventory, "[");
-    for (int i = 1; i < DEFAULT_RESOURCES_NUMBER; i++) {
+    for (int i = 1; i < DEFAULT_RESOURCES_NUMBER - 1; i++) {
         resource_string = resource_to_string(i,
                 player->resources[i], world->resources);
         inventory = realloc(inventory, strlen(inventory) +
                 strlen(resource_string) + 4);
         strcat(inventory, resource_string);
-        if (i == sizeof(player->resources) / 4 - 1)
+        if (i == DEFAULT_RESOURCES_NUMBER  - 2)
             strcat(inventory, "]\n");
         else
             strcat(inventory, ", ");

@@ -12,11 +12,11 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-void *assign_hatching_egg(int egg_num, int sockfd)
+void *assign_hatching_egg(unsigned int *egg_num, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 
-    senders[INT_SENDER_POS] = (sender_t){&egg_num, sizeof(int), sockfd, 0};
+    senders[INT_SENDER_POS] = (sender_t){egg_num, sizeof(int), sockfd, 0};
     senders[CUSTOM_SENDER_POS].is_last = 1;
     return (convert_senders_to_data(senders));
 }
@@ -32,7 +32,7 @@ int send_hatching_egg(const void *data)
 
     if (senders == 0x0)
         return (-1);
-    srv.egg_num = *((int*)(senders[INT_SENDER_POS].data));
+    srv.egg_num = *((int *)(senders[INT_SENDER_POS].data));
     to_write = calloc(1, size * sizeof(char));
     to_write = memcpy(to_write, &hdr, PKT_HDR_LEN);
     memcpy(to_write + PKT_HDR_LEN, &srv, SRV_PLAYER_EGG_HATCHING_LEN);

@@ -17,9 +17,9 @@ int get_player_level(const void __attribute__((unused)) *data)
     return (0);
 }
 
-void *assign_player_level(world_t *world, unsigned int player_num, int sockfd)
+void *assign_player_level(world_t *world, unsigned int *player_num, int sockfd)
 {
-    clt_player_level_t clt = {player_num};
+    clt_player_level_t clt = {*player_num};
     sender_t senders[MAX_SENDERS] = {{0}};
 
     senders[WORLD_SENDER_POS] = (sender_t){world, sizeof(world),

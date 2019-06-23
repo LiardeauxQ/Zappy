@@ -20,7 +20,7 @@ Test(generate_resources, simple_test)
 
     tile.resources = calloc(1, (DEFAULT_RESOURCES_NUMBER + 1) * sizeof(int));
     tile.resources[DEFAULT_RESOURCES_NUMBER] = -1;
-    generate_resources(&tile.resources, resources);
+    generate_resources(&tile.resources, resources, 1);
     for (int i = 0 ; i < DEFAULT_RESOURCES_NUMBER ; i++) {
         cr_assert(tile.resources[i] >= 0 && tile.resources[i] <= 1);
     }
@@ -33,7 +33,7 @@ Test(generate_resources, with_no_parameters)
 
     tile.resources = calloc(1, (DEFAULT_RESOURCES_NUMBER + 1) * sizeof(int));
     tile.resources[DEFAULT_RESOURCES_NUMBER] = -1;
-    generate_resources(&tile.resources, 0x0);
+    generate_resources(&tile.resources, 0x0, 1);
     for (int i = 0 ; i < DEFAULT_RESOURCES_NUMBER ; i++)
         cr_assert_eq(tile.resources[i], 0);
     free(tile.resources);
@@ -71,7 +71,7 @@ Test(update_world_resources, simple_test)
     world.width = width;
     world.height = height;
     generate_world(&world, 0x0);
-    update_world_resources(&world);
+    update_world_resources(&world, 1);
     for (int i = 0 ; i < width ; i++) {
         for (int j = 0 ; j < height ; j++) {
             for (int k = 0 ; k < DEFAULT_RESOURCES_NUMBER ; k++)

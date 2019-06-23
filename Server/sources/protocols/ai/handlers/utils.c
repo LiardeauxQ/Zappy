@@ -26,25 +26,27 @@ player_t *get_player(linked_list_t players, int id)
     return (0x0);
 }
 
-size_t *next_case(world_t *world, size_t *coords, int orientation, int inc)
+pos_t *next_case(world_t *world, pos_t *pos, int orientation, int inc)
 {
     int x_inc[4] = {0, 1, 0, -1};
     int y_inc[4] = {-1, 0, 1, 0};
-    int new_coords[2] = {coords[0], coords[1]};
 
-    new_coords[0] += x_inc[orientation] * inc;
-    new_coords[1] += y_inc[orientation] * inc;
-    if (new_coords[0] >= (int) world->width)
-        new_coords[0] -= (int) world->width;
-    if (new_coords[0] < 0)
-        new_coords[0] += (int) world->width;
-    if (new_coords[1] >= (int) world->height)
-        new_coords[1] -= (int) world->height;
-    if (new_coords[1] < 0)
-        new_coords[1] += (int) world->height;
-    coords[0] = new_coords[0];
-    coords[1] = new_coords[1];
-    return (coords);
+    if (orientation < 1)
+        orientation = 4 - orientation;
+    else if (orientation > 4)
+        orientation = orientation - 4;
+    orientation--;
+    pos->x += x_inc[orientation] * inc;
+    pos->y += y_inc[orientation] * inc;
+    if (pos->x >= (int) world->width)
+        pos->x -= (int) world->width;
+    if (pos->x < 0)
+        pos->x += (int) world->width;
+    if (pos->y >= (int) world->height)
+        pos->y -= (int) world->height;
+    if (pos->y < 0)
+        pos->y += (int) world->height;
+    return (pos);
 }
 
 int is_time_limit_reached(const clock_t start, const uint16_t limit_cycles,

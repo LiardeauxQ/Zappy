@@ -30,6 +30,13 @@ struct tile_content_s {
 
 typedef struct tile_content_s tile_content_t;
 
+struct pos_s {
+    int x;
+    int y;
+};
+
+typedef struct pos_s pos_t;
+
 struct player_s {
     uint8_t level;
     unsigned int id;
@@ -41,6 +48,7 @@ struct player_s {
     enum ORIENTATION orientation;
     clock_t hatch_start_time;
     clock_t elevation_start_time;
+    char *broadcast_text;
 };
 
 typedef struct player_s player_t;
@@ -59,8 +67,8 @@ struct world_s {
 typedef struct world_s world_t;
 
 int generate_world(world_t *world, const char *resources_filename);
-void generate_resources(int **resources, const resource_t *available);
+void generate_resources(int **resources, const resource_t *available, int percentage_scale);
 tile_content_t **init_tiles(const size_t width, const size_t height,
         const int max_resources);
-void update_world_resources(world_t *world);
+void update_world_resources(world_t *world, int percentage_scale);
 world_t *worlddup(world_t *world);

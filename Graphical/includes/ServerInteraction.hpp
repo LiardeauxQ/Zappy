@@ -32,7 +32,7 @@ namespace communication {
         ServerInteraction();
         ~ServerInteraction();
 
-        void requestMapSize(void) const;
+        srv_map_size_t requestMapSize(void) const;
         void requestTileContent(unsigned int x, unsigned int y) const;
         void requestMapContent(void) const;
         void requestTeamsNames(void) const;
@@ -43,13 +43,14 @@ namespace communication {
         void requestTimeUpdate(void) const;
 
         void listenSocket(void);
+        void setNonBlockingSocket(void);
         
         unsigned int getSocket(void) const { return sockfd; }
         EventManager<char*> events;
     private:
         void requestCloseConnection(void) const;
 
-        unsigned int port;
+        unsigned int __attribute__((unused)) port;
         int sockfd;
     };
 }

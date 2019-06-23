@@ -18,8 +18,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *get_response();
+char *get_response(void);
 void set_response(char *value);
 
-void exec_graph_request();
+int is_graph_request_ok(void);
+void exec_graph_request(void);
 void set_graph_request(void *data, int (*fct)(const void *));
+int manage_graph_request(int option, void *data,
+        int (*fct)(const void *));
+

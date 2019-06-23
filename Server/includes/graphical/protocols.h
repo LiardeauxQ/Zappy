@@ -1,9 +1,9 @@
-///
-/// EPITECH PROJECT, 2018
-/// protocols
-/// File description:
-/// protocols
-///
+/*
+** EPITECH PROJECT, 2018
+** protocols
+** File description:
+** protocols
+*/
 
 /// \mainpage Zappy documentation
 ///

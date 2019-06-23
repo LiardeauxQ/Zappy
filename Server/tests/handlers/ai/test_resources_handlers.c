@@ -40,7 +40,8 @@ Test(set_down_object_handler, test_set_down_object_handler)
     old_resources_nbr_on_tile = world->tiles[1][1].resources[1];
     set_down_object_handler(world, player, args);
     cr_assert_eq(player->resources[1], 0);
-    cr_assert_eq(world->tiles[1][1].resources[1], old_resources_nbr_on_tile + 1);
+    cr_assert_eq(world->tiles[1][1].resources[1],
+        old_resources_nbr_on_tile + 1);
     cr_assert_eq(strcmp(get_response(), "ok\n"), 0);
 }
 

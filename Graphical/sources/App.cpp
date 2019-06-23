@@ -256,13 +256,13 @@ void App::updateResourceCollecting(char *data)
     pickUpResourcePlayer(srv->player_num, srv->resource);
 }
 
-void App::updateTime(char *data)
+void App::updateTime(char __attribute__((unused)) *data)
 {
-    srv_time_unit_request_t *srv = (srv_time_unit_request_t*)data;
+    srv_time_unit_request_t __attribute__((unused)) *srv = (srv_time_unit_request_t*)data;
     //TODO: time management
 }
 
-void App::updateBroadcast(char *data)
+void App::updateBroadcast(char __attribute__((unused)) *data)
 {
     //TODO: Broacast
 }
