@@ -12,7 +12,7 @@
 #include "graphical/protocols.h"
 #include "graphical/commands.h"
 
-int assign_layed_egg(player_t *player, int egg_num, int sockfd)
+void *assign_layed_egg(player_t *player, int egg_num, int sockfd)
 {
     sender_t senders[MAX_SENDERS] = {{0}};
 
@@ -20,7 +20,7 @@ int assign_layed_egg(player_t *player, int egg_num, int sockfd)
         sockfd, 0};
     senders[INT_SENDER_POS] = (sender_t){&egg_num, sizeof(int), sockfd, 0};
     senders[CUSTOM_SENDER_POS].is_last = 1;
-    return (send_layed_egg(convert_senders_to_data(senders)));
+    return (convert_senders_to_data(senders));
 }
 
 int send_layed_egg(const void *data)
