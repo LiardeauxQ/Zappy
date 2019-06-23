@@ -13,23 +13,23 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
     port(port),
     sockfd(0)
 {
-    struct sockaddr_in sockaddr;
-    int flags = 0;
-
-    memset(&sockaddr, 0, sizeof(sockaddr));
-    sockaddr.sin_family = AF_INET;
-    sockaddr.sin_port = htons(port);
-    if (inet_aton(ipAddress.c_str(), &sockaddr.sin_addr) == -1)
-        throw ServerInteractionErrors("Can't convert ip address");
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd == -1)
-        throw ServerInteractionErrors("Invalid Socket");
-    std::cout << "Try connection to host: " << ipAddress << std::endl;
-    if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
-        throw ServerInteractionErrors("Unable to connect to server");
-    flags = fcntl(sockfd, F_GETFL, 0);
-    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
-    std::cout << "Successful connection to host: " << ipAddress << std::endl;
+//    struct sockaddr_in sockaddr;
+//    int flags = 0;
+//
+//    memset(&sockaddr, 0, sizeof(sockaddr));
+//    sockaddr.sin_family = AF_INET;
+//    sockaddr.sin_port = htons(port);
+//    if (inet_aton(ipAddress.c_str(), &sockaddr.sin_addr) == -1)
+//        throw ServerInteractionErrors("Can't convert ip address");
+//    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+//    if (sockfd == -1)
+//        throw ServerInteractionErrors("Invalid Socket");
+//    std::cout << "Try connection to host: " << ipAddress << std::endl;
+//    if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
+//        throw ServerInteractionErrors("Unable to connect to server");
+//    flags = fcntl(sockfd, F_GETFL, 0);
+//    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+//    std::cout << "Successful connection to host: " << ipAddress << std::endl;
 }
 
 communication::ServerInteraction::ServerInteraction() :
@@ -41,9 +41,9 @@ communication::ServerInteraction::ServerInteraction() :
 
 communication::ServerInteraction::~ServerInteraction()
 {
-    this->requestCloseConnection();
-    close(sockfd);
-    std::cout << "End connection" << std::endl;
+//    this->requestCloseConnection();
+//    close(sockfd);
+//    std::cout << "End connection" << std::endl;
 }
 
 void communication::ServerInteraction::requestMapSize(void) const

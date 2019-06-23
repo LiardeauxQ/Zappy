@@ -24,6 +24,12 @@ void zapi::Game::initialize()
         }
         tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
     }
+//    for (int i = 1; i != 19; i++) {
+//        addPlayer("BP", i, sf::Vector2f(i * 100, 0));
+//        getPlayer(i).currentAnimation = getPlayer(i).getPlayerAnimation((PLAYER_ANIMATION)i);
+//        getPlayer(i).currentAnimation->play();
+//    }
+    
 }
 
 void zapi::Game::addTeam(const std::string &teamName)
