@@ -90,6 +90,7 @@ clean:
 		$(V)$(foreach var, $(LIBS), make clean --no-print-directory -C $(var);)
 		$(V)$(foreach var, $(DIRS), make clean --no-print-directory -C $(var);)
 		$(V)rm -f $(TMP_FILES)
+		$(V) find . -name '*.log' -type f -delete
 		$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean:
