@@ -5,6 +5,13 @@
 ** connection header
 */
 
+/**
+ * \file connection.h
+ * \brief connection functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <sys/socket.h>

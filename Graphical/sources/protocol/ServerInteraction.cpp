@@ -14,7 +14,6 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
     sockfd(0)
 {
     struct sockaddr_in sockaddr;
-    int flags = 0;
 
     memset(&sockaddr, 0, sizeof(sockaddr));
     sockaddr.sin_family = AF_INET;
@@ -27,8 +26,6 @@ communication::ServerInteraction::ServerInteraction(unsigned int port,
     std::cout << "Try connection to host: " << ipAddress << std::endl;
     if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
         throw ServerInteractionErrors("Unable to connect to server");
-    flags = fcntl(sockfd, F_GETFL, 0);
-    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
     std::cout << "Successful connection to host: " << ipAddress << std::endl;
 }
 
@@ -46,15 +43,23 @@ communication::ServerInteraction::~ServerInteraction()
     std::cout << "End connection" << std::endl;
 }
 
-void communication::ServerInteraction::requestMapSize(void) const
+void communication::ServerInteraction::setNonBlockingSocket(void)
+{
+    int flags = 0;
+
+    flags = fcntl(sockfd, F_GETFL, 0);
+    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+}
+
+srv_map_size_t communication::ServerInteraction::requestMapSize(void) const
 {
     communication::Packet<clt_map_size_t> pkt(CLT_MAP_SIZE, sockfd);
     communication::Packet<srv_map_size_t> pkt2(SRV_MAP_SIZE, sockfd);
+    srv_map_size_t map = {0, 0};
 
     pkt << 0x0;
-    srv_map_size_t map = {0, 0};
     pkt2 >> &map;
-    printf("%d %d\n", map.x, map.y);
+    return (map);
 }
 
 void communication::ServerInteraction::requestTileContent(unsigned int x,
@@ -130,7 +135,6 @@ void communication::ServerInteraction::requestCloseConnection(void) const
 
     pkt << &clt;
     pkt >> &clt;
-    printf("close %d\n", clt.tmp);
 }
 
 void communication::ServerInteraction::listenSocket(void)

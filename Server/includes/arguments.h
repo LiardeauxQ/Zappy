@@ -5,6 +5,13 @@
 ** arguments header
 */
 
+/**
+ * \file arguments.h
+ * \brief arguments functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <string.h>

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "protocols.h"
 
@@ -37,6 +38,8 @@ namespace communication {
             int result = 0;
 
             result = read(sockfd, &hdr, PKT_HDR_LEN);
+            perror("read");
+            printf("result %d, %d %d %d\n", result, hdr.id, hdr.size, hdr.version);
             if (result != PKT_HDR_LEN || hdr.id > SRV_CUSTOM) {
                 data = nullptr;
                 return;

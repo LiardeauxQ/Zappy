@@ -5,6 +5,13 @@
 ** graphical client header
 */
 
+/**
+ * \file client.h
+ * \brief grapgical client functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 typedef struct client_s client_t;

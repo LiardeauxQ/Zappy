@@ -5,6 +5,13 @@
 ** handle client connection
 */
 
+/**
+ * \file client.h
+ * \brief client functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <sys/select.h>

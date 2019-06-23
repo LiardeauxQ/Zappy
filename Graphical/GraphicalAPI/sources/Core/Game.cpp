@@ -9,7 +9,11 @@
 #include <cstdlib>
 #include <iostream>
 
-zapi::Game::Game() : tiles(), teams()
+zapi::Game::Game(unsigned int width, unsigned int height) :
+    tiles(),
+    teams(),
+    width(width),
+    height(height)
 {
     std::srand(std::time(nullptr));
     initialize();
@@ -17,18 +21,24 @@ zapi::Game::Game() : tiles(), teams()
 
 void zapi::Game::initialize()
 {
-    for (float i = 0, x = 0, y = 0; i != 900; i++, x += 100) {
-        if (x >= 3000) {
+    for (float i = 0, x = 0, y = 0; i != width * height; i++, x += 100) {
+        if (x >= width * 100) {
             x = 0;
             y += 100;
         }
         tiles.push_back(Tile(sf::Vector2f(100, 100), sf::Vector2f(x, y)));
     }
+//    for (int i = 1; i != 19; i++) {
+//        addPlayer("BP", i, sf::Vector2f(i * 100, 0));
+//        getPlayer(i).currentAnimation = getPlayer(i).getPlayerAnimation((PLAYER_ANIMATION)i);
+//        getPlayer(i).currentAnimation->play();
+//    }
+    
 }
 
 void zapi::Game::addTeam(const std::string &teamName)
 {
-    teams.push_back(Team(teamName));
+    teams.push_back(Team(width, height, teamName));
 }
 
 void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector2f &position)
@@ -45,7 +55,7 @@ void zapi::Game::addPlayer(const std::string &teamName, int id, const sf::Vector
 
 zapi::Tile *zapi::Game::findTile(const sf::Vector2f &position)
 {
-    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * 30);
+    unsigned int index = ((int)position.x / 100) + (((int)position.y / 100) * width);
     return &tiles[index];
 }
 
@@ -85,7 +95,7 @@ void zapi::Game::pickUpResourcePlayer(unsigned int id, RESOURCE_NUMBER index)
 
 void zapi::Game::updateTile(sf::Vector2f &position, const std::vector<int> &res)
 {
-    sf::Vector2f newPos(position.x * 100, position.y * 100);
+    sf::Vector2f newPos(position.x, position.y);
     Tile *tile = findTile(newPos);
 
     tile->updateResource(res);
@@ -134,7 +144,7 @@ zapi::Player &zapi::Game::getPlayer(unsigned int id)
 
 bool zapi::Game::checkInsideGrid(sf::Vector2f const &coord)
 {
-    return (coord.x < 0 || coord.x > 3000 || coord.y < 0 || coord.y > 3000) ? false : true;
+    return (coord.x < 0 || coord.x > width * 100 || coord.y < 0 || coord.y > height * 100) ? false : true;
 }
 
 void zapi::Game::updatePlayer(unsigned int id, const sf::Vector2f &position, ORIENTATION direction)
@@ -156,12 +166,13 @@ void zapi::Game::expulsePlayer(unsigned int id)
     std::cout << "Player " << id << " expulsed" << std::endl;
 }
 
-void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position, std::array<int, 7> &players)
+void zapi::Game::startIncantation(unsigned int sender, const sf::Vector2f &position,
+        std::array<int, 7> __attribute__((unused)) &players)
 {
     std::cout << "Player " << sender << " start incantation at [" << position.x << ", " << position.y << "]" << std::endl;
 }
 
-void zapi::Game::stopIncantation(RESULT result, const sf::Vector2f &position)
+void zapi::Game::stopIncantation(RESULT __attribute__((unused)) result, const sf::Vector2f &position)
 {
     std::cout << "Incantation stop at [" << position.x << ", " << position.y << "]" << std::endl;
 }
@@ -176,7 +187,8 @@ void zapi::Game::eggLaying(unsigned int id)
     std::cout << "egg " << id << "is laying" << std::endl;
 }
 
-void zapi::Game::eggLayed(unsigned int sender, unsigned int id, const sf::Vector2f &position)
+void zapi::Game::eggLayed(unsigned int __attribute__((unused)) sender,
+        unsigned int id, const sf::Vector2f &position)
 {
     std::cout << "egg " << id << "layed by player" << id << "at [" << position.x << ", " << position.y << "]" << std::endl;
 }

@@ -31,8 +31,8 @@ void check_connection(game_t *game, server_t *server, client_reader reader)
     if (select(max_fd + 1, &readfds, 0x0, 0x0, &timeout) == -1)
         exit_with_error("select");
     clt_sockfd = get_new_connection(&readfds, &server->clients, sockfd);
-    if (reader == &read_graph_client)
-        set_graph_clients(server->clients);
+    if (clt_sockfd > 0 && reader == &read_graph_client)
+        send_graph_welcome(&game->world, server->clients, clt_sockfd);
     if (clt_sockfd > 0 && reader == &read_ai_client)
         write(clt_sockfd, WELCOME_MSG, WELCOME_MSG_LEN);
     else if (clt_sockfd > 0) {
@@ -60,6 +60,6 @@ int main(int ac, char **av)
 
     init_info(ac, av, &info);
     start_server(&info);
-    destroy_info(&info);  
+    destroy_info(&info);
     return (0);
 }

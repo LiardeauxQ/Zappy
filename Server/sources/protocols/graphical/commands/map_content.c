@@ -29,15 +29,15 @@ int send_map_content(const void *data)
     char *to_write = 0x0;
     int subid = SRV_TILE_CONTENT;
 
-    if (count_senders(senders) != 1)
+    if (senders == 0x0)
         return (-1);
-    world = (world_t*)(senders[0].data);
+    world = (world_t*)(senders[WORLD_SENDER_POS].data);
     for (unsigned int i = 0 ; i < world->width ; i++) {
-        for (unsigned int j = 0 ; j < world->height ; i++) {
+        for (unsigned int j = 0 ; j < world->height ; j++) {
             subid = (j + 1 == world->height && i + 1 == world->width)
                 ? 1 : SRV_TILE_CONTENT;
             to_write = write_tile_content(&world->tiles[i][j], i, j, subid);
-            write(senders[0].sockfd, to_write, size);
+            write(senders[WORLD_SENDER_POS].sockfd, to_write, size);
             free(to_write);
         }
     }

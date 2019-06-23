@@ -1,9 +1,9 @@
-///
-/// EPITECH PROJECT, 2018
-/// protocols
-/// File description:
-/// protocols
-///
+/*
+** EPITECH PROJECT, 2018
+** protocols
+** File description:
+** protocols
+*/
 
 /// \mainpage Zappy documentation
 ///
@@ -42,6 +42,13 @@
 /// The scalability lay on the `CLT_CUSTOM` and `SRV_CUSTOM` requests `id`
 /// The packet_header subid field of the header permit to handle custom form of data.
 ///
+
+/**
+ * \file protocol.h
+ * \brief initialise action functions.
+ * \date Jun, 23 2019
+ *
+ */
 
 #pragma once
 

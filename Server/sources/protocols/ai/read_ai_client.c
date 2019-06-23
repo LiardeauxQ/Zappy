@@ -5,6 +5,7 @@
 ** catch clients commands
 */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +14,7 @@
 #include "ai/client.h"
 #include "ai/handlers/elevation_handler.h"
 #include "ai/handlers/fork_handler.h"
+#include "ai/handlers/broadcast_handler.h"
 
 void handle_awaiting_actions(client_t (*clients)[MAX_CLIENT], int client_pos,
         world_t *world)
@@ -45,7 +47,8 @@ void init_client_communication(client_t *clt, game_t *game)
     free(team_name);
 }
 
-void execute_action(client_t *client, game_t *game, player_t *player,
+void execute_action(client_t __attribute__((unused))*client,
+        game_t *game, player_t *player,
         const char **splitted_cmd)
 {
     int action_found = 0;

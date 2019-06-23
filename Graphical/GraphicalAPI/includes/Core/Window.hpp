@@ -18,7 +18,7 @@ namespace zapi
 {
     class Window : public sf::RenderWindow {
         public:
-            Window(const std::string &title);
+            Window(const std::string &title, unsigned int width, unsigned int height);
             ~Window() = default;
             // void update(void);
             void updateHUD(void);
@@ -31,9 +31,10 @@ namespace zapi
             void inputHandler();
 
         private:
-            sf::View camera;
             Hud hud;
             sf::Event event;
-            int zoom;
+            unsigned int __attribute__((unused)) width;
+            unsigned int __attribute__((unused)) height;
+            sf::View camera;
     };
 }

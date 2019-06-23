@@ -5,6 +5,13 @@
 ** server header
 */
 
+/**
+ * \file server.h
+ * \brief server functions.
+ * \date Jun, 23 2019
+ *
+ */
+
 #pragma once
 
 #include <stdlib.h>

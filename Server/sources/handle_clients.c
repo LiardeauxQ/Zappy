@@ -11,6 +11,7 @@
 #include "client.h"
 #include "ai/client.h"
 #include "ai/handlers/utils.h"
+#include "ai/client.h"
 
 void handle_clients(game_t *game, client_t (*clients)[MAX_CLIENT],
         fd_set *readfds, client_reader reader)

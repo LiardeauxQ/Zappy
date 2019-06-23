@@ -14,7 +14,7 @@
 #include "ai/handlers/init_action_handlers.h"
 
 int init_info(int ac, char **av, info_t *info)
-{       
+{
     handle_arguments(ac, av, &info->input);
     parse_resources(info->input.resources_filename);
     init_packets(&info->game.handler_register);

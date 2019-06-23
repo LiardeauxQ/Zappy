@@ -27,7 +27,7 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
         if ((*clients)[i].client_nb == (int) player->id ||
                 (*clients)[i].type != AI || (*clients)[i].client_nb == -1)
             continue;
-        player_t *tmp = get_player(world->players,
+        tmp = get_player(world->players,
                 (*clients)[i].client_nb);
         k = getBroadcastTile(world, player, tmp);
         k += ((tmp->orientation - 1) * 2) % 8;
@@ -57,7 +57,7 @@ int getBroadcastTile(world_t *world, player_t *src_player, player_t *dest_player
     return ((alpha - 22.5) / 45 + 1);
 }
 
-int broadcast_handler(world_t *world, player_t *player,
+int broadcast_handler(world_t __attribute__((unused)) *world, player_t *player,
         const char __attribute__((unused)) **args)
 {
     if (!args || !args[0])

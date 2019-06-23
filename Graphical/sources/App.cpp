@@ -5,6 +5,7 @@
 ** App
 */
 
+#include <iostream>
 #include "App.hpp"
 
 static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
@@ -36,10 +37,12 @@ static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
     std::make_tuple(SRV_CUSTOM, nullptr)
 };
 
-App::App(const std::string &title, communication::ServerInteraction &interaction) :
-    zapi::Game(),
-    window(title),
+App::App(const std::string &title, communication::ServerInteraction &interaction,
+        unsigned int width, unsigned int height) :
+    zapi::Game(width, height),
+    window(title, width, height),
     server(interaction),
+    isEnded(false),
     frameClock(),
     frameTime()
 {
@@ -65,7 +68,8 @@ void App::loop()
     }
 }
 
-void App::update(const std::string &eventType, int id, char *data)
+void App::update(const std::string __attribute__((unused)) &eventType,
+        int id, char *data)
 {
     cmdServerFun func;
 
@@ -238,20 +242,20 @@ void App::updateResourceCollecting(char *data)
     pickUpResourcePlayer(srv->player_num, srv->resource);
 }
 
-void App::updateTime(char *data)
+void App::updateTime(char __attribute__((unused)) *data)
 {
-    srv_time_unit_request_t *srv = (srv_time_unit_request_t*)data;
+    srv_time_unit_request_t __attribute__((unused)) *srv = (srv_time_unit_request_t*)data;
     //TODO: time management
 }
 
-void App::updateBroadcast(char *data)
+void App::updateBroadcast(char __attribute__((unused)) *data)
 {
     //TODO: Broacast
 }
 
 void App::inputHandler(void)
 {
-    window.clear();
+    window.clear(sf::Color(78, 137, 232));
     while(window.pollEvent(window.getEvent())) {
         window.inputHandler();
         if (window.getEvent().type == sf::Event::MouseButtonPressed && window.getEvent().mouseButton.button == sf::Mouse::Left)
@@ -271,4 +275,9 @@ void App::updateHud(void)
         window.getHUD().setDrawable(false);
         window.getHUD().resetTilePtr();
     }
+}
+
+void App::triggerEnd(std::string const &teamName)
+{
+    window.getHUD().setEnd(teamName);
 }
