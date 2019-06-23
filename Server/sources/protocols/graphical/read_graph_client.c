@@ -32,10 +32,7 @@ int dispatch_receive_data(game_t *g, sender_t *default_senders, int sockfd)
     int byte = 0;
     int result = 0;
 
-    printf("-> sockfd: %d\n", sockfd);
     byte = read(sockfd, &hdr, PKT_HDR_LEN);
-    perror("read");
-    printf("byte %d\n", byte);
     if (errno == EBADF)
         return (CLT_CLOSE_CONNECTION);
     if (byte != PKT_HDR_LEN)

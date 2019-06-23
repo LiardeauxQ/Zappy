@@ -21,6 +21,7 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
     int k = 0;
     char *res = 0x0;
     player_t *tmp = 0x0;
+    int orientations[] = {6, 0, 2, 4};
 
     if (!player->broadcast_text)
         return;
@@ -30,31 +31,37 @@ void broadcast(client_t (*clients)[MAX_CLIENT], world_t *world,
             continue;
         tmp = get_player(world->players,
                 (*clients)[i].client_nb);
-        k = getBroadcastTile(world, player, tmp);
-        k += ((tmp->orientation - 1) * 2) % 8;
+        k = (get_broadcast_tile(world, player, tmp) +
+                orientations[player->orientation - 1]) % 8;
         asprintf(&res, "message %d, %s\n", k, player->broadcast_text);
-        write((*clients)[i].sockfd, res, strlen(res));
-        free(player->broadcast_text);
-        player->broadcast_text = 0x0;
+        if ((*clients)[i].sockfd)
+            write((*clients)[i].sockfd, res, strlen(res));
+        free(res);
     }
+    free(player->broadcast_text);
+    player->broadcast_text = 0x0;
 }
 
-int getBroadcastTile(world_t *world, player_t *src_player, player_t *dest_player)
+int get_broadcast_tile(world_t *world, player_t *src_player, player_t *dest_player)
 {
-    unsigned int xc = 0;
-    unsigned int yc = 0;
+    pos_t src_player_pos = {src_player->x, src_player->y};
+    pos_t dest_player_pos = {dest_player->x, dest_player->y};
+    pos_t tmp_player_pos = {0};
     unsigned int tangente = 0;
     unsigned int alpha = 0;
 
-    if (src_player->x - dest_player->x > world->width / 2)
-        dest_player->x += world->width;
-    if (src_player->y - dest_player->y > world->height / 2)
-        dest_player->y += world->height;
-    xc = src_player->x;
-    yc = dest_player->y;
-    tangente = xc / yc;
+    if (src_player_pos.x == dest_player_pos.x &&
+            src_player_pos.y == dest_player_pos.y)
+        return (0);
+    if ((size_t) src_player_pos.x - dest_player_pos.x > world->width / 2)
+        dest_player_pos.x += world->width;
+    if ((size_t) src_player_pos.y - dest_player_pos.y > world->height / 2)
+        dest_player_pos.y += world->height;
+    tmp_player_pos.x = src_player_pos.x;
+    tmp_player_pos.y = dest_player_pos.y;
+    tangente = tmp_player_pos.x / tmp_player_pos.y;
     alpha = atan(tangente);
-    alpha = (dest_player->y > src_player->y) ? alpha + 180 : alpha;
+    alpha = (dest_player_pos.y > src_player_pos.y) ? alpha + 180 : alpha;
     return ((alpha - 22.5) / 45 + 1);
 }
 

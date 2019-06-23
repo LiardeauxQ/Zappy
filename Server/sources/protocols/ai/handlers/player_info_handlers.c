@@ -13,7 +13,7 @@
 
 #include "ai/handlers/player_info_handlers.h"
 
-void tile_to_str(world_t *world, pos_t *pos, int team_id, char **str)
+void tile_to_str(world_t *world, pos_t *pos, char **str)
 {
     char *buffer = 0x0;
     player_t *player = 0x0;
@@ -23,7 +23,7 @@ void tile_to_str(world_t *world, pos_t *pos, int team_id, char **str)
             player_id_cursor = player_id_cursor->next) {
         player = get_player(world->players,
                 *(unsigned int*) player_id_cursor->data);
-        if (player && (int) player->team_id == team_id) {
+        if (player) {
             *str = realloc(*str, strlen(*str) + strlen("player ") + 1);
             strcat(*str, "player ");
         }
@@ -37,12 +37,11 @@ void tile_to_str(world_t *world, pos_t *pos, int team_id, char **str)
     }
 }
 
-void append_tile_to_look_table(world_t *world, pos_t *pos, int team_id,
-        char **look_table)
+void append_tile_to_look_table(world_t *world, pos_t *pos, char **look_table)
 {
     char *tile = calloc(1, 1);
 
-    tile_to_str(world, pos, team_id, &tile);
+    tile_to_str(world, pos, &tile);
     if (!*look_table[0])
         *look_table[0] = '[';
     *look_table = realloc(*look_table, strlen(*look_table) + strlen(tile) + 3);
@@ -59,8 +58,7 @@ int look_handler(world_t *world, player_t *player,
 
     for (int i = 0; i <= player->level; i++) {
         for (int j = 0; j < 1 + i * 2; j++) {
-            append_tile_to_look_table(world, &current_pos,
-                    player->team_id, &look_table);
+            append_tile_to_look_table(world, &current_pos, &look_table);
             next_case(world, &current_pos, player->orientation + 1, 1);
         }
         next_case(world, &current_pos, player->orientation - 1, 2 + i * 2);
