@@ -234,6 +234,6 @@ class Player:
                     self.startIncantation()
                     self.updateLevel()
                 else:
-                    self.broadcast("elevation for level " + str(self.level))
+                    self.broadcast("elevation_for_level_" + str(self.level))
                     print("SENDING BROADCAST FOR ELEVATION !!")
             self.inventory()
