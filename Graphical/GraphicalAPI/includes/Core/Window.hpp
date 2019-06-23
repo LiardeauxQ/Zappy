@@ -24,12 +24,12 @@ namespace zapi
             void updateHUD(void);
             void drawEntities(std::vector<Tile> &entities);
             void drawEntities(std::vector<Resource> &entities);
-            void drawEntities(std::vector<Team> &entities);
-            void drawEntities(std::list<Player> &entities);
+            void drawEntities(std::list<Player> &entities, sf::Time frameTime);
             sf::View &getCamera(void);
             Hud &getHUD(void);
             sf::Event &getEvent(void);
             void inputHandler();
+
         private:
             sf::View camera;
             Hud hud;

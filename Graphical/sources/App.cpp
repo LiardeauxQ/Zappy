@@ -39,7 +39,9 @@ static std::vector<std::tuple<int, App::cmdServerFun>> cmds = {
 App::App(const std::string &title, communication::ServerInteraction &interaction) :
     zapi::Game(),
     window(title),
-    server(interaction)
+    server(interaction),
+    frameClock(),
+    frameTime()
 {
     server.events.subscribe("socket", this);
 }
@@ -52,11 +54,12 @@ void App::start()
 void App::loop()
 {
     while (window.isOpen()) {
+        frameTime = frameClock.restart();
         server.listenSocket();
         inputHandler();
         window.drawEntities(getTiles());
         for (auto &team : getTeams())
-            window.drawEntities(team.getPlayers());
+            window.drawEntities(team.getPlayers(), frameTime);
         window.updateHUD();
         window.display();
     }

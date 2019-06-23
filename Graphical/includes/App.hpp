@@ -51,4 +51,6 @@ public:
 private:
     zapi::Window window;
     communication::ServerInteraction &server;
+    sf::Clock frameClock;
+    sf::Time frameTime;
 };
